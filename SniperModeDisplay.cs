@@ -6,6 +6,7 @@ namespace RED.mbnq
 {
     public class SniperModeDisplay : Form
     {
+        private Timer updateTimer;
         private bool isMoving;
         private Point lastMousePos;
 
@@ -21,6 +22,30 @@ namespace RED.mbnq
             this.MouseDown += SniperModeDisplay_MouseDown;
             this.MouseMove += SniperModeDisplay_MouseMove;
             this.MouseUp += SniperModeDisplay_MouseUp;
+            this.Paint += SniperModeDisplay_Paint;
+
+            updateTimer = new Timer();
+            updateTimer.Interval = 1000;  // Default interval
+            updateTimer.Tick += (s, e) => this.Invalidate();
+            updateTimer.Start();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Graphics g = e.Graphics;
+            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
+        }
+
+        private void SniperModeDisplay_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
+        }
+
+        public void UpdateTimerInterval(int interval)
+        {
+            updateTimer.Interval = interval;
         }
 
         private void SniperModeDisplay_MouseDown(object sender, MouseEventArgs e)
@@ -47,13 +72,6 @@ namespace RED.mbnq
             {
                 isMoving = false;
             }
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            Graphics g = e.Graphics;
-            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
         }
     }
 }

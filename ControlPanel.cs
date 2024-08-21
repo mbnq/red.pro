@@ -11,6 +11,9 @@ namespace RED.mbnq
         private Button saveButton, loadButton;
         private FlowLayoutPanel panel;
 
+        public MainDisplay MainDisplay { get; set; }
+        public SniperModeDisplay SniperModeDisplay { get; set; }
+
         public ControlPanel()
         {
             InitializeComponent();
@@ -68,7 +71,9 @@ namespace RED.mbnq
 
             // CheckBoxes
             lockMainDisplay = new CheckBox() { Text = "Lock Main Display", AutoSize = true };
+            lockMainDisplay.CheckedChanged += LockMainDisplay_CheckedChanged;
             sniperMode = new CheckBox() { Text = "Sniper Mode", AutoSize = true };
+            sniperMode.CheckedChanged += SniperMode_CheckedChanged;
 
             // Buttons
             saveButton = new Button() { Text = "Save Settings", AutoSize = true };
@@ -83,9 +88,19 @@ namespace RED.mbnq
             panel.Controls.Add(loadButton);
 
             this.Controls.Add(panel);
+
+            // Hook up the event handlers
+            colorR.Scroll += (s, e) => UpdateMainDisplay();
+            colorG.Scroll += (s, e) => UpdateMainDisplay();
+            colorB.Scroll += (s, e) => UpdateMainDisplay();
+            size.Scroll += (s, e) => UpdateMainDisplay();
+            transparency.Scroll += (s, e) => UpdateMainDisplay();
+            offsetX.Scroll += (s, e) => UpdateMainDisplay();
+            offsetY.Scroll += (s, e) => UpdateMainDisplay();
+            timerInterval.Scroll += (s, e) => UpdateTimerInterval();
         }
 
-        private (Panel Panel, TrackBar TrackBar) CreateLabeledTrackBar(string labelText, int min, int max)
+        private LabeledTrackBar CreateLabeledTrackBar(string labelText, int min, int max)
         {
             var label = new Label()
             {
@@ -116,7 +131,60 @@ namespace RED.mbnq
             panel.Controls.Add(label);
             panel.Controls.Add(trackBar);
 
-            return (panel, trackBar);
+            return new LabeledTrackBar(panel, trackBar);
+        }
+
+        private void UpdateMainDisplay()
+        {
+            if (MainDisplay != null)
+            {
+                MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                MainDisplay.Size = new Size(size.Value, size.Value);
+                MainDisplay.Opacity = transparency.Value / 100.0;
+                MainDisplay.Left = offsetX.Value;
+                MainDisplay.Top = offsetY.Value;
+
+                MainDisplay.Invalidate();  // Redraw the overlay
+            }
+
+            if (SniperModeDisplay != null && sniperMode.Checked)
+            {
+                SniperModeDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                SniperModeDisplay.Size = new Size(size.Value, size.Value);
+                SniperModeDisplay.Opacity = transparency.Value / 100.0;
+                SniperModeDisplay.Left = offsetX.Value;
+                SniperModeDisplay.Top = offsetY.Value;
+
+                SniperModeDisplay.Invalidate();  // Redraw the overlay
+            }
+        }
+
+        private void UpdateTimerInterval()
+        {
+            if (MainDisplay != null)
+            {
+                MainDisplay.UpdateTimerInterval(timerInterval.Value);
+            }
+            if (SniperModeDisplay != null)
+            {
+                SniperModeDisplay.UpdateTimerInterval(timerInterval.Value);
+            }
+        }
+
+        private void LockMainDisplay_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MainDisplay != null)
+            {
+                MainDisplay.LockDisplay(lockMainDisplay.Checked);
+            }
+        }
+
+        private void SniperMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SniperModeDisplay != null)
+            {
+                SniperModeDisplay.Visible = sniperMode.Checked;
+            }
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -137,6 +205,18 @@ namespace RED.mbnq
         private void LoadSettings()
         {
             // Implement load logic from an .ini file or similar method
+        }
+    }
+
+    public class LabeledTrackBar
+    {
+        public Panel Panel { get; set; }
+        public TrackBar TrackBar { get; set; }
+
+        public LabeledTrackBar(Panel panel, TrackBar trackBar)
+        {
+            Panel = panel;
+            TrackBar = trackBar;
         }
     }
 }
