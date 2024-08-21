@@ -59,7 +59,6 @@ namespace RED.mbnq
                 MainDisplay.Location = new Point(screenBounds.Left + initialX, screenBounds.Top + initialY);
             }
         }
-
         private void InitializeComponent()
         {
             this.Text = "Control Panel";
@@ -180,6 +179,8 @@ namespace RED.mbnq
             return new LabeledTrackBar(panel, trackBar);
         }
 
+        private const int OffsetAdjustmentX = 100;  // Adjust this value as needed
+        private const int OffsetAdjustmentY = 100;  // Adjust this value as needed
         public void UpdateMainDisplay()
         {
             if (MainDisplay != null)
@@ -188,14 +189,14 @@ namespace RED.mbnq
                 MainDisplay.Size = new Size(size.Value, size.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
-                // Apply offsets relative to the screen center
-                MainDisplay.Left = initialX + offsetX.Value + Screen.PrimaryScreen.Bounds.Left;
-                MainDisplay.Top = initialY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top;
+                // Calculate new position with offset and additional adjustments
+                int newLeft = initialX + offsetX.Value + Screen.PrimaryScreen.Bounds.Left + OffsetAdjustmentX;
+                int newTop = initialY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top + OffsetAdjustmentY;
 
-                // Ensure it is within the primary screen bounds
+                // Ensure the new position is within the primary screen bounds
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-                MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, MainDisplay.Left));
-                MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, MainDisplay.Top));
+                MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, newLeft));
+                MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, newTop));
 
                 MainDisplay.Show();  // Ensure it is visible
                 MainDisplay.BringToFront();  // Bring it to the front
@@ -215,8 +216,6 @@ namespace RED.mbnq
                 SniperModeDisplay.Invalidate();  // Redraw the overlay
             }
         }
-
-
         private void UpdateTimerInterval()
         {
             if (MainDisplay != null)
