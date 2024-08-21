@@ -9,6 +9,49 @@ namespace RED.mbnq
     {
         private static string settingsFilePath = "RED.mbnq.settings.ini";
 
+        public static void EnsureSettingsFileExists(ControlPanel controlPanel)
+        {
+            if (!File.Exists(settingsFilePath))
+            {
+                // Create default settings
+                var sb = new StringBuilder();
+
+                sb.AppendLine("[MainDisplay]");
+                sb.AppendLine("Red=255");
+                sb.AppendLine("Green=0");
+                sb.AppendLine("Blue=0");
+                sb.AppendLine("Size=3");
+                sb.AppendLine("Transparency=64");
+                sb.AppendLine("OffsetX=0");
+                sb.AppendLine("OffsetY=0");
+                sb.AppendLine("TimerInterval=100");
+                sb.AppendLine("LockMainDisplay=False");
+                sb.AppendLine("SniperMode=False");
+
+                File.WriteAllText(settingsFilePath, sb.ToString());
+
+                // Adjust controls to default settings
+                controlPanel.ColorRValue = 255;
+                controlPanel.ColorGValue = 0;
+                controlPanel.ColorBValue = 0;
+                controlPanel.SizeValue = 3;
+                controlPanel.TransparencyValue = 64;
+                controlPanel.OffsetXValue = 0;
+                controlPanel.OffsetYValue = 0;
+                controlPanel.TimerIntervalValue = 100;
+                controlPanel.LockMainDisplayChecked = false;
+                controlPanel.SniperModeChecked = false;
+
+                // Apply these settings to the MainDisplay
+                controlPanel.UpdateMainDisplay();
+            }
+            else
+            {
+                // Load existing settings
+                LoadSettings(controlPanel);
+            }
+        }
+
         public static void SaveSettings(ControlPanel controlPanel)
         {
             var sb = new StringBuilder();

@@ -29,8 +29,8 @@ namespace RED.mbnq
         public ControlPanel()
         {
             InitializeComponent();
+            SaveLoad.EnsureSettingsFileExists(this);  // Ensure settings file exists and load settings
         }
-
         private void InitializeMainDisplayPosition()
         {
             // Ensure MainDisplay is not null
