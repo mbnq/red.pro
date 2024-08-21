@@ -44,14 +44,19 @@ namespace RED.mbnq
                 MainDisplay.BringToFront();
             }
         }
-
         private void InitializeMainDisplayPosition()
         {
-            // Ensure MainDisplay is not null
             if (MainDisplay != null)
             {
-                initialX = MainDisplay.Location.X;
-                initialY = MainDisplay.Location.Y;
+                // Get the bounds of the primary screen
+                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+                // Calculate the center of the primary screen
+                initialX = (screenBounds.Width - MainDisplay.Width) / 2;
+                initialY = (screenBounds.Height - MainDisplay.Height) / 2;
+
+                // Set the MainDisplay's location to the center of the primary screen
+                MainDisplay.Location = new Point(screenBounds.Left + initialX, screenBounds.Top + initialY);
             }
         }
 
@@ -183,11 +188,11 @@ namespace RED.mbnq
                 MainDisplay.Size = new Size(size.Value, size.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
-                // Apply offsets relative to the initial position
-                MainDisplay.Left = initialX + offsetX.Value;
-                MainDisplay.Top = initialY + offsetY.Value;
+                // Apply offsets relative to the screen center
+                MainDisplay.Left = initialX + offsetX.Value + Screen.PrimaryScreen.Bounds.Left;
+                MainDisplay.Top = initialY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top;
 
-                // Ensure it is within the screen bounds
+                // Ensure it is within the primary screen bounds
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
                 MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, MainDisplay.Left));
                 MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, MainDisplay.Top));
@@ -204,12 +209,13 @@ namespace RED.mbnq
                 SniperModeDisplay.Opacity = transparency.Value / 100.0;
 
                 // Apply offsets relative to the initial position (if applicable)
-                SniperModeDisplay.Left = initialX + offsetX.Value;
-                SniperModeDisplay.Top = initialY + offsetY.Value;
+                SniperModeDisplay.Left = initialX + offsetX.Value + Screen.PrimaryScreen.Bounds.Left;
+                SniperModeDisplay.Top = initialY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top;
 
                 SniperModeDisplay.Invalidate();  // Redraw the overlay
             }
         }
+
 
         private void UpdateTimerInterval()
         {
