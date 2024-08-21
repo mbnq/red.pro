@@ -156,7 +156,7 @@ namespace RED.mbnq
             return new LabeledTrackBar(panel, trackBar);
         }
 
-        private void UpdateMainDisplay()
+        public void UpdateMainDisplay()
         {
             if (MainDisplay != null)
             {
@@ -215,23 +215,24 @@ namespace RED.mbnq
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            SaveSettings();
+            SaveLoad.SaveSettings(this);
         }
 
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            LoadSettings();
+            SaveLoad.LoadSettings(this);
         }
 
-        private void SaveSettings()
-        {
-            // Implement save logic using an .ini file or similar method
-        }
-
-        private void LoadSettings()
-        {
-            // Implement load logic from an .ini file or similar method
-        }
+        public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
+        public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
+        public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
+        public int SizeValue { get => size.Value; set => size.Value = value; }
+        public int TransparencyValue { get => transparency.Value; set => transparency.Value = value; }
+        public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
+        public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
+        public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
+        public bool LockMainDisplayChecked { get => lockMainDisplay.Checked; set => lockMainDisplay.Checked = value; }
+        public bool SniperModeChecked { get => sniperMode.Checked; set => sniperMode.Checked = value; }
     }
 
     public class LabeledTrackBar
