@@ -14,12 +14,13 @@ namespace RED.mbnq
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Create and show the overlays
+            // Create and show the main display overlay
             mainDisplay = new MainDisplay();
-            mainDisplay.Show();  // Ensure this line is present
+            mainDisplay.Show();
 
+            // Create the sniper mode overlay, but don't show it yet
             sniperModeDisplay = new SniperModeDisplay();
-            sniperModeDisplay.Show();  // Ensure this line is present
+            sniperModeDisplay.Visible = false;  // Set visibility to false at startup
 
             // Start the ControlPanel
             ControlPanel controlPanel = new ControlPanel();
