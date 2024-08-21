@@ -30,22 +30,41 @@ namespace RED.mbnq
             };
 
             // Color TrackBars
-            colorR = CreateTrackBar("Red", 0, 255);
-            colorG = CreateTrackBar("Green", 0, 255);
-            colorB = CreateTrackBar("Blue", 0, 255);
+            var redTrackBar = CreateLabeledTrackBar("Red", 0, 255);
+            colorR = redTrackBar.TrackBar;
+            panel.Controls.Add(redTrackBar.Panel);
+
+            var greenTrackBar = CreateLabeledTrackBar("Green", 0, 255);
+            colorG = greenTrackBar.TrackBar;
+            panel.Controls.Add(greenTrackBar.Panel);
+
+            var blueTrackBar = CreateLabeledTrackBar("Blue", 0, 255);
+            colorB = blueTrackBar.TrackBar;
+            panel.Controls.Add(blueTrackBar.Panel);
 
             // Size TrackBar
-            size = CreateTrackBar("Size", 1, 50);
+            var sizeTrackBar = CreateLabeledTrackBar("Size", 1, 50);
+            size = sizeTrackBar.TrackBar;
+            panel.Controls.Add(sizeTrackBar.Panel);
 
             // Transparency TrackBar
-            transparency = CreateTrackBar("Transparency", 0, 100);
+            var transparencyTrackBar = CreateLabeledTrackBar("Transparency", 0, 100);
+            transparency = transparencyTrackBar.TrackBar;
+            panel.Controls.Add(transparencyTrackBar.Panel);
 
             // Offset TrackBars
-            offsetX = CreateTrackBar("Offset X", -100, 100);
-            offsetY = CreateTrackBar("Offset Y", -100, 100);
+            var offsetXTrackBar = CreateLabeledTrackBar("Offset X", -100, 100);
+            offsetX = offsetXTrackBar.TrackBar;
+            panel.Controls.Add(offsetXTrackBar.Panel);
+
+            var offsetYTrackBar = CreateLabeledTrackBar("Offset Y", -100, 100);
+            offsetY = offsetYTrackBar.TrackBar;
+            panel.Controls.Add(offsetYTrackBar.Panel);
 
             // Timer Interval TrackBar
-            timerInterval = CreateTrackBar("Timer Interval", 1, 1000);
+            var timerIntervalTrackBar = CreateLabeledTrackBar("Timer Interval", 1, 1000);
+            timerInterval = timerIntervalTrackBar.TrackBar;
+            panel.Controls.Add(timerIntervalTrackBar.Panel);
 
             // CheckBoxes
             lockMainDisplay = new CheckBox() { Text = "Lock Main Display", AutoSize = true };
@@ -58,14 +77,6 @@ namespace RED.mbnq
             saveButton.Click += SaveButton_Click;
             loadButton.Click += LoadButton_Click;
 
-            panel.Controls.Add(colorR);
-            panel.Controls.Add(colorG);
-            panel.Controls.Add(colorB);
-            panel.Controls.Add(size);
-            panel.Controls.Add(transparency);
-            panel.Controls.Add(offsetX);
-            panel.Controls.Add(offsetY);
-            panel.Controls.Add(timerInterval);
             panel.Controls.Add(lockMainDisplay);
             panel.Controls.Add(sniperMode);
             panel.Controls.Add(saveButton);
@@ -74,29 +85,38 @@ namespace RED.mbnq
             this.Controls.Add(panel);
         }
 
-        private TrackBar CreateTrackBar(string label, int min, int max)
+        private (Panel Panel, TrackBar TrackBar) CreateLabeledTrackBar(string labelText, int min, int max)
         {
+            var label = new Label()
+            {
+                Text = $"{labelText}: {min}",
+                AutoSize = true,
+                Padding = new Padding(0, 5, 0, 0) // Add some padding to align labels properly
+            };
+
             var trackBar = new TrackBar()
             {
                 Minimum = min,
                 Maximum = max,
                 TickFrequency = (max - min) / 10,
+                Width = 200,
+            };
+            trackBar.Scroll += (s, e) => { label.Text = $"{labelText}: {trackBar.Value}"; };
+
+            var panel = new Panel()
+            {
                 Width = 250,
+                Height = 50, // Adjust height as needed
+                Padding = new Padding(3)
             };
-            var labelControl = new Label()
-            {
-                Text = $"{label}: {trackBar.Value}",
-                AutoSize = true
-            };
-            trackBar.Scroll += (s, e) => { labelControl.Text = $"{label}: {trackBar.Value}"; };
-            var container = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.LeftToRight,
-                AutoSize = true
-            };
-            container.Controls.Add(labelControl);
-            container.Controls.Add(trackBar);
-            return trackBar;
+
+            label.Location = new Point(3, 3);
+            trackBar.Location = new Point(3, label.Height + 5);
+
+            panel.Controls.Add(label);
+            panel.Controls.Add(trackBar);
+
+            return (panel, trackBar);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
