@@ -24,7 +24,7 @@ namespace RED.mbnq
 
             // Start the ControlPanel
             ControlPanel controlPanel = new ControlPanel();
-            controlPanel.MainDisplay = mainDisplay;
+            controlPanel.MainDisplay = mainDisplay;  // Assign MainDisplay here
             controlPanel.SniperModeDisplay = sniperModeDisplay;
 
             Application.Run(controlPanel);

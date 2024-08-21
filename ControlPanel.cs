@@ -11,12 +11,34 @@ namespace RED.mbnq
         private Button saveButton, loadButton;
         private FlowLayoutPanel panel;
 
-        public MainDisplay MainDisplay { get; set; }
+        private MainDisplay mainDisplay;
+        private int initialX, initialY;
+
+        public MainDisplay MainDisplay
+        {
+            get { return mainDisplay; }
+            set
+            {
+                mainDisplay = value;
+                InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned
+            }
+        }
+
         public SniperModeDisplay SniperModeDisplay { get; set; }
 
         public ControlPanel()
         {
             InitializeComponent();
+        }
+
+        private void InitializeMainDisplayPosition()
+        {
+            // Ensure MainDisplay is not null
+            if (MainDisplay != null)
+            {
+                initialX = MainDisplay.Location.X;
+                initialY = MainDisplay.Location.Y;
+            }
         }
 
         private void InitializeComponent()
@@ -141,8 +163,10 @@ namespace RED.mbnq
                 MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 MainDisplay.Size = new Size(size.Value, size.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
-                MainDisplay.Left = offsetX.Value;
-                MainDisplay.Top = offsetY.Value;
+
+                // Apply offsets relative to the initial position
+                MainDisplay.Left = initialX + offsetX.Value;
+                MainDisplay.Top = initialY + offsetY.Value;
 
                 MainDisplay.Invalidate();  // Redraw the overlay
             }
@@ -152,8 +176,10 @@ namespace RED.mbnq
                 SniperModeDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 SniperModeDisplay.Size = new Size(size.Value, size.Value);
                 SniperModeDisplay.Opacity = transparency.Value / 100.0;
-                SniperModeDisplay.Left = offsetX.Value;
-                SniperModeDisplay.Top = offsetY.Value;
+
+                // Apply offsets relative to the initial position (if applicable)
+                SniperModeDisplay.Left = initialX + offsetX.Value;
+                SniperModeDisplay.Top = initialY + offsetY.Value;
 
                 SniperModeDisplay.Invalidate();  // Redraw the overlay
             }
