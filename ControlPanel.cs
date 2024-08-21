@@ -32,6 +32,7 @@ namespace RED.mbnq
             this.Shown += ControlPanel_Shown;  // Hook up the Shown event
             SaveLoad.EnsureSettingsFileExists(this);  // Ensure settings file exists and load settings
         }
+
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             UpdateMainDisplay();  // Ensure MainDisplay is updated after the form is shown
@@ -43,6 +44,7 @@ namespace RED.mbnq
                 MainDisplay.BringToFront();
             }
         }
+
         private void InitializeMainDisplayPosition()
         {
             // Ensure MainDisplay is not null
@@ -150,7 +152,12 @@ namespace RED.mbnq
                 TickFrequency = (max - min) / 10,
                 Width = 200,
             };
+
+            // Update label text when the trackBar is scrolled
             trackBar.Scroll += (s, e) => { label.Text = $"{labelText}: {trackBar.Value}"; };
+
+            // Set initial label value according to the current trackBar value
+            label.Text = $"{labelText}: {trackBar.Value}";
 
             var panel = new Panel()
             {
@@ -176,7 +183,7 @@ namespace RED.mbnq
                 MainDisplay.Size = new Size(size.Value, size.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
-                // Log or set the position manually
+                // Apply offsets relative to the initial position
                 MainDisplay.Left = initialX + offsetX.Value;
                 MainDisplay.Top = initialY + offsetY.Value;
 
