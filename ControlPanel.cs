@@ -29,7 +29,12 @@ namespace RED.mbnq
         public ControlPanel()
         {
             InitializeComponent();
+            this.Shown += ControlPanel_Shown;  // Hook up the Shown event
             SaveLoad.EnsureSettingsFileExists(this);  // Ensure settings file exists and load settings
+        }
+        private void ControlPanel_Shown(object sender, EventArgs e)
+        {
+            UpdateMainDisplay();  // Ensure MainDisplay is updated after the form is shown
         }
         private void InitializeMainDisplayPosition()
         {
