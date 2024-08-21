@@ -40,9 +40,6 @@ namespace RED.mbnq
                 controlPanel.TimerIntervalValue = 100;
                 controlPanel.LockMainDisplayChecked = false;
                 controlPanel.SniperModeChecked = false;
-
-                // Apply these settings to the MainDisplay
-                controlPanel.UpdateMainDisplay();
             }
             else
             {
@@ -50,11 +47,8 @@ namespace RED.mbnq
                 LoadSettings(controlPanel);
             }
 
-            // Ensure MainDisplay is shown after loading settings
-            if (controlPanel.MainDisplay != null)
-            {
-                controlPanel.MainDisplay.Show();
-            }
+            // Ensure MainDisplay is updated with the loaded or default settings
+            controlPanel.UpdateMainDisplay();
         }
         public static void SaveSettings(ControlPanel controlPanel)
         {
