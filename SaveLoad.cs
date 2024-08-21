@@ -8,7 +8,6 @@ namespace RED.mbnq
     public static class SaveLoad
     {
         private static string settingsFilePath = "RED.mbnq.settings.ini";
-
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
         {
             if (!File.Exists(settingsFilePath))
@@ -50,8 +49,13 @@ namespace RED.mbnq
                 // Load existing settings
                 LoadSettings(controlPanel);
             }
-        }
 
+            // Ensure MainDisplay is shown after loading settings
+            if (controlPanel.MainDisplay != null)
+            {
+                controlPanel.MainDisplay.Show();
+            }
+        }
         public static void SaveSettings(ControlPanel controlPanel)
         {
             var sb = new StringBuilder();

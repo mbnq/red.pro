@@ -35,6 +35,13 @@ namespace RED.mbnq
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             UpdateMainDisplay();  // Ensure MainDisplay is updated after the form is shown
+
+            // Explicitly show and bring the MainDisplay to the front
+            if (MainDisplay != null)
+            {
+                MainDisplay.Show();
+                MainDisplay.BringToFront();
+            }
         }
         private void InitializeMainDisplayPosition()
         {
@@ -169,10 +176,17 @@ namespace RED.mbnq
                 MainDisplay.Size = new Size(size.Value, size.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
-                // Apply offsets relative to the initial position
+                // Log or set the position manually
                 MainDisplay.Left = initialX + offsetX.Value;
                 MainDisplay.Top = initialY + offsetY.Value;
 
+                // Ensure it is within the screen bounds
+                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+                MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, MainDisplay.Left));
+                MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, MainDisplay.Top));
+
+                MainDisplay.Show();  // Ensure it is visible
+                MainDisplay.BringToFront();  // Bring it to the front
                 MainDisplay.Invalidate();  // Redraw the overlay
             }
 
