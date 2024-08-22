@@ -141,9 +141,9 @@ namespace RED.mbnq
             buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
             buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
 
-            saveButton = new Button() { Text = "Save Settings", AutoSize = true };
-            loadButton = new Button() { Text = "Load Settings", AutoSize = true };
-            centerButton = new Button() { Text = "Center", AutoSize = true };
+            saveButton = new Button() { Text = "Save Settings", AutoSize = false };
+            loadButton = new Button() { Text = "Load Settings", AutoSize = false };
+            centerButton = new Button() { Text = "Center", AutoSize = false };
 
             autoSaveOnExit = new CheckBox
             {
