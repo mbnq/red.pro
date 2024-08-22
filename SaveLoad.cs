@@ -78,9 +78,6 @@ namespace RED.mbnq
                 return;
             }
 
-            // Center the MainDisplay before applying the saved position
-            controlPanel.CenterMainDisplay();
-
             var lines = File.ReadAllLines(settingsFilePath);
             foreach (var line in lines)
             {
