@@ -270,7 +270,6 @@ namespace RED.mbnq
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after saving settings
         }
-
         private void LoadButton_Click(object sender, EventArgs e)
         {
             SaveLoad.LoadSettings(this);
