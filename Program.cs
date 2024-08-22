@@ -14,15 +14,15 @@ namespace RED.mbnq
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Instantiate MainDisplay and SniperModeDisplay
+            // Initialize MainDisplay and SniperModeDisplay
             mainDisplay = new MainDisplay();
             sniperModeDisplay = new SniperModeDisplay();
-            sniperModeDisplay.Visible = false;  // Keep sniper mode hidden initially
+            sniperModeDisplay.Visible = false;  // Initially hide sniper mode
 
             // Create and show the ControlPanel
             ControlPanel controlPanel = new ControlPanel
             {
-                MainDisplay = mainDisplay,  // Assign MainDisplay here
+                MainDisplay = mainDisplay,
                 SniperModeDisplay = sniperModeDisplay
             };
 

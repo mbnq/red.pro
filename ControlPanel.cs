@@ -30,7 +30,8 @@ namespace RED.mbnq
         {
             InitializeComponent();
             this.Shown += ControlPanel_Shown;  // Hook up the Shown event
-            SaveLoad.EnsureSettingsFileExists(this);  // Ensure settings file exists and load settings
+            SaveLoad.LoadSettings(this, false);  // Load settings without showing a message box
+            UpdateMainDisplay();
         }
 
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -295,7 +296,8 @@ namespace RED.mbnq
         public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
         public bool LockMainDisplayChecked { get => lockMainDisplay.Checked; set => lockMainDisplay.Checked = value; }
         public bool SniperModeChecked { get => sniperMode.Checked; set => sniperMode.Checked = value; }
-    }
+
+        }
 
     public class LabeledTrackBar
     {

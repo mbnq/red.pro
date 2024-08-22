@@ -28,6 +28,7 @@ namespace RED.mbnq
             updateTimer.Interval = 1000;  // Default interval
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
+
         }
         protected override void OnPaint(PaintEventArgs e)
         {

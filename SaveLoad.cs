@@ -76,7 +76,7 @@ namespace RED.mbnq
             controlPanel.UpdateMainDisplay();
         }
 
-        public static void LoadSettings(ControlPanel controlPanel)
+        public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             if (!File.Exists(settingsFilePath))
             {
@@ -112,7 +112,10 @@ namespace RED.mbnq
             // Ensure MainDisplay and labels are updated after loading settings
             controlPanel.UpdateMainDisplay();
 
-            MessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (showMessage)
+            {
+                MessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
