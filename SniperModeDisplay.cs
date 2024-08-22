@@ -9,11 +9,12 @@ namespace RED.mbnq
         private Timer updateTimer;
         private bool isMoving;
         private Point lastMousePos;
+        private bool isRightMouseDown;
 
         public SniperModeDisplay()
         {
             this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.Manual;
             this.Size = new Size(100, 100);  // Default size
             this.BackColor = Color.Blue;     // Default color
             this.Opacity = 0.5;              // Default transparency
@@ -55,6 +56,11 @@ namespace RED.mbnq
                 isMoving = true;
                 lastMousePos = e.Location;
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                isRightMouseDown = true;
+                UpdateVisibility();
+            }
         }
 
         private void SniperModeDisplay_MouseMove(object sender, MouseEventArgs e)
@@ -72,6 +78,39 @@ namespace RED.mbnq
             {
                 isMoving = false;
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                isRightMouseDown = false;
+                UpdateVisibility();
+            }
+        }
+
+        public void UpdateVisibility()
+        {
+            if (Program.sniperModeDisplay.Visible && isRightMouseDown)
+            {
+                CenterSniperOverlay();
+                this.Show();
+                this.BringToFront();
+            }
+            else
+            {
+                this.Hide();
+            }
+        }
+
+        private void CenterSniperOverlay()
+        {
+            // Get the bounds of the primary screen
+            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+            // Calculate the center of the primary screen
+            int centeredX = (screenBounds.Width - this.Width) / 2;
+            int centeredY = (screenBounds.Height - this.Height) / 2;
+
+            // Set the form's position to the calculated center
+            this.Left = screenBounds.Left + centeredX;
+            this.Top = screenBounds.Top + centeredY;
         }
     }
 }

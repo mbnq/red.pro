@@ -160,7 +160,7 @@ namespace RED.mbnq
             loadButton.Click += LoadButton_Click;
 
             // panel.Controls.Add(lockMainDisplay);
-            // panel.Controls.Add(sniperMode);
+            panel.Controls.Add(sniperMode);
             panel.Controls.Add(autoSaveOnExit);
             panel.Controls.Add(saveButton);
             panel.Controls.Add(loadButton);
@@ -362,6 +362,7 @@ namespace RED.mbnq
             if (SniperModeDisplay != null)
             {
                 SniperModeDisplay.Visible = sniperMode.Checked;
+                SniperModeDisplay.UpdateVisibility();
             }
             UpdateMainDisplay(); // Update display when sniper mode state changes  
         }
