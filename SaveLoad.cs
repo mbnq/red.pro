@@ -59,7 +59,7 @@ namespace RED.mbnq
             sb.AppendLine($"LockMainDisplay={controlPanel.LockMainDisplayChecked}");
             sb.AppendLine($"SniperMode={controlPanel.SniperModeChecked}");
 
-            // Save MainDisplay's current position
+            // Save MainDisplay's absolute position
             if (controlPanel.MainDisplay != null)
             {
                 sb.AppendLine($"PositionX={controlPanel.MainDisplay.Left}");

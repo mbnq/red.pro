@@ -63,8 +63,8 @@ namespace RED.mbnq
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
 
                 // Calculate the center of the primary screen
-                initialX = (screenBounds.Width - MainDisplay.Width) / 2;
-                initialY = (screenBounds.Height - MainDisplay.Height) / 2;
+                initialX = ((screenBounds.Width - MainDisplay.Width) / 2);
+                initialY = ((screenBounds.Height - MainDisplay.Height) / 2);
 
                 // Set the MainDisplay's location to the center of the primary screen
                 MainDisplay.Location = new Point(screenBounds.Left + initialX, screenBounds.Top + initialY);

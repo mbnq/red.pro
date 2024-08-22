@@ -22,7 +22,7 @@ namespace RED.mbnq
 
             // Center the form on the primary screen
             Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            this.Location = new Point((screen.Width - this.Width) / 2, (screen.Height - this.Height) / 2);
+            // this.Location = new Point( ((screen.Width - this.Width) / 2) +0, ((screen.Height - this.Height) / 2) + 0);
 
             updateTimer = new Timer();
             updateTimer.Interval = 1000;  // Default interval
