@@ -142,13 +142,12 @@ namespace RED.mbnq
             loadButton = new Button() { Text = "Load Settings", AutoSize = true };
             centerButton = new Button() { Text = "Center", AutoSize = true };
 
-            panel.Controls.Add(centerButton);
-
             centerButton.Click += CenterButton_Click;
             saveButton.Click += SaveButton_Click;
             loadButton.Click += LoadButton_Click;
 
             // panel.Controls.Add(lockMainDisplay);
+            panel.Controls.Add(centerButton);
             panel.Controls.Add(autoSaveOnExit);
             panel.Controls.Add(saveButton);
             panel.Controls.Add(loadButton);
