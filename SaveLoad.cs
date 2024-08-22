@@ -8,7 +8,7 @@ namespace RED.mbnq
     {
         private static string settingsFilePath = "RED.mbnq.settings.ini";
 
-        public static void SaveSettings(ControlPanel controlPanel)
+        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
 
@@ -34,7 +34,10 @@ namespace RED.mbnq
 
             File.WriteAllText(settingsFilePath, sb.ToString());
 
-            MessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (showMessage)
+            {
+                MessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)

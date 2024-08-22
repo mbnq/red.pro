@@ -56,8 +56,19 @@ namespace RED.mbnq
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
+
+            // Add event handler for AutoSaveOnExit checkbox
+            autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
 
+        private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!autoSaveOnExit.Checked)
+            {
+                // Force save when the checkbox is unchecked
+                SaveLoad.SaveSettings(this, false);
+            }
+        }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             UpdateMainDisplay();  // Ensure MainDisplay is updated after the form is shown
