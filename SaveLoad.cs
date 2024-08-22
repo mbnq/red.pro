@@ -8,6 +8,7 @@ namespace RED.mbnq
     public static class SaveLoad
     {
         private static string settingsFilePath = "RED.mbnq.settings.ini";
+
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
         {
             if (!File.Exists(settingsFilePath))
@@ -47,9 +48,10 @@ namespace RED.mbnq
                 LoadSettings(controlPanel);
             }
 
-            // Ensure MainDisplay is updated with the loaded or default settings
+            // Ensure MainDisplay and labels are updated after loading settings
             controlPanel.UpdateMainDisplay();
         }
+
         public static void SaveSettings(ControlPanel controlPanel)
         {
             var sb = new StringBuilder();
@@ -67,7 +69,11 @@ namespace RED.mbnq
             sb.AppendLine($"SniperMode={controlPanel.SniperModeChecked}");
 
             File.WriteAllText(settingsFilePath, sb.ToString());
+
             MessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Ensure MainDisplay and labels are updated after saving settings
+            controlPanel.UpdateMainDisplay();
         }
 
         public static void LoadSettings(ControlPanel controlPanel)
@@ -103,7 +109,9 @@ namespace RED.mbnq
                     controlPanel.SniperModeChecked = bool.Parse(line.Substring("SniperMode=".Length));
             }
 
+            // Ensure MainDisplay and labels are updated after loading settings
             controlPanel.UpdateMainDisplay();
+
             MessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
