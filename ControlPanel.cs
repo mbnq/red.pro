@@ -363,7 +363,7 @@ namespace RED.mbnq
             {
                 SniperModeDisplay.Visible = sniperMode.Checked;
             }
-            UpdateMainDisplay(); // Update display when sniper mode state changes
+            UpdateMainDisplay(); // Update display when sniper mode state changes 
         }
 
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
