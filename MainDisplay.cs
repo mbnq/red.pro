@@ -18,6 +18,11 @@ namespace RED.mbnq
             this.TopMost = true;
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
+            this.ShowInTaskbar = false;
+
+            // this.Text = "RED.+ (mbnq.pl)";
+            // this.Icon = new Icon("mbnqbf.ico");
+
 
             updateTimer = new Timer();
             updateTimer.Interval = 1000;  // Default interval
