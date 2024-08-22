@@ -35,6 +35,8 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
+            this.Size = new Size(300, 650);  // global control panel window size
+
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
         }
