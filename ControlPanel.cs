@@ -329,7 +329,7 @@ namespace RED.mbnq
                 MainDisplay.Left = centeredPosition.X;
                 MainDisplay.Top = centeredPosition.Y;
 
-                // Bring MainDisplay to the front and ensure it is visible
+                // Bring MainDisplay to the front and ensure it is visible 
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
 
