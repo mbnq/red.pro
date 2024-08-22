@@ -201,8 +201,8 @@ namespace RED.mbnq
                 MainDisplay.Size = new Size(size.Value, size.Value);
 
                 // Calculate the new top-left position to keep the center point consistent
-                MainDisplay.Left = centerX - (MainDisplay.Width / 2);
-                MainDisplay.Top = centerY - (MainDisplay.Height / 2);
+                MainDisplay.Left = centerX - (MainDisplay.Width / 2) + offsetX.Value;
+                MainDisplay.Top = centerY - (MainDisplay.Height / 2) + offsetY.Value;
 
                 // Update color and opacity as before
                 MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
@@ -234,8 +234,6 @@ namespace RED.mbnq
             // Update the labels with the current values of the trackbars
             UpdateLabels();
         }
-
-
         private void UpdateLabels()
         {
             // Assuming that the labels are directly associated with the trackbars
