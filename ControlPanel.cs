@@ -277,7 +277,6 @@ namespace RED.mbnq
         }
 
         // this one is for global usage
-
         public void CenterMainDisplay()
         {
             if (MainDisplay != null)
