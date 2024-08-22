@@ -11,7 +11,7 @@ namespace RED.mbnq
         private FlowLayoutPanel panel;
         private MainDisplay mainDisplay;
         private Button centerButton;
-        private CheckBox autoSaveOnExit; // Checkbox for auto save on exit
+        private CheckBox autoSaveOnExit;
 
         private Point GetCenteredPosition()
         {
@@ -25,7 +25,6 @@ namespace RED.mbnq
             // Return the calculated center point as a Point object
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
-
         public MainDisplay MainDisplay
         {
             get { return mainDisplay; }
@@ -33,6 +32,14 @@ namespace RED.mbnq
             {
                 mainDisplay = value;
                 InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned
+            }
+        }
+        private void InitializeMainDisplayPosition()
+        {
+            if (MainDisplay != null)
+            {
+                Point centeredPosition = GetCenteredPosition();
+                MainDisplay.Location = centeredPosition;
             }
         }
         public ControlPanel()
@@ -59,30 +66,18 @@ namespace RED.mbnq
         {
             if (!autoSaveOnExit.Checked)
             {
-                // Force save when the checkbox is unchecked
+                // Force silent save when the checkbox is unchecked
                 SaveLoad.SaveSettings(this, false);
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
-            UpdateMainDisplay();  // Ensure MainDisplay is updated after the form is shown
+            UpdateMainDisplay();
 
-            // Explicitly show and bring the MainDisplay to the front
             if (MainDisplay != null)
             {
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
-            }
-        }
-        private void InitializeMainDisplayPosition()
-        {
-            if (MainDisplay != null)
-            {
-                // Get the centered position using the helper method
-                Point centeredPosition = GetCenteredPosition();
-
-                // Set the MainDisplay's location to the centered position
-                MainDisplay.Location = centeredPosition;
             }
         }
         private void InitializeComponent()
@@ -135,26 +130,47 @@ namespace RED.mbnq
             timerInterval = timerIntervalTrackBar.TrackBar;
             panel.Controls.Add(timerIntervalTrackBar.Panel);
 
-            autoSaveOnExit = new CheckBox { Text = "Auto Save on Exit", AutoSize = true };
+            // Create a TableLayoutPanel to align buttons on the left and checkbox on the right
+            var buttonTable = new TableLayoutPanel
+            {
+                ColumnCount = 2,
+                RowCount = 3,
+                AutoSize = true,
+                Dock = DockStyle.Top
+            };
 
-            // Buttons
+            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+
             saveButton = new Button() { Text = "Save Settings", AutoSize = true };
             loadButton = new Button() { Text = "Load Settings", AutoSize = true };
             centerButton = new Button() { Text = "Center", AutoSize = true };
 
-            centerButton.Click += CenterButton_Click;
-            saveButton.Click += SaveButton_Click;
-            loadButton.Click += LoadButton_Click;
+            autoSaveOnExit = new CheckBox
+            {
+                Text = "Auto Save on Exit",
+                AutoSize = true,
+                Anchor = AnchorStyles.Right
+            };
 
-            // panel.Controls.Add(lockMainDisplay);
-            panel.Controls.Add(centerButton);
-            panel.Controls.Add(autoSaveOnExit);
-            panel.Controls.Add(saveButton);
-            panel.Controls.Add(loadButton);
+            // Add buttons to the first column (left)
+            buttonTable.Controls.Add(centerButton, 0, 0);
+            buttonTable.Controls.Add(saveButton, 0, 1);
+            buttonTable.Controls.Add(loadButton, 0, 2);
+
+            // Add checkbox to the second column (right) in the same row as the save button
+            buttonTable.Controls.Add(autoSaveOnExit, 1, 1);
+
+            // Add the TableLayoutPanel to the main panel
+            panel.Controls.Add(buttonTable);
 
             this.Controls.Add(panel);
 
             // Hook up the event handlers
+            centerButton.Click += CenterButton_Click;
+            saveButton.Click += SaveButton_Click;
+            loadButton.Click += LoadButton_Click;
+
             colorR.Scroll += (s, e) => UpdateMainDisplay();
             colorG.Scroll += (s, e) => UpdateMainDisplay();
             colorB.Scroll += (s, e) => UpdateMainDisplay();
