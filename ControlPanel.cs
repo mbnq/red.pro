@@ -13,6 +13,7 @@ namespace RED.mbnq
 
         private MainDisplay mainDisplay;
         private int initialX, initialY;
+        private Button centerButton;
 
         public MainDisplay MainDisplay
         {
@@ -123,7 +124,11 @@ namespace RED.mbnq
             // Buttons
             saveButton = new Button() { Text = "Save Settings", AutoSize = true };
             loadButton = new Button() { Text = "Load Settings", AutoSize = true };
+            centerButton = new Button() { Text = "Center", AutoSize = true };
 
+            panel.Controls.Add(centerButton);
+
+            centerButton.Click += CenterButton_Click;
             saveButton.Click += SaveButton_Click;
             loadButton.Click += LoadButton_Click;
 
@@ -187,8 +192,8 @@ namespace RED.mbnq
             return new LabeledTrackBar(panel, trackBar);
         }
 
-        private const int OffsetAdjustmentX = 100;  // Adjust this value as needed
-        private const int OffsetAdjustmentY = 100;  // Adjust this value as needed
+        private const int OffsetAdjustmentX = 0;  // Adjust this value as needed
+        private const int OffsetAdjustmentY = 0;  // Adjust this value as needed
         public void UpdateMainDisplay()
         {
             if (MainDisplay != null)
@@ -269,6 +274,50 @@ namespace RED.mbnq
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after loading settings
         }
+
+        private void CenterButton_Click(object sender, EventArgs e)
+        {
+            if (MainDisplay != null)
+            {
+                // Debugging output
+                Console.WriteLine("Center button clicked.");
+
+                // Reset the offset values to zero
+                offsetX.Value = 0;
+                offsetY.Value = 0;
+
+                Console.WriteLine($"Offset X after reset: {offsetX.Value}, Offset Y after reset: {offsetY.Value}");
+
+                // Update the labels for the offsets
+                offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
+                offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
+
+                // Recalculate the initial position
+                InitializeMainDisplayPosition();
+
+                // Apply the initial, centered position
+                int newLeft = initialX + OffsetAdjustmentX + Screen.PrimaryScreen.Bounds.Left;
+                int newTop = initialY + OffsetAdjustmentY + Screen.PrimaryScreen.Bounds.Top;
+
+                MainDisplay.Left = newLeft;
+                MainDisplay.Top = newTop;
+
+                // Debugging output for new position
+                Console.WriteLine($"New position set: Left = {MainDisplay.Left}, Top = {MainDisplay.Top}");
+
+                // Bring MainDisplay to the front and ensure it is visible
+                MainDisplay.Show();
+                MainDisplay.BringToFront();
+
+                // Redraw the MainDisplay to apply changes
+                MainDisplay.Invalidate();
+            }
+            else
+            {
+                MessageBox.Show("MainDisplay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void LockMainDisplay_CheckedChanged(object sender, EventArgs e)
         {
