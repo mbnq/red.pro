@@ -52,7 +52,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(300, 650);  // global control panel window size
+            this.Size = new Size(300, 580);  // global control panel window size
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -82,13 +82,14 @@ namespace RED.mbnq
         private void InitializeComponent()
         {
             this.Text = "RED. (mbnq.pl)";
-            this.Size = new Size(300, 600);  // Adjust the size to fit all elements
+            // this.Size = new Size(300, 600);  // Adjust the size to fit all elements
 
             panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
                 AutoScroll = true,  // Enable scrolling if the content overflows
+                BackColor = Color.Gray,
                 WrapContents = false
             };
 
