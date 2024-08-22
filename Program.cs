@@ -27,7 +27,7 @@ namespace RED.mbnq
             {
                 if (controlPanel.AutoSaveOnExitChecked)
                 {
-                    // Save settings on exit without showing the message
+                    // Save settings on exit without showing the message 
                     SaveLoad.SaveSettings(controlPanel, false);
                 }
             };
