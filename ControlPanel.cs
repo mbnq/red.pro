@@ -250,7 +250,7 @@ namespace RED.mbnq
                 SniperModeDisplay.Invalidate(); // Redraw the overlay
             }
 
-            // Update the labels with the current values of the trackbars
+            // Update the labels with the current values of the trackbars 
             UpdateLabels();
         }
         private void UpdateLabels()
