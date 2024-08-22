@@ -19,20 +19,21 @@ namespace RED.mbnq
             sniperModeDisplay = new SniperModeDisplay();
             sniperModeDisplay.Visible = false;  // Initially hide sniper mode
 
-            // Create and show the ControlPanel
+            // Create ControlPanel and pass MainDisplay and SniperModeDisplay
             ControlPanel controlPanel = new ControlPanel
             {
                 MainDisplay = mainDisplay,
                 SniperModeDisplay = sniperModeDisplay
             };
 
-            // Center the MainDisplay immediately after creating it
-            controlPanel.CenterMainDisplay();
+            // Load the settings and apply them immediately
+            SaveLoad.LoadSettings(controlPanel, false);
 
-            // Ensure MainDisplay is updated after ControlPanel is created
+            // Apply the settings to the MainDisplay
             controlPanel.UpdateMainDisplay();
 
             Application.Run(controlPanel);
         }
     }
+
 }
