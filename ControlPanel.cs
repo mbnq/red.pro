@@ -188,18 +188,25 @@ namespace RED.mbnq
         {
             if (MainDisplay != null)
             {
-                MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                // Store the current center point before resizing
+                int centerX = MainDisplay.Left + (MainDisplay.Width / 2);
+                int centerY = MainDisplay.Top + (MainDisplay.Height / 2);
+
+                // Update the size of the MainDisplay
                 MainDisplay.Size = new Size(size.Value, size.Value);
+
+                // Calculate the new top-left position to keep the center point consistent
+                MainDisplay.Left = centerX - (MainDisplay.Width / 2);
+                MainDisplay.Top = centerY - (MainDisplay.Height / 2);
+
+                // Update color and opacity as before
+                MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
-                // Calculate new position with offset and additional adjustments
-                int newLeft = initialX + offsetX.Value + Screen.PrimaryScreen.Bounds.Left + OffsetAdjustmentX;
-                int newTop = initialY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top + OffsetAdjustmentY;
-
-                // Ensure the new position is within the primary screen bounds
+                // Ensure it is within the screen bounds
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-                MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, newLeft));
-                MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, newTop));
+                MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, MainDisplay.Left));
+                MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, MainDisplay.Top));
 
                 MainDisplay.Show();  // Ensure it is visible
                 MainDisplay.BringToFront();  // Bring it to the front
@@ -208,13 +215,13 @@ namespace RED.mbnq
 
             if (SniperModeDisplay != null && sniperMode.Checked)
             {
+                // Adjust SniperModeDisplay similarly if needed
                 SniperModeDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 SniperModeDisplay.Size = new Size(size.Value, size.Value);
                 SniperModeDisplay.Opacity = transparency.Value / 100.0;
 
-                // Apply offsets relative to the initial position (if applicable)
-                SniperModeDisplay.Left = initialX + offsetX.Value + Screen.PrimaryScreen.Bounds.Left;
-                SniperModeDisplay.Top = initialY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top;
+                SniperModeDisplay.Left = MainDisplay.Left;
+                SniperModeDisplay.Top = MainDisplay.Top;
 
                 SniperModeDisplay.Invalidate();  // Redraw the overlay
             }
@@ -222,6 +229,7 @@ namespace RED.mbnq
             // Update the labels with the current values of the trackbars
             UpdateLabels();
         }
+
 
         private void UpdateLabels()
         {
