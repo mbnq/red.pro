@@ -158,7 +158,10 @@ namespace RED.mbnq
             };
 
             // Update label text when the trackBar is scrolled
-            trackBar.Scroll += (s, e) => { label.Text = $"{labelText}: {trackBar.Value}"; };
+            trackBar.Scroll += (s, e) => {
+                label.Text = $"{labelText}: {trackBar.Value}";
+                UpdateMainDisplay(); // Ensure display is updated on scroll
+            };
 
             // Set initial label value according to the current trackBar value
             label.Text = $"{labelText}: {trackBar.Value}";
@@ -227,6 +230,17 @@ namespace RED.mbnq
                 SniperModeDisplay.UpdateTimerInterval(timerInterval.Value);
             }
         }
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            SaveLoad.SaveSettings(this);
+            UpdateMainDisplay(); // Ensure display is updated after saving settings
+        }
+
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            SaveLoad.LoadSettings(this);
+            UpdateMainDisplay(); // Ensure display is updated after loading settings
+        }
 
         private void LockMainDisplay_CheckedChanged(object sender, EventArgs e)
         {
@@ -234,6 +248,7 @@ namespace RED.mbnq
             {
                 MainDisplay.LockDisplay(lockMainDisplay.Checked);
             }
+            UpdateMainDisplay(); // Update display when lock state changes
         }
 
         private void SniperMode_CheckedChanged(object sender, EventArgs e)
@@ -242,16 +257,7 @@ namespace RED.mbnq
             {
                 SniperModeDisplay.Visible = sniperMode.Checked;
             }
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            SaveLoad.SaveSettings(this);
-        }
-
-        private void LoadButton_Click(object sender, EventArgs e)
-        {
-            SaveLoad.LoadSettings(this);
+            UpdateMainDisplay(); // Update display when sniper mode state changes
         }
 
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
