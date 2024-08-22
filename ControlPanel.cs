@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MaterialSkin;
+using MaterialSkin.Controls;
 
 namespace RED.mbnq
 {
-    public class ControlPanel : Form
+    public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
         private TrackBar colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
         private Button saveButton, loadButton;
@@ -44,6 +46,7 @@ namespace RED.mbnq
         public ControlPanel()
         {
             InitializeComponent();
+            InitializeMaterialSkin();
             this.Shown += ControlPanel_Shown;
 
             this.BackgroundImage = Properties.Resources.mbnqBackground0;
@@ -55,13 +58,24 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(300, 580);  // global control panel window size
+            this.Size = new Size(300, 610);  // global control panel window size
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
 
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+        }
+        private void InitializeMaterialSkin()
+        {
+            var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
+                MaterialSkin.Primary.Red600, MaterialSkin.Primary.Red700,
+                MaterialSkin.Primary.Red200, MaterialSkin.Accent.Red100,
+                MaterialSkin.TextShade.WHITE
+            );
         }
 
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
@@ -89,7 +103,7 @@ namespace RED.mbnq
 
             // this.Size = new Size(300, 600);  // Adjust the size to fit all elements
 
-            panel = new FlowLayoutPanel
+            panel = new FlowLayoutPanel 
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
