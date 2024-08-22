@@ -147,7 +147,6 @@ namespace RED.mbnq
             sniperMode = new CheckBox() { Text = "Sniper Mode", AutoSize = true };
             sniperMode.CheckedChanged += SniperMode_CheckedChanged;
             autoSaveOnExit = new CheckBox { Text = "Auto Save on Exit", AutoSize = true };
-            panel.Controls.Add(autoSaveOnExit);
 
             // Buttons
             saveButton = new Button() { Text = "Save Settings", AutoSize = true };
@@ -162,6 +161,7 @@ namespace RED.mbnq
 
             panel.Controls.Add(lockMainDisplay);
             panel.Controls.Add(sniperMode);
+            panel.Controls.Add(autoSaveOnExit);
             panel.Controls.Add(saveButton);
             panel.Controls.Add(loadButton);
 
