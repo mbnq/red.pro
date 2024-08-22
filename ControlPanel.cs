@@ -83,6 +83,9 @@ namespace RED.mbnq
         {
             this.Text = "RED. (mbnq.pl)";
             this.Icon = Properties.Resources.taskbarIcon;
+            this.BackgroundImage = Properties.Resources.mbnqBackground0;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
             // this.Size = new Size(300, 600);  // Adjust the size to fit all elements
 
             panel = new FlowLayoutPanel
