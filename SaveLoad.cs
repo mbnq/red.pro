@@ -24,7 +24,7 @@ namespace RED.mbnq
                 sb.AppendLine("Transparency=64");
                 sb.AppendLine("OffsetX=0");
                 sb.AppendLine("OffsetY=0");
-                sb.AppendLine("TimerInterval=100");
+                sb.AppendLine("TimerInterval=1000");
                 sb.AppendLine("LockMainDisplay=False");
                 sb.AppendLine("SniperMode=False");
 
@@ -38,7 +38,7 @@ namespace RED.mbnq
                 controlPanel.TransparencyValue = 64;
                 controlPanel.OffsetXValue = 0;
                 controlPanel.OffsetYValue = 0;
-                controlPanel.TimerIntervalValue = 100;
+                controlPanel.TimerIntervalValue = 1000;
                 controlPanel.LockMainDisplayChecked = false;
                 controlPanel.SniperModeChecked = false;
             }
