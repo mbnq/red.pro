@@ -30,7 +30,7 @@ namespace RED.mbnq
             set
             {
                 mainDisplay = value;
-                InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned
+                InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned 
             }
         }
         private void InitializeMainDisplayPosition()
