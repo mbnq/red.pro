@@ -30,7 +30,11 @@ namespace RED.mbnq
         {
             InitializeComponent();
             this.Shown += ControlPanel_Shown;  // Hook up the Shown event
-            SaveLoad.LoadSettings(this, false);  // Load settings without showing a message box
+
+            // Load settings and update MainDisplay without showing a message box
+            SaveLoad.LoadSettings(this, false);
+
+            // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
         }
 

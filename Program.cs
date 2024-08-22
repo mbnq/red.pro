@@ -26,6 +26,9 @@ namespace RED.mbnq
                 SniperModeDisplay = sniperModeDisplay
             };
 
+            // Ensure MainDisplay is updated after ControlPanel is created
+            controlPanel.UpdateMainDisplay();
+
             Application.Run(controlPanel);
         }
     }
