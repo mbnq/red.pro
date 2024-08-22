@@ -58,7 +58,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(300, 610);  // global control panel window size
+            this.Size = new Size(262, 610);  // global control panel window size
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -70,11 +70,11 @@ namespace RED.mbnq
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                MaterialSkin.Primary.Red600, MaterialSkin.Primary.Red700,
-                MaterialSkin.Primary.Red200, MaterialSkin.Accent.Red100,
-                MaterialSkin.TextShade.WHITE
+                MaterialSkin.Primary.Red300, MaterialSkin.Primary.Grey500,
+                MaterialSkin.Primary.Grey100, MaterialSkin.Accent.LightBlue200,
+                MaterialSkin.TextShade.BLACK
             );
         }
 
@@ -98,17 +98,17 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            this.Text = "RED. (mbnq.pl)";
+            this.Text = "RED.";
             this.Icon = Properties.Resources.taskbarIcon;
 
-            // this.Size = new Size(300, 600);  // Adjust the size to fit all elements
+            // this.Size = new Size(240, 600);  // Adjust the size to fit all elements
 
             panel = new FlowLayoutPanel 
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
                 AutoScroll = true,  // Enable scrolling if the content overflows
-                BackColor = Color.Gray,
+                // BackColor = Color.Gray,
                 BackgroundImage = Properties.Resources.mbnqBackground0,
                 BackgroundImageLayout = ImageLayout.Center,
                 WrapContents = false
