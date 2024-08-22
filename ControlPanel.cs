@@ -46,6 +46,9 @@ namespace RED.mbnq
             InitializeComponent();
             this.Shown += ControlPanel_Shown;
 
+            this.BackgroundImage = Properties.Resources.mbnqBackground0;
+            this.BackgroundImageLayout = ImageLayout.Center;
+
             // Ensure settings file exists and load settings
             SaveLoad.EnsureSettingsFileExists(this);
 
@@ -83,8 +86,6 @@ namespace RED.mbnq
         {
             this.Text = "RED. (mbnq.pl)";
             this.Icon = Properties.Resources.taskbarIcon;
-            this.BackgroundImage = Properties.Resources.mbnqBackground0;
-            this.BackgroundImageLayout = ImageLayout.Stretch;
 
             // this.Size = new Size(300, 600);  // Adjust the size to fit all elements
 
@@ -94,6 +95,8 @@ namespace RED.mbnq
                 FlowDirection = FlowDirection.TopDown,
                 AutoScroll = true,  // Enable scrolling if the content overflows
                 BackColor = Color.Gray,
+                BackgroundImage = Properties.Resources.mbnqBackground0,
+                BackgroundImageLayout = ImageLayout.Center,
                 WrapContents = false
             };
 
