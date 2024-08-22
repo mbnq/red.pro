@@ -29,7 +29,7 @@ namespace RED.mbnq
             // Load the settings and apply them immediately
             SaveLoad.LoadSettings(controlPanel, false);
 
-            // Apply the settings to the MainDisplay
+            // Apply the settings to the MainDisplay 
             controlPanel.UpdateMainDisplay();
 
             Application.Run(controlPanel);
