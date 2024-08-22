@@ -128,11 +128,11 @@ namespace RED.mbnq
             panel.Controls.Add(transparencyTrackBar.Panel);
 
             // Offset TrackBars
-            var offsetXTrackBar = CreateLabeledTrackBar("Offset X", -100, 100);
+            var offsetXTrackBar = CreateLabeledTrackBar("Offset X", -1000, 1000);
             offsetX = offsetXTrackBar.TrackBar;
             panel.Controls.Add(offsetXTrackBar.Panel);
 
-            var offsetYTrackBar = CreateLabeledTrackBar("Offset Y", -100, 100);
+            var offsetYTrackBar = CreateLabeledTrackBar("Offset Y", -1000, 1000);
             offsetY = offsetYTrackBar.TrackBar;
             panel.Controls.Add(offsetYTrackBar.Panel);
 
@@ -159,8 +159,8 @@ namespace RED.mbnq
             saveButton.Click += SaveButton_Click;
             loadButton.Click += LoadButton_Click;
 
-            panel.Controls.Add(lockMainDisplay);
-            panel.Controls.Add(sniperMode);
+            // panel.Controls.Add(lockMainDisplay);
+            // panel.Controls.Add(sniperMode);
             panel.Controls.Add(autoSaveOnExit);
             panel.Controls.Add(saveButton);
             panel.Controls.Add(loadButton);
