@@ -12,7 +12,6 @@ namespace RED.mbnq
         private MainDisplay mainDisplay;
         private Button centerButton;
         private CheckBox autoSaveOnExit;
-
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -148,7 +147,7 @@ namespace RED.mbnq
 
             autoSaveOnExit = new CheckBox
             {
-                Text = "Auto Save on Exit",
+                Text = "Save on Exit",
                 AutoSize = true,
                 Anchor = AnchorStyles.Right
             };
@@ -273,7 +272,6 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             timerInterval.Parent.Controls[0].Text = $"Timer Interval: {timerInterval.Value}";
         }
-
         private void UpdateTimerInterval()
         {
             if (MainDisplay != null)
@@ -341,7 +339,6 @@ namespace RED.mbnq
         public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
 
     }
-
     public class LabeledTrackBar
     {
         public Panel Panel { get; set; }
