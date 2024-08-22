@@ -193,16 +193,16 @@ namespace RED.mbnq
         {
             if (MainDisplay != null)
             {
-                // Store the current center point before resizing
-                int centerX = MainDisplay.Left + (MainDisplay.Width / 2);
-                int centerY = MainDisplay.Top + (MainDisplay.Height / 2);
+                // Calculate the new position with offsets relative to the initial position
+                int newLeft = initialX + OffsetAdjustmentX  + offsetX.Value + Screen.PrimaryScreen.Bounds.Left;
+                int newTop = initialY + OffsetAdjustmentY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top;
 
                 // Update the size of the MainDisplay
                 MainDisplay.Size = new Size(size.Value, size.Value);
 
-                // Calculate the new top-left position to keep the center point consistent
-                MainDisplay.Left = centerX - (MainDisplay.Width / 2) + offsetX.Value;
-                MainDisplay.Top = centerY - (MainDisplay.Height / 2) + offsetY.Value;
+                // Apply the new position with offsets
+                MainDisplay.Left = newLeft;
+                MainDisplay.Top = newTop;
 
                 // Update color and opacity as before
                 MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
@@ -220,7 +220,7 @@ namespace RED.mbnq
 
             if (SniperModeDisplay != null && sniperMode.Checked)
             {
-                // Adjust SniperModeDisplay similarly if needed
+                // Apply the same logic to SniperModeDisplay if needed
                 SniperModeDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 SniperModeDisplay.Size = new Size(size.Value, size.Value);
                 SniperModeDisplay.Opacity = transparency.Value / 100.0;
