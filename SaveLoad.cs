@@ -107,6 +107,9 @@ namespace RED.mbnq
                     controlPanel.MainDisplay.Top = int.Parse(line.Substring("PositionY=".Length));
             }
 
+            // Ensure MainDisplay is centered after loading settings
+            // controlPanel.CenterMainDisplay();
+
             // Ensure MainDisplay and labels are updated after loading settings
             controlPanel.UpdateMainDisplay();
 
@@ -115,5 +118,6 @@ namespace RED.mbnq
                 MessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
     }
 }

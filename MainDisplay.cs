@@ -20,15 +20,10 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
 
-            // Center the form on the primary screen
-            Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            // this.Location = new Point( ((screen.Width - this.Width) / 2) +0, ((screen.Height - this.Height) / 2) + 0);
-
             updateTimer = new Timer();
             updateTimer.Interval = 1000;  // Default interval
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
-
         }
         protected override void OnPaint(PaintEventArgs e)
         {

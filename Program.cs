@@ -26,6 +26,9 @@ namespace RED.mbnq
                 SniperModeDisplay = sniperModeDisplay
             };
 
+            // Center the MainDisplay immediately after creating it
+            controlPanel.CenterMainDisplay();
+
             // Ensure MainDisplay is updated after ControlPanel is created
             controlPanel.UpdateMainDisplay();
 
