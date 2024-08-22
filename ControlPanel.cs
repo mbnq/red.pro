@@ -218,7 +218,24 @@ namespace RED.mbnq
 
                 SniperModeDisplay.Invalidate();  // Redraw the overlay
             }
+
+            // Update the labels with the current values of the trackbars
+            UpdateLabels();
         }
+
+        private void UpdateLabels()
+        {
+            // Assuming that the labels are directly associated with the trackbars
+            colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
+            colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
+            colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
+            size.Parent.Controls[0].Text = $"Size: {size.Value}";
+            transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
+            offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
+            offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
+            timerInterval.Parent.Controls[0].Text = $"Timer Interval: {timerInterval.Value}";
+        }
+
         private void UpdateTimerInterval()
         {
             if (MainDisplay != null)
