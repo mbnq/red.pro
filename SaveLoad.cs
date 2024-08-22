@@ -21,8 +21,6 @@ namespace RED.mbnq
             sb.AppendLine($"OffsetX={controlPanel.OffsetXValue}");
             sb.AppendLine($"OffsetY={controlPanel.OffsetYValue}");
             sb.AppendLine($"TimerInterval={controlPanel.TimerIntervalValue}");
-            sb.AppendLine($"LockMainDisplay={controlPanel.LockMainDisplayChecked}");
-            sb.AppendLine($"SniperMode={controlPanel.SniperModeChecked}");
             sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}"); // Save AutoSaveOnExit state
 
             // Save MainDisplay's absolute position
@@ -67,10 +65,6 @@ namespace RED.mbnq
                     controlPanel.OffsetYValue = int.Parse(line.Substring("OffsetY=".Length));
                 else if (line.StartsWith("TimerInterval="))
                     controlPanel.TimerIntervalValue = int.Parse(line.Substring("TimerInterval=".Length));
-                else if (line.StartsWith("LockMainDisplay="))
-                    controlPanel.LockMainDisplayChecked = bool.Parse(line.Substring("LockMainDisplay=".Length));
-                else if (line.StartsWith("SniperMode="))
-                    controlPanel.SniperModeChecked = bool.Parse(line.Substring("SniperMode=".Length));
                 else if (line.StartsWith("AutoSaveOnExit="))
                     controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length)); // Load AutoSaveOnExit state
                 else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
@@ -106,7 +100,6 @@ namespace RED.mbnq
                 sb.AppendLine("OffsetY=0");
                 sb.AppendLine("TimerInterval=1000");
                 sb.AppendLine("LockMainDisplay=False");
-                sb.AppendLine("SniperMode=False");
                 sb.AppendLine("AutoSaveOnExit=True");  // Default to true
 
                 File.WriteAllText(settingsFilePath, sb.ToString());

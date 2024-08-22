@@ -7,12 +7,9 @@ namespace RED.mbnq
     public class ControlPanel : Form
     {
         private TrackBar colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
-        private CheckBox lockMainDisplay, sniperMode;
         private Button saveButton, loadButton;
         private FlowLayoutPanel panel;
-
         private MainDisplay mainDisplay;
-        private int initialX, initialY;
         private Button centerButton;
         private CheckBox autoSaveOnExit; // Checkbox for auto save on exit
 
@@ -38,9 +35,6 @@ namespace RED.mbnq
                 InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned
             }
         }
-
-        public SniperModeDisplay SniperModeDisplay { get; set; }
-
         public ControlPanel()
         {
             InitializeComponent();
@@ -141,11 +135,6 @@ namespace RED.mbnq
             timerInterval = timerIntervalTrackBar.TrackBar;
             panel.Controls.Add(timerIntervalTrackBar.Panel);
 
-            // CheckBoxes
-            lockMainDisplay = new CheckBox() { Text = "Lock Main Display", AutoSize = true };
-            lockMainDisplay.CheckedChanged += LockMainDisplay_CheckedChanged;
-            sniperMode = new CheckBox() { Text = "Sniper Mode", AutoSize = true };
-            sniperMode.CheckedChanged += SniperMode_CheckedChanged;
             autoSaveOnExit = new CheckBox { Text = "Auto Save on Exit", AutoSize = true };
 
             // Buttons
@@ -160,7 +149,6 @@ namespace RED.mbnq
             loadButton.Click += LoadButton_Click;
 
             // panel.Controls.Add(lockMainDisplay);
-            // panel.Controls.Add(sniperMode);
             panel.Controls.Add(autoSaveOnExit);
             panel.Controls.Add(saveButton);
             panel.Controls.Add(loadButton);
@@ -255,20 +243,6 @@ namespace RED.mbnq
                 MainDisplay.BringToFront();
                 MainDisplay.Invalidate(); // Redraw the overlay
             }
-
-            if (SniperModeDisplay != null && sniperMode.Checked)
-            {
-                // Apply the same logic to SniperModeDisplay if needed
-                SniperModeDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-                SniperModeDisplay.Size = new Size(size.Value, size.Value);
-                SniperModeDisplay.Opacity = transparency.Value / 100.0;
-
-                SniperModeDisplay.Left = MainDisplay.Left;
-                SniperModeDisplay.Top = MainDisplay.Top;
-
-                SniperModeDisplay.Invalidate(); // Redraw the overlay
-            }
-
             // Update the labels with the current values of the trackbars 
             UpdateLabels();
         }
@@ -290,10 +264,6 @@ namespace RED.mbnq
             if (MainDisplay != null)
             {
                 MainDisplay.UpdateTimerInterval(timerInterval.Value);
-            }
-            if (SniperModeDisplay != null)
-            {
-                SniperModeDisplay.UpdateTimerInterval(timerInterval.Value);
             }
         }
         private void SaveButton_Click(object sender, EventArgs e)
@@ -348,24 +318,6 @@ namespace RED.mbnq
             CenterMainDisplay();
         }
 
-        private void LockMainDisplay_CheckedChanged(object sender, EventArgs e)
-        {
-            if (MainDisplay != null)
-            {
-                MainDisplay.LockDisplay(lockMainDisplay.Checked);
-            }
-            UpdateMainDisplay(); // Update display when lock state changes
-        }
-
-        private void SniperMode_CheckedChanged(object sender, EventArgs e)
-        {
-            if (SniperModeDisplay != null)
-            {
-                SniperModeDisplay.Visible = sniperMode.Checked;
-            }
-            UpdateMainDisplay(); // Update display when sniper mode state changes  
-        }
-
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
         public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
@@ -374,10 +326,8 @@ namespace RED.mbnq
         public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
         public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
         public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
-        public bool LockMainDisplayChecked { get => lockMainDisplay.Checked; set => lockMainDisplay.Checked = value; }
-        public bool SniperModeChecked { get => sniperMode.Checked; set => sniperMode.Checked = value; }
 
-        }
+    }
 
     public class LabeledTrackBar
     {
