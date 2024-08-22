@@ -138,8 +138,8 @@ namespace RED.mbnq
                 Dock = DockStyle.Top
             };
 
-            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
-            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 
             saveButton = new Button() { Text = "Save Settings", AutoSize = false };
             loadButton = new Button() { Text = "Load Settings", AutoSize = false };
@@ -184,14 +184,13 @@ namespace RED.mbnq
             get => autoSaveOnExit.Checked;
             set => autoSaveOnExit.Checked = value;
         }
-
         private LabeledTrackBar CreateLabeledTrackBar(string labelText, int min, int max)
         {
             var label = new Label()
             {
                 Text = $"{labelText}: {min}",
                 AutoSize = true,
-                Padding = new Padding(0, 5, 0, 0) // Add some padding to align labels properly
+                Padding = new Padding(0, 5, 0, 0)
             };
 
             var trackBar = new TrackBar()
