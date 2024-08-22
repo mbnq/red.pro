@@ -14,26 +14,28 @@ namespace RED.mbnq
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Initialize MainDisplay and SniperModeDisplay
             mainDisplay = new MainDisplay();
             sniperModeDisplay = new SniperModeDisplay();
-            sniperModeDisplay.Visible = false;  // Initially hide sniper mode
+            sniperModeDisplay.Visible = false;
 
-            // Create ControlPanel and pass MainDisplay and SniperModeDisplay
             ControlPanel controlPanel = new ControlPanel
             {
                 MainDisplay = mainDisplay,
                 SniperModeDisplay = sniperModeDisplay
             };
 
-            // Load the settings and apply them immediately
             SaveLoad.LoadSettings(controlPanel, false);
-
-            // Apply the settings to the MainDisplay 
             controlPanel.UpdateMainDisplay();
+
+            controlPanel.FormClosing += (sender, e) =>
+            {
+                if (controlPanel.AutoSaveOnExitChecked)
+                {
+                    SaveLoad.SaveSettings(controlPanel);
+                }
+            };
 
             Application.Run(controlPanel);
         }
     }
-
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -9,40 +8,6 @@ namespace RED.mbnq
     {
         private static string settingsFilePath = "RED.mbnq.settings.ini";
 
-        public static void EnsureSettingsFileExists(ControlPanel controlPanel)
-        {
-            bool fileCreated = false;
-
-            if (!File.Exists(settingsFilePath))
-            {
-                // Create default settings
-                var sb = new StringBuilder();
-
-                sb.AppendLine("[MainDisplay]");
-                sb.AppendLine("Red=255");
-                sb.AppendLine("Green=0");
-                sb.AppendLine("Blue=0");
-                sb.AppendLine("Size=3");
-                sb.AppendLine("Transparency=64");
-                sb.AppendLine("OffsetX=0");
-                sb.AppendLine("OffsetY=0");
-                sb.AppendLine("TimerInterval=1000");
-                sb.AppendLine("LockMainDisplay=False");
-                sb.AppendLine("SniperMode=False");
-
-                File.WriteAllText(settingsFilePath, sb.ToString());
-                fileCreated = true;
-            }
-
-            // Load the settings, whether the file was just created or already existed
-            LoadSettings(controlPanel, false);
-
-            // If the file was just created, ensure the MainDisplay reflects these default settings
-            if (fileCreated)
-            {
-                controlPanel.UpdateMainDisplay();
-            }
-        }
         public static void SaveSettings(ControlPanel controlPanel)
         {
             var sb = new StringBuilder();
@@ -58,6 +23,7 @@ namespace RED.mbnq
             sb.AppendLine($"TimerInterval={controlPanel.TimerIntervalValue}");
             sb.AppendLine($"LockMainDisplay={controlPanel.LockMainDisplayChecked}");
             sb.AppendLine($"SniperMode={controlPanel.SniperModeChecked}");
+            sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}"); // Save AutoSaveOnExit state
 
             // Save MainDisplay's absolute position
             if (controlPanel.MainDisplay != null)
@@ -70,6 +36,7 @@ namespace RED.mbnq
 
             MessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             if (!File.Exists(settingsFilePath))
@@ -101,16 +68,14 @@ namespace RED.mbnq
                     controlPanel.LockMainDisplayChecked = bool.Parse(line.Substring("LockMainDisplay=".Length));
                 else if (line.StartsWith("SniperMode="))
                     controlPanel.SniperModeChecked = bool.Parse(line.Substring("SniperMode=".Length));
+                else if (line.StartsWith("AutoSaveOnExit="))
+                    controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length)); // Load AutoSaveOnExit state
                 else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
                     controlPanel.MainDisplay.Left = int.Parse(line.Substring("PositionX=".Length));
                 else if (line.StartsWith("PositionY=") && controlPanel.MainDisplay != null)
                     controlPanel.MainDisplay.Top = int.Parse(line.Substring("PositionY=".Length));
             }
 
-            // Ensure MainDisplay is centered after loading settings
-            // controlPanel.CenterMainDisplay();
-
-            // Ensure MainDisplay and labels are updated after loading settings
             controlPanel.UpdateMainDisplay();
 
             if (showMessage)
@@ -119,5 +84,38 @@ namespace RED.mbnq
             }
         }
 
+        public static void EnsureSettingsFileExists(ControlPanel controlPanel)
+        {
+            bool fileCreated = false;
+
+            if (!File.Exists(settingsFilePath))
+            {
+                // Create default settings
+                var sb = new StringBuilder();
+
+                sb.AppendLine("[MainDisplay]");
+                sb.AppendLine("Red=255");
+                sb.AppendLine("Green=0");
+                sb.AppendLine("Blue=0");
+                sb.AppendLine("Size=3");
+                sb.AppendLine("Transparency=64");
+                sb.AppendLine("OffsetX=0");
+                sb.AppendLine("OffsetY=0");
+                sb.AppendLine("TimerInterval=1000");
+                sb.AppendLine("LockMainDisplay=False");
+                sb.AppendLine("SniperMode=False");
+                sb.AppendLine("AutoSaveOnExit=True");  // Default to true
+
+                File.WriteAllText(settingsFilePath, sb.ToString());
+                fileCreated = true;
+            }
+
+            LoadSettings(controlPanel, false);
+
+            if (fileCreated)
+            {
+                controlPanel.UpdateMainDisplay();
+            }
+        }
     }
 }

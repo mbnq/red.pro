@@ -14,6 +14,7 @@ namespace RED.mbnq
         private MainDisplay mainDisplay;
         private int initialX, initialY;
         private Button centerButton;
+        private CheckBox autoSaveOnExit; // Checkbox for auto save on exit
 
         private Point GetCenteredPosition()
         {
@@ -43,7 +44,7 @@ namespace RED.mbnq
         public ControlPanel()
         {
             InitializeComponent();
-            this.Shown += ControlPanel_Shown;  // Hook up the Shown event
+            this.Shown += ControlPanel_Shown;
 
             // Ensure settings file exists and load settings
             SaveLoad.EnsureSettingsFileExists(this);
@@ -134,6 +135,8 @@ namespace RED.mbnq
             lockMainDisplay.CheckedChanged += LockMainDisplay_CheckedChanged;
             sniperMode = new CheckBox() { Text = "Sniper Mode", AutoSize = true };
             sniperMode.CheckedChanged += SniperMode_CheckedChanged;
+            autoSaveOnExit = new CheckBox { Text = "Auto Save on Exit", AutoSize = true };
+            panel.Controls.Add(autoSaveOnExit);
 
             // Buttons
             saveButton = new Button() { Text = "Save Settings", AutoSize = true };
@@ -162,6 +165,11 @@ namespace RED.mbnq
             offsetX.Scroll += (s, e) => UpdateMainDisplay();
             offsetY.Scroll += (s, e) => UpdateMainDisplay();
             timerInterval.Scroll += (s, e) => UpdateTimerInterval();
+        }
+        public bool AutoSaveOnExitChecked
+        {
+            get => autoSaveOnExit.Checked;
+            set => autoSaveOnExit.Checked = value;
         }
 
         private LabeledTrackBar CreateLabeledTrackBar(string labelText, int min, int max)
