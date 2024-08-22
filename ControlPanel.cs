@@ -81,7 +81,7 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            this.Text = "Control Panel";
+            this.Text = "RED. (mbnq.pl)";
             this.Size = new Size(300, 600);  // Adjust the size to fit all elements
 
             panel = new FlowLayoutPanel
