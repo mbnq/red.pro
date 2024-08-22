@@ -11,6 +11,8 @@ namespace RED.mbnq
 
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
         {
+            bool fileCreated = false;
+
             if (!File.Exists(settingsFilePath))
             {
                 // Create default settings
@@ -29,29 +31,18 @@ namespace RED.mbnq
                 sb.AppendLine("SniperMode=False");
 
                 File.WriteAllText(settingsFilePath, sb.ToString());
-
-                // Adjust controls to default settings
-                controlPanel.ColorRValue = 255;
-                controlPanel.ColorGValue = 0;
-                controlPanel.ColorBValue = 0;
-                controlPanel.SizeValue = 3;
-                controlPanel.TransparencyValue = 64;
-                controlPanel.OffsetXValue = 0;
-                controlPanel.OffsetYValue = 0;
-                controlPanel.TimerIntervalValue = 1000;
-                controlPanel.LockMainDisplayChecked = false;
-                controlPanel.SniperModeChecked = false;
+                fileCreated = true;
             }
-            else
+
+            // Load the settings, whether the file was just created or already existed
+            LoadSettings(controlPanel, false);
+
+            // If the file was just created, ensure the MainDisplay reflects these default settings
+            if (fileCreated)
             {
-                // Load existing settings
-                LoadSettings(controlPanel);
+                controlPanel.UpdateMainDisplay();
             }
-
-            // Ensure MainDisplay and labels are updated after loading settings
-            controlPanel.UpdateMainDisplay();
         }
-
         public static void SaveSettings(ControlPanel controlPanel)
         {
             var sb = new StringBuilder();
@@ -68,14 +59,17 @@ namespace RED.mbnq
             sb.AppendLine($"LockMainDisplay={controlPanel.LockMainDisplayChecked}");
             sb.AppendLine($"SniperMode={controlPanel.SniperModeChecked}");
 
+            // Save MainDisplay's current position
+            if (controlPanel.MainDisplay != null)
+            {
+                sb.AppendLine($"PositionX={controlPanel.MainDisplay.Left}");
+                sb.AppendLine($"PositionY={controlPanel.MainDisplay.Top}");
+            }
+
             File.WriteAllText(settingsFilePath, sb.ToString());
 
             MessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Ensure MainDisplay and labels are updated after saving settings
-            controlPanel.UpdateMainDisplay();
         }
-
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             if (!File.Exists(settingsFilePath))
@@ -83,6 +77,9 @@ namespace RED.mbnq
                 MessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Center the MainDisplay before applying the saved position
+            controlPanel.CenterMainDisplay();
 
             var lines = File.ReadAllLines(settingsFilePath);
             foreach (var line in lines)
@@ -107,6 +104,10 @@ namespace RED.mbnq
                     controlPanel.LockMainDisplayChecked = bool.Parse(line.Substring("LockMainDisplay=".Length));
                 else if (line.StartsWith("SniperMode="))
                     controlPanel.SniperModeChecked = bool.Parse(line.Substring("SniperMode=".Length));
+                else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
+                    controlPanel.MainDisplay.Left = int.Parse(line.Substring("PositionX=".Length));
+                else if (line.StartsWith("PositionY=") && controlPanel.MainDisplay != null)
+                    controlPanel.MainDisplay.Top = int.Parse(line.Substring("PositionY=".Length));
             }
 
             // Ensure MainDisplay and labels are updated after loading settings

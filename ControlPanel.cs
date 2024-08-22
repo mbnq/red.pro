@@ -32,6 +32,9 @@ namespace RED.mbnq
             InitializeComponent();
             this.Shown += ControlPanel_Shown;  // Hook up the Shown event
 
+            // Ensure settings file exists and load settings
+            SaveLoad.EnsureSettingsFileExists(this);
+
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
@@ -277,18 +280,15 @@ namespace RED.mbnq
             UpdateMainDisplay(); // Ensure display is updated after loading settings
         }
 
-        private void CenterButton_Click(object sender, EventArgs e)
+        // this one is for global usage
+
+        public void CenterMainDisplay()
         {
             if (MainDisplay != null)
             {
-                // Debugging output
-                Console.WriteLine("Center button clicked.");
-
                 // Reset the offset values to zero
                 offsetX.Value = 0;
                 offsetY.Value = 0;
-
-                Console.WriteLine($"Offset X after reset: {offsetX.Value}, Offset Y after reset: {offsetY.Value}");
 
                 // Update the labels for the offsets
                 offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
@@ -304,9 +304,6 @@ namespace RED.mbnq
                 MainDisplay.Left = newLeft;
                 MainDisplay.Top = newTop;
 
-                // Debugging output for new position
-                Console.WriteLine($"New position set: Left = {MainDisplay.Left}, Top = {MainDisplay.Top}");
-
                 // Bring MainDisplay to the front and ensure it is visible
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
@@ -320,6 +317,11 @@ namespace RED.mbnq
             }
         }
 
+        // this one is for local usage
+        private void CenterButton_Click(object sender, EventArgs e)
+        {
+            CenterMainDisplay();
+        }
 
         private void LockMainDisplay_CheckedChanged(object sender, EventArgs e)
         {
