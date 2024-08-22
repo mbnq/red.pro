@@ -8,6 +8,7 @@ namespace RED.mbnq
     {
         private Timer updateTimer;
         private bool isLocked = false;
+
         public MainDisplay()
         {
             this.FormBorderStyle = FormBorderStyle.None;

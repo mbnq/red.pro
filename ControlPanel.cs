@@ -323,7 +323,6 @@ namespace RED.mbnq
             CenterMainDisplay();
         }
 
-
         private void LockMainDisplay_CheckedChanged(object sender, EventArgs e)
         {
             if (MainDisplay != null)
@@ -354,6 +353,7 @@ namespace RED.mbnq
         public bool SniperModeChecked { get => sniperMode.Checked; set => sniperMode.Checked = value; }
 
         }
+
     public class LabeledTrackBar
     {
         public Panel Panel { get; set; }
