@@ -15,6 +15,19 @@ namespace RED.mbnq
         private int initialX, initialY;
         private Button centerButton;
 
+        private Point GetCenteredPosition()
+        {
+            // Get the bounds of the primary screen
+            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+            // Calculate the center of the primary screen
+            int centeredX = (screenBounds.Width - MainDisplay.Width) / 2;
+            int centeredY = (screenBounds.Height - MainDisplay.Height) / 2;
+
+            // Return the calculated center point as a Point object
+            return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
+        }
+
         public MainDisplay MainDisplay
         {
             get { return mainDisplay; }
@@ -59,15 +72,11 @@ namespace RED.mbnq
         {
             if (MainDisplay != null)
             {
-                // Get the bounds of the primary screen
-                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+                // Get the centered position using the helper method
+                Point centeredPosition = GetCenteredPosition();
 
-                // Calculate the center of the primary screen
-                initialX = ((screenBounds.Width - MainDisplay.Width) / 2);
-                initialY = ((screenBounds.Height - MainDisplay.Height) / 2);
-
-                // Set the MainDisplay's location to the center of the primary screen
-                MainDisplay.Location = new Point(screenBounds.Left + initialX, screenBounds.Top + initialY);
+                // Set the MainDisplay's location to the centered position
+                MainDisplay.Location = centeredPosition;
             }
         }
         private void InitializeComponent()
@@ -203,18 +212,18 @@ namespace RED.mbnq
         {
             if (MainDisplay != null)
             {
-                // Calculate the new position with offsets relative to the initial position
-                int newLeft = initialX + OffsetAdjustmentX  + offsetX.Value + Screen.PrimaryScreen.Bounds.Left;
-                int newTop = initialY + OffsetAdjustmentY + offsetY.Value + Screen.PrimaryScreen.Bounds.Top;
-
-                // Update the size of the MainDisplay
-                MainDisplay.Size = new Size(size.Value, size.Value);
+                // Get the centered position
+                Point centeredPosition = GetCenteredPosition();
 
                 // Apply the new position with offsets
+                int newLeft = centeredPosition.X + offsetX.Value;
+                int newTop = centeredPosition.Y + offsetY.Value;
+
                 MainDisplay.Left = newLeft;
                 MainDisplay.Top = newTop;
 
-                // Update color and opacity as before
+                // Update size, color, and opacity as before
+                MainDisplay.Size = new Size(size.Value, size.Value);
                 MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
@@ -223,9 +232,9 @@ namespace RED.mbnq
                 MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, MainDisplay.Left));
                 MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, MainDisplay.Top));
 
-                MainDisplay.Show();  // Ensure it is visible
-                MainDisplay.BringToFront();  // Bring it to the front
-                MainDisplay.Invalidate();  // Redraw the overlay
+                MainDisplay.Show();
+                MainDisplay.BringToFront();
+                MainDisplay.Invalidate(); // Redraw the overlay
             }
 
             if (SniperModeDisplay != null && sniperMode.Checked)
@@ -238,7 +247,7 @@ namespace RED.mbnq
                 SniperModeDisplay.Left = MainDisplay.Left;
                 SniperModeDisplay.Top = MainDisplay.Top;
 
-                SniperModeDisplay.Invalidate();  // Redraw the overlay
+                SniperModeDisplay.Invalidate(); // Redraw the overlay
             }
 
             // Update the labels with the current values of the trackbars
@@ -294,15 +303,12 @@ namespace RED.mbnq
                 offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
                 offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
 
-                // Recalculate the initial position
-                InitializeMainDisplayPosition();
+                // Get the centered position
+                Point centeredPosition = GetCenteredPosition();
 
-                // Apply the initial, centered position
-                int newLeft = initialX + OffsetAdjustmentX + Screen.PrimaryScreen.Bounds.Left;
-                int newTop = initialY + OffsetAdjustmentY + Screen.PrimaryScreen.Bounds.Top;
-
-                MainDisplay.Left = newLeft;
-                MainDisplay.Top = newTop;
+                // Apply the centered position
+                MainDisplay.Left = centeredPosition.X;
+                MainDisplay.Top = centeredPosition.Y;
 
                 // Bring MainDisplay to the front and ensure it is visible
                 MainDisplay.Show();
