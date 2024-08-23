@@ -36,6 +36,8 @@ namespace RED.mbnq
             this.BackgroundImageLayout = ImageLayout.Center;
             this.MaximizeBox = false;
             this.TopMost = true;
+            this.AutoSize = true;
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             // Ensure settings file exists and load settings
             SaveLoad.EnsureSettingsFileExists(this);
