@@ -76,9 +76,9 @@ namespace RED.mbnq
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                MaterialSkin.Primary.Red300, 
+                MaterialSkin.Primary.Red500, 
                 MaterialSkin.Primary.Grey500,
-                MaterialSkin.Primary.Green200, 
+                MaterialSkin.Primary.Green500, 
                 MaterialSkin.Accent.LightBlue200,
                 MaterialSkin.TextShade.WHITE
             );
