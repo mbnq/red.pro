@@ -35,7 +35,7 @@ namespace RED.mbnq
 
             if (showMessage)
             {
-                MaterialMessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
+                MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
@@ -77,7 +77,7 @@ namespace RED.mbnq
 
             if (showMessage)
             {
-                MaterialMessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
+                MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
