@@ -189,7 +189,7 @@ namespace RED.mbnq
             // Initialize Checkbox
             autoSaveOnExit = new MaterialCheckbox
             {
-                Text = "Save on Exit",
+                Text = "Save on Exit   ",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left
             };
@@ -213,7 +213,7 @@ namespace RED.mbnq
         {
             var label = new MaterialLabel()
             {
-                Text = $"{labelText}: {min}",
+                Text = "", // $"{labelText}: {min}",
                 AutoSize = true,
                 Padding = new Padding(0, 5, 0, 0)
              };
@@ -225,11 +225,11 @@ namespace RED.mbnq
             {
                 RangeMin = min,
                 RangeMax = max,
-                Value = (int)Math.Round(midpoint),
                 // Width = 300,
-                Size = new Size(280, 30),
+                // Size = new Size(280, 30),
                 Text = "",
-                RightToLeft = RightToLeft.No,
+                ShowText = false,
+                // RightToLeft = RightToLeft.No,
                 BackColor = backgroundColor // color.Empty
             };
 
@@ -246,12 +246,12 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = 250,
-                Height = 50, // Adjust height as needed
+                Height = 60, // Adjust height as needed
                 Padding = new Padding(3)
             };
 
             label.Location = new Point(3, 3);
-            materialSlider.Location = new Point(3, label.Height + 5);
+            materialSlider.Location = new Point(-3, label.Height + 1);
 
             panel.Controls.Add(label);
             panel.Controls.Add(materialSlider);
