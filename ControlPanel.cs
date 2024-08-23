@@ -26,6 +26,30 @@ namespace RED.mbnq
             // Return the calculated center point as a Point object
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
+        public ControlPanel()
+        {
+            InitializeComponent();
+            InitializeMaterialSkin();
+            this.Shown += ControlPanel_Shown;
+
+            this.BackgroundImage = Properties.Resources.mbnqBackground0;
+            this.BackgroundImageLayout = ImageLayout.Center;
+            this.MaximizeBox = false;
+
+            // Ensure settings file exists and load settings
+            SaveLoad.EnsureSettingsFileExists(this);
+
+            // Load settings and update MainDisplay without showing a message box
+            SaveLoad.LoadSettings(this, false);
+
+            this.Size = new Size(320, 700);  // global control panel window size
+
+            // Ensure MainDisplay is updated after loading settings
+            UpdateMainDisplay();
+
+            // Add event handler for AutoSaveOnExit checkbox
+            autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+        }
         public MainDisplay MainDisplay
         {
             get { return mainDisplay; }
@@ -42,29 +66,6 @@ namespace RED.mbnq
                 Point centeredPosition = GetCenteredPosition();
                 MainDisplay.Location = centeredPosition;
             }
-        }
-        public ControlPanel()
-        {
-            InitializeComponent();
-            InitializeMaterialSkin();
-            this.Shown += ControlPanel_Shown;
-
-            this.BackgroundImage = Properties.Resources.mbnqBackground0;
-            this.BackgroundImageLayout = ImageLayout.Center;
-
-            // Ensure settings file exists and load settings
-            SaveLoad.EnsureSettingsFileExists(this);
-
-            // Load settings and update MainDisplay without showing a message box
-            SaveLoad.LoadSettings(this, false);
-
-            this.Size = new Size(320, 700);  // global control panel window size
-
-            // Ensure MainDisplay is updated after loading settings
-            UpdateMainDisplay();
-
-            // Add event handler for AutoSaveOnExit checkbox
-            autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
         private void InitializeMaterialSkin()
         {
