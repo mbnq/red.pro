@@ -12,7 +12,8 @@ namespace RED.mbnq
             // defaults
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
-            this.Size = new Size(200, 200);
+            this.MinimumSize = new Size(1, 1);
+            this.Size = new Size(4, 4);
             this.BackColor = Color.Red;
             this.Opacity = 0.5;
             this.TopMost = true;
