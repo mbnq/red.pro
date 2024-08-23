@@ -35,6 +35,7 @@ namespace RED.mbnq
             this.BackgroundImage = Properties.Resources.mbnqBackground0;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.MaximizeBox = false;
+            this.TopMost = true;
 
             // Ensure settings file exists and load settings
             SaveLoad.EnsureSettingsFileExists(this);
@@ -42,7 +43,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(320, 700);  // global control panel window size
+            this.Size = new Size(263, 667);  // global control panel window size
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
