@@ -10,7 +10,6 @@ namespace RED.mbnq
         public MainDisplay()
         {
             // defaults
-
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Size = new Size(200, 200);
@@ -28,20 +27,10 @@ namespace RED.mbnq
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
         }
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            Graphics g = e.Graphics;
-            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
-        }
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
-        }
-        public void UpdateTimerInterval(int interval)
-        {
-            updateTimer.Interval = interval;
         }
     }
 }
