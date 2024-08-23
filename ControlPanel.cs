@@ -76,9 +76,9 @@ namespace RED.mbnq
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
                 MaterialSkin.Primary.Red300, 
                 MaterialSkin.Primary.Grey500,
-                MaterialSkin.Primary.Grey100, 
+                MaterialSkin.Primary.Green200, 
                 MaterialSkin.Accent.LightBlue200,
-                MaterialSkin.TextShade.BLACK
+                MaterialSkin.TextShade.WHITE
             );
         }
 
@@ -171,11 +171,11 @@ namespace RED.mbnq
             loadButton = new MaterialButton() { Text = "Load Settings", AutoSize = false };
             centerButton = new MaterialButton() { Text = "Center", AutoSize = false };
 
-            autoSaveOnExit = new MaterialCheckbox();
+            autoSaveOnExit = new MaterialCheckbox() 
             {
-                Text = "Save on Exit";
-                AutoSize = true;
-                Anchor = AnchorStyles.Right;
+                Text = "Save on Exit  ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Right
             };
 
             // Add buttons to the first column (left)
