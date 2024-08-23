@@ -13,6 +13,7 @@ namespace RED.mbnq
         {
             var sb = new StringBuilder();
 
+            sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
             sb.AppendLine("[MainDisplay]");
             sb.AppendLine($"Red={controlPanel.ColorRValue}");
             sb.AppendLine($"Green={controlPanel.ColorGValue}");
@@ -24,7 +25,7 @@ namespace RED.mbnq
             sb.AppendLine($"TimerInterval={controlPanel.TimerIntervalValue}");
             sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}"); // Save AutoSaveOnExit state
 
-            // Save MainDisplay's absolute position
+            // Save overlay absolute position
             if (controlPanel.MainDisplay != null)
             {
                 sb.AppendLine($"PositionX={controlPanel.MainDisplay.Left}");
@@ -90,6 +91,7 @@ namespace RED.mbnq
                 // Create default settings
                 var sb = new StringBuilder();
 
+                sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
                 sb.AppendLine("[MainDisplay]");
                 sb.AppendLine("Red=255");
                 sb.AppendLine("Green=0");
