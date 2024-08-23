@@ -31,13 +31,14 @@ namespace RED.mbnq
         {
             InitializeComponent();
             InitializeMaterialSkin();
-            this.Shown += ControlPanel_Shown;
 
+            this.Text = "RED.";
+            this.Icon = Properties.Resources.taskbarIcon;
+            this.Shown += ControlPanel_Shown;
             this.BackgroundImage = Properties.Resources.mbnqBackground0;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.MaximizeBox = false;
             // this.TopMost = true;
-
             this.StartPosition = FormStartPosition.CenterScreen;
 
             // Ensure settings file exists and load settings
@@ -56,7 +57,6 @@ namespace RED.mbnq
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
-
         public MainDisplay MainDisplay
         {
             get { return mainDisplay; }
@@ -66,7 +66,6 @@ namespace RED.mbnq
                 InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned 
             }
         }
-
         private void InitializeMainDisplayPosition()
         {
             if (MainDisplay != null)
@@ -75,7 +74,6 @@ namespace RED.mbnq
                 MainDisplay.Location = centeredPosition;
             }
         }
-
         private void InitializeMaterialSkin()
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
@@ -89,16 +87,14 @@ namespace RED.mbnq
                 MaterialSkin.TextShade.WHITE
             );
         }
-
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (!autoSaveOnExit.Checked)
             {
-                // Force silent save when the checkbox is unchecked
+                // Force silent save when the checkbox is being unchecked
                 SaveLoad.SaveSettings(this, false);
             }
         }
-
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             UpdateMainDisplay();
@@ -109,11 +105,10 @@ namespace RED.mbnq
                 MainDisplay.BringToFront();
             }
         }
-
         private void InitializeComponent()
         {
-            this.Text = "RED.";
-            this.Icon = Properties.Resources.taskbarIcon;
+            // this.Text = "RED.";
+            // this.Icon = Properties.Resources.taskbarIcon;
 
             panel = new FlowLayoutPanel
             {
