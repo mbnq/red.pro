@@ -208,7 +208,7 @@ namespace RED.mbnq
         }
         private LabeledTrackBar CreateLabeledTrackBar(string labelText, int min, int max)
         {
-            var label = new Label()
+            var label = new MaterialLabel()
             {
                 Text = $"{labelText}: {min}",
                 AutoSize = true,
@@ -221,6 +221,7 @@ namespace RED.mbnq
                 Maximum = max,
                 TickFrequency = (max - min) / 10,
                 Width = 200,
+                BackColor = Color.SlateGray
             };
 
             // Update label text when the trackBar is scrolled
