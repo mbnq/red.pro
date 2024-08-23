@@ -167,11 +167,11 @@ namespace RED.mbnq
             loadButton = new MaterialButton() { Text = "Load Settings", AutoSize = false };
             centerButton = new MaterialButton() { Text = "Center", AutoSize = false };
 
-            autoSaveOnExit = new CheckBox
+            autoSaveOnExit = new MaterialCheckbox();
             {
-                Text = "Save on Exit",
-                AutoSize = true,
-                Anchor = AnchorStyles.Right
+                Text = "Save on Exit";
+                AutoSize = true;
+                Anchor = AnchorStyles.Right;
             };
 
             // Add buttons to the first column (left)
