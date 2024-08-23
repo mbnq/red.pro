@@ -45,7 +45,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(262, 780);  // global control panel window size
+            this.Size = new Size(262, 825);  // global control panel window size
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly; // Allow the form to grow and shrink based on its content
 
@@ -235,7 +235,7 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = 250,
-                Height = 60, // Adjust height as needed
+                Height = 66, // Adjust height as needed
                 Padding = new Padding(3)
             };
 
@@ -300,8 +300,6 @@ namespace RED.mbnq
                 return value - 1000;
             }
         }
-
-
         private void UpdateLabels()
         {
             // Assuming that the labels are directly associated with the sliders
@@ -314,7 +312,6 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             timerInterval.Parent.Controls[0].Text = $"Timer Interval: {timerInterval.Value}";
         }
-
         private void UpdateTimerInterval()
         {
             if (MainDisplay != null)
@@ -322,13 +319,11 @@ namespace RED.mbnq
                 MainDisplay.UpdateTimerInterval(timerInterval.Value);
             }
         }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after saving settings
         }
-
         private void LoadButton_Click(object sender, EventArgs e)
         {
             SaveLoad.LoadSettings(this);
@@ -368,7 +363,6 @@ namespace RED.mbnq
             }
         }
 
-
         // This one is for local usage
         private void CenterButton_Click(object sender, EventArgs e)
         {
@@ -385,7 +379,6 @@ namespace RED.mbnq
         public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
 
     }
-
     public class LabeledSlider
     {
         public Panel Panel { get; set; }
