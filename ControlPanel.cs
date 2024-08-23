@@ -272,9 +272,13 @@ namespace RED.mbnq
                 // Get the centered position
                 Point centeredPosition = GetCenteredPosition();
 
-                // Apply the new position with offsets
-                int newLeft = centeredPosition.X + offsetX.Value;
-                int newTop = centeredPosition.Y + offsetY.Value;
+                // Translate the offset values
+                int translatedOffsetX = TranslateOffset(offsetX.Value);
+                int translatedOffsetY = TranslateOffset(offsetY.Value);
+
+                // Apply the new position with translated offsets
+                int newLeft = centeredPosition.X + translatedOffsetX + OffsetAdjustmentX;
+                int newTop = centeredPosition.Y + translatedOffsetY + OffsetAdjustmentY;
 
                 MainDisplay.Left = newLeft;
                 MainDisplay.Top = newTop;
@@ -297,6 +301,20 @@ namespace RED.mbnq
             // Update the labels with the current values of the sliders
             UpdateLabels();
         }
+        private int TranslateOffset(int value)
+        {
+            if (value < 1000)
+            {
+                // Range 0-1000 -> -1000 to 0
+                return value - 1000;
+            }
+            else
+            {
+                // Range 1000-2000 -> 0 to 1000
+                return value - 1000;
+            }
+        }
+
 
         private void UpdateLabels()
         {
