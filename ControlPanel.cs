@@ -27,7 +27,6 @@ namespace RED.mbnq
             // Return the calculated center point as a Point object
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
-
         public ControlPanel()
         {
             InitializeComponent();

@@ -94,12 +94,11 @@ namespace RED.mbnq
                 sb.AppendLine("Red=255");
                 sb.AppendLine("Green=0");
                 sb.AppendLine("Blue=0");
-                sb.AppendLine("Size=3");
+                sb.AppendLine("Size=4");
                 sb.AppendLine("Transparency=64");
-                sb.AppendLine("OffsetX=0");
-                sb.AppendLine("OffsetY=0");
+                sb.AppendLine("OffsetX=1000");
+                sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("TimerInterval=1000");
-                sb.AppendLine("LockMainDisplay=False");
                 sb.AppendLine("AutoSaveOnExit=True");  // Default to true
 
                 File.WriteAllText(settingsFilePath, sb.ToString());
