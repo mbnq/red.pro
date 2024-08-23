@@ -38,7 +38,7 @@ namespace RED.mbnq
             this.BackgroundImageLayout = ImageLayout.Center;
             this.MaximizeBox = false;
             // this.TopMost = true;
-            this.AutoSize = true;
+
             this.StartPosition = FormStartPosition.CenterScreen;
 
             // Ensure settings file exists and load settings
@@ -47,7 +47,9 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(284, 700);  // global control panel window size
+            this.Size = new Size(262, 780);  // global control panel window size
+            // this.AutoSize = true;
+            // this.AutoSizeMode = AutoSizeMode.GrowOnly; // Allow the form to grow and shrink based on its content
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -229,6 +231,7 @@ namespace RED.mbnq
                 // Size = new Size(280, 30),
                 Text = "",
                 ShowText = false,
+                ShowValue = false,
                 // RightToLeft = RightToLeft.No,
                 BackColor = backgroundColor // color.Empty
             };
