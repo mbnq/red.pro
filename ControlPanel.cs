@@ -150,11 +150,11 @@ namespace RED.mbnq
             panel.Controls.Add(transparencySlider.Panel);
 
             // Offset Sliders
-            var offsetXSlider = CreateLabeledSlider("Offset X", -1000, 1000);
+            var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000);
             offsetX = offsetXSlider.Slider;
             panel.Controls.Add(offsetXSlider.Panel);
 
-            var offsetYSlider = CreateLabeledSlider("Offset Y", -1000, 1000);
+            var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000);
             offsetY = offsetYSlider.Slider;
             panel.Controls.Add(offsetYSlider.Panel);
 
@@ -354,18 +354,18 @@ namespace RED.mbnq
         {
             if (MainDisplay != null)
             {
-                // Reset the offset values to zero
-                offsetX.Value = 0;
-                offsetY.Value = 0;
+                // Reset the offset values to the midpoint, which corresponds to 0 in the new translation
+                offsetX.Value = 1000;
+                offsetY.Value = 1000;
 
                 // Update the labels for the offsets
-                offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
-                offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
+                offsetX.Parent.Controls[0].Text = $"Offset X: {TranslateOffset(offsetX.Value)}";
+                offsetY.Parent.Controls[0].Text = $"Offset Y: {TranslateOffset(offsetY.Value)}";
 
                 // Get the centered position
                 Point centeredPosition = GetCenteredPosition();
 
-                // Apply the centered position
+                // Apply the centered position directly without offsets, as offsets are now at their midpoint (0 translated)
                 MainDisplay.Left = centeredPosition.X;
                 MainDisplay.Top = centeredPosition.Y;
 
@@ -381,6 +381,7 @@ namespace RED.mbnq
                 MessageBox.Show("MainDisplay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // This one is for local usage
         private void CenterButton_Click(object sender, EventArgs e)
