@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* www.mbnq.pl 2024 */
+
+using System;
 using System.Windows.Forms;
 
 namespace RED.mbnq

@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* www.mbnq.pl 2024 */
+
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using MaterialSkin;
@@ -116,8 +118,8 @@ namespace RED.mbnq
             };
 
             /* --- --- ---  Sliders --- --- --- */
-            // Color
-            var redSlider = CreateLabeledSlider("Red", 0, 255);
+// Color
+var redSlider = CreateLabeledSlider("Red", 0, 255);
             colorR = redSlider.Slider;
             panel.Controls.Add(redSlider.Panel);
 

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿/* www.mbnq.pl 2024 */
+
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using MaterialSkin;             // let's leave it here for now, just in case
