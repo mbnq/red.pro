@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using MaterialSkin;
+using MaterialSkin.Controls;
 
 namespace RED.mbnq
 {
@@ -33,14 +35,14 @@ namespace RED.mbnq
 
             if (showMessage)
             {
-                MessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MaterialMessageBox.Show("Settings saved successfully.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             if (!File.Exists(settingsFilePath))
             {
-                MessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MaterialMessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
                 return;
             }
 
@@ -75,7 +77,7 @@ namespace RED.mbnq
 
             if (showMessage)
             {
-                MessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MaterialMessageBox.Show("Settings loaded successfully.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
