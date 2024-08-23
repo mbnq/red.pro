@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     public static class SaveLoad
     {
-        private static string settingsFilePath = "RED.mbnq.settings.ini";
+        private static string settingsFilePath = "RED.settings.sav";
         public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
