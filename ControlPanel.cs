@@ -309,7 +309,7 @@ namespace RED.mbnq
             transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
-            timerInterval.Parent.Controls[0].Text = $"Timer Interval: {timerInterval.Value}";
+            timerInterval.Parent.Controls[0].Text = $"Refresh Rate: {timerInterval.Value} ms";
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
