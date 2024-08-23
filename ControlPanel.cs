@@ -35,8 +35,6 @@ namespace RED.mbnq
             this.Text = "RED.";
             this.Icon = Properties.Resources.taskbarIcon;
             this.Shown += ControlPanel_Shown;
-            this.BackgroundImage = Properties.Resources.mbnqBackground0;
-            this.BackgroundImageLayout = ImageLayout.Center;
             this.MaximizeBox = false;
             // this.TopMost = true;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -107,20 +105,18 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            // this.Text = "RED.";
-            // this.Icon = Properties.Resources.taskbarIcon;
-
             panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true,
-                BackgroundImage = Properties.Resources.mbnqBackground0,
-                BackgroundImageLayout = ImageLayout.Center,
+                // AutoScroll = true,
+                // BackgroundImage = Properties.Resources.mbnqBackground0,
+                // BackgroundImageLayout = ImageLayout.Center,
                 WrapContents = false
             };
 
-            // Color Sliders
+            /* --- --- ---  Sliders --- --- --- */
+            // Color
             var redSlider = CreateLabeledSlider("Red", 0, 255);
             colorR = redSlider.Slider;
             panel.Controls.Add(redSlider.Panel);
@@ -133,17 +129,17 @@ namespace RED.mbnq
             colorB = blueSlider.Slider;
             panel.Controls.Add(blueSlider.Panel);
 
-            // Size Slider
+            // Size
             var sizeSlider = CreateLabeledSlider("Size", 1, 50);
             size = sizeSlider.Slider;
             panel.Controls.Add(sizeSlider.Panel);
 
-            // Transparency Slider
+            // Transparency
             var transparencySlider = CreateLabeledSlider("Transparency", 0, 100);
             transparency = transparencySlider.Slider;
             panel.Controls.Add(transparencySlider.Panel);
 
-            // Offset Sliders
+            // Offsets
             var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000);
             offsetX = offsetXSlider.Slider;
             panel.Controls.Add(offsetXSlider.Panel);
@@ -152,12 +148,13 @@ namespace RED.mbnq
             offsetY = offsetYSlider.Slider;
             panel.Controls.Add(offsetYSlider.Panel);
 
-            // Timer Interval Slider
-            var timerIntervalSlider = CreateLabeledSlider("Timer Interval", 1, 1000);
+            // Timer Interval aka Refresh Rate aka Redraw Rate
+            var timerIntervalSlider = CreateLabeledSlider("Refresh Rate", 1, 1000);
             timerInterval = timerIntervalSlider.Slider;
             panel.Controls.Add(timerIntervalSlider.Panel);
 
-            // Initialize Buttons
+            /* --- --- ---  Buttons --- --- --- */
+            // Save and Load
             saveButton = new MaterialButton
             {
                 Text = "Save Settings",
@@ -174,6 +171,7 @@ namespace RED.mbnq
             };
             loadButton.Click += LoadButton_Click;
 
+            // Center aka Force Center
             centerButton = new MaterialButton
             {
                 Text = "Center",
@@ -182,7 +180,8 @@ namespace RED.mbnq
             };
             centerButton.Click += CenterButton_Click;
 
-            // Initialize Checkbox
+            /* --- --- ---  Checkboxes --- --- --- */
+            // Save on Exit
             autoSaveOnExit = new MaterialCheckbox
             {
                 Text = "Save on Exit   ",
@@ -191,7 +190,7 @@ namespace RED.mbnq
             };
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
 
-            // Add buttons and checkbox to a panel or appropriate container
+            /* --- --- ---  Add Controls --- --- --- */
             panel.Controls.Add(centerButton);
             panel.Controls.Add(saveButton);
             panel.Controls.Add(loadButton);
@@ -205,11 +204,11 @@ namespace RED.mbnq
             set => autoSaveOnExit.Checked = value;
         }
 
+        /* --- --- --- Mix sliders with labels here --- --- --- */
         private LabeledSlider CreateLabeledSlider(string labelText, int min, int max)
         {
             var label = new MaterialLabel()
             {
-                Text = "", // $"{labelText}: {min}",
                 AutoSize = true,
                 Padding = new Padding(0, 5, 0, 0)
              };
