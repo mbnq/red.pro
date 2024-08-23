@@ -377,7 +377,6 @@ namespace RED.mbnq
     {
         public Panel Panel { get; set; }
         public MaterialSlider Slider { get; set; }
-
         public LabeledSlider(Panel panel, MaterialSlider slider)
         {
             Panel = panel;
