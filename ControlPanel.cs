@@ -58,7 +58,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(262, 610);  // global control panel window size
+            this.Size = new Size(320, 700);  // global control panel window size
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -163,9 +163,9 @@ namespace RED.mbnq
             buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 
-            saveButton = new Button() { Text = "Save Settings", AutoSize = false };
-            loadButton = new Button() { Text = "Load Settings", AutoSize = false };
-            centerButton = new Button() { Text = "Center", AutoSize = false };
+            saveButton = new MaterialButton() { Text = "Save Settings", AutoSize = false };
+            loadButton = new MaterialButton() { Text = "Load Settings", AutoSize = false };
+            centerButton = new MaterialButton() { Text = "Center", AutoSize = false };
 
             autoSaveOnExit = new CheckBox
             {
