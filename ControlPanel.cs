@@ -213,20 +213,13 @@ namespace RED.mbnq
                 Padding = new Padding(0, 5, 0, 0)
              };
 
-            var backgroundColor = Color.FromArgb(35, 35, 35);
-            var midpoint = min + (max - min) / 2.0;
-
             var materialSlider = new MaterialSlider()
             {
                 RangeMin = min,
                 RangeMax = max,
-                // Width = 300,
-                // Size = new Size(280, 30),
-                Text = "",
                 ShowText = false,
                 ShowValue = false,
-                // RightToLeft = RightToLeft.No,
-                BackColor = backgroundColor // color.Empty
+                BackColor = Color.FromArgb(35, 35, 35)
             };
 
             // Update label text when the slider value changes
