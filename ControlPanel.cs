@@ -286,6 +286,8 @@ namespace RED.mbnq
             // Update the labels with the current values of the sliders
             UpdateLabels();
         }
+
+        //This one is needed to handle negative values
         private int TranslateOffset(int value)
         {
             if (value < 1000)
