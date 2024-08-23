@@ -78,6 +78,7 @@ namespace RED.mbnq
             if (showMessage)
             {
                 MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
+                controlPanel.Activate();
             }
         }
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)

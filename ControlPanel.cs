@@ -8,12 +8,13 @@ namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
-        private TrackBar colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
+        private MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
         private Button saveButton, loadButton;
         private FlowLayoutPanel panel;
         private MainDisplay mainDisplay;
         private Button centerButton;
         private CheckBox autoSaveOnExit;
+
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -26,6 +27,7 @@ namespace RED.mbnq
             // Return the calculated center point as a Point object
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
+
         public ControlPanel()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace RED.mbnq
             this.BackgroundImage = Properties.Resources.mbnqBackground0;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.MaximizeBox = false;
-            this.TopMost = true;
+            // this.TopMost = true;
             this.AutoSize = true;
             this.StartPosition = FormStartPosition.CenterScreen;
 
@@ -45,7 +47,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(263, 667);  // global control panel window size
+            this.Size = new Size(284, 700);  // global control panel window size
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -53,6 +55,7 @@ namespace RED.mbnq
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
+
         public MainDisplay MainDisplay
         {
             get { return mainDisplay; }
@@ -62,6 +65,7 @@ namespace RED.mbnq
                 InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned 
             }
         }
+
         private void InitializeMainDisplayPosition()
         {
             if (MainDisplay != null)
@@ -70,15 +74,16 @@ namespace RED.mbnq
                 MainDisplay.Location = centeredPosition;
             }
         }
+
         private void InitializeMaterialSkin()
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                MaterialSkin.Primary.Red500, 
+                MaterialSkin.Primary.Red500,
                 MaterialSkin.Primary.Grey500,
-                MaterialSkin.Primary.Green500, 
+                MaterialSkin.Primary.Green500,
                 MaterialSkin.Accent.LightBlue200,
                 MaterialSkin.TextShade.WHITE
             );
@@ -92,6 +97,7 @@ namespace RED.mbnq
                 SaveLoad.SaveSettings(this, false);
             }
         }
+
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             UpdateMainDisplay();
@@ -102,142 +108,140 @@ namespace RED.mbnq
                 MainDisplay.BringToFront();
             }
         }
+
         private void InitializeComponent()
         {
             this.Text = "RED.";
             this.Icon = Properties.Resources.taskbarIcon;
 
-            // this.Size = new Size(240, 600);  // Adjust the size to fit all elements
-
-            panel = new FlowLayoutPanel 
+            panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true,  // Enable scrolling if the content overflows
-                // BackColor = Color.Gray,
+                AutoScroll = true,
                 BackgroundImage = Properties.Resources.mbnqBackground0,
                 BackgroundImageLayout = ImageLayout.Center,
                 WrapContents = false
             };
 
-            // Color TrackBars
-            var redTrackBar = CreateLabeledTrackBar("Red", 0, 255);
-            colorR = redTrackBar.TrackBar;
-            panel.Controls.Add(redTrackBar.Panel);
+            // Color Sliders
+            var redSlider = CreateLabeledSlider("Red", 0, 255);
+            colorR = redSlider.Slider;
+            panel.Controls.Add(redSlider.Panel);
 
-            var greenTrackBar = CreateLabeledTrackBar("Green", 0, 255);
-            colorG = greenTrackBar.TrackBar;
-            panel.Controls.Add(greenTrackBar.Panel);
+            var greenSlider = CreateLabeledSlider("Green", 0, 255);
+            colorG = greenSlider.Slider;
+            panel.Controls.Add(greenSlider.Panel);
 
-            var blueTrackBar = CreateLabeledTrackBar("Blue", 0, 255);
-            colorB = blueTrackBar.TrackBar;
-            panel.Controls.Add(blueTrackBar.Panel);
+            var blueSlider = CreateLabeledSlider("Blue", 0, 255);
+            colorB = blueSlider.Slider;
+            panel.Controls.Add(blueSlider.Panel);
 
-            // Size TrackBar
-            var sizeTrackBar = CreateLabeledTrackBar("Size", 1, 50);
-            size = sizeTrackBar.TrackBar;
-            panel.Controls.Add(sizeTrackBar.Panel);
+            // Size Slider
+            var sizeSlider = CreateLabeledSlider("Size", 1, 50);
+            size = sizeSlider.Slider;
+            panel.Controls.Add(sizeSlider.Panel);
 
-            // Transparency TrackBar
-            var transparencyTrackBar = CreateLabeledTrackBar("Transparency", 0, 100);
-            transparency = transparencyTrackBar.TrackBar;
-            panel.Controls.Add(transparencyTrackBar.Panel);
+            // Transparency Slider
+            var transparencySlider = CreateLabeledSlider("Transparency", 0, 100);
+            transparency = transparencySlider.Slider;
+            panel.Controls.Add(transparencySlider.Panel);
 
-            // Offset TrackBars
-            var offsetXTrackBar = CreateLabeledTrackBar("Offset X", -1000, 1000);
-            offsetX = offsetXTrackBar.TrackBar;
-            panel.Controls.Add(offsetXTrackBar.Panel);
+            // Offset Sliders
+            var offsetXSlider = CreateLabeledSlider("Offset X", -1000, 1000);
+            offsetX = offsetXSlider.Slider;
+            panel.Controls.Add(offsetXSlider.Panel);
 
-            var offsetYTrackBar = CreateLabeledTrackBar("Offset Y", -1000, 1000);
-            offsetY = offsetYTrackBar.TrackBar;
-            panel.Controls.Add(offsetYTrackBar.Panel);
+            var offsetYSlider = CreateLabeledSlider("Offset Y", -1000, 1000);
+            offsetY = offsetYSlider.Slider;
+            panel.Controls.Add(offsetYSlider.Panel);
 
-            // Timer Interval TrackBar
-            var timerIntervalTrackBar = CreateLabeledTrackBar("Timer Interval", 1, 1000);
-            timerInterval = timerIntervalTrackBar.TrackBar;
-            panel.Controls.Add(timerIntervalTrackBar.Panel);
+            // Timer Interval Slider
+            var timerIntervalSlider = CreateLabeledSlider("Timer Interval", 1, 1000);
+            timerInterval = timerIntervalSlider.Slider;
+            panel.Controls.Add(timerIntervalSlider.Panel);
 
-            // Create a TableLayoutPanel to align buttons on the left and checkbox on the right
-            var buttonTable = new TableLayoutPanel
+            // Initialize Buttons
+            saveButton = new MaterialButton
             {
-                ColumnCount = 2,
-                RowCount = 3,
-                AutoSize = true,
-                Dock = DockStyle.Top
+                Text = "Save Settings",
+                AutoSize = false,
+                Width = 200
             };
+            saveButton.Click += SaveButton_Click;
 
-            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-
-            saveButton = new MaterialButton() { Text = "Save Settings", AutoSize = false };
-            loadButton = new MaterialButton() { Text = "Load Settings", AutoSize = false };
-            centerButton = new MaterialButton() { Text = "Center", AutoSize = false };
-
-            autoSaveOnExit = new MaterialCheckbox() 
+            loadButton = new MaterialButton
             {
-                Text = "Save on Exit  ",
+                Text = "Load Settings",
+                AutoSize = false,
+                Width = 200
+            };
+            loadButton.Click += LoadButton_Click;
+
+            centerButton = new MaterialButton
+            {
+                Text = "Center",
+                AutoSize = false,
+                Width = 200
+            };
+            centerButton.Click += CenterButton_Click;
+
+            // Initialize Checkbox
+            autoSaveOnExit = new MaterialCheckbox
+            {
+                Text = "Save on Exit",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left
             };
+            autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
 
-            // Add buttons to the first column (left)
-            buttonTable.Controls.Add(centerButton, 0, 0);
-            buttonTable.Controls.Add(saveButton, 0, 1);
-            buttonTable.Controls.Add(loadButton, 0, 2);
-
-            // Add checkbox to the second column (right) in the same row as the save button
-            buttonTable.Controls.Add(autoSaveOnExit, 1, 1);
-
-            // Add the TableLayoutPanel to the main panel
-            panel.Controls.Add(buttonTable);
+            // Add buttons and checkbox to a panel or appropriate container
+            panel.Controls.Add(centerButton);
+            panel.Controls.Add(saveButton);
+            panel.Controls.Add(loadButton);
+            panel.Controls.Add(autoSaveOnExit);
 
             this.Controls.Add(panel);
-
-            // Hook up the event handlers
-            centerButton.Click += CenterButton_Click;
-            saveButton.Click += SaveButton_Click;
-            loadButton.Click += LoadButton_Click;
-
-            colorR.Scroll += (s, e) => UpdateMainDisplay();
-            colorG.Scroll += (s, e) => UpdateMainDisplay();
-            colorB.Scroll += (s, e) => UpdateMainDisplay();
-            size.Scroll += (s, e) => UpdateMainDisplay();
-            transparency.Scroll += (s, e) => UpdateMainDisplay();
-            offsetX.Scroll += (s, e) => UpdateMainDisplay();
-            offsetY.Scroll += (s, e) => UpdateMainDisplay();
-            timerInterval.Scroll += (s, e) => UpdateTimerInterval();
         }
         public bool AutoSaveOnExitChecked
         {
             get => autoSaveOnExit.Checked;
             set => autoSaveOnExit.Checked = value;
         }
-        private LabeledTrackBar CreateLabeledTrackBar(string labelText, int min, int max)
+
+        private LabeledSlider CreateLabeledSlider(string labelText, int min, int max)
         {
             var label = new MaterialLabel()
             {
                 Text = $"{labelText}: {min}",
                 AutoSize = true,
                 Padding = new Padding(0, 5, 0, 0)
-            };
+             };
 
-            var trackBar = new TrackBar()
+            var backgroundColor = Color.FromArgb(35, 35, 35);
+            var midpoint = min + (max - min) / 2.0;
+
+            var materialSlider = new MaterialSlider()
             {
-                Minimum = min,
-                Maximum = max,
-                TickFrequency = (max - min) / 10,
-                Width = 200,
-                BackColor = Color.SlateGray
+                RangeMin = min,
+                RangeMax = max,
+                Value = (int)Math.Round(midpoint),
+                // Width = 300,
+                Size = new Size(280, 30),
+                Text = "",
+                RightToLeft = RightToLeft.No,
+                BackColor = backgroundColor // color.Empty
             };
 
-            // Update label text when the trackBar is scrolled
-            trackBar.Scroll += (s, e) => {
-                label.Text = $"{labelText}: {trackBar.Value}";
-                UpdateMainDisplay(); // Ensure display is updated on scroll
+            // Update label text when the slider value changes
+            materialSlider.onValueChanged += (s, e) =>
+            {
+                label.Text = $"{labelText}: {materialSlider.Value}";
+                UpdateMainDisplay(); // Ensure display is updated on value change
             };
 
-            // Set initial label value according to the current trackBar value
-            label.Text = $"{labelText}: {trackBar.Value}";
+            // Set initial label value according to the current slider value
+            label.Text = $"{labelText}: {materialSlider.Value}";
 
             var panel = new Panel()
             {
@@ -247,16 +251,17 @@ namespace RED.mbnq
             };
 
             label.Location = new Point(3, 3);
-            trackBar.Location = new Point(3, label.Height + 5);
+            materialSlider.Location = new Point(3, label.Height + 5);
 
             panel.Controls.Add(label);
-            panel.Controls.Add(trackBar);
+            panel.Controls.Add(materialSlider);
 
-            return new LabeledTrackBar(panel, trackBar);
+            return new LabeledSlider(panel, materialSlider);
         }
 
         private const int OffsetAdjustmentX = 0;  // Adjust this value as needed
         private const int OffsetAdjustmentY = 0;  // Adjust this value as needed
+
         public void UpdateMainDisplay()
         {
             if (MainDisplay != null)
@@ -285,12 +290,14 @@ namespace RED.mbnq
                 MainDisplay.BringToFront();
                 MainDisplay.Invalidate(); // Redraw the overlay
             }
-            // Update the labels with the current values of the trackbars 
+
+            // Update the labels with the current values of the sliders
             UpdateLabels();
         }
+
         private void UpdateLabels()
         {
-            // Assuming that the labels are directly associated with the trackbars
+            // Assuming that the labels are directly associated with the sliders
             colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
             colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
@@ -300,6 +307,7 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             timerInterval.Parent.Controls[0].Text = $"Timer Interval: {timerInterval.Value}";
         }
+
         private void UpdateTimerInterval()
         {
             if (MainDisplay != null)
@@ -307,18 +315,20 @@ namespace RED.mbnq
                 MainDisplay.UpdateTimerInterval(timerInterval.Value);
             }
         }
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after saving settings
         }
+
         private void LoadButton_Click(object sender, EventArgs e)
         {
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after loading settings
         }
 
-        // this one is for global usage
+        // This one is for global usage
         public void CenterMainDisplay()
         {
             if (MainDisplay != null)
@@ -351,7 +361,7 @@ namespace RED.mbnq
             }
         }
 
-        // this one is for local usage
+        // This one is for local usage
         private void CenterButton_Click(object sender, EventArgs e)
         {
             CenterMainDisplay();
@@ -367,15 +377,16 @@ namespace RED.mbnq
         public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
 
     }
-    public class LabeledTrackBar
+
+    public class LabeledSlider
     {
         public Panel Panel { get; set; }
-        public TrackBar TrackBar { get; set; }
+        public MaterialSlider Slider { get; set; }
 
-        public LabeledTrackBar(Panel panel, TrackBar trackBar)
+        public LabeledSlider(Panel panel, MaterialSlider slider)
         {
             Panel = panel;
-            TrackBar = trackBar;
+            Slider = slider;
         }
     }
 }
