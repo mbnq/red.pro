@@ -166,8 +166,8 @@ namespace RED.mbnq
                 Dock = DockStyle.Top
             };
 
-            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            buttonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
 
             saveButton = new MaterialButton() { Text = "Save Settings", AutoSize = false };
             loadButton = new MaterialButton() { Text = "Load Settings", AutoSize = false };
@@ -177,7 +177,7 @@ namespace RED.mbnq
             {
                 Text = "Save on Exit  ",
                 AutoSize = true,
-                Anchor = AnchorStyles.Right
+                Anchor = AnchorStyles.Left
             };
 
             // Add buttons to the first column (left)
