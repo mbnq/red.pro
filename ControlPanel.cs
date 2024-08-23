@@ -250,7 +250,6 @@ namespace RED.mbnq
 
         private const int OffsetAdjustmentX = 0;  // Adjust this value as needed
         private const int OffsetAdjustmentY = 0;  // Adjust this value as needed
-
         public void UpdateMainDisplay()
         {
             if (MainDisplay != null)
@@ -311,13 +310,6 @@ namespace RED.mbnq
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             timerInterval.Parent.Controls[0].Text = $"Timer Interval: {timerInterval.Value}";
-        }
-        private void UpdateTimerInterval()
-        {
-            if (MainDisplay != null)
-            {
-                MainDisplay.UpdateTimerInterval(timerInterval.Value);
-            }
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
