@@ -11,6 +11,8 @@ namespace RED.mbnq
     public static class SaveLoad
     {
         private static string settingsFilePath = "RED.settings.sav";
+
+        /* --- --- --- saving --- --- --- */
         public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
@@ -42,6 +44,8 @@ namespace RED.mbnq
                 Sounds.PlayClickSoundOnce();
             }
         }
+
+        /* --- --- --- loading --- --- --- */
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             if (!File.Exists(settingsFilePath))
@@ -79,14 +83,15 @@ namespace RED.mbnq
             }
 
             controlPanel.UpdateMainDisplay();
-
+            
             if (showMessage)
             {
                 MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
-                controlPanel.Activate();
                 Sounds.PlayClickSoundOnce();
             }
         }
+
+        /* --- --- --- Check if savefile exists --- --- --- */
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
         {
             bool fileCreated = false;
@@ -106,7 +111,7 @@ namespace RED.mbnq
                 sb.AppendLine("OffsetX=1000");
                 sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("TimerInterval=1000");
-                sb.AppendLine("AutoSaveOnExit=True");  // Default to true
+                sb.AppendLine("AutoSaveOnExit=True");
 
                 File.WriteAllText(settingsFilePath, sb.ToString());
                 fileCreated = true;

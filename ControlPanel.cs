@@ -5,20 +5,19 @@ using System.Drawing;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using static MaterialSkin.MaterialSkinManager;
 
 namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
         private MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
-        private Button saveButton, loadButton;
+        private Button saveButton, loadButton, centerButton;
         private FlowLayoutPanel panel;
         private MainDisplay mainDisplay;
-        private Button centerButton;
         private CheckBox autoSaveOnExit;
         private MaterialLabel linkLabel;
         private int mControlWidth;
-
 
         private int mCPWidth = 262;        
         private int mCPHeight = 262;
@@ -88,6 +87,7 @@ namespace RED.mbnq
         private void InitializeMaterialSkin()
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
+            materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
@@ -104,15 +104,18 @@ namespace RED.mbnq
             {
                 Text = "www.mbnq.pl",
                 AutoSize = true,
-                ForeColor = Color.Gray,
-                BackColor = Color.White,
+                // ForeColor = Color.Gray,
+                // BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
-                Location = new Point(mCPWidth - (mControlRMargin*3), 40)
+                FontType = MaterialSkin.MaterialSkinManager.fontType.Caption,
+                HighEmphasis = false,
+                Location = new Point(mCPWidth - (mControlRMargin*2) - 4, 50),
+                UseAccent = false
             };
-            linkLabel.Click += LinkLabel_Click;
 
-            this.BackColor = Color.FromArgb(255, 64, 58);
+            linkLabel.Click += LinkLabel_Click;
             this.Controls.Add(linkLabel);
+            this.BackColor = Color.FromArgb(255, 69, 58);
         }
         private void LinkLabel_Click(object sender, EventArgs e)
         {
