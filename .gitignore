@@ -363,3 +363,53 @@ MigrationBackup/
 FodyWeavers.xsd
 /offcode/icon
 /offcode/sounds
+
+# Binary files and build outputs
+*.exe
+*.dll
+*.pdb
+*.obj
+*.bin
+*.o
+*.so
+*.a
+*.lib
+
+# Visual Studio specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln
+*.csproj.user
+
+# Packages
+packages/
+packages.config
+
+# Generated files
+*.Designer.cs
+*.resx
+
+# Configuration files
+App.config
+
+# Audio files and icons
+*.wav
+*.ico
+*.png
+
+# Other generated files/folders
+bin/
+obj/
+Properties/
+
+# NuGet packages
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Logs and temporary files
+*.log
+*.tmp
