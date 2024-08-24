@@ -17,6 +17,7 @@ namespace RED.mbnq
         private MainDisplay mainDisplay;
         private CheckBox autoSaveOnExit;
         private MaterialLabel linkLabel;
+        private rmbMenu rightClickMenu;
         private int mControlWidth;
 
         private int mCPWidth = 262;        
@@ -48,6 +49,9 @@ namespace RED.mbnq
             AddLinkLabel();
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);         // false means, do not show dialogbox
+
+            rightClickMenu = new rmbMenu();
+            this.ContextMenuStrip = rightClickMenu;
 
             this.Size = new Size(mCPWidth, mCPHeight);  // global control panel window size
             // this.AutoSize = true;

@@ -229,6 +229,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="rmbMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SaveLoad.cs" />
     <Compile Include="Sounds.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
