@@ -28,7 +28,7 @@ namespace RED.mbnq
         private int mControlRMargin = 36;
         private Point GetCenteredPosition()
         {
-            // Get the bounds of the primary screen
+            // Get the bounds of the primary screen 
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
 
             // Calculate the center of the primary screen
