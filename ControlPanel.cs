@@ -49,7 +49,7 @@ namespace RED.mbnq
             SaveLoad.LoadSettings(this, false);         // false means, do not show dialogbox
 
             // rmbMenu
-            rightClickMenu = new rmbMenu();
+            rightClickMenu = new rmbMenu(this);
             this.ContextMenuStrip = rightClickMenu;
             rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for sound
 

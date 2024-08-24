@@ -7,14 +7,25 @@ namespace RED.mbnq
 {
     public class rmbMenu : MaterialContextMenuStrip
     {
-        private ToolStripMenuItem closeMenuItem;
-        private ToolStripMenuItem aboutMenuItem;
-        private ToolStripSeparator separator;
-        public rmbMenu()
+        private ControlPanel controlPanel;
+        private ToolStripMenuItem saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem;
+        private ToolStripSeparator separator, separator2, separator3, separator4;
+        public rmbMenu(ControlPanel controlPanel)
         {
+            this.controlPanel = controlPanel;
 
             // Initialize the separator
             separator = new ToolStripSeparator();
+            separator2 = new ToolStripSeparator();
+            separator3 = new ToolStripSeparator();
+            separator4 = new ToolStripSeparator();
+
+            // Initialize the save load menu items
+            saveMenuItem = new ToolStripMenuItem("Save settings");
+            saveMenuItem.Click += saveMenuItem_Click;
+
+            loadMenuItem = new ToolStripMenuItem("Load settings");
+            loadMenuItem.Click += loadMenuItem_Click;
 
             // Initialize the "Close Program" menu item
             closeMenuItem = new ToolStripMenuItem("Close Program");
@@ -26,19 +37,27 @@ namespace RED.mbnq
 
             // Add the items to the context menu
 
+            this.Items.Add(separator3);
+            this.Items.Add(saveMenuItem);
+            this.Items.Add(loadMenuItem);
+            this.Items.Add(separator2);
             this.Items.Add(aboutMenuItem);
             this.Items.Add(separator);
             this.Items.Add(closeMenuItem);
 
         }
 
-        // Event handler to close the program
-        private void CloseMenuItem_Click(object sender, EventArgs e)
+        private void saveMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit(); // Closes the entire application
+            Sounds.PlayClickSoundOnce();
+            SaveLoad.SaveSettings(controlPanel,false);
+        }
+        private void loadMenuItem_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+            SaveLoad.LoadSettings(controlPanel,false);
         }
 
-        // Event handler to open the About page
         private void AboutMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start(new ProcessStartInfo
@@ -47,6 +66,11 @@ namespace RED.mbnq
                 UseShellExecute = true
             });
             Sounds.PlayClickSoundOnce();
+        }
+
+        private void CloseMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
