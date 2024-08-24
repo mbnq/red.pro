@@ -23,7 +23,7 @@ namespace RED.mbnq
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
             // this.Text = "RED.+ (mbnq.pl)";
-            // this.Icon = new Icon("mbnqbf.ico");
+            // this.Icon = new Icon("mbnqIcon.ico");
 
             updateTimer = new Timer();
             updateTimer.Interval = 1000;
