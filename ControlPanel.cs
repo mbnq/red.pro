@@ -17,6 +17,11 @@ namespace RED.mbnq
         private Button centerButton;
         private CheckBox autoSaveOnExit;
         private int mControlWidth;
+
+        private int mCPWidth = 262;        
+        private int mCPHeight = 262;
+        private int mControlRMargin = 35;
+
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -47,7 +52,7 @@ namespace RED.mbnq
             // Load settings and update MainDisplay without showing a message box
             SaveLoad.LoadSettings(this, false);
 
-            this.Size = new Size(262, 825);  // global control panel window size
+            this.Size = new Size(mCPWidth, mCPHeight);  // global control panel window size
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly; // Allow the form to grow and shrink based on its content
 
@@ -116,7 +121,7 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            mControlWidth = this.ClientSize.Width - 35;
+            mControlWidth = this.ClientSize.Width - mControlRMargin;
 
             panel = new FlowLayoutPanel
             {
