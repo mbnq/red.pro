@@ -16,7 +16,9 @@ namespace RED.mbnq
         private MainDisplay mainDisplay;
         private Button centerButton;
         private CheckBox autoSaveOnExit;
+        private MaterialLabel linkLabel;
         private int mControlWidth;
+
 
         private int mCPWidth = 262;        
         private int mCPHeight = 262;
@@ -45,6 +47,8 @@ namespace RED.mbnq
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
+
+            AddLinkLabel();
 
             // Ensure settings file exists and load settings
             SaveLoad.EnsureSettingsFileExists(this);
@@ -93,12 +97,33 @@ namespace RED.mbnq
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                MaterialSkin.Primary.Red500,
-                MaterialSkin.Primary.Grey500,
-                MaterialSkin.Primary.Green500,
-                MaterialSkin.Accent.LightBlue200,
-                MaterialSkin.TextShade.WHITE
+            MaterialSkin.Primary.Red500,        // Primary color
+            MaterialSkin.Primary.Grey500,       // Dark primary color
+            MaterialSkin.Primary.Green500,      // Light primary color
+            MaterialSkin.Accent.LightBlue200,   // Accent color
+            MaterialSkin.TextShade.WHITE        // Text color
             );
+        }
+        private void AddLinkLabel()
+        {
+            linkLabel = new MaterialLabel
+            {
+                Text = "www.mbnq.pl",
+                AutoSize = true,
+                ForeColor = Color.Gray,
+                BackColor = Color.White,
+                Cursor = Cursors.Hand,
+                Location = new Point(mCPWidth - (mControlRMargin*3), 40)
+            };
+            linkLabel.Click += LinkLabel_Click;
+
+            this.BackColor = Color.FromArgb(255, 64, 58);
+            this.Controls.Add(linkLabel);
+        }
+        private void LinkLabel_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSound();
+            System.Diagnostics.Process.Start("https://www.mbnq.pl");
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
@@ -255,8 +280,7 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = mControlWidth,
-                Height = 66, // Adjust height as needed
-                Padding = new Padding(3)
+                Height = 66
             };
 
             label.Location = new Point(3, 3);
