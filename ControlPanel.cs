@@ -336,13 +336,13 @@ namespace RED.mbnq
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Sounds.PlayClickSoundOnce();
+            Sounds.PlayClickSound();
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            Sounds.PlayClickSoundOnce();
+            Sounds.PlayClickSound();
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay();
         }
@@ -384,8 +384,8 @@ namespace RED.mbnq
         // This one is for local usage
         private void CenterButton_Click(object sender, EventArgs e)
         {
-            CenterMainDisplay();
             Sounds.PlayClickSoundOnce();
+            CenterMainDisplay();
         }
 
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }

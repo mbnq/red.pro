@@ -40,10 +40,9 @@ namespace RED.mbnq
 
             if (showMessage)
             {
+                Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
-            Sounds.PlayClickSoundOnce();
-            controlPanel.InitializeMaterialSkin();
         }
 
         /* --- --- --- loading --- --- --- */
@@ -51,8 +50,8 @@ namespace RED.mbnq
         {
             if (!File.Exists(settingsFilePath))
             {
-                MaterialMessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
                 Sounds.PlayClickSoundOnce();
+                MaterialMessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
                 return;
             }
 
@@ -87,9 +86,9 @@ namespace RED.mbnq
             
             if (showMessage)
             {
+                Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
-            Sounds.PlayClickSoundOnce();
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */
