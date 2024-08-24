@@ -23,7 +23,6 @@ namespace RED.mbnq
         private int mCPWidth = 262;        
         private int mCPHeight = 262;
         private int mControlRMargin = 35;
-
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -33,7 +32,6 @@ namespace RED.mbnq
             int centeredX = (screenBounds.Width - MainDisplay.Width) / 2;
             int centeredY = (screenBounds.Height - MainDisplay.Height) / 2;
 
-            // Return the calculated center point as a Point object
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
         public ControlPanel()
@@ -49,16 +47,12 @@ namespace RED.mbnq
             this.StartPosition = FormStartPosition.CenterScreen;
 
             AddLinkLabel();
-
-            // Ensure settings file exists and load settings
             SaveLoad.EnsureSettingsFileExists(this);
-
-            // Load settings and update MainDisplay without showing a message box
-            SaveLoad.LoadSettings(this, false);
+            SaveLoad.LoadSettings(this, false);         // false means, do not show dialogbox
 
             this.Size = new Size(mCPWidth, mCPHeight);  // global control panel window size
             // this.AutoSize = true;
-            // this.AutoSizeMode = AutoSizeMode.GrowOnly; // Allow the form to grow and shrink based on its content
+            // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -67,12 +61,12 @@ namespace RED.mbnq
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
 
+        // don't remove this one
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-
             // Force the form to maintain its original size
-            this.Size = new Size(262, 825);  // Your defined form size
+            this.Size = new Size(262, 825);
         }
         public MainDisplay MainDisplay
         {
@@ -151,15 +145,16 @@ namespace RED.mbnq
             panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
+                FlowDirection = FlowDirection.TopDown
+                // Location = new Point(0, 0),
                 // AutoScroll = true,
                 // BackgroundImage = Properties.Resources.mbnqBackground0,
                 // BackgroundImageLayout = ImageLayout.Center,
-                WrapContents = false
+                // WrapContents = false
             };
 
             /* --- --- ---  Sliders --- --- --- */
-// Color
+            // Color
             var redSlider = CreateLabeledSlider("Red", 0, 255);
             colorR = redSlider.Slider;
             panel.Controls.Add(redSlider.Panel);
@@ -266,6 +261,9 @@ namespace RED.mbnq
                 BackColor = Color.FromArgb(35, 35, 35)
             };
 
+            // Set initial label value according to the current slider value
+            label.Text = $"{labelText}: {materialSlider.Value}";
+
             // Update label text when the slider value changes
             materialSlider.onValueChanged += (s, e) =>
             {
@@ -273,9 +271,6 @@ namespace RED.mbnq
                 label.Text = $"{labelText}: {materialSlider.Value}";
                 UpdateMainDisplay(); // Ensure display is updated on value change
             };
-
-            // Set initial label value according to the current slider value
-            label.Text = $"{labelText}: {materialSlider.Value}";
 
             var panel = new Panel()
             {
@@ -291,7 +286,7 @@ namespace RED.mbnq
 
             return new LabeledSlider(panel, materialSlider);
         }
-        public void UpdateMainDisplay()
+        public void UpdateMainDisplay() // overlay
         {
             if (MainDisplay != null)
             {
@@ -325,7 +320,6 @@ namespace RED.mbnq
 
             }
 
-            // Update the labels with the current values of the sliders
             UpdateLabels();
         }
 
@@ -345,7 +339,6 @@ namespace RED.mbnq
         }
         private void UpdateLabels()
         {
-            // Assuming that the labels are directly associated with the sliders
             colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
             colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
@@ -359,13 +352,13 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             SaveLoad.SaveSettings(this);
-            UpdateMainDisplay(); // Ensure display is updated after saving settings
+            UpdateMainDisplay();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             SaveLoad.LoadSettings(this);
-            UpdateMainDisplay(); // Ensure display is updated after loading settings
+            UpdateMainDisplay();
         }
 
         // This one is for global usage
