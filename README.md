@@ -1,6 +1,6 @@
 # RED.mbnq
 
-![image](https://github.com/user-attachments/assets/af264b0f-e7c3-494c-9fe6-695ee6dd274b)
+![image](https://github.com/user-attachments/assets/5eafe6bd-0359-4af8-a662-a1e8d283178a)
 
 Dependencies:
   - MaterialSkin (https://licenses.nuget.org/MIT)
