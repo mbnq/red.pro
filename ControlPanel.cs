@@ -1,7 +1,7 @@
 ﻿/* 
     www.mbnq.pl 2024 
     mbnq00 on gmail
- */
+*/
 
 using System;
 using System.Drawing;
