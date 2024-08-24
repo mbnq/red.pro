@@ -92,7 +92,7 @@ namespace RED.mbnq
             {
                 // Force silent save when the checkbox is being unchecked
                 SaveLoad.SaveSettings(this, false);
-                Sounds.PlayClickSound();
+                Sounds.PlayClickSoundOnce();
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -321,13 +321,13 @@ namespace RED.mbnq
         {
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after saving settings
-            Sounds.PlayClickSound();
+            Sounds.PlayClickSoundOnce();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after loading settings
-            Sounds.PlayClickSound();
+            Sounds.PlayClickSoundOnce();
         }
 
         // This one is for global usage
@@ -367,6 +367,7 @@ namespace RED.mbnq
         private void CenterButton_Click(object sender, EventArgs e)
         {
             CenterMainDisplay();
+            Sounds.PlayClickSoundOnce();
         }
 
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
