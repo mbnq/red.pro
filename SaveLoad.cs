@@ -43,6 +43,7 @@ namespace RED.mbnq
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
             Sounds.PlayClickSoundOnce();
+            controlPanel.InitializeMaterialSkin();
         }
 
         /* --- --- --- loading --- --- --- */

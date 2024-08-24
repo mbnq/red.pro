@@ -56,8 +56,6 @@ namespace RED.mbnq
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
 
-            this.BackColor = Color.FromArgb(255, 69, 58);
-
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
@@ -86,19 +84,21 @@ namespace RED.mbnq
                 MainDisplay.Location = centeredPosition;
             }
         }
-        private void InitializeMaterialSkin()
+        public void InitializeMaterialSkin()
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;    
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-            MaterialSkin.Primary.Red500,        // Primary color
-            MaterialSkin.Primary.Grey500,       // Dark primary color
-            MaterialSkin.Primary.Red500,        // Light primary color
-            MaterialSkin.Accent.Red700,         // Accent color
-            MaterialSkin.TextShade.WHITE        // Text color
+                MaterialSkin.Primary.Red500,        // Primary color
+                MaterialSkin.Primary.Red700,        // Dark primary color
+                MaterialSkin.Primary.Red200,        // Light primary color
+                MaterialSkin.Accent.Red100,         // Accent color
+                MaterialSkin.TextShade.WHITE        // Text color
             );
+            this.BackColor = Color.FromArgb(255, 64, 58);
+            this.DrawerBackgroundWithAccent = false;
         }
         private void AddLinkLabel()
         {
