@@ -16,6 +16,7 @@ namespace RED.mbnq
         private MainDisplay mainDisplay;
         private Button centerButton;
         private CheckBox autoSaveOnExit;
+        private int mControlWidth;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -115,6 +116,8 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
+            mControlWidth = this.ClientSize.Width - 35;
+
             panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -165,14 +168,12 @@ namespace RED.mbnq
 
             /* --- --- ---  Buttons --- --- --- */
 
-            int mButtonWidth = this.ClientSize.Width - 35;
-
             // Save and Load
             saveButton = new MaterialButton
             {
                 Text = "Save Settings",
                 AutoSize = false,
-                Width = mButtonWidth
+                Width = mControlWidth
             };
             saveButton.Click += SaveButton_Click;
 
@@ -180,7 +181,7 @@ namespace RED.mbnq
             {
                 Text = "Load Settings",
                 AutoSize = false,
-                Width = mButtonWidth
+                Width = mControlWidth
             };
             loadButton.Click += LoadButton_Click;
 
@@ -189,7 +190,7 @@ namespace RED.mbnq
             {
                 Text = "Center",
                 AutoSize = false,
-                Width = mButtonWidth
+                Width = mControlWidth
             };
             centerButton.Click += CenterButton_Click;
 
@@ -248,7 +249,7 @@ namespace RED.mbnq
 
             var panel = new Panel()
             {
-                Width = 250,
+                Width = mControlWidth,
                 Height = 66, // Adjust height as needed
                 Padding = new Padding(3)
             };
