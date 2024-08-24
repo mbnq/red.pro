@@ -156,12 +156,15 @@ namespace RED.mbnq
             panel.Controls.Add(timerIntervalSlider.Panel);
 
             /* --- --- ---  Buttons --- --- --- */
+
+            int mButtonWidth = this.ClientSize.Width - 35;
+
             // Save and Load
             saveButton = new MaterialButton
             {
                 Text = "Save Settings",
                 AutoSize = false,
-                Width = 200
+                Width = mButtonWidth
             };
             saveButton.Click += SaveButton_Click;
 
@@ -169,7 +172,7 @@ namespace RED.mbnq
             {
                 Text = "Load Settings",
                 AutoSize = false,
-                Width = 200
+                Width = mButtonWidth
             };
             loadButton.Click += LoadButton_Click;
 
@@ -178,7 +181,7 @@ namespace RED.mbnq
             {
                 Text = "Center",
                 AutoSize = false,
-                Width = 200
+                Width = mButtonWidth
             };
             centerButton.Click += CenterButton_Click;
 
