@@ -22,7 +22,7 @@ namespace RED.mbnq
 
         private int mCPWidth = 262;        
         private int mCPHeight = 262;
-        private int mControlRMargin = 35;
+        private int mControlRMargin = 36;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
