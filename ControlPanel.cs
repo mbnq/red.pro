@@ -20,7 +20,7 @@ namespace RED.mbnq
         private int mControlWidth;
 
         private int mCPWidth = 262;        
-        private int mCPHeight = 262;
+        private int mCPHeight = 735;
         private int mControlRMargin = 36;
         private Point GetCenteredPosition()
         {
@@ -55,7 +55,7 @@ namespace RED.mbnq
 
             this.Size = new Size(mCPWidth, mCPHeight);  // global control panel window size
             // this.AutoSize = true;
-            // this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            // this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
@@ -73,7 +73,7 @@ namespace RED.mbnq
         {
             base.OnResize(e);
             // Force the form to maintain its original size
-            this.Size = new Size(262, 825);
+            this.Size = new Size(mCPWidth, mCPHeight);
         }
         public MainDisplay MainDisplay
         {
@@ -220,8 +220,8 @@ namespace RED.mbnq
 
             /* --- --- ---  Add Controls --- --- --- */
             panel.Controls.Add(centerButton);
-            panel.Controls.Add(saveButton);
-            panel.Controls.Add(loadButton);
+            // panel.Controls.Add(saveButton);
+            // panel.Controls.Add(loadButton);
             panel.Controls.Add(autoSaveOnExit);
 
             this.Controls.Add(panel);
@@ -336,13 +336,13 @@ namespace RED.mbnq
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Sounds.PlayClickSound();
+            // Sounds.PlayClickSound();
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            Sounds.PlayClickSound();
+            // Sounds.PlayClickSound();
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay();
         }
