@@ -16,7 +16,6 @@ namespace RED.mbnq
         private FlowLayoutPanel panel;
         private MainDisplay mainDisplay;
         private CheckBox autoSaveOnExit;
-        private MaterialLabel linkLabel;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
 
@@ -46,7 +45,6 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            AddLinkLabel();
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);         // false means, do not show dialogbox
 
@@ -103,25 +101,6 @@ namespace RED.mbnq
             );
             this.BackColor = Color.FromArgb(255, 64, 58);
             this.DrawerBackgroundWithAccent = false;
-        }
-        private void AddLinkLabel()
-        {
-            linkLabel = new MaterialLabel
-            {
-                Text = "www.mbnq.pl",
-                AutoSize = true,
-                Cursor = Cursors.Hand,
-                FontType = MaterialSkin.MaterialSkinManager.fontType.Caption,
-                Location = new Point(mCPWidth - (mControlRMargin*2) - 4, 50)
-            };
-
-            linkLabel.Click += LinkLabel_Click;
-            this.Controls.Add(linkLabel);
-        }
-        private void LinkLabel_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSound();
-            System.Diagnostics.Process.Start("https://www.mbnq.pl");
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
