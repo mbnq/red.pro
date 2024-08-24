@@ -21,7 +21,7 @@ namespace RED.mbnq
 
         private int mCPWidth = 262;        
         private int mCPHeight = 262;
-        private int mControlDefSpacing = 36;
+        private int mControlRMargin = 36;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -108,7 +108,7 @@ namespace RED.mbnq
                 AutoSize = true,
                 Cursor = Cursors.Hand,
                 FontType = MaterialSkin.MaterialSkinManager.fontType.Caption,
-                Location = new Point(mCPWidth - (mControlDefSpacing*2) - 4, 50)
+                Location = new Point(mCPWidth - (mControlRMargin*2) - 4, 50)
             };
 
             linkLabel.Click += LinkLabel_Click;
@@ -140,7 +140,7 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            mControlWidth = this.ClientSize.Width - mControlDefSpacing;
+            mControlWidth = this.ClientSize.Width - mControlRMargin;
 
             panel = new FlowLayoutPanel
             {
@@ -274,7 +274,7 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = mControlWidth,
-                Height = ((mControlDefSpacing * 2) - 6)
+                Height = ((mControlRMargin * 2) - 6)
             };
 
             label.Location = new Point(3, 3);
@@ -384,6 +384,7 @@ namespace RED.mbnq
 
                 // Redraw the MainDisplay to apply changes
                 MainDisplay.Invalidate();
+                UpdateMainDisplay();
             }
             else
             {
