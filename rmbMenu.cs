@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* 
+    www.mbnq.pl 2024 
+    mbnq00 on gmail
+ */
+
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
