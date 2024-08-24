@@ -227,9 +227,9 @@ namespace RED.mbnq
             // Update label text when the slider value changes
             materialSlider.onValueChanged += (s, e) =>
             {
+                Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
                 UpdateMainDisplay(); // Ensure display is updated on value change
-                Sounds.PlayClickSound();
             };
 
             // Set initial label value according to the current slider value
