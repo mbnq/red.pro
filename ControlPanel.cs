@@ -35,7 +35,7 @@ namespace RED.mbnq
             InitializeMaterialSkin();
 
             this.Text = "RED.";
-            this.Icon = Properties.Resources.taskbarIcon;
+            this.Icon = Properties.Resources.mbnqIcon;
             this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
             // this.TopMost = true;

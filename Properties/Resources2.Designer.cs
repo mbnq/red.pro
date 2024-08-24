@@ -73,9 +73,9 @@ namespace RED.mbnq.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon taskbarIcon {
+        internal static System.Drawing.Icon mbnqIcon {
             get {
-                object obj = ResourceManager.GetObject("taskbarIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("mbnqIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
