@@ -394,7 +394,7 @@ namespace RED.mbnq
             }
         }
 
-        // This one is for local usage
+        // This one is for local usage 
         private void CenterButton_Click(object sender, EventArgs e)
         {
             CenterMainDisplay();
