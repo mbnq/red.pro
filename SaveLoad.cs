@@ -101,6 +101,8 @@ namespace RED.mbnq
                 Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
+
+            controlPanel.mSettingsLoaded = 1;
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */
@@ -139,6 +141,8 @@ namespace RED.mbnq
             {
                 controlPanel.UpdateMainDisplay();
             }
+
+            controlPanel.mSettingsLoaded = 1;
         }
     }
 }

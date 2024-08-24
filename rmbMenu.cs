@@ -37,7 +37,7 @@ namespace RED.mbnq
             loadMenuItem.Click += loadMenuItem_Click;
 
             // Initialize the "Close Program" menu item
-            closeMenuItem = new ToolStripMenuItem("Close Program");
+            closeMenuItem = new ToolStripMenuItem("Close");
             closeMenuItem.Click += CloseMenuItem_Click;
 
             // Initialize the "About" menu item

@@ -18,6 +18,7 @@ namespace RED.mbnq
         private CheckBox autoSaveOnExit;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
+        public int mSettingsLoaded = 0;
 
         private int mCPWidth = 262;        
         private int mCPHeight = 730;
@@ -110,7 +111,6 @@ namespace RED.mbnq
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
-            Sounds.PlayClickSound();
             if (!autoSaveOnExit.Checked)
             {
                 // Force silent save when the checkbox is being unchecked
@@ -216,7 +216,15 @@ namespace RED.mbnq
                 AutoSize = true,
                 Anchor = AnchorStyles.Left
             };
-            autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+
+            autoSaveOnExit.CheckedChanged += (s, e) =>
+            {
+                AutoSaveOnExit_CheckedChanged(s, e);
+                if (mSettingsLoaded > 0) 
+                { 
+                    Sounds.PlayClickSound();
+                }
+            };
 
             /* --- --- ---  Add Controls --- --- --- */
             panel.Controls.Add(centerButton);
