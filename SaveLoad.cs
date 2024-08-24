@@ -36,7 +36,8 @@ namespace RED.mbnq
             sb.AppendLine($"OffsetX={controlPanel.OffsetXValue}");
             sb.AppendLine($"OffsetY={controlPanel.OffsetYValue}");
             sb.AppendLine($"TimerInterval={controlPanel.TimerIntervalValue}");
-            sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}"); // Save AutoSaveOnExit state
+            sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}");
+            sb.AppendLine($"SoundEnabled={Sounds.IsSoundEnabled}");
 
             // Save overlay absolute position
             if (controlPanel.MainDisplay != null)
@@ -84,11 +85,13 @@ namespace RED.mbnq
                 else if (line.StartsWith("TimerInterval="))
                     controlPanel.TimerIntervalValue = int.Parse(line.Substring("TimerInterval=".Length));
                 else if (line.StartsWith("AutoSaveOnExit="))
-                    controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length)); // Load AutoSaveOnExit state
+                    controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length));
                 else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
                     controlPanel.MainDisplay.Left = int.Parse(line.Substring("PositionX=".Length));
                 else if (line.StartsWith("PositionY=") && controlPanel.MainDisplay != null)
                     controlPanel.MainDisplay.Top = int.Parse(line.Substring("PositionY=".Length));
+                else if (line.StartsWith("SoundEnabled="))
+                    Sounds.IsSoundEnabled = bool.Parse(line.Substring("SoundEnabled=".Length));
             }
 
             controlPanel.UpdateMainDisplay();
@@ -124,6 +127,7 @@ namespace RED.mbnq
                 sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("TimerInterval=1000");
                 sb.AppendLine("AutoSaveOnExit=True");
+                sb.AppendLine("SoundEnabled=True");
 
                 File.WriteAllText(settingsFilePath, sb.ToString());
                 fileCreated = true;

@@ -23,6 +23,7 @@ namespace RED.mbnq
             // Initialize the toggle sound menu item
             toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
             toggleSoundMenuItem.Click += ToggleSoundMenuItem_Click;
+            toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
 
             // Initialize center menu item
             centerMenuItem = new ToolStripMenuItem("Center Overlay");
@@ -59,8 +60,9 @@ namespace RED.mbnq
         }
         private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
         {
-            Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;  // Toggle the sound setting
-            toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";  // Update the menu text
+            Sounds.PlayClickSoundOnce();
+            Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
+            toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
         }
         private void centerMenuItem_Click(object sender, EventArgs e)
         {
