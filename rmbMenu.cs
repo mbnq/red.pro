@@ -10,9 +10,9 @@ namespace RED.mbnq
         private ToolStripMenuItem closeMenuItem;
         private ToolStripMenuItem aboutMenuItem;
         private ToolStripSeparator separator;
-
         public rmbMenu()
         {
+
             // Initialize the separator
             separator = new ToolStripSeparator();
 
@@ -29,6 +29,7 @@ namespace RED.mbnq
             this.Items.Add(aboutMenuItem);
             this.Items.Add(separator);
             this.Items.Add(closeMenuItem);
+
         }
 
         // Event handler to close the program
@@ -45,6 +46,7 @@ namespace RED.mbnq
                 FileName = "https://www.mbnq.pl",
                 UseShellExecute = true
             });
+            Sounds.PlayClickSoundOnce();
         }
     }
 }

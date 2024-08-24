@@ -48,8 +48,10 @@ namespace RED.mbnq
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);         // false means, do not show dialogbox
 
+            // rmbMenu
             rightClickMenu = new rmbMenu();
             this.ContextMenuStrip = rightClickMenu;
+            rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for sound
 
             this.Size = new Size(mCPWidth, mCPHeight);  // global control panel window size
             // this.AutoSize = true;
@@ -60,6 +62,10 @@ namespace RED.mbnq
 
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+        }
+        private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
         }
 
         // don't remove this one
