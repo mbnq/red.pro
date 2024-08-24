@@ -1,5 +1,6 @@
 ﻿/* www.mbnq.pl 2024 */
 
+using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -10,7 +11,15 @@ namespace RED.mbnq
 {
     public static class SaveLoad
     {
-        private static string settingsFilePath = "RED.settings.sav";
+        private static readonly string settingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
+        private static readonly string settingsFilePath = Path.Combine(settingsDirectory, "RED.settings.sav");
+        private static void EnsureDirectoryExists()
+        {
+            if (!Directory.Exists(settingsDirectory))
+            {
+                Directory.CreateDirectory(settingsDirectory);
+            }
+        }
 
         /* --- --- --- saving --- --- --- */
         public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
@@ -95,6 +104,9 @@ namespace RED.mbnq
         public static void EnsureSettingsFileExists(ControlPanel controlPanel)
         {
             bool fileCreated = false;
+
+            // Ensure the directory exists before checking or creating the file
+            EnsureDirectoryExists();
 
             if (!File.Exists(settingsFilePath))
             {
