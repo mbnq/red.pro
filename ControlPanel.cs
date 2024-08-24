@@ -37,7 +37,7 @@ namespace RED.mbnq
             this.Icon = Properties.Resources.mbnqIcon;
             this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
-            // this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
 
             // Ensure settings file exists and load settings
@@ -55,6 +55,14 @@ namespace RED.mbnq
 
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            // Force the form to maintain its original size
+            this.Size = new Size(262, 825);  // Your defined form size
         }
         public MainDisplay MainDisplay
         {
