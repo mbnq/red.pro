@@ -1,6 +1,8 @@
 ﻿/* 
     www.mbnq.pl 2024 
     mbnq00 on gmail
+
+    That's the main code
 */
 
 using System;
@@ -50,21 +52,19 @@ namespace RED.mbnq
             this.StartPosition = FormStartPosition.CenterScreen;
 
             SaveLoad.EnsureSettingsFileExists(this);
-            SaveLoad.LoadSettings(this, false);         // false means, do not show dialogbox
+            SaveLoad.LoadSettings(this, false);                 // false means, do not show dialogbox
 
             // rmbMenu
             rightClickMenu = new rmbMenu(this);
             this.ContextMenuStrip = rightClickMenu;
-            rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for sound
+            rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for the sound
 
-            this.Size = new Size(mCPWidth, mCPHeight);  // global control panel window size
+            this.Size = new Size(mCPWidth, mCPHeight);          // global controlpanel window size
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
-            // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
 
-            // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -76,7 +76,6 @@ namespace RED.mbnq
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            // Force the form to maintain its original size
             this.Size = new Size(mCPWidth, mCPHeight);
         }
         public MainDisplay MainDisplay
@@ -85,7 +84,7 @@ namespace RED.mbnq
             set
             {
                 mainDisplay = value;
-                InitializeMainDisplayPosition();  // Initialize position after MainDisplay is assigned 
+                InitializeMainDisplayPosition();
             }
         }
         private void InitializeMainDisplayPosition()
@@ -116,7 +115,6 @@ namespace RED.mbnq
         {
             if (!autoSaveOnExit.Checked)
             {
-                // Force silent save when the checkbox is being unchecked
                 SaveLoad.SaveSettings(this, false);
             }
         }
@@ -185,7 +183,7 @@ namespace RED.mbnq
 
             /* --- --- ---  Buttons --- --- --- */
 
-            // Save and Load
+            // Save and Load (disabled atm at addcontrols)
             saveButton = new MaterialButton
             {
                 Text = "Save Settings",
@@ -260,15 +258,13 @@ namespace RED.mbnq
                 ShowValue = false
             };
 
-            // Set initial label value according to the current slider value
             label.Text = $"{labelText}: {materialSlider.Value}";
 
-            // Update label text when the slider value changes
             materialSlider.onValueChanged += (s, e) =>
             {
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                UpdateMainDisplay(); // Ensure display is updated on value change
+                UpdateMainDisplay();
             };
 
             var panel = new Panel()
@@ -315,12 +311,12 @@ namespace RED.mbnq
 
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
-                MainDisplay.Invalidate(); // Redraw the overlay
+                MainDisplay.Invalidate();
             }
             UpdateLabels();
         }
 
-        //This one is needed to handle negative values
+        //This one is needed to handle negative values because of materialSkin limitations
         private int TranslateOffset(int value)
         {
             if (value < 1000)
@@ -347,18 +343,15 @@ namespace RED.mbnq
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            // Sounds.PlayClickSound();
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            // Sounds.PlayClickSound();
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay();
         }
 
-        // This one is for global usage
         public void CenterMainDisplay()
         {
             if (MainDisplay != null)
@@ -367,32 +360,28 @@ namespace RED.mbnq
                 offsetX.Value = 1000;
                 offsetY.Value = 1000;
 
-                // Update the labels for the offsets
+                // Update the labels for the translated offsets
                 offsetX.Parent.Controls[0].Text = $"Offset X: {TranslateOffset(offsetX.Value)}";
                 offsetY.Parent.Controls[0].Text = $"Offset Y: {TranslateOffset(offsetY.Value)}";
 
-                // Get the centered position
                 Point centeredPosition = GetCenteredPosition();
 
-                // Apply the centered position directly without offsets, as offsets are now at their midpoint (0 translated)
+                // Apply the centered position directly without offsets as offsets are now at their midpoint (0 translated)
                 MainDisplay.Left = centeredPosition.X;
                 MainDisplay.Top = centeredPosition.Y;
 
-                // Bring MainDisplay to the front and ensure it is visible 
+                // ensure overlay is visible 
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
-
-                // Redraw the MainDisplay to apply changes
                 MainDisplay.Invalidate();
                 UpdateMainDisplay();
             }
             else
             {
-                MessageBox.Show("MainDisplay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Overlay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // This one is for local usage
         private void CenterButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();

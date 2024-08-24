@@ -1,6 +1,8 @@
 ﻿/* 
     www.mbnq.pl 2024 
     mbnq00 on gmail
+
+    File io goes here
 */
 
 using System;
@@ -113,7 +115,6 @@ namespace RED.mbnq
         {
             bool fileCreated = false;
 
-            // Ensure the directory exists before checking or creating the file
             EnsureDirectoryExists();
 
             if (!File.Exists(settingsFilePath))

@@ -1,6 +1,8 @@
 ﻿/* 
     www.mbnq.pl 2024 
     mbnq00 on gmail
+
+    This is the overlay reddot crosshair
 */
 
 using System;

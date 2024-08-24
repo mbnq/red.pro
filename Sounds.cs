@@ -1,6 +1,8 @@
 ﻿/* 
     www.mbnq.pl 2024 
     mbnq00 on gmail
+
+    Sound logic goes here
 */
 
 using System;
@@ -25,9 +27,8 @@ namespace RED.mbnq
         {
             try
             {
-                // Load the sound from resources
                 clickSoundPlayer = new SoundPlayer(Properties.Resources.mbnqClick);
-                clickSoundPlayer.Load(); // Load the sound file into memory
+                clickSoundPlayer.Load();
             }
             catch (Exception ex)
             {
@@ -36,14 +37,14 @@ namespace RED.mbnq
         }
         public static void PlayClickSound()
         {
-            if (IsSoundEnabled)  // Check if sound is enabled
+            if (IsSoundEnabled)
             {
                 Task.Run(() => PlaySoundInternal());
             }
         }
         public static void PlayClickSoundOnce()
         {
-            if (IsSoundEnabled)  // Check if sound is enabled
+            if (IsSoundEnabled)
             {
                 clickSoundPlayer.Play();
             }
