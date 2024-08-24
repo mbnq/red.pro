@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,13 +7,14 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RED.mbnq")]
-[assembly: AssemblyDescription("Red Dot overlay app.")]
+[assembly: AssemblyDescription("Red Dot overlay app. mbnq00@gmail.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("www.mbnq.pl")]
 [assembly: AssemblyProduct("RED.mbnq")]
 [assembly: AssemblyCopyright("Copyright © www.mbnq.pl 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en-US")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
