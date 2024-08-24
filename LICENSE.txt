@@ -20,3 +20,4 @@ For example, other rights such as publicity, privacy, or moral rights may limit 
 
 Dependencies:
   - MaterialSkin (https://licenses.nuget.org/MIT)
+  - Costura.Fody (https://licenses.nuget.org/MIT) 
