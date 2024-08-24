@@ -8,7 +8,7 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem;
+        private ToolStripMenuItem toggleSoundMenuItem , centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem;
         private ToolStripSeparator separator, separator2, separator3, separator4;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -19,6 +19,10 @@ namespace RED.mbnq
             separator2 = new ToolStripSeparator();
             separator3 = new ToolStripSeparator();
             separator4 = new ToolStripSeparator();
+
+            // Initialize the toggle sound menu item
+            toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
+            toggleSoundMenuItem.Click += ToggleSoundMenuItem_Click;
 
             // Initialize center menu item
             centerMenuItem = new ToolStripMenuItem("Center Overlay");
@@ -41,6 +45,8 @@ namespace RED.mbnq
 
             // Add the items to the context menu
 
+            this.Items.Add(toggleSoundMenuItem);
+            this.Items.Add(separator4);
             this.Items.Add(centerMenuItem);
             this.Items.Add(separator3);
             this.Items.Add(saveMenuItem);
@@ -51,7 +57,11 @@ namespace RED.mbnq
             this.Items.Add(closeMenuItem);
 
         }
-
+        private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
+        {
+            Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;  // Toggle the sound setting
+            toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";  // Update the menu text
+        }
         private void centerMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();

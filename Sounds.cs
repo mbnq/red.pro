@@ -11,6 +11,7 @@ namespace RED.mbnq
     {
         private static SoundPlayer clickSoundPlayer;
         private static bool isPlayingSound = false;
+        public static bool IsSoundEnabled { get; set; } = true;
 
         static Sounds()
         {
@@ -32,12 +33,17 @@ namespace RED.mbnq
         }
         public static void PlayClickSound()
         {
-            // Run the sound playing logic on a separate thread
-            Task.Run(() => PlaySoundInternal());
+            if (IsSoundEnabled)  // Check if sound is enabled
+            {
+                Task.Run(() => PlaySoundInternal());
+            }
         }
         public static void PlayClickSoundOnce()
         {
-            clickSoundPlayer.Play();
+            if (IsSoundEnabled)  // Check if sound is enabled
+            {
+                clickSoundPlayer.Play();
+            }
         }
         private static void PlaySoundInternal()
         {
