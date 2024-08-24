@@ -2,6 +2,7 @@
 
 using System;
 using System.Media;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -20,31 +21,41 @@ namespace RED.mbnq
         {
             try
             {
-                clickSoundPlayer = new SoundPlayer("mbnqClick.wav");
+                // Load the sound from resources
+                clickSoundPlayer = new SoundPlayer(Properties.Resources.mbnqClick);
                 clickSoundPlayer.Load(); // Load the sound file into memory
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
+                MessageBox.Show($"Failed to load sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        public static void PlayClickSoundOnce()
+        {
+            // Run the sound playing logic on a separate thread
+            Task.Run(() => clickSoundPlayer.PlaySync());
+        }
         public static void PlayClickSound()
+        {
+            // Run the sound playing logic on a separate thread
+            Task.Run(() => PlaySoundInternal());
+        }
+        private static void PlaySoundInternal()
         {
             if (isPlayingSound) return;
 
             try
             {
                 isPlayingSound = true;
-                clickSoundPlayer.PlaySync();
+                clickSoundPlayer.PlaySync(); // PlaySync ensures that the sound plays synchronously and waits until the sound is done
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to play sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
+                MessageBox.Show($"Failed to play sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                isPlayingSound = false;
+                isPlayingSound = false; // Reset the flag once the sound is done playing
             }
         }
     }

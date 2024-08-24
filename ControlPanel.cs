@@ -16,7 +16,6 @@ namespace RED.mbnq
         private MainDisplay mainDisplay;
         private Button centerButton;
         private CheckBox autoSaveOnExit;
-
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -93,6 +92,7 @@ namespace RED.mbnq
             {
                 // Force silent save when the checkbox is being unchecked
                 SaveLoad.SaveSettings(this, false);
+                Sounds.PlayClickSound();
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -119,7 +119,7 @@ namespace RED.mbnq
 
             /* --- --- ---  Sliders --- --- --- */
 // Color
-var redSlider = CreateLabeledSlider("Red", 0, 255);
+            var redSlider = CreateLabeledSlider("Red", 0, 255);
             colorR = redSlider.Slider;
             panel.Controls.Add(redSlider.Panel);
 
@@ -229,6 +229,7 @@ var redSlider = CreateLabeledSlider("Red", 0, 255);
             {
                 label.Text = $"{labelText}: {materialSlider.Value}";
                 UpdateMainDisplay(); // Ensure display is updated on value change
+                Sounds.PlayClickSound();
             };
 
             // Set initial label value according to the current slider value
@@ -283,6 +284,7 @@ var redSlider = CreateLabeledSlider("Red", 0, 255);
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
                 MainDisplay.Invalidate(); // Redraw the overlay
+
             }
 
             // Update the labels with the current values of the sliders
@@ -319,11 +321,13 @@ var redSlider = CreateLabeledSlider("Red", 0, 255);
         {
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after saving settings
+            Sounds.PlayClickSound();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after loading settings
+            Sounds.PlayClickSound();
         }
 
         // This one is for global usage
