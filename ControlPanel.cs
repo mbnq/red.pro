@@ -21,7 +21,7 @@ namespace RED.mbnq
 
         private int mCPWidth = 262;        
         private int mCPHeight = 262;
-        private int mControlRMargin = 36;
+        private int mControlDefSpacing = 36;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen
@@ -55,6 +55,8 @@ namespace RED.mbnq
 
             // Ensure MainDisplay is updated after loading settings
             UpdateMainDisplay();
+
+            this.BackColor = Color.FromArgb(255, 69, 58);
 
             // Add event handler for AutoSaveOnExit checkbox
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
@@ -106,14 +108,11 @@ namespace RED.mbnq
                 AutoSize = true,
                 Cursor = Cursors.Hand,
                 FontType = MaterialSkin.MaterialSkinManager.fontType.Caption,
-                HighEmphasis = false,
-                Location = new Point(mCPWidth - (mControlRMargin*2) - 4, 50),
-                UseAccent = false
+                Location = new Point(mCPWidth - (mControlDefSpacing*2) - 4, 50)
             };
 
             linkLabel.Click += LinkLabel_Click;
             this.Controls.Add(linkLabel);
-            this.BackColor = Color.FromArgb(255, 69, 58);
         }
         private void LinkLabel_Click(object sender, EventArgs e)
         {
@@ -141,7 +140,7 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            mControlWidth = this.ClientSize.Width - mControlRMargin;
+            mControlWidth = this.ClientSize.Width - mControlDefSpacing;
 
             panel = new FlowLayoutPanel
             {
@@ -258,8 +257,7 @@ namespace RED.mbnq
                 RangeMin = min,
                 RangeMax = max,
                 ShowText = false,
-                ShowValue = false,
-                BackColor = Color.FromArgb(35, 35, 35)
+                ShowValue = false
             };
 
             // Set initial label value according to the current slider value
@@ -276,7 +274,7 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = mControlWidth,
-                Height = 66
+                Height = ((mControlDefSpacing * 2) - 6)
             };
 
             label.Location = new Point(3, 3);
@@ -318,9 +316,7 @@ namespace RED.mbnq
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
                 MainDisplay.Invalidate(); // Redraw the overlay
-
             }
-
             UpdateLabels();
         }
 
