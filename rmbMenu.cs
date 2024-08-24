@@ -8,7 +8,7 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem;
+        private ToolStripMenuItem centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem;
         private ToolStripSeparator separator, separator2, separator3, separator4;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -19,6 +19,10 @@ namespace RED.mbnq
             separator2 = new ToolStripSeparator();
             separator3 = new ToolStripSeparator();
             separator4 = new ToolStripSeparator();
+
+            // Initialize center menu item
+            centerMenuItem = new ToolStripMenuItem("Center Overlay");
+            centerMenuItem.Click += centerMenuItem_Click;
 
             // Initialize the save load menu items
             saveMenuItem = new ToolStripMenuItem("Save settings");
@@ -37,6 +41,7 @@ namespace RED.mbnq
 
             // Add the items to the context menu
 
+            this.Items.Add(centerMenuItem);
             this.Items.Add(separator3);
             this.Items.Add(saveMenuItem);
             this.Items.Add(loadMenuItem);
@@ -47,6 +52,11 @@ namespace RED.mbnq
 
         }
 
+        private void centerMenuItem_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+            controlPanel.CenterMainDisplay();
+        }
         private void saveMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();

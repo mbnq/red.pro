@@ -20,7 +20,7 @@ namespace RED.mbnq
         private int mControlWidth;
 
         private int mCPWidth = 262;        
-        private int mCPHeight = 735;
+        private int mCPHeight = 730;
         private int mControlRMargin = 36;
         private Point GetCenteredPosition()
         {
