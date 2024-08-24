@@ -93,8 +93,8 @@ namespace RED.mbnq
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
             MaterialSkin.Primary.Red500,        // Primary color
             MaterialSkin.Primary.Grey500,       // Dark primary color
-            MaterialSkin.Primary.Green500,      // Light primary color
-            MaterialSkin.Accent.LightBlue200,   // Accent color
+            MaterialSkin.Primary.Red500,        // Light primary color
+            MaterialSkin.Accent.Red700,         // Accent color
             MaterialSkin.TextShade.WHITE        // Text color
             );
         }
@@ -104,8 +104,6 @@ namespace RED.mbnq
             {
                 Text = "www.mbnq.pl",
                 AutoSize = true,
-                // ForeColor = Color.Gray,
-                // BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
                 FontType = MaterialSkin.MaterialSkinManager.fontType.Caption,
                 HighEmphasis = false,
