@@ -60,9 +60,9 @@ namespace RED.mbnq
         }
         private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
         {
-            Sounds.PlayClickSoundOnce();
             Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
             toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
+            Sounds.PlayClickSoundOnce();
         }
         private void centerMenuItem_Click(object sender, EventArgs e)
         {
