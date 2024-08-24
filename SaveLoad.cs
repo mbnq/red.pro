@@ -41,8 +41,8 @@ namespace RED.mbnq
             if (showMessage)
             {
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
-                Sounds.PlayClickSoundOnce();
             }
+            Sounds.PlayClickSoundOnce();
         }
 
         /* --- --- --- loading --- --- --- */
@@ -87,8 +87,8 @@ namespace RED.mbnq
             if (showMessage)
             {
                 MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
-                Sounds.PlayClickSoundOnce();
             }
+            Sounds.PlayClickSoundOnce();
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */
