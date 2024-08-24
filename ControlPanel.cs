@@ -88,11 +88,11 @@ namespace RED.mbnq
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
+            Sounds.PlayClickSound();
             if (!autoSaveOnExit.Checked)
             {
                 // Force silent save when the checkbox is being unchecked
                 SaveLoad.SaveSettings(this, false);
-                Sounds.PlayClickSoundOnce();
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -250,9 +250,6 @@ namespace RED.mbnq
 
             return new LabeledSlider(panel, materialSlider);
         }
-
-        private const int OffsetAdjustmentX = 0;  // Adjust this value as needed
-        private const int OffsetAdjustmentY = 0;  // Adjust this value as needed
         public void UpdateMainDisplay()
         {
             if (MainDisplay != null)
@@ -265,8 +262,8 @@ namespace RED.mbnq
                 int translatedOffsetY = TranslateOffset(offsetY.Value);
 
                 // Apply the new position with translated offsets
-                int newLeft = centeredPosition.X + translatedOffsetX + OffsetAdjustmentX;
-                int newTop = centeredPosition.Y + translatedOffsetY + OffsetAdjustmentY;
+                int newLeft = centeredPosition.X + translatedOffsetX;
+                int newTop = centeredPosition.Y + translatedOffsetY;
 
                 MainDisplay.Left = newLeft;
                 MainDisplay.Top = newTop;
@@ -319,15 +316,15 @@ namespace RED.mbnq
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            Sounds.PlayClickSoundOnce();
             SaveLoad.SaveSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after saving settings
-            Sounds.PlayClickSoundOnce();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
+            Sounds.PlayClickSoundOnce();
             SaveLoad.LoadSettings(this);
             UpdateMainDisplay(); // Ensure display is updated after loading settings
-            Sounds.PlayClickSoundOnce();
         }
 
         // This one is for global usage

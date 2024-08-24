@@ -30,15 +30,14 @@ namespace RED.mbnq
                 MessageBox.Show($"Failed to load sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public static void PlayClickSoundOnce()
-        {
-            // Run the sound playing logic on a separate thread
-            Task.Run(() => clickSoundPlayer.PlaySync());
-        }
         public static void PlayClickSound()
         {
             // Run the sound playing logic on a separate thread
             Task.Run(() => PlaySoundInternal());
+        }
+        public static void PlayClickSoundOnce()
+        {
+            clickSoundPlayer.Play();
         }
         private static void PlaySoundInternal()
         {
