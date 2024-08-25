@@ -44,7 +44,7 @@ namespace RED.mbnq
             InitializeComponent();
             InitializeMaterialSkin();
 
-            this.Text = "RED.";
+            this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
             this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
