@@ -79,7 +79,9 @@ namespace RED.mbnq
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
                 openFileDialog.Filter = "PNG files (*.png)|*.png";
+
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
