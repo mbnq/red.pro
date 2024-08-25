@@ -71,17 +71,17 @@ namespace RED.mbnq
 
             /* --- --- --- Menu --- --- --- */
 
-            this.Items.Add(openSettingsDirMenuItem);
-            this.Items.Add(separator6);
-            this.Items.Add(loadCustomMenuItem);
-            this.Items.Add(removeCustomMenuItem);
-            this.Items.Add(separator5);
-            this.Items.Add(toggleSoundMenuItem);
-            this.Items.Add(separator4);
-            this.Items.Add(centerMenuItem);
-            this.Items.Add(separator3);
             this.Items.Add(saveMenuItem);
             this.Items.Add(loadMenuItem);
+            this.Items.Add(separator6);
+            this.Items.Add(openSettingsDirMenuItem);
+            this.Items.Add(separator5);
+            this.Items.Add(loadCustomMenuItem);
+            this.Items.Add(removeCustomMenuItem);
+            this.Items.Add(separator4);
+            this.Items.Add(toggleSoundMenuItem);
+            this.Items.Add(separator3);
+            this.Items.Add(centerMenuItem);
             this.Items.Add(separator2);
             this.Items.Add(aboutMenuItem);
             this.Items.Add(separator1);
