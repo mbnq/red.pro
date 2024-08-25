@@ -1,6 +1,6 @@
 ﻿/* 
     www.mbnq.pl 2024 
-    mbnq00 on gmail
+    mbnq00 on gmail 
 */
 
 using System;
