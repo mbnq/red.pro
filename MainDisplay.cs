@@ -23,7 +23,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.MinimumSize = new Size(1, 1);
-            this.Size = new Size(128, 128);
+            this.Size = new Size(ControlPanel.mPNGMaxWidth, ControlPanel.mPNGMaxHeight);
             this.BackColor = Color.Red;
             this.Opacity = 0.5;
             this.TopMost = true;

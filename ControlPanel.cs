@@ -30,8 +30,8 @@ namespace RED.mbnq
         private int mCPHeight = 730;
         private int mControlRMargin = 36;
 
-        public int mPNGMaxWidth = 256;
-        public int mPNGMaxHeight = 256;
+        public const int mPNGMaxWidth = 256;
+        public const int mPNGMaxHeight = 256;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen 
@@ -126,7 +126,6 @@ namespace RED.mbnq
                 Application.Restart();
             }
         }
-
         public void ApplyCustomOverlay()
         {
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
@@ -136,26 +135,23 @@ namespace RED.mbnq
                 {
                     using (var img = Image.FromFile(customFilePath))
                     {
-                        if (img.Width <= 128 && img.Height <= 128)
+                        if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
                         {
                             mainDisplay.SetCustomOverlay();
                         }
                         else
                         {
-                            MaterialMessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions of 128x128 pixels.", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
+                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                             File.Delete(customFilePath);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
-
-
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Sounds.PlayClickSoundOnce();
