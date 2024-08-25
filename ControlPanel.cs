@@ -393,11 +393,21 @@ namespace RED.mbnq
                     // If using a custom overlay, use a transparent background
                     MainDisplay.BackColor = Color.Lime;  // Set a color to be used as the transparency key
                     MainDisplay.TransparencyKey = MainDisplay.BackColor;  // Make this color transparent
+
+                    // Disable color sliders
+                    colorR.Enabled = false;
+                    colorG.Enabled = false;
+                    colorB.Enabled = false;
                 }
                 else
                 {
                     // If no custom overlay, use the selected color from sliders
                     MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+
+                    // Enable color sliders
+                    colorR.Enabled = true;
+                    colorG.Enabled = true;
+                    colorB.Enabled = true;
                 }
 
                 // Update opacity
@@ -414,6 +424,7 @@ namespace RED.mbnq
             }
             UpdateLabels();
         }
+
 
         //This one is needed to handle negative values because of materialSkin limitations
         private int TranslateOffset(int value)
