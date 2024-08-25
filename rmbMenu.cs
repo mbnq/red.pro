@@ -160,16 +160,6 @@ namespace RED.mbnq
             Application.Exit();
         }
 
-        // refresh menu
-        private void UpdateMenuItems()
-        {
-            // bool hasCustomOverlay = controlPanel.MainDisplay.HasCustomOverlay;
-            bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
-
-            removeCustomMenuItem.Enabled = hasCustomOverlay;
-            loadCustomMenuItem.Enabled = !hasCustomOverlay;
-        }
-
         // load custom .png
         private void LoadCustomMenuItem_Click(object sender, EventArgs e)
         {
@@ -177,10 +167,7 @@ namespace RED.mbnq
             controlPanel.LoadCustomOverlay();
             controlPanel.MainDisplay.SetCustomOverlay();
             UpdateMenuItems();
-            // controlPanel.colorR.Value = 0;
-            // controlPanel.colorG.Value = 0;
-            // controlPanel.colorB.Value = 0;
-            // controlPanel.UpdateMainDisplay();
+            controlPanel.UpdateMainDisplay();
         }
 
         // remove custom .png
@@ -190,10 +177,27 @@ namespace RED.mbnq
             controlPanel.MainDisplay.RemoveCustomOverlay();
             controlPanel.RemoveCustomOverlay();
             UpdateMenuItems();
-            // controlPanel.colorR.Value = 255;
-            // controlPanel.colorG.Value = 0;
-            // controlPanel.colorB.Value = 0;
-            // controlPanel.UpdateMainDisplay();
+            SaveLoad.LoadSettings(controlPanel, false);
+
+            // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
+            if (controlPanel.colorR.Value < 5 && controlPanel.colorG.Value < 5 && controlPanel.colorB.Value < 5)
+            {
+                controlPanel.colorR.Value = 255;
+            }
+
+            // refresh
+            controlPanel.UpdateMainDisplay();
+        }
+
+        /* --- --- ---  --- --- --- */
+        // refresh menu
+        private void UpdateMenuItems()
+        {
+            // bool hasCustomOverlay = controlPanel.MainDisplay.HasCustomOverlay;
+            bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+
+            removeCustomMenuItem.Enabled = hasCustomOverlay;
+            loadCustomMenuItem.Enabled = !hasCustomOverlay;
         }
     }
 }
