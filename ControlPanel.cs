@@ -28,9 +28,9 @@ namespace RED.mbnq
         private int mControlWidth;
         public int mSettingsLoaded = 0;
 
-        private int mCPWidth = 262;        
-        private int mCPHeight = 730;
-        private int mControlRMargin = 36;
+        private static readonly int mCPWidth = 262;        
+        private static readonly int mCPHeight = 730;
+        private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 256;
         public const int mPNGMaxHeight = 256;
@@ -192,7 +192,7 @@ namespace RED.mbnq
         }
         private void InitializeComponent()
         {
-            mControlWidth = this.ClientSize.Width - mControlRMargin;
+            mControlWidth = this.ClientSize.Width - mControlDefSpacer;
 
             panel = new FlowLayoutPanel
             {
@@ -332,7 +332,7 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = mControlWidth,
-                Height = ((mControlRMargin * 2) - 6)
+                Height = ((mControlDefSpacer * 2) - 6)
             };
 
             label.Location = new Point(3, 3);

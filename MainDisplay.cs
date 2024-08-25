@@ -74,7 +74,7 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    // MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                     customOverlay = null;
                     if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay file does not exist."); }
