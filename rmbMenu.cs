@@ -85,6 +85,8 @@ namespace RED.mbnq
             this.Items.Add(separator);
             this.Items.Add(closeMenuItem);
 
+            UpdateMenuItems();
+
         }
 
         /* --- --- --- --- --- --- */
@@ -102,12 +104,12 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    MessageBox.Show("Settings directory not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show("Settings directory not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
@@ -148,7 +150,8 @@ namespace RED.mbnq
         }
         private void UpdateMenuItems()
         {
-            bool hasCustomOverlay = controlPanel.MainDisplay.HasCustomOverlay;
+            // bool hasCustomOverlay = controlPanel.MainDisplay.HasCustomOverlay;
+            bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
             // Enable or disable the "Remove Custom" menu item based on the overlay state
             removeCustomMenuItem.Enabled = hasCustomOverlay;
