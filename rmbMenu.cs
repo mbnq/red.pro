@@ -16,13 +16,13 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private ToolStripMenuItem toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, openSettingsDirMenuItem;
-        private ToolStripSeparator separator, separator2, separator3, separator4, separator5, separator6;
+        private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
             this.controlPanel = controlPanel;
 
             // Initialize menu item separators
-            separator = new ToolStripSeparator();
+            separator1 = new ToolStripSeparator();
             separator2 = new ToolStripSeparator();
             separator3 = new ToolStripSeparator();
             separator4 = new ToolStripSeparator();
@@ -82,7 +82,7 @@ namespace RED.mbnq
             this.Items.Add(loadMenuItem);
             this.Items.Add(separator2);
             this.Items.Add(aboutMenuItem);
-            this.Items.Add(separator);
+            this.Items.Add(separator1);
             this.Items.Add(closeMenuItem);
 
             UpdateMenuItems();
@@ -91,6 +91,7 @@ namespace RED.mbnq
 
         /* --- --- --- --- --- --- */
 
+        // open player's data folder
         private void OpenSettingsDirMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
@@ -104,25 +105,33 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    MaterialMessageBox.Show("Settings directory not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show("Settings directory not found.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Sounds.PlayClickSoundOnce();
                 }
             }
             catch (Exception ex)
             {
-                MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Sounds.PlayClickSoundOnce();
             }
         }
+
+        // sounds mute toggle
         private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
             toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
             Sounds.PlayClickSoundOnce();
         }
+
+        // center overlay
         private void centerMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.CenterMainDisplay();
         }
+
+        // saveLoad settings
         private void saveMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
@@ -134,6 +143,7 @@ namespace RED.mbnq
             SaveLoad.LoadSettings(controlPanel, false);
         }
 
+        // about
         private void AboutMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start(new ProcessStartInfo
@@ -144,39 +154,37 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
         }
 
+        // close aka exit
         private void CloseMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+        // refresh menu
         private void UpdateMenuItems()
         {
             // bool hasCustomOverlay = controlPanel.MainDisplay.HasCustomOverlay;
             bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
-            // Enable or disable the "Remove Custom" menu item based on the overlay state
             removeCustomMenuItem.Enabled = hasCustomOverlay;
-
-            // Disable the "Load Custom" menu item if the custom overlay has been removed
             loadCustomMenuItem.Enabled = !hasCustomOverlay;
         }
 
+        // load custom .png
         private void LoadCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomOverlay();
-            controlPanel.MainDisplay.SetCustomOverlay(); // Refresh the main display after loading the overlay
-
-            // Update the menu items state
+            controlPanel.MainDisplay.SetCustomOverlay();
             UpdateMenuItems();
         }
 
+        // remove custom .png
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.RemoveCustomOverlay();
-            controlPanel.MainDisplay.RemoveCustomOverlay(); // Refresh the main display after removing the overlay
-
-            // Update the menu items state
+            controlPanel.MainDisplay.RemoveCustomOverlay();
             UpdateMenuItems();
         }
     }
