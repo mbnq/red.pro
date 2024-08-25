@@ -22,7 +22,7 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
         private Button saveButton, loadButton, centerButton;
         private FlowLayoutPanel panel;
-        private MainDisplay mainDisplay;
+        public MainDisplay mainDisplay;
         private CheckBox autoSaveOnExit;
         private rmbMenu rightClickMenu;
         private int mControlWidth;

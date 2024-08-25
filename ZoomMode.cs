@@ -71,14 +71,20 @@ namespace RED.mbnq
 
         private static void ZoomForm_Paint(object sender, PaintEventArgs e)
         {
-            if (controlPanel == null) return;
+            if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
-            // Use GetCenteredPosition to determine the zoom area center
-            Point centeredPosition = controlPanel.GetCenteredPosition();
-            int zoomSize = 256;
+            // Get the current position of the MainDisplay
+            Point mainDisplayPosition = controlPanel.MainDisplay.Location;
 
-            int captureX = centeredPosition.X - (zoomSize / 2);
-            int captureY = centeredPosition.Y - (zoomSize / 2);
+            int zoomSize = 128;
+
+            // Calculate the center of the MainDisplay
+            int centerX = mainDisplayPosition.X + (controlPanel.MainDisplay.Width / 2);
+            int centerY = mainDisplayPosition.Y + (controlPanel.MainDisplay.Height / 2);
+
+            // Adjust captureX and captureY to be the top-left corner of the capture area
+            int captureX = centerX + (zoomSize / 2);
+            int captureY = centerY + (zoomSize / 2);
 
             // Draw the zoomed portion of the screen directly using the Graphics object
             Graphics g = e.Graphics;
@@ -87,7 +93,6 @@ namespace RED.mbnq
 
             g.CopyFromScreen(captureX, captureY, 0, 0, new Size(zoomSize, zoomSize));
         }
-
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
