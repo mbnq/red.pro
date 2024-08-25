@@ -32,7 +32,7 @@ namespace RED.mbnq
             // Load settings and update display
             SaveLoad.LoadSettings(controlPanel, false);
 
-            // Check for a custom overlay file and remove it if it's invalid
+            // Check for a custom overlay file
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
@@ -49,7 +49,6 @@ namespace RED.mbnq
                 }
             };
 
-            // Run the application with the control panel as the main form
             Application.Run(controlPanel);
         }
     }
