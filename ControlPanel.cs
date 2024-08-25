@@ -17,7 +17,7 @@ namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
-        public static bool mIsDebugOn = false;
+        public static readonly bool mIsDebugOn = false;
 
         private MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
         private Button saveButton, loadButton, centerButton;

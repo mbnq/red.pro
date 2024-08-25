@@ -121,7 +121,7 @@ namespace RED.mbnq
                     File.Move(customFilePath, backupFilePath);
                 } else
                 {
-                    File.Delete(filePath);
+                    File.Delete(customFilePath);
                 }
 
                 // Dispose of the overlay
