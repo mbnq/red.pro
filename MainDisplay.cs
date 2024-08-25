@@ -170,6 +170,8 @@ namespace RED.mbnq
                 if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay is null, drawing fallback rectangle."); }
                 DrawFallbackRectangle(g);
             }
+
+            this.Show();
         }
         private void DrawFallbackRectangle(Graphics g)
         {
