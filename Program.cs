@@ -30,6 +30,8 @@ namespace RED.mbnq
                 MainDisplay = mainDisplay,
             };
 
+            ZoomMode.InitializeZoomMode();
+
             // Load settings and update display
             SaveLoad.LoadSettings(controlPanel, false);
 

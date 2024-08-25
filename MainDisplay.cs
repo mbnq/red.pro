@@ -39,6 +39,22 @@ namespace RED.mbnq
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
 
+            this.MouseDown += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    ZoomMode.StartHoldTimer();
+                }
+            };
+
+            this.MouseUp += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    ZoomMode.StopHoldTimer();
+                    ZoomMode.HideZoomOverlay();
+                }
+            };
         }
 
         string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
@@ -178,6 +194,8 @@ namespace RED.mbnq
         {
             g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
         }
+
+
 
         // ensure the custom overlay image is properly disposed
         protected override void Dispose(bool disposing)

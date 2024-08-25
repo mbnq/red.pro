@@ -246,6 +246,7 @@
     </Compile>
     <Compile Include="SaveLoad.cs" />
     <Compile Include="Sounds.cs" />
+    <Compile Include="ZoomMode.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
