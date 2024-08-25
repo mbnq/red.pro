@@ -92,6 +92,7 @@ namespace RED.mbnq
                     File.Copy(filePath, destinationPath);
 
                     MainDisplay.SetCustomOverlay(); // Set the new custom overlay and refresh display
+                    UpdateMainDisplay();
                 }
             }
         }
@@ -99,6 +100,7 @@ namespace RED.mbnq
         public void RemoveCustomOverlay()
         {
             MainDisplay.RemoveCustomOverlay(); // Remove the overlay and refresh display
+            UpdateMainDisplay();
         }
         public void ApplyCustomOverlay()
         {
