@@ -105,13 +105,13 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    MaterialMessageBox.Show("Settings directory not found.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show("Settings directory not found.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                 }
             }
             catch (Exception ex)
             {
-                MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                 Sounds.PlayClickSoundOnce();
             }
         }

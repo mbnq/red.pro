@@ -63,7 +63,7 @@ namespace RED.mbnq
                             }
                             else
                             {
-                                MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                                 Sounds.PlayClickSoundOnce();
                                 File.Delete(filePath);
                                 customOverlay = null;
@@ -74,7 +74,7 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                     customOverlay = null;
                     if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay file does not exist."); }
@@ -82,7 +82,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
                 Sounds.PlayClickSoundOnce();
                 customOverlay = null;
                 if (ControlPanel.mIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }

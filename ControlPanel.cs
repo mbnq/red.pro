@@ -125,7 +125,7 @@ namespace RED.mbnq
                 }
                 catch (Exception ex)
                 {
-                    MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
             }
         }
@@ -464,7 +464,7 @@ namespace RED.mbnq
             }
             else
             {
-                MessageBox.Show("Overlay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Overlay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
 
