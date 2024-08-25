@@ -32,8 +32,8 @@ namespace RED.mbnq
         private static readonly int mCPHeight = 730;
         private static readonly int mControlDefSpacer = 36;
 
-        public const int mPNGMaxWidth = 1000;
-        public const int mPNGMaxHeight = 1000;
+        public const int mPNGMaxWidth = 1920;
+        public const int mPNGMaxHeight = 1080;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen 
