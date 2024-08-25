@@ -119,5 +119,9 @@ namespace RED.mbnq
             }
             base.Dispose(disposing);
         }
+        public bool HasCustomOverlay
+        {
+            get { return customOverlay != null; }
+        }
     }
 }

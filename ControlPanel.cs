@@ -194,7 +194,7 @@ namespace RED.mbnq
                 MaterialSkin.Accent.Red100,         // Accent color
                 MaterialSkin.TextShade.WHITE        // Text color
             );
-            this.BackColor = Color.FromArgb(255, 64, 58);
+            // this.BackColor = Color.FromArgb(255, 255, 58);
             this.DrawerBackgroundWithAccent = false;
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
@@ -385,9 +385,22 @@ namespace RED.mbnq
                 MainDisplay.Left = newLeft;
                 MainDisplay.Top = newTop;
 
-                // Update size, color, and opacity as before
+                // Update size
                 MainDisplay.Size = new Size(size.Value, size.Value);
-                MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+
+                if (MainDisplay.HasCustomOverlay)  // Check if custom overlay exists
+                {
+                    // If using a custom overlay, use a transparent background
+                    MainDisplay.BackColor = Color.Lime;  // Set a color to be used as the transparency key
+                    MainDisplay.TransparencyKey = MainDisplay.BackColor;  // Make this color transparent
+                }
+                else
+                {
+                    // If no custom overlay, use the selected color from sliders
+                    MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                }
+
+                // Update opacity
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
                 // Ensure it is within the screen bounds
