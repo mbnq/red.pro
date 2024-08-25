@@ -31,16 +31,17 @@ namespace RED.mbnq
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
 
+            // Setup the update timer
             updateTimer = new Timer();
             updateTimer.Interval = 1000;
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
+        }
 
-            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-            if (File.Exists(customFilePath))
-            {
-                customOverlay = Image.FromFile(customFilePath);
-            }
+        public void SetCustomOverlay(Image overlay)
+        {
+            customOverlay = overlay;
+            this.Invalidate();  // Forces the control to be redrawn
         }
 
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
@@ -49,13 +50,17 @@ namespace RED.mbnq
 
             if (customOverlay != null)
             {
+                // Draw custom overlay image
                 g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             }
             else
             {
+                // Default rectangle drawing
                 g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
             }
         }
+
+        // Dispose method to ensure the custom overlay image is properly disposed
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -65,4 +70,5 @@ namespace RED.mbnq
             base.Dispose(disposing);
         }
     }
+
 }
