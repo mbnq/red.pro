@@ -16,7 +16,7 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private ToolStripMenuItem toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem;
-        private ToolStripSeparator separator, separator2, separator3, separator4, separator5;
+        private ToolStripSeparator separator, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
             this.controlPanel = controlPanel;
@@ -27,6 +27,7 @@ namespace RED.mbnq
             separator3 = new ToolStripSeparator();
             separator4 = new ToolStripSeparator();
             separator5 = new ToolStripSeparator();
+            separator6 = new ToolStripSeparator();
 
             // Initialize the toggle sound menu item
             toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
@@ -59,12 +60,13 @@ namespace RED.mbnq
             removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
             removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
+            this.Items.Add(separator6);
+
             // Safely insert items into the context menu
             int currentItemCount = this.Items.Count;
 
             int loadCustomIndex = Math.Min(2, currentItemCount);
             this.Items.Insert(loadCustomIndex, loadCustomMenuItem);
-
             int removeCustomIndex = Math.Min(3, currentItemCount + 1);
             this.Items.Insert(removeCustomIndex, removeCustomMenuItem);
 
