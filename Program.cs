@@ -30,7 +30,7 @@ namespace RED.mbnq
                 MainDisplay = mainDisplay,
             };
 
-            ZoomMode.InitializeZoomMode();
+            ZoomMode.InitializeZoomMode(controlPanel);
             GlobalMouseHook.SetHook();
 
             // Load settings and update display
