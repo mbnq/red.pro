@@ -56,6 +56,7 @@ namespace RED.mbnq
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.TopMost = true;
 
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means, do not show dialogbox
