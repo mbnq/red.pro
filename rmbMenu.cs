@@ -59,11 +59,11 @@ namespace RED.mbnq
             aboutMenuItem.Click += AboutMenuItem_Click;
 
             // Initialize menu item Load Custom
-            loadCustomMenuItem = new ToolStripMenuItem("Load Custom");
+            loadCustomMenuItem = new ToolStripMenuItem("Load Custom PNG");
             loadCustomMenuItem.Click += LoadCustomMenuItem_Click;
 
             // Initialize menu item Remove Custom
-            removeCustomMenuItem = new ToolStripMenuItem("Remove Custom");
+            removeCustomMenuItem = new ToolStripMenuItem("Remove Custom PNG");
             removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
             removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 

@@ -96,10 +96,10 @@ namespace RED.mbnq
             string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
-                // Calculate hash of the current custom overlay
+                // Calculate hash of the current .png file
                 string currentFileHash = CalculateFileHash(customFilePath);
 
-                // Check for existing backup files
+                // Check for existing in backup files with same hash
                 var backupFiles = Directory.GetFiles(SaveLoad.SettingsDirectory, "old.*.custom.png");
 
                 bool shouldCreateBackup = true;
@@ -119,7 +119,8 @@ namespace RED.mbnq
                     string backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
                     string backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
                     File.Move(customFilePath, backupFilePath);
-                } else
+                } 
+                else
                 {
                     File.Delete(customFilePath);
                 }
@@ -132,6 +133,8 @@ namespace RED.mbnq
                 this.Invalidate();
             }
         }
+
+        // calculate file hash
         private string CalculateFileHash(string filePath)
         {
             using (var sha256 = SHA256.Create())
@@ -143,28 +146,29 @@ namespace RED.mbnq
                 }
             }
         }
+
+        // draw overlay
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
             if (customOverlay != null)
             {
-                Console.WriteLine("Drawing custom overlay.");
-                // Draw the image at the top-left corner
+                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Drawing custom overlay."); }
                 g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             }
             else
             {
-                Console.WriteLine("Custom overlay is null, drawing fallback rectangle.");
+                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay is null, drawing fallback rectangle."); }
                 DrawFallbackRectangle(g);
             }
         }
         private void DrawFallbackRectangle(Graphics g)
         {
-            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle); // Default red fill as a fallback
+            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
         }
 
-        // Dispose method to ensure the custom overlay image is properly disposed
+        // ensure the custom overlay image is properly disposed
         protected override void Dispose(bool disposing)
         {
             if (disposing)
