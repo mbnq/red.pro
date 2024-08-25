@@ -169,6 +169,16 @@ namespace RED.mbnq
             controlPanel.LoadCustomOverlay();
             controlPanel.MainDisplay.SetCustomOverlay();
             UpdateMenuItems();
+
+            // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
+            if (controlPanel.colorR.Value > 200 || controlPanel.colorG.Value > 200 || controlPanel.colorB.Value > 200)
+            {
+                controlPanel.colorR.Value = 10;
+                controlPanel.colorG.Value = 10;
+                controlPanel.colorB.Value = 10;
+            }
+
+            // refresh
             controlPanel.UpdateMainDisplay();
         }
 
