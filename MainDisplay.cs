@@ -9,6 +9,7 @@ using MaterialSkin.Controls;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -39,9 +40,9 @@ namespace RED.mbnq
             updateTimer.Start();
         }
 
+        string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomOverlay()
         {
-            string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
 
             try
             {
@@ -95,9 +96,33 @@ namespace RED.mbnq
             string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
-                string backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
-                string backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
-                File.Move(customFilePath, backupFilePath);
+                // Calculate hash of the current custom overlay
+                string currentFileHash = CalculateFileHash(customFilePath);
+
+                // Check for existing backup files
+                var backupFiles = Directory.GetFiles(SaveLoad.SettingsDirectory, "old.*.custom.png");
+
+                bool shouldCreateBackup = true;
+
+                foreach (var backupFile in backupFiles)
+                {
+                    string backupFileHash = CalculateFileHash(backupFile);
+                    if (currentFileHash == backupFileHash)
+                    {
+                        shouldCreateBackup = false;
+                        break;
+                    }
+                }
+
+                if (shouldCreateBackup)
+                {
+                    string backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
+                    string backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
+                    File.Move(customFilePath, backupFilePath);
+                } else
+                {
+                    File.Delete(filePath);
+                }
 
                 // Dispose of the overlay
                 customOverlay?.Dispose();
@@ -105,6 +130,17 @@ namespace RED.mbnq
 
                 // Refresh the display
                 this.Invalidate();
+            }
+        }
+        private string CalculateFileHash(string filePath)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                using (var stream = File.OpenRead(filePath))
+                {
+                    byte[] hash = sha256.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
             }
         }
         private void MainDisplay_Paint(object sender, PaintEventArgs e)

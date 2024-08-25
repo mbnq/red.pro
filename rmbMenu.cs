@@ -183,8 +183,8 @@ namespace RED.mbnq
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.RemoveCustomOverlay();
             controlPanel.MainDisplay.RemoveCustomOverlay();
+            controlPanel.RemoveCustomOverlay();
             UpdateMenuItems();
         }
     }
