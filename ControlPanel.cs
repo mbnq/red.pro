@@ -74,63 +74,7 @@ namespace RED.mbnq
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
 
-        /* --- --- --- Custom overlay --- --- --- */
-        public void LoadCustomOverlay()
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
-                openFileDialog.Filter = "PNG files (*.png)|*.png";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = openFileDialog.FileName;
-                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-
-                    if (File.Exists(destinationPath))
-                    {
-                        File.Delete(destinationPath);
-                    }
-
-                    File.Copy(filePath, destinationPath);
-
-                    MainDisplay.SetCustomOverlay(); // Set the new custom overlay and refresh display 
-                    UpdateMainDisplay();
-                }
-            }
-        }
-
-        public void RemoveCustomOverlay()
-        {
-            MainDisplay.RemoveCustomOverlay(); // Remove the overlay and refresh display
-            UpdateMainDisplay();
-        }
-        public void ApplyCustomOverlay()
-        {
-            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-            if (File.Exists(customFilePath))
-            {
-                try
-                {
-                    using (var img = Image.FromFile(customFilePath))
-                    {
-                        if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
-                        {
-                            mainDisplay.SetCustomOverlay();
-                        }
-                        else
-                        {
-                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                            File.Delete(customFilePath);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                }
-            }
-        }
+        // sound for rmb
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Sounds.PlayClickSoundOnce();
@@ -142,6 +86,8 @@ namespace RED.mbnq
             base.OnResize(e);
             this.Size = new Size(mCPWidth, mCPHeight);
         }
+
+        // main display init
         public MainDisplay MainDisplay
         {
             get { return mainDisplay; }
@@ -303,6 +249,71 @@ namespace RED.mbnq
         {
             get => autoSaveOnExit.Checked;
             set => autoSaveOnExit.Checked = value;
+        }
+
+        /* --- --- --- Custom overlay --- --- --- */
+
+        // Load and set the new custom overlay and refresh display
+        public void LoadCustomOverlay()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
+                openFileDialog.Filter = "PNG files (*.png)|*.png";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+
+                    if (File.Exists(destinationPath))
+                    {
+                        File.Delete(destinationPath);
+                    }
+
+                    File.Copy(filePath, destinationPath);
+
+                    MainDisplay.SetCustomOverlay();
+                    UpdateMainDisplay();
+                }
+            }
+        }
+
+        // Remove the overlay and refresh display
+        public void RemoveCustomOverlay()
+        {
+            MainDisplay.RemoveCustomOverlay();
+            UpdateMainDisplay();
+        }
+
+        // Apply custon overlay
+        public void ApplyCustomOverlay()
+        {
+            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            if (File.Exists(customFilePath))
+            {
+                try
+                {
+                    using (var img = Image.FromFile(customFilePath))
+                    {
+                        if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
+                        {
+                            mainDisplay.SetCustomOverlay();
+                        }
+                        else
+                        {
+                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                            Sounds.PlayClickSoundOnce();
+                            File.Delete(customFilePath);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    Sounds.PlayClickSoundOnce();
+                }
+            }
         }
 
         /* --- --- --- Mix sliders with labels here --- --- --- */
