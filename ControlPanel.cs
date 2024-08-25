@@ -105,6 +105,12 @@ namespace RED.mbnq
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
+                // Dispose of the image first
+                if (mainDisplay != null)
+                {
+                    mainDisplay.Dispose();
+                }
+
                 var backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
                 var backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
                 File.Move(customFilePath, backupFilePath);
@@ -113,6 +119,7 @@ namespace RED.mbnq
                 Application.Restart();
             }
         }
+
 
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {

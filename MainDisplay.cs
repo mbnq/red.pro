@@ -56,5 +56,13 @@ namespace RED.mbnq
                 g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
             }
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                customOverlay?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
