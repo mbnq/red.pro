@@ -120,15 +120,15 @@ namespace RED.mbnq
             Application.Exit();
         }
 
-        // Load Custom event
         private void LoadCustomMenuItem_Click(object sender, EventArgs e)
         {
+            Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomOverlay();
         }
 
-        // Remove Custom event
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
+            Sounds.PlayClickSoundOnce();
             controlPanel.RemoveCustomOverlay();
         }
     }

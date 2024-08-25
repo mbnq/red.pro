@@ -87,7 +87,9 @@ namespace RED.mbnq
                 {
                     if (img.Width > 128 || img.Height > 128)
                     {
-                        MessageBox.Show("The image must be 128x128 pixels or smaller.", "Invalid Image Size", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Sounds.PlayClickSoundOnce();
+                        MaterialMessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions of 128x128 pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                        Sounds.PlayClickSoundOnce();
                         return;
                     }
                 }
@@ -98,7 +100,6 @@ namespace RED.mbnq
                 // Apply the custom overlay immediately
                 ApplyCustomOverlay();
 
-                MessageBox.Show("Custom overlay loaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Application.Restart();
             }
         }
@@ -119,7 +120,6 @@ namespace RED.mbnq
                 var backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
                 File.Move(customFilePath, backupFilePath);
 
-                MessageBox.Show("Custom overlay removed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Application.Restart();
             }
         }
@@ -139,7 +139,7 @@ namespace RED.mbnq
                         }
                         else
                         {
-                            MessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions of 128x128 pixels.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MaterialMessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions of 128x128 pixels.", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
                             File.Delete(customFilePath);
                         }
                     }
