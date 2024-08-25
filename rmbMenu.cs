@@ -1,7 +1,9 @@
 ﻿/* 
     www.mbnq.pl 2024 
     mbnq00 on gmail
- */
+
+    Mouse menu comes here
+*/
 
 using System;
 using System.IO;
