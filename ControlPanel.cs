@@ -112,7 +112,7 @@ namespace RED.mbnq
                 MaterialSkin.Accent.Red100,         // Accent color
                 MaterialSkin.TextShade.WHITE        // Text color
             );
-            // this.BackColor = Color.FromArgb(255, 255, 58);
+            this.BackColor = Color.FromArgb(255, 255, 58);
             this.DrawerBackgroundWithAccent = false;
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
