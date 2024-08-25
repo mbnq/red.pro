@@ -5,6 +5,7 @@
     This is the overlay reddot crosshair
 */
 
+using MaterialSkin.Controls;
 using System;
 using System.Drawing;
 using System.IO;
@@ -57,31 +58,30 @@ namespace RED.mbnq
                                 customOverlay = new Bitmap(img);
                                 this.Invalidate();
 
-                                if (ControlPanel.mIsDebugOn)
-                                {
-                                    Console.WriteLine("Custom overlay successfully loaded.");
-                                }
+                                if (ControlPanel.mIsDebugOn) {Console.WriteLine("Custom overlay successfully loaded.");}
                             }
                             else
                             {
-                                MessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions or is not a valid PNG.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Sounds.PlayClickSoundOnce();
                                 File.Delete(filePath);
                                 customOverlay = null;
-                                Console.WriteLine("Custom overlay failed to load: Invalid dimensions or format.");
+                                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay failed to load: Invalid dimensions or format."); }
                             }
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("The specified custom overlay file does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Sounds.PlayClickSoundOnce();
                     customOverlay = null;
-                    Console.WriteLine("Custom overlay file does not exist.");
+                    if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay file does not exist."); }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 customOverlay = null;
                 Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}");
             }
