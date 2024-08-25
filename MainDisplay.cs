@@ -39,22 +39,6 @@ namespace RED.mbnq
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
 
-            this.MouseDown += (s, e) =>
-            {
-                if (e.Button == MouseButtons.Right)
-                {
-                    ZoomMode.StartHoldTimer();
-                }
-            };
-
-            this.MouseUp += (s, e) =>
-            {
-                if (e.Button == MouseButtons.Right)
-                {
-                    ZoomMode.StopHoldTimer();
-                    ZoomMode.HideZoomOverlay();
-                }
-            };
         }
 
         string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");

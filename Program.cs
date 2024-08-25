@@ -31,6 +31,7 @@ namespace RED.mbnq
             };
 
             ZoomMode.InitializeZoomMode();
+            GlobalMouseHook.SetHook();
 
             // Load settings and update display
             SaveLoad.LoadSettings(controlPanel, false);

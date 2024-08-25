@@ -45,7 +45,7 @@ namespace RED.mbnq
                 zoomForm = new Form
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(256, 256),
+                    Size = new Size(512, 512),
                     StartPosition = FormStartPosition.Manual,
                     TopMost = true,
                     ShowInTaskbar = false,
@@ -57,7 +57,7 @@ namespace RED.mbnq
 
             // Capture screen
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-            int zoomSize = 256;
+            int zoomSize = 512;
             int captureX = (screenBounds.Width - zoomSize) / 2;
             int captureY = (screenBounds.Height - zoomSize) / 2;
             Bitmap bmp = new Bitmap(zoomSize, zoomSize);

@@ -231,6 +231,7 @@
     <Compile Include="ControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GlobalMouseHook.cs" />
     <Compile Include="MainDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

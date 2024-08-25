@@ -34,7 +34,7 @@ namespace RED.mbnq
 
         public const int mPNGMaxWidth = 1920;
         public const int mPNGMaxHeight = 1080;
-        private Point GetCenteredPosition()
+        public Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen 
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
