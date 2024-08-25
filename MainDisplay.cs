@@ -82,8 +82,9 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Sounds.PlayClickSoundOnce();
                 customOverlay = null;
-                Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}");
+                if (ControlPanel.mIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
             }
 
             // Refresh the display
