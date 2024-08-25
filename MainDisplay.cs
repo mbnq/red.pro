@@ -152,6 +152,11 @@ namespace RED.mbnq
         {
             Graphics g = e.Graphics;
 
+            // Set graphics options for better quality rendering
+            // g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            // g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            // g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
             if (customOverlay != null)
             {
                 if (ControlPanel.mIsDebugOn) { Console.WriteLine("Drawing custom overlay."); }
