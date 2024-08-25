@@ -17,7 +17,7 @@ namespace RED.mbnq
 
             holdTimer = new Timer
             {
-                Interval = 2000 // 2 seconds
+                Interval = 1000 // 2 seconds
             };
             holdTimer.Tick += HoldTimer_Tick;
         }
@@ -48,7 +48,7 @@ namespace RED.mbnq
                 zoomForm = new Form
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(256, 256),
+                    Size = new Size(384, 384),
                     StartPosition = FormStartPosition.Manual,
                     TopMost = true,
                     ShowInTaskbar = false,
@@ -76,11 +76,11 @@ namespace RED.mbnq
             // Get the current position of the MainDisplay
             Point mainDisplayPosition = controlPanel.MainDisplay.Location;
 
-            int zoomSize = 128;
+            int zoomSize = 256;
 
             // Calculate the center of the MainDisplay
-            int centerX = mainDisplayPosition.X + (controlPanel.MainDisplay.Width / 2);
-            int centerY = mainDisplayPosition.Y + (controlPanel.MainDisplay.Height / 2);
+            int centerX = mainDisplayPosition.X;
+            int centerY = mainDisplayPosition.Y;
 
             // Adjust captureX and captureY to be the top-left corner of the capture area
             int captureX = centerX + (zoomSize / 2);
