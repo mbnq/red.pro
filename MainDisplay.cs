@@ -52,7 +52,7 @@ namespace RED.mbnq
                         {
                             if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
                             {
-                                // Dispose of any existing overlay
+                                // Dispose of the existing overlay if it exists
                                 customOverlay?.Dispose();
                                 customOverlay = new Bitmap(img);
                                 this.Invalidate();  // Force the control to redraw with the new image
@@ -82,8 +82,27 @@ namespace RED.mbnq
                 customOverlay = null;
                 Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}");
             }
+
+            // Refresh the display
+            this.Invalidate();
         }
-        
+        public void RemoveCustomOverlay()
+        {
+            string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            if (File.Exists(customFilePath))
+            {
+                string backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
+                string backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
+                File.Move(customFilePath, backupFilePath);
+
+                // Dispose of the overlay
+                customOverlay?.Dispose();
+                customOverlay = null;
+
+                // Refresh the display
+                this.Invalidate();
+            }
+        }
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;

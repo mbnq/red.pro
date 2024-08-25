@@ -76,55 +76,29 @@ namespace RED.mbnq
 
         public void LoadCustomOverlay()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                Filter = "PNG Files (*.png)|*.png",
-                Title = "Select Custom Overlay",
-                CheckFileExists = true
-            };
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                var selectedFile = openFileDialog.FileName;
-                using (var img = Image.FromFile(selectedFile))
+                openFileDialog.Filter = "PNG files (*.png)|*.png";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (img.Width > mPNGMaxWidth || img.Height > mPNGMaxHeight)
+                    string filePath = openFileDialog.FileName;
+                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+
+                    if (File.Exists(destinationPath))
                     {
-                        Sounds.PlayClickSoundOnce();
-                        MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                        Sounds.PlayClickSoundOnce();
-                        return;
+                        File.Delete(destinationPath);
                     }
+
+                    File.Copy(filePath, destinationPath);
+
+                    MainDisplay.SetCustomOverlay(); // Set the new custom overlay and refresh display
                 }
-
-                var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-                File.Copy(selectedFile, customFilePath, true);
-
-                // Apply the custom overlay immediately
-                ApplyCustomOverlay();
-
-                Application.Restart();
             }
         }
 
-
         public void RemoveCustomOverlay()
         {
-            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-            if (File.Exists(customFilePath))
-            {
-                // Dispose of the image first
-                if (mainDisplay != null)
-                {
-                    mainDisplay.Dispose();
-                }
-
-                var backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
-                var backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
-                File.Move(customFilePath, backupFilePath);
-
-                Application.Restart();
-            }
+            MainDisplay.RemoveCustomOverlay(); // Remove the overlay and refresh display
         }
         public void ApplyCustomOverlay()
         {

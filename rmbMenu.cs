@@ -155,13 +155,14 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomOverlay();
+            controlPanel.MainDisplay.SetCustomOverlay(); // Refresh the main display after loading the overlay
         }
 
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.RemoveCustomOverlay();
+            controlPanel.MainDisplay.RemoveCustomOverlay(); // Refresh the main display after removing the overlay
         }
     }
 }
-
