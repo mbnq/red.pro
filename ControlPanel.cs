@@ -74,12 +74,6 @@ namespace RED.mbnq
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
 
-        // sound for rmb
-        private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-        }
-
         // don't remove this one
         protected override void OnResize(EventArgs e)
         {
@@ -414,7 +408,6 @@ namespace RED.mbnq
             UpdateLabels();
         }
 
-
         //This one is needed to handle negative values because of materialSkin limitations
         private int TranslateOffset(int value)
         {
@@ -440,17 +433,6 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             timerInterval.Parent.Controls[0].Text = $"Refresh Rate: {timerInterval.Value} ms";
         }
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            SaveLoad.SaveSettings(this);
-            UpdateMainDisplay();
-        }
-        private void LoadButton_Click(object sender, EventArgs e)
-        {
-            SaveLoad.LoadSettings(this);
-            UpdateMainDisplay();
-        }
-
         public void CenterMainDisplay()
         {
             if (MainDisplay != null)
@@ -480,12 +462,30 @@ namespace RED.mbnq
                 MessageBox.Show("Overlay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
-
         private void CenterButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             CenterMainDisplay();
         }
+
+        /* --- --- --- Mouse --- --- --- */
+        private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            SaveLoad.SaveSettings(this);
+            UpdateMainDisplay();
+        }
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            SaveLoad.LoadSettings(this);
+            UpdateMainDisplay();
+        }
+
+        /* --- --- ---  --- --- --- */
 
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
