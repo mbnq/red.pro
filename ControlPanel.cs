@@ -162,7 +162,7 @@ namespace RED.mbnq
             panel.Controls.Add(blueSlider.Panel);
 
             // Size
-            var sizeSlider = CreateLabeledSlider("Size", 1, 100);
+            var sizeSlider = CreateLabeledSlider("Size", 1, 200);
             size = sizeSlider.Slider;
             panel.Controls.Add(sizeSlider.Panel);
 
