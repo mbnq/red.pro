@@ -135,7 +135,7 @@ namespace RED.mbnq
                     {
                         if (img.Width <= 128 && img.Height <= 128)
                         {
-                            mainDisplay.SetCustomOverlay(customFilePath);  // Corrected line
+                            mainDisplay.SetCustomOverlay();
                         }
                         else
                         {

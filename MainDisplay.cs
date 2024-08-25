@@ -22,8 +22,8 @@ namespace RED.mbnq
             // Defaults
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
-            this.MinimumSize = new Size(1, 1);
-            this.Size = new Size(4, 4);
+            this.MinimumSize = new Size(128, 128);  // Set minimum size to match the image
+            this.Size = new Size(128, 128);         // Set initial size to match the image
             this.BackColor = Color.Red;
             this.Opacity = 0.5;
             this.TopMost = true;
@@ -38,8 +38,11 @@ namespace RED.mbnq
             updateTimer.Start();
         }
 
-        public void SetCustomOverlay(string filePath)
+
+        public void SetCustomOverlay()
         {
+            string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+
             try
             {
                 if (File.Exists(filePath))
@@ -48,18 +51,21 @@ namespace RED.mbnq
                     {
                         using (var img = Image.FromStream(ms))
                         {
-                            // Perform additional checks on the image to ensure it is valid
                             if (img.Width <= 128 && img.Height <= 128 && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
                             {
                                 // Dispose of any existing overlay
                                 customOverlay?.Dispose();
                                 customOverlay = new Bitmap(img);
+                                this.Invalidate();  // Force the control to redraw with the new image
+
+                                Console.WriteLine("Custom overlay successfully loaded.");
                             }
                             else
                             {
                                 MessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions or is not a valid PNG.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 File.Delete(filePath);
                                 customOverlay = null;
+                                Console.WriteLine("Custom overlay failed to load: Invalid dimensions or format.");
                             }
                         }
                     }
@@ -67,14 +73,18 @@ namespace RED.mbnq
                 else
                 {
                     MessageBox.Show("The specified custom overlay file does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    customOverlay = null;
+                    Console.WriteLine("Custom overlay file does not exist.");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 customOverlay = null;
+                Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}");
             }
         }
+
 
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
@@ -82,32 +92,24 @@ namespace RED.mbnq
 
             if (customOverlay != null)
             {
-                try
-                {
-                    if (customOverlay.Width > 0 && customOverlay.Height > 0)
-                    {
-                        g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
-                    }
-                    else
-                    {
-                        FallbackDrawing(g);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred while drawing the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    FallbackDrawing(g);
-                }
+                Console.WriteLine("Drawing custom overlay.");
+                // Draw the image at the top-left corner
+                g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             }
             else
             {
-                FallbackDrawing(g);
+                Console.WriteLine("Custom overlay is null, drawing fallback rectangle.");
+                DrawFallbackRectangle(g);
             }
         }
 
-        private void FallbackDrawing(Graphics g)
+
+
+
+
+        private void DrawFallbackRectangle(Graphics g)
         {
-            g.FillRectangle(Brushes.Red, this.ClientRectangle); // Default red fill as a fallback
+            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle); // Default red fill as a fallback
         }
 
         // Dispose method to ensure the custom overlay image is properly disposed

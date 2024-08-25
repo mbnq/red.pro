@@ -36,7 +36,7 @@ namespace RED.mbnq
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
-                mainDisplay.SetCustomOverlay(customFilePath);  // Corrected line
+                mainDisplay.SetCustomOverlay();
             }
 
             // Update the main display after settings have loaded
