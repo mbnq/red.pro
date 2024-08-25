@@ -155,6 +155,7 @@ namespace RED.mbnq
             // Set graphics options for better quality rendering
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             // g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
 

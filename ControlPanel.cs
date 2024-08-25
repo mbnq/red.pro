@@ -181,7 +181,7 @@ namespace RED.mbnq
             panel.Controls.Add(offsetYSlider.Panel);
 
             // Timer Interval aka Refresh Rate aka Redraw Rate
-            var timerIntervalSlider = CreateLabeledSlider("Refresh Rate", 1, 1000);
+            var timerIntervalSlider = CreateLabeledSlider("Refresh Rate", 10, 1000);
             timerInterval = timerIntervalSlider.Slider;
             panel.Controls.Add(timerIntervalSlider.Panel);
 
