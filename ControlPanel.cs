@@ -56,7 +56,7 @@ namespace RED.mbnq
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.TopMost = true;                             // not ready yet
+            this.TopMost = true;                                // not ready yet
 
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means, do not show dialogbox
@@ -113,7 +113,7 @@ namespace RED.mbnq
                 MaterialSkin.Accent.Red100,         // Accent color
                 MaterialSkin.TextShade.WHITE        // Text color
             );
-            this.BackColor = Color.FromArgb(255, 255, 58);
+            // this.BackColor = Color.FromArgb(255, 255, 58);               // not needed
             this.DrawerBackgroundWithAccent = false;
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
