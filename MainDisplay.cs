@@ -22,8 +22,8 @@ namespace RED.mbnq
             // Defaults
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
-            this.MinimumSize = new Size(128, 128);  // Set minimum size to match the image
-            this.Size = new Size(128, 128);         // Set initial size to match the image
+            this.MinimumSize = new Size(1, 1);
+            this.Size = new Size(128, 128);
             this.BackColor = Color.Red;
             this.Opacity = 0.5;
             this.TopMost = true;
@@ -37,7 +37,6 @@ namespace RED.mbnq
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
         }
-
 
         public void SetCustomOverlay()
         {
@@ -102,7 +101,6 @@ namespace RED.mbnq
                 DrawFallbackRectangle(g);
             }
         }
-
 
 
 
