@@ -54,14 +54,21 @@ namespace RED.mbnq
 
             loadCustomMenuItem = new ToolStripMenuItem("Load Custom");
             loadCustomMenuItem.Click += LoadCustomMenuItem_Click;
+
             removeCustomMenuItem = new ToolStripMenuItem("Remove Custom");
             removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
             removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
-            // Add the items to the context menu
+            // Safely insert items into the context menu
+            int currentItemCount = this.Items.Count;
 
-            this.Items.Insert(3, removeCustomMenuItem); // Insert after loadCustomMenuItem
-            this.Items.Insert(2, loadCustomMenuItem); // Insert after toggleSoundMenuItem
+            int loadCustomIndex = Math.Min(2, currentItemCount);
+            this.Items.Insert(loadCustomIndex, loadCustomMenuItem);
+
+            int removeCustomIndex = Math.Min(3, currentItemCount + 1);
+            this.Items.Insert(removeCustomIndex, removeCustomMenuItem);
+
+            // Add the remaining items
             this.Items.Add(separator5);
             this.Items.Add(toggleSoundMenuItem);
             this.Items.Add(separator4);
@@ -73,7 +80,6 @@ namespace RED.mbnq
             this.Items.Add(aboutMenuItem);
             this.Items.Add(separator);
             this.Items.Add(closeMenuItem);
-
         }
 
         // Add new items for custom overlay
