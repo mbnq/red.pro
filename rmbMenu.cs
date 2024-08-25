@@ -21,7 +21,7 @@ namespace RED.mbnq
         {
             this.controlPanel = controlPanel;
 
-            // Initialize the separator
+            // Initialize menu item separators
             separator = new ToolStripSeparator();
             separator2 = new ToolStripSeparator();
             separator3 = new ToolStripSeparator();
@@ -29,40 +29,42 @@ namespace RED.mbnq
             separator5 = new ToolStripSeparator();
             separator6 = new ToolStripSeparator();
 
-            // Create a new menu item for opening settings directory
+            // Initialize menu item Browse UserData
             ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse UserData");
             openSettingsDirMenuItem.Click += OpenSettingsDirMenuItem_Click;
 
-            // Initialize the toggle sound menu item
+            // Initialize menu item Toggle Sound
             toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
             toggleSoundMenuItem.Click += ToggleSoundMenuItem_Click;
             toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
 
-            // Initialize center menu item
+            // Initialize menu item Center Overlay
             centerMenuItem = new ToolStripMenuItem("Center Overlay");
             centerMenuItem.Click += centerMenuItem_Click;
 
-            // Initialize the save load menu items
+            // Initialize menu item Save settings
             saveMenuItem = new ToolStripMenuItem("Save settings");
             saveMenuItem.Click += saveMenuItem_Click;
 
+            // Initialize menu item Load settings
             loadMenuItem = new ToolStripMenuItem("Load settings");
             loadMenuItem.Click += loadMenuItem_Click;
 
-            // Initialize the "Close Program" menu item
+            // Initialize menu item Close
             closeMenuItem = new ToolStripMenuItem("Close");
             closeMenuItem.Click += CloseMenuItem_Click;
 
-            // Initialize the "About" menu item
+            // Initialize menu item About
             aboutMenuItem = new ToolStripMenuItem("About");
             aboutMenuItem.Click += AboutMenuItem_Click;
 
+            // Initialize menu item Load Custom
             loadCustomMenuItem = new ToolStripMenuItem("Load Custom");
             loadCustomMenuItem.Click += LoadCustomMenuItem_Click;
 
             removeCustomMenuItem = new ToolStripMenuItem("Remove Custom");
             removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
-            // removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+            removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
             /* --- --- --- Menu --- --- --- */
 

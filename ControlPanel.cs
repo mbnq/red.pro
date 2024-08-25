@@ -73,7 +73,6 @@ namespace RED.mbnq
         }
 
         /* --- --- --- Custom overlay --- --- --- */
-
         public void LoadCustomOverlay()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
