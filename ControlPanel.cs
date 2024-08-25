@@ -375,9 +375,8 @@ namespace RED.mbnq
 
                 if (MainDisplay.HasCustomOverlay)  // Check if custom overlay exists
                 {
-                    // If using a custom overlay, use a transparent background
                     MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-                    MainDisplay.TransparencyKey = MainDisplay.BackColor;  // Make this color transparent
+                    MainDisplay.TransparencyKey = MainDisplay.BackColor;
 
                     // Disable color sliders
                     // colorR.Enabled = false;
