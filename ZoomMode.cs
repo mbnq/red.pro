@@ -98,7 +98,7 @@ namespace RED.mbnq
             // Get the current graphics context
             Graphics g = e.Graphics;
 
-            // Set high-quality rendering options
+            // Set high-quality rendering options 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
