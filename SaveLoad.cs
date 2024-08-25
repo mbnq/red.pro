@@ -18,6 +18,7 @@ namespace RED.mbnq
     {
         private static readonly string settingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
         private static readonly string settingsFilePath = Path.Combine(settingsDirectory, "RED.settings.sav");
+        public static string SettingsDirectory => settingsDirectory;
         private static void EnsureDirectoryExists()
         {
             if (!Directory.Exists(settingsDirectory))

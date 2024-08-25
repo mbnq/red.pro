@@ -4,6 +4,8 @@
  */
 
 using System;
+using System.IO;
+using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
@@ -13,8 +15,8 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem toggleSoundMenuItem , centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem;
-        private ToolStripSeparator separator, separator2, separator3, separator4;
+        private ToolStripMenuItem toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem;
+        private ToolStripSeparator separator, separator2, separator3, separator4, separator5;
         public rmbMenu(ControlPanel controlPanel)
         {
             this.controlPanel = controlPanel;
@@ -24,6 +26,7 @@ namespace RED.mbnq
             separator2 = new ToolStripSeparator();
             separator3 = new ToolStripSeparator();
             separator4 = new ToolStripSeparator();
+            separator5 = new ToolStripSeparator();
 
             // Initialize the toggle sound menu item
             toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
@@ -49,8 +52,17 @@ namespace RED.mbnq
             aboutMenuItem = new ToolStripMenuItem("About");
             aboutMenuItem.Click += AboutMenuItem_Click;
 
+            loadCustomMenuItem = new ToolStripMenuItem("Load Custom");
+            loadCustomMenuItem.Click += LoadCustomMenuItem_Click;
+            removeCustomMenuItem = new ToolStripMenuItem("Remove Custom");
+            removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
+            removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+
             // Add the items to the context menu
 
+            this.Items.Insert(3, removeCustomMenuItem); // Insert after loadCustomMenuItem
+            this.Items.Insert(2, loadCustomMenuItem); // Insert after toggleSoundMenuItem
+            this.Items.Add(separator5);
             this.Items.Add(toggleSoundMenuItem);
             this.Items.Add(separator4);
             this.Items.Add(centerMenuItem);
@@ -63,6 +75,8 @@ namespace RED.mbnq
             this.Items.Add(closeMenuItem);
 
         }
+
+        // Add new items for custom overlay
         private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
@@ -77,12 +91,12 @@ namespace RED.mbnq
         private void saveMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            SaveLoad.SaveSettings(controlPanel,false);
+            SaveLoad.SaveSettings(controlPanel, false);
         }
         private void loadMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            SaveLoad.LoadSettings(controlPanel,false);
+            SaveLoad.LoadSettings(controlPanel, false);
         }
 
         private void AboutMenuItem_Click(object sender, EventArgs e)
@@ -98,6 +112,18 @@ namespace RED.mbnq
         private void CloseMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        // Load Custom event
+        private void LoadCustomMenuItem_Click(object sender, EventArgs e)
+        {
+            controlPanel.LoadCustomOverlay();
+        }
+
+        // Remove Custom event
+        private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
+        {
+            controlPanel.RemoveCustomOverlay();
         }
     }
 }

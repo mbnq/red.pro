@@ -7,6 +7,7 @@
 
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -67,6 +68,52 @@ namespace RED.mbnq
 
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
+
+        /* --- --- --- Custom overlay --- --- --- */
+
+        public void LoadCustomOverlay()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "PNG Files (*.png)|*.png",
+                Title = "Select Custom Overlay",
+                CheckFileExists = true
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var selectedFile = openFileDialog.FileName;
+                using (var img = Image.FromFile(selectedFile))
+                {
+                    if (img.Width > 128 || img.Height > 128)
+                    {
+                        MessageBox.Show("The image must be 128x128 pixels or smaller.", "Invalid Image Size", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+                File.Copy(selectedFile, customFilePath, true);
+
+                MessageBox.Show("Custom overlay loaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Restart();
+            }
+        }
+
+        public void RemoveCustomOverlay()
+        {
+            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            if (File.Exists(customFilePath))
+            {
+                var backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
+                var backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
+                File.Move(customFilePath, backupFilePath);
+
+                MessageBox.Show("Custom overlay removed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Restart();
+            }
+        }
+
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Sounds.PlayClickSoundOnce();
