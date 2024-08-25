@@ -83,8 +83,7 @@ namespace RED.mbnq
                 Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}");
             }
         }
-
-
+        
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -101,10 +100,6 @@ namespace RED.mbnq
                 DrawFallbackRectangle(g);
             }
         }
-
-
-
-
         private void DrawFallbackRectangle(Graphics g)
         {
             g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle); // Default red fill as a fallback
