@@ -310,6 +310,8 @@ namespace RED.mbnq
             }
         }
 
+        /* --- --- --- End of custom overlay --- --- --- */
+
         /* --- --- --- Mix sliders with labels here --- --- --- */
         private LabeledSlider CreateLabeledSlider(string labelText, int min, int max)
         {
@@ -407,6 +409,19 @@ namespace RED.mbnq
             }
             UpdateLabels();
         }
+        private void UpdateLabels()
+        {
+            colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
+            colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
+            colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
+            size.Parent.Controls[0].Text = $"Size: {size.Value}";
+            transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
+            offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
+            offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
+            timerInterval.Parent.Controls[0].Text = $"Refresh Rate: {timerInterval.Value} ms";
+        }
+
+        /* --- --- --- Center Button --- --- --- */
 
         //This one is needed to handle negative values because of materialSkin limitations
         private int TranslateOffset(int value)
@@ -421,17 +436,6 @@ namespace RED.mbnq
                 // Range 1000-2000 -> 0 to 1000
                 return value - 1000;
             }
-        }
-        private void UpdateLabels()
-        {
-            colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
-            colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
-            colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
-            size.Parent.Controls[0].Text = $"Size: {size.Value}";
-            transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
-            offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
-            offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
-            timerInterval.Parent.Controls[0].Text = $"Refresh Rate: {timerInterval.Value} ms";
         }
         public void CenterMainDisplay()
         {
@@ -497,6 +501,8 @@ namespace RED.mbnq
         public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
 
     }
+
+    /* --- --- ---  --- --- --- */
     public class LabeledSlider
     {
         public Panel Panel { get; set; }
