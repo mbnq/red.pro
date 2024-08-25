@@ -48,7 +48,7 @@ namespace RED.mbnq
                 zoomForm = new Form
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(512, 512),
+                    Size = new Size(256, 256),
                     StartPosition = FormStartPosition.Manual, // This indicates that you want to set the position manually
                     Location = new Point(controlPanel.MainDisplay.Location.X, controlPanel.MainDisplay.Location.Y), // Set the location manually using a Point
                     TopMost = true,
@@ -74,18 +74,20 @@ namespace RED.mbnq
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
             // Define the zoom size
-            int zoomSize = 256;
+            int zoomSize = 512;
 
             Point centeredPosition = controlPanel.GetCenteredPosition();
 
             // Draw the zoomed portion of the screen directly using the Graphics object
             Graphics g = e.Graphics;
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.PageScale = 16.0f;
+            // g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            // g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
 
             // Capture and draw the area centered at the calculated captureX and captureY
-            // g.CopyFromScreen((controlPanel.MainDisplay.Location.X), (controlPanel.MainDisplay.Location.Y), 0, 0, new Size(zoomSize, zoomSize));
-            g.CopyFromScreen((centeredPosition.X + (zoomSize) - 30), (centeredPosition.Y + (zoomSize/2)), 0, 0, new Size(zoomSize, zoomSize));
+            g.CopyFromScreen((controlPanel.MainDisplay.Location.X), (controlPanel.MainDisplay.Location.Y), 0, 0, new Size(zoomSize, zoomSize));
+
         }
 
 
