@@ -149,15 +149,15 @@ namespace RED.mbnq
 
             /* --- --- ---  Sliders --- --- --- */
             // Color
-            var redSlider = CreateLabeledSlider("Red", 1, 255);
+            var redSlider = CreateLabeledSlider("Red", 0, 255);
             colorR = redSlider.Slider;
             panel.Controls.Add(redSlider.Panel);
 
-            var greenSlider = CreateLabeledSlider("Green", 1, 255);
+            var greenSlider = CreateLabeledSlider("Green", 0, 255);
             colorG = greenSlider.Slider;
             panel.Controls.Add(greenSlider.Panel);
 
-            var blueSlider = CreateLabeledSlider("Blue", 1, 255);
+            var blueSlider = CreateLabeledSlider("Blue", 0, 255);
             colorB = blueSlider.Slider;
             panel.Controls.Add(blueSlider.Panel);
 
