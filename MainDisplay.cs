@@ -50,7 +50,7 @@ namespace RED.mbnq
                     {
                         using (var img = Image.FromStream(ms))
                         {
-                            if (img.Width <= 128 && img.Height <= 128 && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
+                            if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
                             {
                                 // Dispose of any existing overlay
                                 customOverlay?.Dispose();
