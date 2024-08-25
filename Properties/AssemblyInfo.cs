@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RED.mbnq")]
-[assembly: AssemblyDescription("Red Dot overlay app. mbnq00@gmail.com")]
+[assembly: AssemblyTitle("RED.pro")]
+[assembly: AssemblyDescription("Red Dot Pro - overlay app. mbnq00@gmail.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("www.mbnq.pl")]
-[assembly: AssemblyProduct("RED.mbnq")]
+[assembly: AssemblyProduct("RED.pro")]
 [assembly: AssemblyCopyright("Copyright © www.mbnq.pl 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

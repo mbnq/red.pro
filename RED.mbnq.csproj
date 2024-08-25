@@ -8,7 +8,7 @@
     <ProjectGuid>{4D05E7A6-7651-4EDF-94C4-1F815E55F264}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>RED.mbnq</RootNamespace>
-    <AssemblyName>RED.mbnq</AssemblyName>
+    <AssemblyName>RED.pro</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
