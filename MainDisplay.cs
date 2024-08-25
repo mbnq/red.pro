@@ -31,7 +31,7 @@ namespace RED.mbnq
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
 
-            // Setup the update timer
+            // The update timer
             updateTimer = new Timer();
             updateTimer.Interval = 1000;
             updateTimer.Tick += (s, e) => this.Invalidate();
@@ -55,9 +55,12 @@ namespace RED.mbnq
                                 // Dispose of the existing overlay if it exists
                                 customOverlay?.Dispose();
                                 customOverlay = new Bitmap(img);
-                                this.Invalidate();  // Force the control to redraw with the new image
+                                this.Invalidate();
 
-                                Console.WriteLine("Custom overlay successfully loaded.");
+                                if (ControlPanel.mIsDebugOn)
+                                {
+                                    Console.WriteLine("Custom overlay successfully loaded.");
+                                }
                             }
                             else
                             {

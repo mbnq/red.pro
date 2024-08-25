@@ -7,6 +7,7 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RED.mbnq
 {
