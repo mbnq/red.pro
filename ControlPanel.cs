@@ -95,10 +95,14 @@ namespace RED.mbnq
                 var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
                 File.Copy(selectedFile, customFilePath, true);
 
+                // Apply the custom overlay immediately
+                ApplyCustomOverlay();
+
                 MessageBox.Show("Custom overlay loaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Application.Restart();
             }
         }
+
 
         public void RemoveCustomOverlay()
         {
@@ -119,6 +123,34 @@ namespace RED.mbnq
                 Application.Restart();
             }
         }
+
+        public void ApplyCustomOverlay()
+        {
+            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            if (File.Exists(customFilePath))
+            {
+                try
+                {
+                    using (var img = Image.FromFile(customFilePath))
+                    {
+                        if (img.Width <= 128 && img.Height <= 128)
+                        {
+                            mainDisplay.SetCustomOverlay(customFilePath);  // Corrected line
+                        }
+                        else
+                        {
+                            MessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions of 128x128 pixels.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            File.Delete(customFilePath);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
 
 
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)

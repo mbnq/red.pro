@@ -38,10 +38,42 @@ namespace RED.mbnq
             updateTimer.Start();
         }
 
-        public void SetCustomOverlay(Image overlay)
+        public void SetCustomOverlay(string filePath)
         {
-            customOverlay = overlay;
-            this.Invalidate();  // Forces the control to be redrawn
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(filePath)))
+                    {
+                        using (var img = Image.FromStream(ms))
+                        {
+                            // Perform additional checks on the image to ensure it is valid
+                            if (img.Width <= 128 && img.Height <= 128 && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
+                            {
+                                // Dispose of any existing overlay
+                                customOverlay?.Dispose();
+                                customOverlay = new Bitmap(img);
+                            }
+                            else
+                            {
+                                MessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions or is not a valid PNG.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                File.Delete(filePath);
+                                customOverlay = null;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The specified custom overlay file does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                customOverlay = null;
+            }
         }
 
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
@@ -50,14 +82,32 @@ namespace RED.mbnq
 
             if (customOverlay != null)
             {
-                // Draw custom overlay image
-                g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                try
+                {
+                    if (customOverlay.Width > 0 && customOverlay.Height > 0)
+                    {
+                        g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                    }
+                    else
+                    {
+                        FallbackDrawing(g);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while drawing the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FallbackDrawing(g);
+                }
             }
             else
             {
-                // Default rectangle drawing
-                g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
+                FallbackDrawing(g);
             }
+        }
+
+        private void FallbackDrawing(Graphics g)
+        {
+            g.FillRectangle(Brushes.Red, this.ClientRectangle); // Default red fill as a fallback
         }
 
         // Dispose method to ensure the custom overlay image is properly disposed
@@ -70,5 +120,4 @@ namespace RED.mbnq
             base.Dispose(disposing);
         }
     }
-
 }

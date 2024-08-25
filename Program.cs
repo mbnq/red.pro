@@ -36,19 +36,7 @@ namespace RED.mbnq
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
-                using (var img = Image.FromFile(customFilePath))
-                {
-                    if (img.Width > 128 || img.Height > 128)
-                    {
-                        MessageBox.Show("The custom overlay is invalid and will be removed.", "Invalid Custom Overlay", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        File.Delete(customFilePath);
-                    }
-                    else
-                    {
-                        // Set the custom overlay
-                        mainDisplay.SetCustomOverlay(img);
-                    }
-                }
+                mainDisplay.SetCustomOverlay(customFilePath);  // Corrected line
             }
 
             // Update the main display after settings have loaded
