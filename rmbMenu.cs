@@ -177,6 +177,10 @@ namespace RED.mbnq
             controlPanel.LoadCustomOverlay();
             controlPanel.MainDisplay.SetCustomOverlay();
             UpdateMenuItems();
+            // controlPanel.colorR.Value = 0;
+            // controlPanel.colorG.Value = 0;
+            // controlPanel.colorB.Value = 0;
+            // controlPanel.UpdateMainDisplay();
         }
 
         // remove custom .png
@@ -186,6 +190,10 @@ namespace RED.mbnq
             controlPanel.MainDisplay.RemoveCustomOverlay();
             controlPanel.RemoveCustomOverlay();
             UpdateMenuItems();
+            // controlPanel.colorR.Value = 255;
+            // controlPanel.colorG.Value = 0;
+            // controlPanel.colorB.Value = 0;
+            // controlPanel.UpdateMainDisplay();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace RED.mbnq
     {
         public static readonly bool mIsDebugOn = false;
 
-        private MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
         private Button saveButton, loadButton, centerButton;
         private FlowLayoutPanel panel;
         private MainDisplay mainDisplay;
@@ -292,6 +292,7 @@ namespace RED.mbnq
                     {
                         if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
                         {
+                            UpdateLabels();
                             mainDisplay.SetCustomOverlay();
                         }
                         else
