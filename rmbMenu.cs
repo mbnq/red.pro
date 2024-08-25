@@ -15,7 +15,7 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem;
+        private ToolStripMenuItem toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, openSettingsDirMenuItem;
         private ToolStripSeparator separator, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -28,6 +28,10 @@ namespace RED.mbnq
             separator4 = new ToolStripSeparator();
             separator5 = new ToolStripSeparator();
             separator6 = new ToolStripSeparator();
+
+            // Create a new menu item for opening settings directory
+            ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse UserData");
+            openSettingsDirMenuItem.Click += OpenSettingsDirMenuItem_Click;
 
             // Initialize the toggle sound menu item
             toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
@@ -60,6 +64,9 @@ namespace RED.mbnq
             removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
             removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
+            /* --- --- --- Menu --- --- --- */
+
+            this.Items.Add(openSettingsDirMenuItem);
             this.Items.Add(separator6);
 
             // Safely insert items into the context menu
@@ -84,7 +91,29 @@ namespace RED.mbnq
             this.Items.Add(closeMenuItem);
         }
 
-        // Add new items for custom overlay
+        /* --- --- --- --- --- --- */
+
+        private void OpenSettingsDirMenuItem_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+            try
+            {
+                string settingsDir = SaveLoad.SettingsDirectory;
+
+                if (Directory.Exists(settingsDir))
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", settingsDir);
+                }
+                else
+                {
+                    MessageBox.Show("Settings directory not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
