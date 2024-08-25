@@ -38,6 +38,7 @@ namespace RED.mbnq
             updateTimer.Interval = 1000;
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
+
         }
 
         string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");

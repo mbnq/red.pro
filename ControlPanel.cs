@@ -71,7 +71,6 @@ namespace RED.mbnq
             // this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
             UpdateMainDisplay();
-
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
 
@@ -114,7 +113,7 @@ namespace RED.mbnq
                 MaterialSkin.TextShade.WHITE        // Text color
             );
             // this.BackColor = Color.FromArgb(255, 255, 58);               // not needed
-            this.DrawerBackgroundWithAccent = false;
+            // this.DrawerBackgroundWithAccent = false;
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
@@ -141,7 +140,7 @@ namespace RED.mbnq
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown
-                // Location = new Point(0, 0),
+                // Location = new Point(0, 0)
                 // AutoScroll = true,
                 // BackgroundImage = Properties.Resources.mbnqBackground0,
                 // BackgroundImageLayout = ImageLayout.Center,
@@ -270,6 +269,7 @@ namespace RED.mbnq
 
                     MainDisplay.SetCustomOverlay();
                     UpdateMainDisplay();
+
                 }
             }
         }
@@ -310,6 +310,7 @@ namespace RED.mbnq
                     Sounds.PlayClickSoundOnce();
                 }
             }
+            UpdateMainDisplay();
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
@@ -343,7 +344,7 @@ namespace RED.mbnq
             var panel = new Panel()
             {
                 Width = mControlWidth,
-                Height = ((mControlDefSpacer * 2) - 6)
+                Height = ((mControlDefSpacer * 2) - 6),
             };
 
             label.Location = new Point(3, 3);
