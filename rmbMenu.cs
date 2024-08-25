@@ -62,7 +62,7 @@ namespace RED.mbnq
 
             removeCustomMenuItem = new ToolStripMenuItem("Remove Custom");
             removeCustomMenuItem.Click += RemoveCustomMenuItem_Click;
-            removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+            // removeCustomMenuItem.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 
             /* --- --- --- Menu --- --- --- */
 
@@ -150,12 +150,25 @@ namespace RED.mbnq
         {
             Application.Exit();
         }
+        private void UpdateMenuItems()
+        {
+            bool hasCustomOverlay = controlPanel.MainDisplay.HasCustomOverlay;
+
+            // Enable or disable the "Remove Custom" menu item based on the overlay state
+            removeCustomMenuItem.Enabled = hasCustomOverlay;
+
+            // Disable the "Load Custom" menu item if the custom overlay has been removed
+            loadCustomMenuItem.Enabled = !hasCustomOverlay;
+        }
 
         private void LoadCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomOverlay();
             controlPanel.MainDisplay.SetCustomOverlay(); // Refresh the main display after loading the overlay
+
+            // Update the menu items state
+            UpdateMenuItems();
         }
 
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
@@ -163,6 +176,9 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
             controlPanel.RemoveCustomOverlay();
             controlPanel.MainDisplay.RemoveCustomOverlay(); // Refresh the main display after removing the overlay
+
+            // Update the menu items state
+            UpdateMenuItems();
         }
     }
 }
