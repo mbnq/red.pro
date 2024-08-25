@@ -29,6 +29,9 @@ namespace RED.mbnq
         private int mCPWidth = 262;        
         private int mCPHeight = 730;
         private int mControlRMargin = 36;
+
+        public int mPNGMaxWidth = 256;
+        public int mPNGMaxHeight = 256;
         private Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen 
@@ -85,10 +88,10 @@ namespace RED.mbnq
                 var selectedFile = openFileDialog.FileName;
                 using (var img = Image.FromFile(selectedFile))
                 {
-                    if (img.Width > 128 || img.Height > 128)
+                    if (img.Width > mPNGMaxWidth || img.Height > mPNGMaxHeight)
                     {
                         Sounds.PlayClickSoundOnce();
-                        MaterialMessageBox.Show("The custom overlay image exceeds the maximum allowed dimensions of 128x128 pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                        MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                         Sounds.PlayClickSoundOnce();
                         return;
                     }
