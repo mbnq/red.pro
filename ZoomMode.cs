@@ -12,6 +12,7 @@ namespace RED.mbnq
         private static bool isZooming = false;
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
+        private static int zoomSizeSet = 256;   // Define the zoom area to capture, smaller size for more zoom
 
         public static void InitializeZoomMode(ControlPanel panel)
         {
@@ -31,8 +32,7 @@ namespace RED.mbnq
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
             // Initialize the bitmap to be reused
-            int zoomSize = 128;
-            zoomBitmap = new Bitmap(zoomSize, zoomSize);
+            zoomBitmap = new Bitmap(zoomSizeSet, zoomSizeSet);
         }
 
         private static void HoldTimer_Tick(object sender, EventArgs e)
@@ -71,15 +71,12 @@ namespace RED.mbnq
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
             Point centeredPosition = controlPanel.GetCenteredPosition();
 
-            // Define the zoom area to capture, smaller size for more zoom
-            int zoomSize = 128; // Adjust this value to control the zoom level (smaller size = more zoom)
-
             // Calculate the center of the screen
             int centeredX = centeredPosition.X + 192; // (zoomSize); // screenBounds.Width / 2;
             int centeredY = centeredPosition.Y + 78; // (zoomSize / 1.5); // - (zoomSize); // screenBounds.Height / 2;
 
             // Adjust the capture rectangle to be centered around the screen's center
-            Rectangle captureRect = new Rectangle(centeredX,centeredY, zoomSize, zoomSize);
+            Rectangle captureRect = new Rectangle(centeredX,centeredY, zoomSizeSet, zoomSizeSet);
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
