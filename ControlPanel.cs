@@ -10,12 +10,13 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
-        public static readonly bool mIsDebugOn = false;
+        public static readonly bool mIsDebugOn = true;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval, zoomLevel;
         private Button saveButton, loadButton, centerButton;
@@ -49,6 +50,8 @@ namespace RED.mbnq
         {
             InitializeComponent();
             InitializeMaterialSkin();
+
+            Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
@@ -119,7 +122,7 @@ namespace RED.mbnq
         {
             if (!autoSaveOnExit.Checked)
             {
-                SaveLoad.SaveSettings(this, false);
+                _= SaveLoad.SaveSettings(this, false);
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)

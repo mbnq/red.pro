@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace RED.mbnq
 {
@@ -60,7 +61,7 @@ namespace RED.mbnq
                                 customOverlay = new Bitmap(img);
                                 this.Invalidate();
 
-                                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay successfully loaded."); }
+                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
                             }
                             else
                             {
@@ -68,7 +69,7 @@ namespace RED.mbnq
                                 Sounds.PlayClickSoundOnce();
                                 File.Delete(filePath);
                                 customOverlay = null;
-                                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay failed to load: Invalid dimensions or format."); }
+                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
                             }
                         }
                     }
@@ -78,7 +79,7 @@ namespace RED.mbnq
                     // MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                     customOverlay = null;
-                    if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay file does not exist."); }
+                    Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay file does not exist.");
                 }
             }
             catch (Exception ex)
@@ -87,6 +88,7 @@ namespace RED.mbnq
                 Sounds.PlayClickSoundOnce();
                 customOverlay = null;
                 if (ControlPanel.mIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Exception occurred while loading custom overlay: {ex.Message}");
             }
 
             // Refresh the display
@@ -163,12 +165,12 @@ namespace RED.mbnq
 
             if (customOverlay != null)
             {
-                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Drawing custom overlay."); }
+                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Drawing custom overlay.");
                 g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             }
             else
             {
-                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay is null, drawing fallback rectangle."); }
+                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay is null, drawing fallback rectangle.");
                 DrawFallbackRectangle(g);
             }
 
