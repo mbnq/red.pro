@@ -84,22 +84,21 @@ namespace RED.mbnq
                 captureGraphics.CopyFromScreen(new Point(centeredX, centeredY), Point.Empty, new Size(zoomSizeSet, zoomSizeSet));
             }
 
-            // Define the destination rectangle that represents the entire zoomForm
+            // Define the destination rectangle for the circular area
             Rectangle destRect = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
 
-            // Draw the captured bitmap, stretched to fill the zoomForm
-            e.Graphics.DrawImage(zoomBitmap, destRect);
-
-            // Define the destination rectangle that represents the entire zoomForm
-            Rectangle destRect2 = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
-
-            // Draw the captured bitmap, stretched to fill the zoomForm
-            e.Graphics.DrawImage(zoomBitmap, destRect2);
-
-            // Add a black border around the zoomed image
-            using (Pen blackPen = new Pen(Color.Black, 1)) // You can adjust the border width here
+            // Draw the captured bitmap, clipped to the circular region
+            using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
             {
-                e.Graphics.DrawRectangle(blackPen, destRect);
+                path.AddEllipse(destRect);
+                e.Graphics.SetClip(path);
+                e.Graphics.DrawImage(zoomBitmap, destRect);
+            }
+
+            // Optionally, draw a border around the circle
+            using (Pen borderPen = new Pen(Color.Black, 2)) // You can adjust the border width and color
+            {
+                e.Graphics.DrawEllipse(borderPen, destRect);
             }
         }
 
