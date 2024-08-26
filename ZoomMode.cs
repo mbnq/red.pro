@@ -67,22 +67,15 @@ namespace RED.mbnq
         {
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
-            // Get the bounds of the primary screen (or the screen where the form is located)
-            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-            Point centeredPosition = controlPanel.GetCenteredPosition();
-
             // Calculate the center of the screen
-            int centeredX = centeredPosition.X + 192; // (zoomSize); // screenBounds.Width / 2;
-            int centeredY = centeredPosition.Y + 78; // (zoomSize / 1.5); // - (zoomSize); // screenBounds.Height / 2;
-
-            // Adjust the capture rectangle to be centered around the screen's center
-            Rectangle captureRect = new Rectangle(centeredX,centeredY, zoomSizeSet, zoomSizeSet);
+            int centeredX = controlPanel.MainDisplay.Left + (zoomSizeSet / 2);
+            int centeredY = controlPanel.MainDisplay.Top + (controlPanel.SizeValue);
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
             {
                 // Copy the screen area into the bitmap
-                captureGraphics.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
+                captureGraphics.CopyFromScreen(new Point(centeredX, centeredY), Point.Empty, new Size(zoomSizeSet, zoomSizeSet));
             }
 
             // Define the destination rectangle that represents the entire zoomForm
