@@ -153,6 +153,22 @@ namespace RED.mbnq
             // Set the control styles to reduce flickering
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.UpdateStyles();
+
+            // Apply a circular region to the form
+            this.ApplyCircularRegion();
+        }
+        private void ApplyCircularRegion()
+        {
+            // Create a circular region based on the form's size
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddEllipse(0, 0, this.Width, this.Height);
+            this.Region = new Region(path);
+        }
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            // Reapply the circular region whenever the form is resized
+            ApplyCircularRegion();
         }
     }
 
