@@ -404,6 +404,9 @@ namespace RED.mbnq
                     colorB.Enabled = true;
                 }
 
+                // Update zoom
+                ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
+
                 // Update opacity
                 MainDisplay.Opacity = transparency.Value / 100.0;
 
@@ -425,6 +428,7 @@ namespace RED.mbnq
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
             size.Parent.Controls[0].Text = $"Size: {size.Value}";
             transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
+            zoomLevel.Parent.Controls[0].Text = $"Zoom Level: {zoomLevel.Value}";
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             timerInterval.Parent.Controls[0].Text = $"Refresh Rate: {timerInterval.Value} ms";

@@ -21,6 +21,17 @@ namespace RED.mbnq
             IsZoomModeEnabled = !IsZoomModeEnabled;
         }
 
+        public static void UpdateZoomMultiplier(int newZoomMultiplier)
+        {
+            zoomMultiplier = newZoomMultiplier;
+
+            if (zoomForm != null)
+            {
+                zoomForm.Size = new Size(zoomSizeSet * zoomMultiplier, zoomSizeSet * zoomMultiplier);
+                zoomForm.Invalidate(); // Force the form to repaint with the new size
+            }
+        }
+
         public static void InitializeZoomMode(ControlPanel panel)
         {
             controlPanel = panel;

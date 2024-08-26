@@ -39,6 +39,7 @@ namespace RED.mbnq
             sb.AppendLine($"Blue={controlPanel.ColorBValue}");
             sb.AppendLine($"Size={controlPanel.SizeValue}");
             sb.AppendLine($"Transparency={controlPanel.TransparencyValue}");
+            sb.AppendLine($"ZoomLevel={controlPanel.zoomLevel.Value}");
             sb.AppendLine($"OffsetX={controlPanel.OffsetXValue}");
             sb.AppendLine($"OffsetY={controlPanel.OffsetYValue}");
             sb.AppendLine($"TimerInterval={controlPanel.TimerIntervalValue}");
@@ -85,6 +86,8 @@ namespace RED.mbnq
                     controlPanel.SizeValue = int.Parse(line.Substring("Size=".Length));
                 else if (line.StartsWith("Transparency="))
                     controlPanel.TransparencyValue = int.Parse(line.Substring("Transparency=".Length));
+                else if (line.StartsWith("ZoomLevel="))
+                    controlPanel.zoomLevel.Value = int.Parse(line.Substring("ZoomLevel=".Length));
                 else if (line.StartsWith("OffsetX="))
                     controlPanel.OffsetXValue = int.Parse(line.Substring("OffsetX=".Length));
                 else if (line.StartsWith("OffsetY="))
@@ -139,6 +142,7 @@ namespace RED.mbnq
                 sb.AppendLine("Blue=0");
                 sb.AppendLine("Size=4");
                 sb.AppendLine("Transparency=64");
+                sb.AppendLine("ZoomLevel=4");
                 sb.AppendLine("OffsetX=1000");
                 sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("TimerInterval=1000");
