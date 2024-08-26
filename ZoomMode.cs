@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
 
 namespace RED.mbnq
 {
@@ -72,26 +70,29 @@ namespace RED.mbnq
 
 
 
-            Point TestLocation = new Point(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-
-            foreach (var screen in Screen.AllScreens)
-            {
-                Debug.WriteLine($"Screen {screen.DeviceName}: {screen.Bounds.Width}x{screen.Bounds.Height}");
-            }
-
-            /* --- */
-
 
 
             /* --- */
 
+                // Get the primary screen
+                Screen primaryScreen = Screen.PrimaryScreen;
 
-            int centeredX = 0; // Screen.PrimaryScreen.Bounds.Width / 2; 
+                // Get the working area of the primary screen (excludes taskbar)
+                Rectangle workingArea = primaryScreen.Bounds;
 
-            // Calculate the centered Y position if needed
-            int centeredY = 0;
+                // Calculate the center point
+                Point centerPoint = new Point(
+                    workingArea.Left + workingArea.Width / 2,
+                    workingArea.Top + workingArea.Height / 2
+                );
 
-            // Debug.WriteLine($"New Test: {(Screen.PrimaryScreen.Bounds.Width * 1.25)}");
+                Console.WriteLine($"Center of primary screen: {centerPoint}");
+
+            /* --- */
+
+
+            int centeredX = centerPoint.X - (zoomSizeSet / 2);
+            int centeredY = centerPoint.Y - (zoomSizeSet / 2);
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
