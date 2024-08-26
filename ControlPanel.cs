@@ -148,45 +148,46 @@ namespace RED.mbnq
             };
 
             /* --- --- ---  Sliders --- --- --- */
+            // label, min, max, def
             // Color
-            var redSlider = CreateLabeledSlider("Red", 0, 255);
+            var redSlider = CreateLabeledSlider("Red", 0, 255, 255);
             colorR = redSlider.Slider;
             panel.Controls.Add(redSlider.Panel);
 
-            var greenSlider = CreateLabeledSlider("Green", 0, 255);
+            var greenSlider = CreateLabeledSlider("Green", 0, 255, 0);
             colorG = greenSlider.Slider;
             panel.Controls.Add(greenSlider.Panel);
 
-            var blueSlider = CreateLabeledSlider("Blue", 0, 255);
+            var blueSlider = CreateLabeledSlider("Blue", 0, 255, 0);
             colorB = blueSlider.Slider;
             panel.Controls.Add(blueSlider.Panel);
 
             // Size
-            var sizeSlider = CreateLabeledSlider("Size", 1, 200);
+            var sizeSlider = CreateLabeledSlider("Size", 1, 200, 50);
             size = sizeSlider.Slider;
             panel.Controls.Add(sizeSlider.Panel);
 
             // Transparency
-            var transparencySlider = CreateLabeledSlider("Transparency", 0, 100);
+            var transparencySlider = CreateLabeledSlider("Transparency", 0, 100, 64);
             transparency = transparencySlider.Slider;
             panel.Controls.Add(transparencySlider.Panel);
 
             // Zoom Level
-            var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10); // Adjust the range as needed
+            var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10, 3); // Adjust the range as needed
             zoomLevel = zoomLevelSlider.Slider;
             panel.Controls.Add(zoomLevelSlider.Panel);
 
             // Offsets
-            var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000);
+            var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000, 1000);
             offsetX = offsetXSlider.Slider;
             panel.Controls.Add(offsetXSlider.Panel);
 
-            var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000);
+            var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000, 1000);
             offsetY = offsetYSlider.Slider;
             panel.Controls.Add(offsetYSlider.Panel);
 
             // Timer Interval aka Refresh Rate aka Redraw Rate
-            var timerIntervalSlider = CreateLabeledSlider("Refresh Rate", 10, 1000);
+            var timerIntervalSlider = CreateLabeledSlider("Refresh Rate", 10, 1000, 1000);
             timerInterval = timerIntervalSlider.Slider;
             panel.Controls.Add(timerIntervalSlider.Panel);
 
@@ -321,7 +322,7 @@ namespace RED.mbnq
         /* --- --- --- End of custom overlay --- --- --- */
 
         /* --- --- --- Mix sliders with labels here --- --- --- */
-        private LabeledSlider CreateLabeledSlider(string labelText, int min, int max)
+        private LabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
         {
             var label = new MaterialLabel()
             {
@@ -334,7 +335,8 @@ namespace RED.mbnq
                 RangeMin = min,
                 RangeMax = max,
                 ShowText = false,
-                ShowValue = false
+                ShowValue = false,
+                Value = defaultValue // Set the initial value to the default
             };
 
             label.Text = $"{labelText}: {materialSlider.Value}";
@@ -344,6 +346,15 @@ namespace RED.mbnq
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
                 UpdateMainDisplay();
+            };
+
+            // Handle double-click to reset to default value
+            materialSlider.DoubleClick += (s, e) =>
+            {
+                materialSlider.Value = defaultValue;
+                label.Text = $"{labelText}: {materialSlider.Value}";
+                UpdateMainDisplay();
+                Sounds.PlayClickSound();
             };
 
             var panel = new Panel()
