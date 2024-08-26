@@ -58,12 +58,9 @@ namespace RED.mbnq
 
         public static void StartHoldTimer()
         {
-            if (IsZoomModeEnabled)
+            if (!isZooming)
             {
-                if (!isZooming)
-                {
-                    holdTimer.Start();
-                }
+                holdTimer.Start();
             }
         }
 

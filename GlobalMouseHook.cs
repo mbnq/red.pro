@@ -56,16 +56,19 @@ namespace RED.mbnq
         {
             if (nCode >= 0)
             {
-                if (wParam == (IntPtr)WM_RBUTTONDOWN)
+                if (ZoomMode.IsZoomModeEnabled)
                 {
-                    // Start the zoom hold timer when the right button is pressed
-                    ZoomMode.StartHoldTimer();
-                }
-                else if (wParam == (IntPtr)WM_RBUTTONUP)
-                {
-                    // Stop the zoom hold timer and hide the overlay when the right button is released
-                    ZoomMode.StopHoldTimer();
-                    ZoomMode.HideZoomOverlay();
+                    if (wParam == (IntPtr)WM_RBUTTONDOWN)
+                    {
+                        // Start the zoom hold timer when the right button is pressed
+                        ZoomMode.StartHoldTimer();
+                    }
+                    else if (wParam == (IntPtr)WM_RBUTTONUP)
+                    {
+                        // Stop the zoom hold timer and hide the overlay when the right button is released
+                        ZoomMode.StopHoldTimer();
+                        ZoomMode.HideZoomOverlay();
+                    }
                 }
             }
 
