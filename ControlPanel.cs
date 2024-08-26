@@ -5,13 +5,11 @@
     That's the main code
 */
 
+using MaterialSkin.Controls;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
-using static MaterialSkin.MaterialSkinManager;
 
 namespace RED.mbnq
 {
@@ -28,7 +26,7 @@ namespace RED.mbnq
         private int mControlWidth;
         public int mSettingsLoaded = 0;
 
-        private static readonly int mCPWidth = 262;        
+        private static readonly int mCPWidth = 262;
         private static readonly int mCPHeight = 800;
         private static readonly int mControlDefSpacer = 36;
 
@@ -106,7 +104,7 @@ namespace RED.mbnq
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;    
+            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
                 MaterialSkin.Primary.Red500,        // Primary color
                 MaterialSkin.Primary.Red700,        // Dark primary color
@@ -232,8 +230,8 @@ namespace RED.mbnq
             autoSaveOnExit.CheckedChanged += (s, e) =>
             {
                 AutoSaveOnExit_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0) 
-                { 
+                if (mSettingsLoaded > 0)
+                {
                     Sounds.PlayClickSound();
                 }
             };
@@ -329,7 +327,7 @@ namespace RED.mbnq
             {
                 AutoSize = true,
                 Padding = new Padding(0, 5, 0, 0)
-             };
+            };
 
             var materialSlider = new MaterialSlider()
             {

@@ -5,12 +5,11 @@
     File io goes here
 */
 
+using MaterialSkin.Controls;
 using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using MaterialSkin;             // let's leave it here for now, just in case
-using MaterialSkin.Controls;
 
 namespace RED.mbnq
 {
@@ -113,7 +112,7 @@ namespace RED.mbnq
             }
 
             controlPanel.UpdateMainDisplay();
-            
+
             if (showMessage)
             {
                 Sounds.PlayClickSoundOnce();

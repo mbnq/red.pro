@@ -5,12 +5,11 @@
     Mouse menu comes here
 */
 
-using System;
-using System.IO;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
 using MaterialSkin.Controls;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace RED.mbnq
 {

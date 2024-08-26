@@ -4,11 +4,9 @@
 */
 
 using System;
-using System.Windows.Forms;
 using System.IO;
-using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RED.mbnq
 {
@@ -53,7 +51,8 @@ namespace RED.mbnq
             // Update the main display after settings have loaded
             controlPanel.UpdateMainDisplay();
 
-            controlPanel.FormClosing += (sender, e) => {
+            controlPanel.FormClosing += (sender, e) =>
+            {
                 if (controlPanel.AutoSaveOnExitChecked)
                 {
                     SaveLoad.SaveSettings(controlPanel, false);

@@ -60,7 +60,7 @@ namespace RED.mbnq
                                 customOverlay = new Bitmap(img);
                                 this.Invalidate();
 
-                                if (ControlPanel.mIsDebugOn) {Console.WriteLine("Custom overlay successfully loaded.");}
+                                if (ControlPanel.mIsDebugOn) { Console.WriteLine("Custom overlay successfully loaded."); }
                             }
                             else
                             {
@@ -120,7 +120,7 @@ namespace RED.mbnq
                     string backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
                     string backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
                     File.Move(customFilePath, backupFilePath);
-                } 
+                }
                 else
                 {
                     File.Delete(customFilePath);
