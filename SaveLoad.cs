@@ -97,7 +97,7 @@ namespace RED.mbnq
         }
 
         /* --- --- --- saving --- --- --- */
-        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
+        public async static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
 
