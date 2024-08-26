@@ -33,7 +33,7 @@ namespace RED.mbnq
         }
 
         /* --- --- --- encrypt / decrypt --- --- --- */
-        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");
+        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");  // chill, it's here just for testing and learning purposes
         private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
 
         private static byte[] EncryptString(string plainText, byte[] key, byte[] iv)
