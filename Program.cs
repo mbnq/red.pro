@@ -50,7 +50,7 @@ namespace RED.mbnq
                 mainDisplay.SetCustomOverlay();
             }
 
-            if (ZoomMode.IsZoomEnabled)
+            if (ZoomMode.IsZoomModeEnabled)
             {
                 ZoomMode.ShowZoomOverlay();
             }

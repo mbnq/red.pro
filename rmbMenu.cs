@@ -32,9 +32,9 @@ namespace RED.mbnq
             separator6 = new ToolStripSeparator();
 
             // ZoomMode
-            toggleZoomMenuItem = new ToolStripMenuItem("Enable Zoom");
+            toggleZoomMenuItem = new ToolStripMenuItem("Enable ZoomMode");
             toggleZoomMenuItem.Click += ToggleZoomMenuItem_Click;
-            toggleZoomMenuItem.Text = ZoomMode.IsZoomEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
+            toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
 
             // Initialize menu item Browse UserData
             ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse UserData");
@@ -136,7 +136,7 @@ namespace RED.mbnq
         private void ToggleZoomMenuItem_Click(object sender, EventArgs e)
         {
             ZoomMode.ToggleZoomMode();
-            toggleZoomMenuItem.Text = ZoomMode.IsZoomEnabled ? "Disable Zoom" : "Enable Zoom";
+            toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
             Sounds.PlayClickSoundOnce();
         }
 

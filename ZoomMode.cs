@@ -15,10 +15,10 @@ namespace RED.mbnq
         private static Bitmap zoomBitmap;
         private static int zoomSizeSet = 192;   // Define the zoom area to capture, smaller size for more zoom
         private static int zoomMultiplier = 4;
-        public static bool IsZoomEnabled { get; private set; } = false;
+        public static bool IsZoomModeEnabled { get; private set; } = false;
         public static void ToggleZoomMode()
         {
-            IsZoomEnabled = !IsZoomEnabled;
+            IsZoomModeEnabled = !IsZoomModeEnabled;
         }
 
         public static void InitializeZoomMode(ControlPanel panel)
@@ -58,9 +58,12 @@ namespace RED.mbnq
 
         public static void StartHoldTimer()
         {
-            if (!isZooming)
+            if (IsZoomModeEnabled)
             {
-                holdTimer.Start();
+                if (!isZooming)
+                {
+                    holdTimer.Start();
+                }
             }
         }
 
