@@ -9,6 +9,7 @@ using System;
 using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace RED.mbnq
 {
@@ -33,6 +34,7 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Failed to load sound: {ex.Message}");
             }
         }
         public static void PlayClickSound()
@@ -40,6 +42,7 @@ namespace RED.mbnq
             if (IsSoundEnabled)
             {
                 Task.Run(() => PlaySoundInternal());
+                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Playing Click sound.");
             }
         }
         public static void PlayClickSoundOnce()
@@ -47,6 +50,7 @@ namespace RED.mbnq
             if (IsSoundEnabled)
             {
                 clickSoundPlayer.Play();
+                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Playing Click sound once.");
             }
         }
         private static void PlaySoundInternal()
@@ -61,6 +65,7 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to play sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"Failed to play sound: {ex.Message}");
             }
             finally
             {
