@@ -62,6 +62,40 @@ namespace RED.mbnq
             holdTimer.Stop();
         }
 
+        // camera
+        private static void ZoomForm_Paint(object sender, PaintEventArgs e)
+        {
+            if (controlPanel == null || controlPanel.MainDisplay == null) return;
+
+            // Get the bounds of the primary screen (or the screen where the form is located)
+            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+            // Calculate the center of the screen
+            int centeredX = screenBounds.Width / 2;
+            int centeredY = screenBounds.Height / 2;
+
+            // Define the zoom area to capture, smaller size for more zoom
+            int zoomSize = 256; // Adjust this value to control the zoom level (smaller size = more zoom)
+
+            // Adjust the capture rectangle to be centered around the screen's center
+            Rectangle captureRect = new Rectangle(centeredX - (zoomSize / 2), centeredY - (zoomSize / 2), zoomSize, zoomSize);
+
+            // Reuse the bitmap to capture the screen area
+            using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
+            {
+                // Copy the screen area into the bitmap
+                captureGraphics.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
+            }
+
+            // Define the destination rectangle that represents the entire zoomForm
+            Rectangle destRect = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
+
+            // Draw the captured bitmap, stretched to fill the zoomForm
+            e.Graphics.DrawImage(zoomBitmap, destRect);
+        }
+
+        // tv
+
         private static void ShowZoomOverlay()
         {
             if (zoomForm == null)
@@ -71,7 +105,7 @@ namespace RED.mbnq
                     FormBorderStyle = FormBorderStyle.None,
                     Size = new Size(512, 512),
                     StartPosition = FormStartPosition.Manual, // Set the position manually
-                    Location = new Point(controlPanel.MainDisplay.Location.X, controlPanel.MainDisplay.Location.Y), // Set the location manually using a Point
+                    Location = controlPanel.GetCenteredPosition(), // Use the corrected method
                     TopMost = true,
                     ShowInTaskbar = false,
                     TransparencyKey = Color.Magenta,
@@ -90,39 +124,6 @@ namespace RED.mbnq
             isZooming = true;
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
         }
-
-        private static void ZoomForm_Paint(object sender, PaintEventArgs e)
-        {
-            if (controlPanel == null || controlPanel.MainDisplay == null) return;
-
-            // Get the current graphics context
-            Graphics g = e.Graphics;
-
-            // Set high-quality rendering options 
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-
-            // Define the zoom area to capture
-            int zoomSize = 256;
-            Point centeredPosition = controlPanel.GetCenteredPosition();
-            Rectangle captureRect = new Rectangle(centeredPosition.X - (zoomSize / 2), centeredPosition.Y - (zoomSize / 2), zoomSize, zoomSize);
-
-            // Reuse the bitmap to capture the screen area
-            using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
-            {
-                // Copy the screen area into the bitmap
-                captureGraphics.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
-            }
-
-            // Define the destination rectangle that represents the entire zoomForm
-            Rectangle destRect = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
-
-            // Draw the captured bitmap, stretched to fill the zoomForm
-            g.DrawImage(zoomBitmap, destRect);
-        }
-
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
