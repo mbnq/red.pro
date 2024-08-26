@@ -69,16 +69,17 @@ namespace RED.mbnq
 
             // Get the bounds of the primary screen (or the screen where the form is located)
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-
-            // Calculate the center of the screen
-            int centeredX = screenBounds.Width / 2;
-            int centeredY = screenBounds.Height / 2;
+            Point centeredPosition = controlPanel.GetCenteredPosition();
 
             // Define the zoom area to capture, smaller size for more zoom
             int zoomSize = 256; // Adjust this value to control the zoom level (smaller size = more zoom)
 
+            // Calculate the center of the screen
+            int centeredX = centeredPosition.X + (zoomSize / 2); // screenBounds.Width / 2;
+            int centeredY = centeredPosition.Y + (zoomSize / 2); // screenBounds.Height / 2;
+
             // Adjust the capture rectangle to be centered around the screen's center
-            Rectangle captureRect = new Rectangle(centeredX - (zoomSize / 2), centeredY - (zoomSize / 2), zoomSize, zoomSize);
+            Rectangle captureRect = new Rectangle(centeredX,centeredY, zoomSize, zoomSize);
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
@@ -92,6 +93,20 @@ namespace RED.mbnq
 
             // Draw the captured bitmap, stretched to fill the zoomForm
             e.Graphics.DrawImage(zoomBitmap, destRect);
+
+            // ---
+
+            // Define the destination rectangle that represents the entire zoomForm
+            Rectangle destRect2 = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
+
+            // Draw the captured bitmap, stretched to fill the zoomForm
+            e.Graphics.DrawImage(zoomBitmap, destRect2);
+
+            // Add a black border around the zoomed image
+            using (Pen blackPen = new Pen(Color.Black, 5)) // You can adjust the border width here
+            {
+                e.Graphics.DrawRectangle(blackPen, destRect);
+            }
         }
 
         // tv
@@ -109,7 +124,7 @@ namespace RED.mbnq
                     TopMost = true,
                     ShowInTaskbar = false,
                     TransparencyKey = Color.Magenta,
-                    BackColor = Color.Magenta
+                    BackColor = Color.Black
                 };
 
                 zoomForm.Paint += ZoomForm_Paint;
