@@ -72,14 +72,22 @@ namespace RED.mbnq
             // int centeredX = FormStartPosition.CenterScreen; // controlPanel.MainDisplay.Left + (zoomSizeSet / 2);
             // int centeredY = controlPanel.MainDisplay.Top + (controlPanel.SizeValue);
 
+            Point TestLocation = new Point(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+            foreach (var screen in Screen.AllScreens)
+            {
+                Debug.WriteLine($"Screen {screen.DeviceName}: {screen.Bounds.Width}x{screen.Bounds.Height}");
+            }
+
+
             // Get the screen bounds (entire screen size)
             // Calculate the centered X position
-            int centeredX = Screen.PrimaryScreen.Bounds.Width / 2; 
+            int centeredX = 0; // Screen.PrimaryScreen.Bounds.Width / 2; 
 
             // Calculate the centered Y position if needed
-            int centeredY = Screen.PrimaryScreen.Bounds.Height / 2;
+            int centeredY = 0;
 
-            Debug.WriteLine($"Centered X: {centeredX}, Centered Y: {centeredY}");
+            Debug.WriteLine($"Centered X: {centeredX}, Centered Y: {centeredY},  test: {Screen.PrimaryScreen.WorkingArea}");
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
@@ -160,4 +168,5 @@ namespace RED.mbnq
             this.UpdateStyles();
         }
     }
+
 }
