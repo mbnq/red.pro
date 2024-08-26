@@ -2,7 +2,7 @@
     www.mbnq.pl 2024 
     mbnq00 on gmail
 
-    File io goes here
+    File io goes here, encryption is just for learning purposes
 */
 
 using MaterialSkin.Controls;
@@ -12,7 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Windows.Media;
+using System.Security.Cryptography;
+using System.Linq;
+// using System.Windows.Media;
 
 namespace RED.mbnq
 {
@@ -30,8 +32,72 @@ namespace RED.mbnq
             }
         }
 
+        /* --- --- --- encrypt / decrypt --- --- --- */
+        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");
+        private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
+
+        private static byte[] EncryptString(string plainText, byte[] key, byte[] iv)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+                aes.Padding = PaddingMode.PKCS7;
+
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter sw = new StreamWriter(cs))
+                        {
+                            sw.Write(plainText);
+                        }
+                        byte[] encryptedData = ms.ToArray();
+                        Debug.WriteLine("Encrypted data length: " + encryptedData.Length);
+                        return encryptedData;
+                    }
+                }
+            }
+        }
+
+        private static string DecryptString(byte[] cipherText, byte[] key, byte[] iv)
+        {
+            Debug.WriteLine("Ciphertext length before decryption: " + cipherText.Length);
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+                aes.Padding = PaddingMode.PKCS7;
+
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+                using (MemoryStream ms = new MemoryStream(cipherText))
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader sr = new StreamReader(cs))
+                        {
+                            try
+                            {
+                                string result = sr.ReadToEnd();
+                                Debug.WriteLine("Decrypted data length: " + result.Length);
+                                return result;
+                            }
+                            catch (CryptographicException ex)
+                            {
+                                Console.WriteLine("Decryption failed: " + ex.Message);
+                                throw;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         /* --- --- --- saving --- --- --- */
-        public static async Task SaveSettings(ControlPanel controlPanel, bool showMessage = true)
+        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
 
@@ -57,8 +123,8 @@ namespace RED.mbnq
                 sb.AppendLine($"PositionY={controlPanel.MainDisplay.Top}");
             }
 
-            // File.WriteAllText(settingsFilePath, sb.ToString());
-            await Task.Run(() => File.WriteAllText(settingsFilePath, sb.ToString()));
+            byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
+            File.WriteAllBytes(settingsFilePath, encryptedData);
 
             if (showMessage)
             {
@@ -67,6 +133,7 @@ namespace RED.mbnq
             }
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
         }
+
 
         /* --- --- --- loading --- --- --- */
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
@@ -79,7 +146,10 @@ namespace RED.mbnq
                 return;
             }
 
-            var lines = File.ReadAllLines(settingsFilePath);
+            byte[] encryptedData = File.ReadAllBytes(settingsFilePath);
+            string decryptedData = DecryptString(encryptedData, key, iv);
+
+            var lines = decryptedData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var line in lines)
             {
                 if (line.StartsWith("Red="))
@@ -157,7 +227,8 @@ namespace RED.mbnq
                 sb.AppendLine("SoundEnabled=True");
                 sb.AppendLine("ZoomEnabled=False");
 
-                File.WriteAllText(settingsFilePath, sb.ToString());
+                byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
+                File.WriteAllBytes(settingsFilePath, encryptedData);
                 fileCreated = true;
 
                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings save file created.");

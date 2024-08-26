@@ -122,7 +122,7 @@ namespace RED.mbnq
         {
             if (!autoSaveOnExit.Checked)
             {
-                _= SaveLoad.SaveSettings(this, false);
+                SaveLoad.SaveSettings(this, false);
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -503,9 +503,9 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
         }
 
-        private async void SaveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
-            await SaveLoad.SaveSettings(this);
+            SaveLoad.SaveSettings(this);
             UpdateMainDisplay();
         }
         private void LoadButton_Click(object sender, EventArgs e)

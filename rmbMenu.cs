@@ -147,10 +147,10 @@ namespace RED.mbnq
         }
 
         // saveLoad settings
-        private async void saveMenuItem_Click(object sender, EventArgs e)
+        private void saveMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            await SaveLoad.SaveSettings(controlPanel, false);
+            SaveLoad.SaveSettings(controlPanel, false);
         }
         private void loadMenuItem_Click(object sender, EventArgs e)
         {
