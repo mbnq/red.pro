@@ -55,7 +55,7 @@ namespace RED.mbnq
                             sw.Write(plainText);
                         }
                         byte[] encryptedData = ms.ToArray();
-                        Debug.WriteLine("Encrypted data length: " + encryptedData.Length);
+                        Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Encrypted data length: " + encryptedData.Length);
                         return encryptedData;
                     }
                 }
@@ -64,7 +64,7 @@ namespace RED.mbnq
 
         private static string DecryptString(byte[] cipherText, byte[] key, byte[] iv)
         {
-            Debug.WriteLine("Ciphertext length before decryption: " + cipherText.Length);
+            Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Ciphertext length before decryption: " + cipherText.Length);
             using (Aes aes = Aes.Create())
             {
                 aes.Key = key;
@@ -82,7 +82,7 @@ namespace RED.mbnq
                             try
                             {
                                 string result = sr.ReadToEnd();
-                                Debug.WriteLine("Decrypted data length: " + result.Length);
+                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Decrypted data length: " + result.Length);
                                 return result;
                             }
                             catch (CryptographicException ex)
