@@ -87,8 +87,14 @@ namespace RED.mbnq
                             }
                             catch (CryptographicException ex)
                             {
-                                Console.WriteLine("Decryption failed: " + ex.Message);
-                                throw;
+                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"Decryption failed: {ex.Message}");
+                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"Removing: {settingsFilePath}");
+                                File.Delete(settingsFilePath);
+                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"Restarting...");
+                                Application.Restart();
+
+                                // Return null or another appropriate value after calling restart
+                                return null;
                             }
                         }
                     }
@@ -97,7 +103,7 @@ namespace RED.mbnq
         }
 
         /* --- --- --- saving --- --- --- */
-        public async static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
+        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
 
@@ -133,7 +139,6 @@ namespace RED.mbnq
             }
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
         }
-
 
         /* --- --- --- loading --- --- --- */
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
