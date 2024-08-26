@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace RED.mbnq
 {
@@ -68,8 +69,17 @@ namespace RED.mbnq
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
             // Calculate the center of the screen
-            int centeredX = controlPanel.MainDisplay.Left + (zoomSizeSet / 2);
-            int centeredY = controlPanel.MainDisplay.Top + (controlPanel.SizeValue);
+            // int centeredX = FormStartPosition.CenterScreen; // controlPanel.MainDisplay.Left + (zoomSizeSet / 2);
+            // int centeredY = controlPanel.MainDisplay.Top + (controlPanel.SizeValue);
+
+            // Get the screen bounds (entire screen size)
+            // Calculate the centered X position
+            int centeredX = Screen.PrimaryScreen.Bounds.Width / 2; 
+
+            // Calculate the centered Y position if needed
+            int centeredY = Screen.PrimaryScreen.Bounds.Height / 2;
+
+            Debug.WriteLine($"Centered X: {centeredX}, Centered Y: {centeredY}");
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
