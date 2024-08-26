@@ -13,22 +13,22 @@ namespace RED.mbnq
         private static bool isZooming = false;
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
-        private static int zoomSizeSet = 256;   // Define the zoom area to capture, smaller size for more zoom
+        private static int zoomSizeSet = 192;   // Define the zoom area to capture, smaller size for more zoom
 
         public static void InitializeZoomMode(ControlPanel panel)
         {
-            controlPanel = panel; // Assign the control panel reference
+            controlPanel = panel;
 
             holdTimer = new Timer
             {
-                Interval = 1000 // 1 second delay before showing zoom
+                Interval = 1000 // before showing zoom in ms
             };
             holdTimer.Tick += HoldTimer_Tick;
 
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 16 // Approximately 60fps
+                Interval = 2
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -92,8 +92,11 @@ namespace RED.mbnq
             /* --- */
 
 
-            int centeredX = centerPoint.X - (zoomSizeSet / 2);
-            int centeredY = centerPoint.Y - (zoomSizeSet / 2);
+            // int centeredX = centerPoint.X - (zoomSizeSet / 2);
+            // int centeredY = centerPoint.Y - (zoomSizeSet / 2);
+
+            int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
+            int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))

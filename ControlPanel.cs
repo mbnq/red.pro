@@ -34,6 +34,8 @@ namespace RED.mbnq
 
         public const int mPNGMaxWidth = 1920;
         public const int mPNGMaxHeight = 1080;
+
+        // this is for center crosshair button
         public Point GetCenteredPosition()
         {
             // Get the bounds of the primary screen 
