@@ -36,7 +36,7 @@ namespace RED.mbnq
             toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
 
             // Initialize menu item Browse UserData
-            ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse UserData");
+            ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse User Data");
             openSettingsDirMenuItem.Click += OpenSettingsDirMenuItem_Click;
 
             // Initialize menu item Toggle Sound
