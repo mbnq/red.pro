@@ -85,10 +85,12 @@ namespace RED.mbnq
         {
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;   // HighQualityBicubic or Bicubic or Bilinear or NearestNeighbor or Default or HighQualityBilinear
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;                  // AntiAlias or HighQuality or HighSpeed or None or Default
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;              // HighQuality or HighSpeed or Hlaf or None
+            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;        // HighQuality or HighSpeed or AssumeLinear or Default
+            e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;                // SourceOver or SourceCopy
+
 
             int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
             int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
