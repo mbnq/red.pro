@@ -228,6 +228,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="commentsNotesOnly.cs" />
     <Compile Include="ControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>

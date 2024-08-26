@@ -16,10 +16,11 @@ namespace RED.mbnq
     {
         public static MainDisplay mainDisplay;
 
-        [STAThread]
-
         [DllImport("user32.dll")]
+
         static extern bool SetProcessDPIAware();
+
+        [STAThread]
         static void Main()
         {
             SetProcessDPIAware();
