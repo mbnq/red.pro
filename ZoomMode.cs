@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace RED.mbnq
 {
@@ -79,6 +81,35 @@ namespace RED.mbnq
                 Debug.WriteLine($"Screen {screen.DeviceName}: {screen.Bounds.Width}x{screen.Bounds.Height}");
             }
 
+            /* --- */
+
+
+
+            /* --- */
+
+            /*
+            // Path to the registry key where DPI settings are stored
+            string dpiRegistryPath = @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics";
+            string valueName = "AppliedDPI";
+
+            // Retrieve the DPI value from the registry
+            object dpiValue = Registry.GetValue(dpiRegistryPath, valueName, 96);
+
+            if (dpiValue != null)
+            {
+                int dpi = (int)dpiValue;
+
+                // Calculate the scaling factor
+                float scalingFactor = dpi / 96.0f;
+
+                Console.WriteLine($"Scaling Factor New: {scalingFactor * 100}% {dpiValue}");
+            }
+            else
+            {
+                Console.WriteLine("Failed to retrieve DPI setting from registry.");
+            }
+            */
+
 
             // Get the screen bounds (entire screen size)
             // Calculate the centered X position
@@ -87,7 +118,11 @@ namespace RED.mbnq
             // Calculate the centered Y position if needed
             int centeredY = 0;
 
-            Debug.WriteLine($"Centered X: {centeredX}, Centered Y: {centeredY},  test: {Screen.PrimaryScreen.WorkingArea}");
+            Debug.WriteLine($"New Test: {(Screen.PrimaryScreen.Bounds.Width * 1.25)}");
+
+            // Debug.WriteLine($"New Test: {System.Windows.SystemParameters.FullPrimaryScreenWidth.ToString()}");
+            // Debug.WriteLine($"New Test: {System.Windows.SystemParameters.PrimaryScreenHeight.ToString()}");
+            // Debug.WriteLine($"Centered X: {centeredX}, Centered Y: {centeredY},  test: {Screen.PrimaryScreen.WorkingArea}");
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))

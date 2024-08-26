@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.InteropServices;
 
 namespace RED.mbnq
 {
@@ -16,8 +17,13 @@ namespace RED.mbnq
         public static MainDisplay mainDisplay;
 
         [STAThread]
+
+        [DllImport("user32.dll")]
+        static extern bool SetProcessDPIAware();
         static void Main()
         {
+            SetProcessDPIAware();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
