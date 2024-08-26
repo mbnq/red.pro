@@ -11,6 +11,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Windows.Media;
 
 namespace RED.mbnq
 {
@@ -23,6 +25,7 @@ namespace RED.mbnq
         {
             if (!Directory.Exists(settingsDirectory))
             {
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Creating folder for userfiles...");
                 Directory.CreateDirectory(settingsDirectory);
             }
         }
@@ -62,6 +65,7 @@ namespace RED.mbnq
                 Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
+            Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
         }
 
         /* --- --- --- loading --- --- --- */
@@ -71,6 +75,7 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings file not found.");
                 return;
             }
 
@@ -122,6 +127,7 @@ namespace RED.mbnq
             }
 
             controlPanel.mSettingsLoaded = 1;
+            Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */
@@ -153,9 +159,15 @@ namespace RED.mbnq
 
                 File.WriteAllText(settingsFilePath, sb.ToString());
                 fileCreated = true;
+
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings save file created.");
+            }
+            else
+            {
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings save file found.");
             }
 
-            LoadSettings(controlPanel, false);
+            // LoadSettings(controlPanel, false);
 
             if (fileCreated)
             {
