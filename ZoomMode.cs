@@ -86,7 +86,8 @@ namespace RED.mbnq
                     workingArea.Top + workingArea.Height / 2
                 );
 
-                Console.WriteLine($"Center of primary screen: {centerPoint}");
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn,$"Center of primary screen: {centerPoint}\n");
+
 
             /* --- */
 
