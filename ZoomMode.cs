@@ -29,7 +29,7 @@ namespace RED.mbnq
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 2
+                Interval = 1
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -108,7 +108,7 @@ namespace RED.mbnq
                 {
                     FormBorderStyle = FormBorderStyle.None,
                     Size = new Size((zoomSizeSet * zoomMultiplier), (zoomSizeSet * zoomMultiplier)),
-                    StartPosition = FormStartPosition.CenterScreen, // Set the position manually
+                    StartPosition = FormStartPosition.Manual, // Set the position manually
                     Location = new Point(0,0),
                     TopMost = true,
                     ShowInTaskbar = false,
@@ -119,13 +119,12 @@ namespace RED.mbnq
                 zoomForm.Paint += ZoomForm_Paint;
             }
 
-            /* 
                 // Delta Force Style
                 // Position the zoomForm in the bottom-right corner
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
                 zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
                 zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
-            */ 
+
             zoomForm.Show();
             isZooming = true;
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
