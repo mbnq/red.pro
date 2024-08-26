@@ -15,6 +15,11 @@ namespace RED.mbnq
         private static Bitmap zoomBitmap;
         private static int zoomSizeSet = 192;   // Define the zoom area to capture, smaller size for more zoom
         private static int zoomMultiplier = 4;
+        public static bool IsZoomEnabled { get; private set; } = false;
+        public static void ToggleZoomMode()
+        {
+            IsZoomEnabled = !IsZoomEnabled;
+        }
 
         public static void InitializeZoomMode(ControlPanel panel)
         {
@@ -100,34 +105,34 @@ namespace RED.mbnq
 
         // tv
 
-        private static void ShowZoomOverlay()
+        public static void ShowZoomOverlay()
         {
-            if (zoomForm == null)
-            {
-                zoomForm = new CustomZoomForm
+                if (zoomForm == null)
                 {
-                    FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size((zoomSizeSet * zoomMultiplier), (zoomSizeSet * zoomMultiplier)),
-                    StartPosition = FormStartPosition.Manual, // Set the position manually
-                    Location = new Point(0,0),
-                    TopMost = true,
-                    ShowInTaskbar = false,
-                    TransparencyKey = Color.Magenta,
-                    BackColor = Color.Black
-                };
+                    zoomForm = new CustomZoomForm
+                    {
+                        FormBorderStyle = FormBorderStyle.None,
+                        Size = new Size((zoomSizeSet * zoomMultiplier), (zoomSizeSet * zoomMultiplier)),
+                        StartPosition = FormStartPosition.Manual, // Set the position manually
+                        Location = new Point(0,0),
+                        TopMost = true,
+                        ShowInTaskbar = false,
+                        TransparencyKey = Color.Magenta,
+                        BackColor = Color.Black
+                    };
 
-                zoomForm.Paint += ZoomForm_Paint;
-            }
+                    zoomForm.Paint += ZoomForm_Paint;
+                }
 
-                // Delta Force Style
-                // Position the zoomForm in the bottom-right corner
-                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-                zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
-                zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
+                    // Delta Force Style
+                    // Position the zoomForm in the bottom-right corner
+                    Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+                    zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
+                    zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
 
-            zoomForm.Show();
-            isZooming = true;
-            zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
+                zoomForm.Show();
+                isZooming = true;
+                zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
         }
         public static void HideZoomOverlay()
         {

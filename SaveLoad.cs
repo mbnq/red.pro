@@ -44,6 +44,7 @@ namespace RED.mbnq
             sb.AppendLine($"TimerInterval={controlPanel.TimerIntervalValue}");
             sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}");
             sb.AppendLine($"SoundEnabled={Sounds.IsSoundEnabled}");
+            sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomEnabled}");
 
             // Save overlay absolute position
             if (controlPanel.MainDisplay != null)
@@ -98,6 +99,14 @@ namespace RED.mbnq
                     controlPanel.MainDisplay.Top = int.Parse(line.Substring("PositionY=".Length));
                 else if (line.StartsWith("SoundEnabled="))
                     Sounds.IsSoundEnabled = bool.Parse(line.Substring("SoundEnabled=".Length));
+                else if (line.StartsWith("ZoomEnabled="))
+                {
+                    bool.TryParse(line.Substring("ZoomEnabled=".Length), out bool zoomEnabled);
+                    if (zoomEnabled != ZoomMode.IsZoomEnabled)
+                    {
+                        ZoomMode.ToggleZoomMode(); // This will correctly set the value
+                    }
+                }
             }
 
             controlPanel.UpdateMainDisplay();
@@ -135,6 +144,7 @@ namespace RED.mbnq
                 sb.AppendLine("TimerInterval=1000");
                 sb.AppendLine("AutoSaveOnExit=True");
                 sb.AppendLine("SoundEnabled=True");
+                sb.AppendLine("ZoomEnabled=True");
 
                 File.WriteAllText(settingsFilePath, sb.ToString());
                 fileCreated = true;

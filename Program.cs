@@ -50,6 +50,15 @@ namespace RED.mbnq
                 mainDisplay.SetCustomOverlay();
             }
 
+            if (ZoomMode.IsZoomEnabled)
+            {
+                ZoomMode.ShowZoomOverlay();
+            }
+            else
+            {
+                ZoomMode.HideZoomOverlay();
+            }
+
             // Update the main display after settings have loaded
             controlPanel.UpdateMainDisplay();
 

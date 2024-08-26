@@ -17,7 +17,7 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, openSettingsDirMenuItem;
+        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, openSettingsDirMenuItem;
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -30,6 +30,11 @@ namespace RED.mbnq
             separator4 = new ToolStripSeparator();
             separator5 = new ToolStripSeparator();
             separator6 = new ToolStripSeparator();
+
+            // ZoomMode
+            toggleZoomMenuItem = new ToolStripMenuItem("Enable Zoom");
+            toggleZoomMenuItem.Click += ToggleZoomMenuItem_Click;
+            toggleZoomMenuItem.Text = ZoomMode.IsZoomEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
 
             // Initialize menu item Browse UserData
             ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse UserData");
@@ -79,6 +84,7 @@ namespace RED.mbnq
             this.Items.Add(loadCustomMenuItem);
             this.Items.Add(removeCustomMenuItem);
             this.Items.Add(separator4);
+            this.Items.Add(toggleZoomMenuItem);
             this.Items.Add(toggleSoundMenuItem);
             this.Items.Add(separator3);
             this.Items.Add(centerMenuItem);
@@ -123,6 +129,14 @@ namespace RED.mbnq
         {
             Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
             toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
+            Sounds.PlayClickSoundOnce();
+        }
+
+        // zoomMode toggle
+        private void ToggleZoomMenuItem_Click(object sender, EventArgs e)
+        {
+            ZoomMode.ToggleZoomMode();
+            toggleZoomMenuItem.Text = ZoomMode.IsZoomEnabled ? "Disable Zoom" : "Enable Zoom";
             Sounds.PlayClickSoundOnce();
         }
 
