@@ -9,6 +9,7 @@ using MaterialSkin.Controls;
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -27,7 +28,7 @@ namespace RED.mbnq
         }
 
         /* --- --- --- saving --- --- --- */
-        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
+        public static async Task SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
 
@@ -53,7 +54,8 @@ namespace RED.mbnq
                 sb.AppendLine($"PositionY={controlPanel.MainDisplay.Top}");
             }
 
-            File.WriteAllText(settingsFilePath, sb.ToString());
+            // File.WriteAllText(settingsFilePath, sb.ToString());
+            await Task.Run(() => File.WriteAllText(settingsFilePath, sb.ToString()));
 
             if (showMessage)
             {
