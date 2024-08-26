@@ -85,15 +85,23 @@ namespace RED.mbnq
         {
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
             int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
             int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
 
             // Reuse the bitmap to capture the screen area
             using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
             {
-                // Copy the screen area into the bitmap
-                captureGraphics.CopyFromScreen(new Point(centeredX, centeredY), Point.Empty, new Size(zoomSizeSet, zoomSizeSet));
+                // Adjusted capture area
+                captureGraphics.CopyFromScreen(new Point(centeredX, centeredY),
+                                               Point.Empty,
+                                               new Size(zoomSizeSet * zoomMultiplier, zoomSizeSet * zoomMultiplier));
             }
+
 
             // Define the destination rectangle for the circular area
             Rectangle destRect = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
