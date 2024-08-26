@@ -503,9 +503,9 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        private async void SaveButton_Click(object sender, EventArgs e)
         {
-            SaveLoad.SaveSettings(this);
+            await SaveLoad.SaveSettings(this);
             UpdateMainDisplay();
         }
         private void LoadButton_Click(object sender, EventArgs e)

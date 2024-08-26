@@ -7,6 +7,8 @@
 
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
+using RED.mbnq;
 public static class mbFunctions
 {
 
@@ -39,3 +41,4 @@ public static class mbFunctions
     }
 
 }
+
