@@ -19,7 +19,7 @@ namespace RED.mbnq
     {
         public static readonly bool mIsDebugOn = false;
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval, zoomLevel;
         private Button saveButton, loadButton, centerButton;
         private FlowLayoutPanel panel;
         public MainDisplay mainDisplay;
@@ -29,7 +29,7 @@ namespace RED.mbnq
         public int mSettingsLoaded = 0;
 
         private static readonly int mCPWidth = 262;        
-        private static readonly int mCPHeight = 730;
+        private static readonly int mCPHeight = 800;
         private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
@@ -172,6 +172,11 @@ namespace RED.mbnq
             var transparencySlider = CreateLabeledSlider("Transparency", 0, 100);
             transparency = transparencySlider.Slider;
             panel.Controls.Add(transparencySlider.Panel);
+
+            // Zoom Level
+            var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10); // Adjust the range as needed
+            zoomLevel = zoomLevelSlider.Slider;
+            panel.Controls.Add(zoomLevelSlider.Panel);
 
             // Offsets
             var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000);
