@@ -142,7 +142,7 @@ namespace RED.mbnq
                 sb.AppendLine("Blue=0");
                 sb.AppendLine("Size=4");
                 sb.AppendLine("Transparency=64");
-                sb.AppendLine("ZoomLevel=4");
+                sb.AppendLine("ZoomLevel=3");
                 sb.AppendLine("OffsetX=1000");
                 sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("TimerInterval=1000");
