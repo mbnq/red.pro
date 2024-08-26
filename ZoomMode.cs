@@ -14,6 +14,7 @@ namespace RED.mbnq
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
         private static int zoomSizeSet = 192;   // Define the zoom area to capture, smaller size for more zoom
+        private static int zoomMultiplier = 4;
 
         public static void InitializeZoomMode(ControlPanel panel)
         {
@@ -68,33 +69,6 @@ namespace RED.mbnq
         {
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
-
-
-
-
-            /* --- */
-
-                // Get the primary screen
-                Screen primaryScreen = Screen.PrimaryScreen;
-
-                // Get the working area of the primary screen (excludes taskbar)
-                Rectangle workingArea = primaryScreen.Bounds;
-
-                // Calculate the center point
-                Point centerPoint = new Point(
-                    workingArea.Left + workingArea.Width / 2,
-                    workingArea.Top + workingArea.Height / 2
-                );
-
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn,$"Center of primary screen: {centerPoint}\n");
-
-
-            /* --- */
-
-
-            // int centeredX = centerPoint.X - (zoomSizeSet / 2);
-            // int centeredY = centerPoint.Y - (zoomSizeSet / 2);
-
             int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
             int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
 
@@ -111,8 +85,6 @@ namespace RED.mbnq
             // Draw the captured bitmap, stretched to fill the zoomForm
             e.Graphics.DrawImage(zoomBitmap, destRect);
 
-            // ---
-
             // Define the destination rectangle that represents the entire zoomForm
             Rectangle destRect2 = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
 
@@ -120,7 +92,7 @@ namespace RED.mbnq
             e.Graphics.DrawImage(zoomBitmap, destRect2);
 
             // Add a black border around the zoomed image
-            using (Pen blackPen = new Pen(Color.Black, 5)) // You can adjust the border width here
+            using (Pen blackPen = new Pen(Color.Black, 1)) // You can adjust the border width here
             {
                 e.Graphics.DrawRectangle(blackPen, destRect);
             }
@@ -135,9 +107,9 @@ namespace RED.mbnq
                 zoomForm = new CustomZoomForm
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(512, 512),
-                    StartPosition = FormStartPosition.Manual, // Set the position manually
-                    Location = controlPanel.GetCenteredPosition(), // Use the corrected method
+                    Size = new Size((zoomSizeSet * zoomMultiplier), (zoomSizeSet * zoomMultiplier)),
+                    StartPosition = FormStartPosition.CenterScreen, // Set the position manually
+                    Location = new Point(0,0),
                     TopMost = true,
                     ShowInTaskbar = false,
                     TransparencyKey = Color.Magenta,
@@ -147,11 +119,13 @@ namespace RED.mbnq
                 zoomForm.Paint += ZoomForm_Paint;
             }
 
-            // Position the zoomForm in the bottom-right corner
-            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-            zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
-            zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
-
+            /* 
+                // Delta Force Style
+                // Position the zoomForm in the bottom-right corner
+                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+                zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
+                zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
+            */ 
             zoomForm.Show();
             isZooming = true;
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
