@@ -76,7 +76,7 @@ namespace RED.mbnq
 
             // Calculate the center of the screen
             int centeredX = centeredPosition.X + (zoomSize / 2); // screenBounds.Width / 2;
-            int centeredY = centeredPosition.Y + (zoomSize / 2); // screenBounds.Height / 2;
+            int centeredY = centeredPosition.Y + (zoomSize / 16); // (zoomSize / 1.5); // - (zoomSize); // screenBounds.Height / 2;
 
             // Adjust the capture rectangle to be centered around the screen's center
             Rectangle captureRect = new Rectangle(centeredX,centeredY, zoomSize, zoomSize);
