@@ -10,10 +10,12 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Linq;
+using MaterialSkin;
 // using System.Windows.Media;
 
 namespace RED.mbnq
@@ -32,8 +34,12 @@ namespace RED.mbnq
             }
         }
 
-        /* --- --- --- encrypt / decrypt --- --- --- */
-        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");  // chill, it's here just for testing and learning purposes
+        /* --- --- --- progress bar --- --- --- */
+
+
+
+    /* --- --- --- encrypt / decrypt --- --- --- */
+    private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");  // chill, it's here just for testing and learning purposes
         private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
 
         private static byte[] EncryptString(string plainText, byte[] key, byte[] iv)
@@ -107,6 +113,10 @@ namespace RED.mbnq
         {
             var sb = new StringBuilder();
 
+            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            controlPanel.mbProgressBar0.Value = 0;
+            controlPanel.UpdateMainDisplay();
+
             sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
             sb.AppendLine("[MainDisplay]");
             sb.AppendLine($"Red={controlPanel.ColorRValue}");
@@ -122,12 +132,18 @@ namespace RED.mbnq
             sb.AppendLine($"SoundEnabled={Sounds.IsSoundEnabled}");
             sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomModeEnabled}");
 
+            controlPanel.mbProgressBar0.Value = 30;
+            controlPanel.UpdateMainDisplay();
+
             // Save overlay absolute position
             if (controlPanel.MainDisplay != null)
             {
                 sb.AppendLine($"PositionX={controlPanel.MainDisplay.Left}");
                 sb.AppendLine($"PositionY={controlPanel.MainDisplay.Top}");
             }
+
+            controlPanel.mbProgressBar0.Value = 50;
+            controlPanel.UpdateMainDisplay();
 
             byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
             File.WriteAllBytes(settingsFilePath, encryptedData);
@@ -138,11 +154,18 @@ namespace RED.mbnq
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
+
+            controlPanel.mbProgressBar0.Value = 100;
+            controlPanel.mbProgressBar0.Visible = false;
+            controlPanel.UpdateMainDisplay();
         }
 
         /* --- --- --- loading --- --- --- */
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
+            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            controlPanel.mbProgressBar0.Value = 0;
+
             if (!File.Exists(settingsFilePath))
             {
                 Sounds.PlayClickSoundOnce();
@@ -153,6 +176,8 @@ namespace RED.mbnq
 
             byte[] encryptedData = File.ReadAllBytes(settingsFilePath);
             string decryptedData = DecryptString(encryptedData, key, iv);
+
+            controlPanel.mbProgressBar0.Value = 30;
 
             var lines = decryptedData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var line in lines)
@@ -193,6 +218,8 @@ namespace RED.mbnq
                 }
             }
 
+            controlPanel.mbProgressBar0.Value = 60;
+
             controlPanel.UpdateMainDisplay();
 
             if (showMessage)
@@ -203,6 +230,10 @@ namespace RED.mbnq
 
             controlPanel.mSettingsLoaded = 1;
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
+            controlPanel.mbProgressBar0.Value = 100;
+            controlPanel.mbProgressBar0.Visible = false;
+            controlPanel.UpdateMainDisplay();
+
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */

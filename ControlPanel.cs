@@ -17,9 +17,11 @@ namespace RED.mbnq
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
         public static readonly bool mIsDebugOn = false;
+        public static readonly bool mPBIsOn = false;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval, zoomLevel;
         private Button saveButton, loadButton, centerButton;
+        public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
         public MainDisplay mainDisplay;
         private CheckBox autoSaveOnExit;
@@ -118,7 +120,7 @@ namespace RED.mbnq
             // this.BackColor = Color.FromArgb(255, 255, 58);               // not needed
             // this.DrawerBackgroundWithAccent = false;
         }
-        private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
+    private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (!autoSaveOnExit.Checked)
             {
@@ -239,6 +241,17 @@ namespace RED.mbnq
                     Sounds.PlayClickSound();
                 }
             };
+
+            /* --- --- --- Progress Bar --- --- --- */
+            mbProgressBar0 = new MaterialProgressBar
+            {
+                Location = new Point(mbFunctions.mGetPrimaryScreenCenter().X, mbFunctions.mGetPrimaryScreenCenter().Y),  // new System.Drawing.Point(1, 1),
+                Size = new System.Drawing.Size(mCPWidth, 10),
+                Visible = false // Initially hidden
+            }; 
+
+            panel.Controls.Add(mbProgressBar0);
+            mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
             /* --- --- ---  Add Controls --- --- --- */
             panel.Controls.Add(centerButton);
