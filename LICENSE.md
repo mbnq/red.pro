@@ -1,7 +1,5 @@
 # RED. PRO (RED DOT PRO) - License Agreement
 
-**Copyright © [2004] mbnq.pl**
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
 to use the current version of the Software without restriction, including without limitation the rights to use, copy, and distribute the Software, subject to the following conditions:
 
@@ -20,6 +18,7 @@ to use the current version of the Software without restriction, including withou
 7. **Attribution**: The Software must not be used in any way that implies endorsement by or association with mbnq.pl without prior written permission.
 
 For any questions or additional information, please contact mbnq.pl.
+**Copyright © [2004] mbnq.pl**
 
 Dependencies:
   - MaterialSkin (https://licenses.nuget.org/MIT)
