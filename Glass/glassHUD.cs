@@ -190,15 +190,20 @@ namespace RED.mbnq
             debugInfoDisplay.DrawDebugInfo(g);
 
             // Draw a border around the control if enabled
-            if (isBorderVisible && !isCircle)
+            if (isBorderVisible)
             {
                 using (Pen borderPen = new Pen(Color.Gray, 4))
                 {
-                    g.DrawRectangle(borderPen, 0, 0, this.Width - 1, this.Height - 1);
+                    if (isCircle)
+                    {
+                        g.DrawEllipse(borderPen, 0, 0, this.Width - 1, this.Height - 1);
+                    }
+                    else
+                    {
+                        g.DrawRectangle(borderPen, 0, 0, this.Width - 1, this.Height - 1);
+                    }
                 }
             }
         }
-
-
     }
 }
