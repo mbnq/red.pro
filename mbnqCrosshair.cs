@@ -37,8 +37,7 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
-            // this.Enabled = false;
-            // Cursor.Hide(); // Hide the cursor when the overlay is shown
+            // this.Enabled = false;            // Comment this out if the overlay should still display correctly without disabling the form entirely
 
             // The update timer
             updateTimer = new Timer();
@@ -189,5 +188,32 @@ namespace RED.mbnq
         {
             get { return customOverlay != null; }
         }
+
+        /* --- --- --- Let's sure overlay is non-clickable --- --- --- */
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCHITTEST = 0x84;
+            const int HTTRANSPARENT = -1;
+
+            if (m.Msg == WM_NCHITTEST)
+            {
+                m.Result = (IntPtr)HTTRANSPARENT; // Make the overlay non-clickable
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x20; // WS_EX_TRANSPARENT - Makes the form transparent to mouse events
+                cp.ExStyle |= 0x80; // WS_EX_NOACTIVATE - Prevents the form from becoming the foreground window
+                return cp;
+            }
+        }
+
+        /* --- --- ---  --- --- --- */
     }
 }
