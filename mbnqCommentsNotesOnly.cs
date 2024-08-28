@@ -5,7 +5,7 @@
  *  - improve performance
  *  - fps
  *  - advanced settings
- * 
+ *  - rotate crosshair
  * 
  * 
  * 
