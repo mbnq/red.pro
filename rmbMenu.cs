@@ -37,7 +37,7 @@ namespace RED.mbnq
             toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
 
             // New Capture Region Menu Item
-            newCaptureRegionMenuItem = new ToolStripMenuItem("New Capture Region");
+            newCaptureRegionMenuItem = new ToolStripMenuItem("Select Glass HUD");
             newCaptureRegionMenuItem.Click += NewCaptureRegionMenuItem_Click;
 
             // Initialize menu item Browse UserData
