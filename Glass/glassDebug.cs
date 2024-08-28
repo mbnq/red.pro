@@ -10,7 +10,6 @@ namespace RED.mbnq
         private bool isDebugEnabled = true;
         private Rectangle selectedRegion;
         private GlassHudOverlay displayOverlayForm;
-
         public DebugThings(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
@@ -23,7 +22,6 @@ namespace RED.mbnq
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;
         }
-
         public bool IsDebugEnabled
         {
             get { return isDebugEnabled; }
@@ -33,13 +31,11 @@ namespace RED.mbnq
                 displayOverlayForm.Invalidate(); // redraw when toggling debug mode
             }
         }
-
         public void UpdateSelectedRegion(Rectangle newSelectedRegion)
         {
             this.selectedRegion = newSelectedRegion;
             displayOverlayForm.Invalidate(); // Redraw the overlay to reflect the new region
         }
-
         public void DrawDebugInfo(Graphics g)
         {
             if (!isDebugEnabled)

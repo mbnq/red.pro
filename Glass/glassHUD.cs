@@ -48,8 +48,10 @@ namespace RED.mbnq
         private void ToggleShape()
         {
             isCircle = !isCircle; // Toggle the shape flag
+            ApplyCircularRegion(); // Reapply the shape
             this.Invalidate(); // Trigger a repaint to update the shape
         }
+
         public Rectangle GetAdjustedCaptureArea()
         {
             int adjustedX = captureArea.Location.X + (int)(captureArea.Width * offsetX);
