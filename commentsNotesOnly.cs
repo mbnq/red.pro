@@ -1,4 +1,15 @@
-﻿
+﻿/*
+ *  New ideas
+ *  - toggle crouch to hold
+ *  - anti-recoil
+ *  - improve performance
+ *  - fps
+ *  - advanced settings
+ * 
+ * 
+ * 
+ * 
+ */
 
 /*
     // Path to the registry key where DPI settings are stored

@@ -37,14 +37,14 @@ namespace RED.mbnq
 
             holdTimer = new Timer
             {
-                Interval = 1000 // before showing zoom in ms
+                Interval = 500 // before showing zoom in ms
             };
             holdTimer.Tick += HoldTimer_Tick;
 
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 1
+                Interval = 2
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -84,43 +84,50 @@ namespace RED.mbnq
         {
             if (controlPanel == null || controlPanel.MainDisplay == null) return;
 
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;   // HighQualityBicubic or Bicubic or Bilinear or NearestNeighbor or Default or HighQualityBilinear
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;                  // AntiAlias or HighQuality or HighSpeed or None or Default
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;              // HighQuality or HighSpeed or Hlaf or None
-            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;        // HighQuality or HighSpeed or AssumeLinear or Default
-            e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;                // SourceOver or SourceCopy
-
-
-            int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
-            int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
-
-            // Reuse the bitmap to capture the screen area
-            using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
+            // Create a BufferedGraphicsContext
+            BufferedGraphicsContext context = BufferedGraphicsManager.Current;
+            // Allocate a BufferedGraphics object for the current form
+            using (BufferedGraphics bufferedGraphics = context.Allocate(e.Graphics, e.ClipRectangle))
             {
-                // Adjusted capture area
-                captureGraphics.CopyFromScreen(new Point(centeredX, centeredY),
-                                               Point.Empty,
-                                               new Size(zoomSizeSet * zoomMultiplier, zoomSizeSet * zoomMultiplier));
-            }
+                // Use the graphics object from the bufferedGraphics
+                Graphics g = bufferedGraphics.Graphics;
 
+                // Your existing drawing code, but now using 'g' instead of 'e.Graphics'
+                e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;             // HighQualityBicubic or Bicubic or Bilinear or NearestNeighbor or Default or HighQualityBilinear
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;                    // AntiAlias or HighQuality or HighSpeed or None or Default
+                e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;                // HighQuality or HighSpeed or Hlaf or None
+                e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;          // HighQuality or HighSpeed or AssumeLinear or Default
+                e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;               // SourceOver or SourceCopy
 
-            // Define the destination rectangle for the circular area
-            Rectangle destRect = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
+                // Your drawing operations
+                int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
+                int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
 
-            // Draw the captured bitmap, clipped to the circular region
-            using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
-            {
-                path.AddEllipse(destRect);
-                e.Graphics.SetClip(path);
-                e.Graphics.DrawImage(zoomBitmap, destRect);
-            }
+                using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
+                {
+                    captureGraphics.CopyFromScreen(new Point(centeredX, centeredY),
+                                                   Point.Empty,
+                                                   new Size(zoomSizeSet * zoomMultiplier, zoomSizeSet * zoomMultiplier));
+                }
 
-            // Optionally, draw a border around the circle
-            using (Pen borderPen = new Pen(Color.Black, 2)) // You can adjust the border width and color
-            {
-                e.Graphics.DrawEllipse(borderPen, destRect);
+                Rectangle destRect = new Rectangle(0, 0, zoomForm.Width, zoomForm.Height);
+                using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                {
+                    path.AddEllipse(destRect);
+                    g.SetClip(path);
+                    g.DrawImage(zoomBitmap, destRect);
+                }
+
+                using (Pen borderPen = new Pen(Color.Black, 2))
+                {
+                    g.DrawEllipse(borderPen, destRect);
+                }
+
+                // Render the buffered content to the screen
+                bufferedGraphics.Render();
             }
         }
+
 
         // tv
 
