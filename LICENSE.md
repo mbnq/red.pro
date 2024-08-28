@@ -19,7 +19,7 @@ to use the current version of the Software without restriction, including withou
 
 For any questions or additional information, please contact mbnq.pl.
 
-**Copyright © [2004] mbnq.pl**
+**Copyright © [2024] mbnq.pl**
 
 Dependencies:
   - MaterialSkin (https://licenses.nuget.org/MIT)
