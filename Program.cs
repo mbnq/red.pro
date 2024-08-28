@@ -58,9 +58,9 @@ namespace RED.mbnq
             };
 
             // Integrate the Mieszacz functionality
-            Rectangle captureArea = SelectCaptureArea();
-            displayOverlay = new OverlayForm(captureArea, captureArea); // Pass the same region for both for now
-            displayOverlay.Show(); // Show the overlay
+            // Rectangle captureArea = SelectCaptureArea();
+            // displayOverlay = new OverlayForm(captureArea, captureArea); // Pass the same region for both for now
+            // displayOverlay.Show(); // Show the overlay
 
             Application.Run(controlPanel); // This will run the main display and overlay together
         }
