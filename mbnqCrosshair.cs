@@ -37,7 +37,8 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
-            this.Enabled = false;               // to prevent being clickable
+            // this.Enabled = false;
+            // Cursor.Hide(); // Hide the cursor when the overlay is shown
 
             // The update timer
             updateTimer = new Timer();
@@ -46,7 +47,6 @@ namespace RED.mbnq
             updateTimer.Start();
 
         }
-
         string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomOverlay()
         {
@@ -65,7 +65,6 @@ namespace RED.mbnq
                                 customOverlay?.Dispose();
                                 customOverlay = new Bitmap(img);
                                 this.Invalidate();
-
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
                             }
                             else
@@ -145,6 +144,7 @@ namespace RED.mbnq
         // draw overlay
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
+            Cursor.Hide();
             Graphics g = e.Graphics;
 
             // Set graphics options for better quality rendering
@@ -167,6 +167,8 @@ namespace RED.mbnq
             }
 
             this.Show();
+            Cursor.Show();
+
         }
         private void DrawFallbackRectangle(Graphics g)
         {
@@ -179,6 +181,7 @@ namespace RED.mbnq
             if (disposing)
             {
                 customOverlay?.Dispose();
+                Cursor.Show();
             }
             base.Dispose(disposing);
         }
