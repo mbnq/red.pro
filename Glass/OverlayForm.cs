@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RED.mbnq
 {
@@ -79,12 +80,21 @@ namespace RED.mbnq
 
         public async void UpdateCaptureArea(Rectangle newCaptureArea)
         {
+            // Update UI-related properties on the main thread
             this.captureArea = newCaptureArea;
             this.Location = new Point(newCaptureArea.Right + 20, newCaptureArea.Top);
             this.Size = newCaptureArea.Size;
-            debugInfoDisplay.UpdateSelectedRegion(newCaptureArea); // Update the debug information
+
+            // Offload the potentially time-consuming debug update to a background thread
+            await Task.Run(() =>
+            {
+                debugInfoDisplay.UpdateSelectedRegion(newCaptureArea);
+            });
+
+            // Invalidate the form on the main thread to trigger a repaint
             this.Invalidate();
         }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
