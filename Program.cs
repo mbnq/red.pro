@@ -9,7 +9,7 @@ namespace RED.mbnq
     static class Program
     {
         public static MainDisplay mainDisplay;
-        private static OverlayForm? displayOverlay;
+        public static OverlayForm? displayOverlay;
         public static int mbFrameDelay = 8; // in ms
         public static float mbVersion = 0.02f;
 
@@ -56,11 +56,6 @@ namespace RED.mbnq
                     SaveLoad.SaveSettings(controlPanel, false);
                 }
             };
-
-            // Integrate the Mieszacz functionality
-            // Rectangle captureArea = SelectCaptureArea();
-            // displayOverlay = new OverlayForm(captureArea, captureArea); // Pass the same region for both for now
-            // displayOverlay.Show(); // Show the overlay
 
             Application.Run(controlPanel); // This will run the main display and overlay together
         }

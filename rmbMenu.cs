@@ -10,13 +10,14 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace RED.mbnq
 {
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, openSettingsDirMenuItem;
+        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, openSettingsDirMenuItem, newCaptureRegionMenuItem;
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -34,6 +35,10 @@ namespace RED.mbnq
             toggleZoomMenuItem = new ToolStripMenuItem("Enable ZoomMode");
             toggleZoomMenuItem.Click += ToggleZoomMenuItem_Click;
             toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
+
+            // New Capture Region Menu Item
+            newCaptureRegionMenuItem = new ToolStripMenuItem("New Capture Region");
+            newCaptureRegionMenuItem.Click += NewCaptureRegionMenuItem_Click;
 
             // Initialize menu item Browse UserData
             ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse User Data");
@@ -87,6 +92,7 @@ namespace RED.mbnq
             this.Items.Add(toggleSoundMenuItem);
             this.Items.Add(separator3);
             this.Items.Add(centerMenuItem);
+            this.Items.Add(newCaptureRegionMenuItem);
             this.Items.Add(separator2);
             this.Items.Add(aboutMenuItem);
             this.Items.Add(separator1);
@@ -121,6 +127,17 @@ namespace RED.mbnq
                 MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                 Sounds.PlayClickSoundOnce();
             }
+        }
+
+        // Event handler for the new capture region menu item
+        private void NewCaptureRegionMenuItem_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            // Code to select a new capture area and display the overlay
+            Rectangle captureArea = Program.SelectCaptureArea();
+            Program.displayOverlay = new OverlayForm(captureArea, captureArea); // Pass the same region for both for now
+            Program.displayOverlay.Show(); // Show the overlay
         }
 
         // sounds mute toggle
