@@ -143,7 +143,6 @@ namespace RED.mbnq
         // draw overlay
         private void MainDisplay_Paint(object sender, PaintEventArgs e)
         {
-            Cursor.Hide();
             Graphics g = e.Graphics;
 
             // Set graphics options for better quality rendering
