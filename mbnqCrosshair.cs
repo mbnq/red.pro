@@ -37,6 +37,7 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
+            this.Enabled = false;               // to prevent being clickable
 
             // The update timer
             updateTimer = new Timer();
