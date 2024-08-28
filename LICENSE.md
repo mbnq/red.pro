@@ -1,6 +1,6 @@
-# RED. PRO aka RED DOT PRO - License Agreement
+# RED. PRO (RED DOT PRO) - License Agreement
 
-**Copyright © [Year] mbnq.pl**
+**Copyright © [2004] mbnq.pl**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
 to use the current version of the Software without restriction, including without limitation the rights to use, copy, and distribute the Software, subject to the following conditions:
@@ -9,9 +9,9 @@ to use the current version of the Software without restriction, including withou
 
 2. **Content Creators**: Content creators are permitted to use the Software in their work (e.g., videos, streams, tutorials) provided they mention the author (mbnq.pl) and include a link to where the Software was obtained.
 
-3. **License Expiration**: This license will automatically expire if a new version or update of the Software is released. Upon the release of a new version or update, users must obtain a new license to continue using the Software.
+3. **License Expiration**: This license will automatically expire if a new version or update of the Software is released. Upon the release of a new version or update, users must obtain a new license to continue using the Software. This expiration does not apply to content created using this software before the release of a new version or update.
 
-4. **Prohibited Actions**: Selling, redistributing, or modifying the Software without prior written permission from mbnq.pl is strictly prohibited.
+4. **Prohibited Actions**: Selling, redistributing, or modifying the Software without prior written permission from the original author is strictly prohibited.
 
 5. **Fair Play Notice**: This type of software may be recognized as cheating in some games. However, this was not the intended purpose of the Software, and the author takes no responsibility for user actions. Users are strongly advised to always follow fair play rules and to use the Software responsibly.
 
@@ -20,3 +20,7 @@ to use the current version of the Software without restriction, including withou
 7. **Attribution**: The Software must not be used in any way that implies endorsement by or association with mbnq.pl without prior written permission.
 
 For any questions or additional information, please contact mbnq.pl.
+
+Dependencies:
+  - MaterialSkin (https://licenses.nuget.org/MIT)
+  - Costura.Fody (https://licenses.nuget.org/MIT) 
