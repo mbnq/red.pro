@@ -13,7 +13,7 @@ namespace RED.mbnq
         private System.Windows.Forms.Timer updateTimer;
         private bool isMoving = false;
         private bool isMoveEnabled = false;
-        private bool isCircle = false; // Flag to track the current shape
+        public bool isCircle = false;
         private Point lastMousePos;
         private DebugThings debugInfoDisplay;
 
@@ -67,9 +67,12 @@ namespace RED.mbnq
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(mbDisplay.Right, mbDisplay.Top);
             this.Size = mbDisplay.Size;
-            this.BackColor = Color.Black;
             this.Opacity = 1.0;
             this.DoubleBuffered = true;
+
+            // Apply a circular region to the form
+            ApplyCircularRegion();
+
             this.debugInfoDisplay = new DebugThings(this, selectedArea); // Updated constructor call
 
             InitializeTrackBars();
@@ -82,6 +85,37 @@ namespace RED.mbnq
             updateTimer.Start();
             EnableFormMovement();
         }
+
+        private void ApplyCircularRegion()
+        {
+            if (isCircle)
+            {
+                // Create a circular region based on the form's size
+                using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                {
+                    path.AddEllipse(0, 0, this.Width, this.Height);
+                    this.Region = new Region(path);
+                }
+            }
+            else
+            {
+                // Create a rectangular region based on the form's size
+                using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                {
+                    path.AddRectangle(new Rectangle(0, 0, this.Width, this.Height));
+                    this.Region = new Region(path);
+                }
+            }
+        }
+
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            // Reapply the circular region whenever the form is resized
+            ApplyCircularRegion();
+        }
+
         public Rectangle CaptureArea => captureArea;
 
         public async void UpdateCaptureArea(Rectangle newCaptureArea)
@@ -128,12 +162,9 @@ namespace RED.mbnq
 
                     Rectangle destRect2 = new Rectangle(0, 0, this.Width, this.Height);
 
-                    // Draw the shape based on the isCircle flag
                     if (isCircle)
                     {
-                        // Draw a circle (ellipse) within the bounds of the adjusted capture area
-                        // g.FillEllipse(Brushes.Black, new Rectangle(0, 0, zoomedWidth, zoomedHeight));
-
+                        // Draw the captured bitmap, clipped to the circular region
                         using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
                         {
                             path.AddEllipse(destRect2);
@@ -165,6 +196,7 @@ namespace RED.mbnq
                 }
             }
         }
+
 
     }
 }
