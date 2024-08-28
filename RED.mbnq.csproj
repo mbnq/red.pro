@@ -233,14 +233,14 @@
     <Compile Include="ControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Glass\DebugThings.cs" />
-    <Compile Include="Glass\MenuAndInput.cs">
+    <Compile Include="Glass\glassDebug.cs" />
+    <Compile Include="Glass\glassIO.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Glass\glassHUD.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Glass\selector.cs">
+    <Compile Include="Glass\glassSelector.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GlobalMouseHook.cs" />
