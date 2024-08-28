@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RED.mbnq
 {
-    public partial class OverlayForm
+    public partial class GlassHudOverlay
     {
         private void OverlayForm_MouseClick(object? sender, MouseEventArgs e)
         {

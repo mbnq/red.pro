@@ -9,7 +9,7 @@ namespace RED.mbnq
     static class Program
     {
         public static MainDisplay mainDisplay;
-        public static OverlayForm? displayOverlay;
+        public static GlassHudOverlay? displayOverlay;
         public static int mbFrameDelay = 8; // in ms
         public static float mbVersion = 0.02f;
 

@@ -136,7 +136,7 @@ namespace RED.mbnq
 
             // Code to select a new capture area and display the overlay
             Rectangle captureArea = Program.SelectCaptureArea();
-            Program.displayOverlay = new OverlayForm(captureArea, captureArea); // Pass the same region for both for now
+            Program.displayOverlay = new GlassHudOverlay(captureArea, captureArea); // Pass the same region for both for now
             Program.displayOverlay.Show(); // Show the overlay
         }
 

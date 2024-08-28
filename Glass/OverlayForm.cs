@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RED.mbnq
 {
-    public partial class OverlayForm : Form
+    public partial class GlassHudOverlay : Form
     {
         private Rectangle captureArea;
         private System.Windows.Forms.Timer updateTimer;
@@ -51,7 +51,7 @@ namespace RED.mbnq
 
             return new Rectangle(adjustedX, adjustedY, adjustedWidth, adjustedHeight);
         }
-        public OverlayForm(Rectangle mbDisplay, Rectangle selectedArea)
+        public GlassHudOverlay(Rectangle mbDisplay, Rectangle selectedArea)
         {
             this.captureArea = mbDisplay;
             this.FormBorderStyle = FormBorderStyle.None;

@@ -9,16 +9,16 @@ namespace RED.mbnq
     {
         private bool isDebugEnabled = true;
         private Rectangle selectedRegion;
-        private OverlayForm displayOverlayForm;
+        private GlassHudOverlay displayOverlayForm;
 
-        public DebugThings(OverlayForm overlayForm)
+        public DebugThings(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
         }
 
         // New constructor accepting the selected region
-        public DebugThings(OverlayForm overlayForm, Rectangle selectedRegion)
+        public DebugThings(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;
@@ -74,7 +74,7 @@ namespace RED.mbnq
             }
         }
     }
-    public partial class OverlayForm
+    public partial class GlassHudOverlay
     {
         Color mDefColGray = Color.Gray;
         Color mDefColWhite = Color.White;
