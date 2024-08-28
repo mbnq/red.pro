@@ -10,8 +10,8 @@ namespace RED.mbnq
     {
         public static mbnqCrosshair mainDisplay;
         public static GlassHudOverlay? displayOverlay;
-        public static int mbFrameDelay = 8; // in ms
-        public static float mbVersion = 0.02f;
+        public static int mbFrameDelay = 8;     // in ms, for glass hud
+        public static float mbVersion = 0.03f;
 
         [DllImport("user32.dll")]
         static extern bool SetProcessDPIAware();
