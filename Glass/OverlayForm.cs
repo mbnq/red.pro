@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
 namespace RED.mbnq
@@ -76,7 +77,7 @@ namespace RED.mbnq
         }
         public Rectangle CaptureArea => captureArea;
 
-        public void UpdateCaptureArea(Rectangle newCaptureArea)
+        public async void UpdateCaptureArea(Rectangle newCaptureArea)
         {
             this.captureArea = newCaptureArea;
             this.Location = new Point(newCaptureArea.Right + 20, newCaptureArea.Top);
@@ -84,7 +85,6 @@ namespace RED.mbnq
             debugInfoDisplay.UpdateSelectedRegion(newCaptureArea); // Update the debug information
             this.Invalidate();
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
