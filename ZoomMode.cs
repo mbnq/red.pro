@@ -44,7 +44,7 @@ namespace RED.mbnq
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 2
+                Interval = 16
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -86,6 +86,7 @@ namespace RED.mbnq
 
             // Create a BufferedGraphicsContext
             BufferedGraphicsContext context = BufferedGraphicsManager.Current;
+
             // Allocate a BufferedGraphics object for the current form
             using (BufferedGraphics bufferedGraphics = context.Allocate(e.Graphics, e.ClipRectangle))
             {
@@ -93,11 +94,11 @@ namespace RED.mbnq
                 Graphics g = bufferedGraphics.Graphics;
 
                 // Your existing drawing code, but now using 'g' instead of 'e.Graphics'
-                e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;             // HighQualityBicubic or Bicubic or Bilinear or NearestNeighbor or Default or HighQualityBilinear
-                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;                    // AntiAlias or HighQuality or HighSpeed or None or Default
-                e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;                // HighQuality or HighSpeed or Hlaf or None
-                e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;          // HighQuality or HighSpeed or AssumeLinear or Default
-                e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;               // SourceOver or SourceCopy
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.None;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
 
                 // Your drawing operations
                 int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
@@ -124,9 +125,10 @@ namespace RED.mbnq
                 }
 
                 // Render the buffered content to the screen
-                bufferedGraphics.Render();
+                bufferedGraphics.Render(); // This call is crucial to actually display the buffered content on the screen
             }
         }
+
 
 
         // tv
@@ -176,13 +178,16 @@ namespace RED.mbnq
     {
         public CustomZoomForm()
         {
-            // Set the control styles to reduce flickering
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            // Enable double buffering to reduce flicker
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint |
+                          ControlStyles.OptimizedDoubleBuffer, true);
             this.UpdateStyles();
 
             // Apply a circular region to the form
             this.ApplyCircularRegion();
         }
+
         private void ApplyCircularRegion()
         {
             // Create a circular region based on the form's size
@@ -190,6 +195,7 @@ namespace RED.mbnq
             path.AddEllipse(0, 0, this.Width, this.Height);
             this.Region = new Region(path);
         }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -197,5 +203,6 @@ namespace RED.mbnq
             ApplyCircularRegion();
         }
     }
+
 
 }

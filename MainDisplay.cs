@@ -22,6 +22,10 @@ namespace RED.mbnq
 
         public MainDisplay()
         {
+            this.DoubleBuffered = true; // Enforce double buffering
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.UpdateStyles();
+
             // Defaults
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
