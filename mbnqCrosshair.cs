@@ -105,7 +105,7 @@ namespace RED.mbnq
             if (File.Exists(customFilePath))
             {
                 // Calculate hash of the current .png file
-                string currentFileHash = CalculateFileHash(customFilePath);
+                string currentFileHash = mbFunctions.CalculateFileHash(customFilePath);
 
                 // Check for existing in backup files with same hash
                 var backupFiles = Directory.GetFiles(SaveLoad.SettingsDirectory, "old.*.custom.png");
@@ -114,7 +114,7 @@ namespace RED.mbnq
 
                 foreach (var backupFile in backupFiles)
                 {
-                    string backupFileHash = CalculateFileHash(backupFile);
+                    string backupFileHash = mbFunctions.CalculateFileHash(backupFile);
                     if (currentFileHash == backupFileHash)
                     {
                         shouldCreateBackup = false;
@@ -139,19 +139,6 @@ namespace RED.mbnq
 
                 // Refresh the display
                 this.Invalidate();
-            }
-        }
-
-        // calculate file hash
-        private string CalculateFileHash(string filePath)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                using (var stream = File.OpenRead(filePath))
-                {
-                    byte[] hash = sha256.ComputeHash(stream);
-                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-                }
             }
         }
 

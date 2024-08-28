@@ -9,6 +9,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using RED.mbnq;
+using System.Security.Cryptography;
+using System;
+using System.IO;
 public static class mbFunctions
 {
 
@@ -40,5 +43,17 @@ public static class mbFunctions
         return new PointCoordinates(centerX, centerY);
     }
 
+    // calculate file hash
+    public static string CalculateFileHash(string filePath)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            using (var stream = File.OpenRead(filePath))
+            {
+                byte[] hash = sha256.ComputeHash(stream);
+                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+    }
 }
 
