@@ -166,8 +166,6 @@ namespace RED.mbnq
             }
 
             this.Show();
-            Cursor.Show();
-
         }
         private void DrawFallbackRectangle(Graphics g)
         {
