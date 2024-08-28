@@ -18,6 +18,7 @@ to use the current version of the Software without restriction, including withou
 7. **Attribution**: The Software must not be used in any way that implies endorsement by or association with mbnq.pl without prior written permission.
 
 For any questions or additional information, please contact mbnq.pl.
+
 **Copyright © [2004] mbnq.pl**
 
 Dependencies:
