@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     static class Program
     {
-        public static MainDisplay mainDisplay;
+        public static mbnqCrosshair mainDisplay;
         public static GlassHudOverlay? displayOverlay;
         public static int mbFrameDelay = 8; // in ms
         public static float mbVersion = 0.02f;
@@ -25,7 +25,7 @@ namespace RED.mbnq
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Initialize MainDisplay
-            mainDisplay = new MainDisplay();
+            mainDisplay = new mbnqCrosshair();
 
             // Initialize ControlPanel
             ControlPanel controlPanel = new ControlPanel

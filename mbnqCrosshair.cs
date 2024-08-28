@@ -15,12 +15,12 @@ using System.Diagnostics;
 
 namespace RED.mbnq
 {
-    public class MainDisplay : Form
+    public class mbnqCrosshair : Form
     {
         private Timer updateTimer;
         private Image customOverlay;
 
-        public MainDisplay()
+        public mbnqCrosshair()
         {
             this.DoubleBuffered = true; // Enforce double buffering
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);

@@ -262,7 +262,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GlobalMouseHook.cs" />
-    <Compile Include="MainDisplay.cs">
+    <Compile Include="mbnqCrosshair.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mbFunctions.cs" />

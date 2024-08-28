@@ -23,7 +23,7 @@ namespace RED.mbnq
         private Button saveButton, loadButton, centerButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
-        public MainDisplay mainDisplay;
+        public mbnqCrosshair mainDisplay;
         private CheckBox autoSaveOnExit;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
@@ -87,7 +87,7 @@ namespace RED.mbnq
         }
 
         // main display init
-        public MainDisplay MainDisplay
+        public mbnqCrosshair MainDisplay
         {
             get { return mainDisplay; }
             set
