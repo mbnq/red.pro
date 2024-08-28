@@ -13,6 +13,7 @@ namespace RED.mbnq
         private System.Windows.Forms.Timer updateTimer;
         private bool isMoving = false;
         private bool isMoveEnabled = false;
+        private bool isCircle = false; // Flag to track the current shape
         private Point lastMousePos;
         private DebugThings debugInfoDisplay;
 
@@ -43,6 +44,11 @@ namespace RED.mbnq
         {
             isBorderVisible = !isBorderVisible;
             this.Invalidate(); // Request the form to be repainted with the new border setting
+        }
+        private void ToggleShape()
+        {
+            isCircle = !isCircle; // Toggle the shape flag
+            this.Invalidate(); // Trigger a repaint to update the shape
         }
         public Rectangle GetAdjustedCaptureArea()
         {
@@ -99,6 +105,7 @@ namespace RED.mbnq
         {
             Graphics g = e.Graphics;
 
+            // Adjust the capture area based on offsets and zoom
             int adjustedX = captureArea.Location.X + (int)(captureArea.Width * offsetX);
             int adjustedY = captureArea.Location.Y + (int)(captureArea.Height * offsetY);
             Point adjustedLocation = new Point(adjustedX, adjustedY);
@@ -119,8 +126,26 @@ namespace RED.mbnq
                     // Capture the screen into the bitmap
                     bitmapGraphics.CopyFromScreen(adjustedCaptureArea.Location, Point.Empty, adjustedCaptureArea.Size);
 
-                    // Draw the scaled bitmap onto the form
-                    g.DrawImage(bitmap, new Rectangle(0, 0, this.Width, this.Height));
+                    Rectangle destRect2 = new Rectangle(0, 0, this.Width, this.Height);
+
+                    // Draw the shape based on the isCircle flag
+                    if (isCircle)
+                    {
+                        // Draw a circle (ellipse) within the bounds of the adjusted capture area
+                        // g.FillEllipse(Brushes.Black, new Rectangle(0, 0, zoomedWidth, zoomedHeight));
+
+                        using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                        {
+                            path.AddEllipse(destRect2);
+                            e.Graphics.SetClip(path);
+                            e.Graphics.DrawImage(bitmap, destRect2);
+                        }
+                    }
+                    else
+                    {
+                        // Draw the scaled bitmap onto the form
+                        g.DrawImage(bitmap, new Rectangle(0, 0, this.Width, this.Height));
+                    }
                 }
             }
 
@@ -128,17 +153,18 @@ namespace RED.mbnq
             this.Opacity = opacityFactor;
             this.DoubleBuffered = true;
 
-            // Draw debug information
+            // Draw debug information if enabled
             debugInfoDisplay.DrawDebugInfo(g);
 
-            // Draw a border around the control
-            if (isBorderVisible)
+            // Draw a border around the control if enabled
+            if (isBorderVisible && !isCircle)
             {
                 using (Pen borderPen = new Pen(Color.Gray, 4))
                 {
-                    g.DrawRectangle(borderPen, 0, 0, this.Width + 1, this.Height + 1);
+                    g.DrawRectangle(borderPen, 0, 0, this.Width - 1, this.Height - 1);
                 }
             }
         }
+
     }
 }
