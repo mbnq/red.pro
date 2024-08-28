@@ -8,7 +8,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
-using RED.mbnq;
 using System.Security.Cryptography;
 using System;
 using System.IO;
