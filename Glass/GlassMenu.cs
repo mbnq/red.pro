@@ -7,15 +7,15 @@ namespace RED.mbnq
 {
     public class GlassMenu
     {
-        private bool isDebugEnabled = true;
+        private bool isGlassMenuEnabled = true;
         private Rectangle selectedRegion;
         private GlassHudOverlay displayOverlayForm;
         public bool IsGlassMenuEnabled
         {
-            get { return isDebugEnabled; }
+            get { return isGlassMenuEnabled; }
             set
             {
-                isDebugEnabled = value;
+                isGlassMenuEnabled = value;
                 displayOverlayForm.Invalidate(); // Redraw when toggling debug mode
             }
         }
@@ -38,7 +38,7 @@ namespace RED.mbnq
         }
         public void DrawDebugInfo(Graphics g)
         {
-            if (!isDebugEnabled)
+            if (!isGlassMenuEnabled)
                 return;
 
             Rectangle adjustedRegion = displayOverlayForm.GetAdjustedCaptureArea();
@@ -49,7 +49,7 @@ namespace RED.mbnq
                 $"Debug Mode - mbnq - v.{Program.mbVersion} - {mbDateTime}",
                 $"Selected region: Top-Left({selectedRegion.X},{selectedRegion.Y}) Size({selectedRegion.Width}x{selectedRegion.Height})",
                 $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
-                $"Frame Times Set: 0ms {(int)Math.Floor(displayOverlayForm.currentFps):F2}fps",
+                $"FPS: {(int)Math.Floor(displayOverlayForm.currentFps):F2}",
                 ""
             };
 
