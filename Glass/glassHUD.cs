@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.Remoting.Contexts;
 
 namespace RED.mbnq
 {
@@ -174,56 +175,60 @@ namespace RED.mbnq
             // Update lastFrameTime for the next frame
             lastFrameTime = currentFrameTime;
 
-            Graphics g = e.Graphics;
-
-            // Adjust the capture area based on offsets and zoom
-            Rectangle adjustedCaptureArea = GetAdjustedCaptureArea();
-
-            // Create a bitmap to hold the captured screen area at the zoomed size
-            using (Bitmap bitmap = new Bitmap(adjustedCaptureArea.Width, adjustedCaptureArea.Height))
+            BufferedGraphicsContext context = BufferedGraphicsManager.Current;
+            using (BufferedGraphics bufferedGraphics = context.Allocate(e.Graphics, e.ClipRectangle))
             {
-                using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
+                Graphics g = bufferedGraphics.Graphics;
+
+                // Adjust the capture area based on offsets and zoom
+                Rectangle adjustedCaptureArea = GetAdjustedCaptureArea();
+
+                // Create a bitmap to hold the captured screen area at the zoomed size
+                using (Bitmap bitmap = new Bitmap(adjustedCaptureArea.Width, adjustedCaptureArea.Height))
                 {
-                    // Capture the screen into the bitmap
-                    bitmapGraphics.CopyFromScreen(adjustedCaptureArea.Location, Point.Empty, adjustedCaptureArea.Size);
-
-                    Rectangle destRect = new Rectangle(0, 0, this.Width, this.Height);
-
-                    if (isCircle)
+                    using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
                     {
-                        // Draw the captured bitmap, clipped to the circular region
-                        using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                        // Capture the screen into the bitmap
+                        bitmapGraphics.CopyFromScreen(adjustedCaptureArea.Location, Point.Empty, adjustedCaptureArea.Size);
+
+                        Rectangle destRect = new Rectangle(0, 0, this.Width, this.Height);
+
+                        if (isCircle)
                         {
-                            path.AddEllipse(destRect);
-                            e.Graphics.SetClip(path);
-                            e.Graphics.DrawImage(bitmap, destRect);
+                            // Draw the captured bitmap, clipped to the circular region
+                            using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+                            {
+                                path.AddEllipse(destRect);
+                                e.Graphics.SetClip(path);
+                                e.Graphics.DrawImage(bitmap, destRect);
+                            }
+                        }
+                        else
+                        {
+                            g.DrawImage(bitmap, destRect);
+                        }
+                    } 
+                }
+                // Draw debug information if enabled
+                debugInfoDisplay.DrawDebugInfo(g);
+
+                // Draw a border around the control if enabled
+                if (isBorderVisible)
+                {
+                    using (Pen borderPen = new Pen(Color.Gray, 4))
+                    {
+                        if (isCircle)
+                        {
+                            g.DrawEllipse(borderPen, 0, 0, this.Width - 1, this.Height - 1);
+                        }
+                        else
+                        {
+                            g.DrawRectangle(borderPen, 0, 0, this.Width - 1, this.Height - 1);
                         }
                     }
-                    else
-                    {
-                        // Draw the scaled bitmap onto the form
-                        g.DrawImage(bitmap, destRect);
-                    }
                 }
-            }
 
-            // Draw debug information if enabled
-            debugInfoDisplay.DrawDebugInfo(g);
-
-            // Draw a border around the control if enabled
-            if (isBorderVisible)
-            {
-                using (Pen borderPen = new Pen(Color.Gray, 4))
-                {
-                    if (isCircle)
-                    {
-                        g.DrawEllipse(borderPen, 0, 0, this.Width - 1, this.Height - 1);
-                    }
-                    else
-                    {
-                        g.DrawRectangle(borderPen, 0, 0, this.Width - 1, this.Height - 1);
-                    }
-                }
+                bufferedGraphics.Render();
             }
         }
 
