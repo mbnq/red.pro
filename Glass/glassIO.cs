@@ -13,11 +13,15 @@ namespace RED.mbnq
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
+
+                menu.Items.Add((debugInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => ToggleGlassMenu());  // Open Menu
+                menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Change Capture Region", null, (s, ea) => GlassHudOverlay.RestartWithNewArea());
+                menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add(isMoveEnabled ? "Bind" : "Move", null, (s, ea) => ToggleMoveOption());
-                menu.Items.Add("Glass Menu " + (debugInfoDisplay.IsGlassMenuEnabled ? "Off" : "On"), null, (s, ea) => ToggleGlassMenu());
                 menu.Items.Add("Toggle Border", null, (s, ea) => ToggleFrameVisibility());
-                menu.Items.Add("Toggle Shape", null, (s, ea) => ToggleShape()); // Added line
+                menu.Items.Add("Toggle Shape", null, (s, ea) => ToggleShape());
+                menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Close Glass", null, (s, ea) => this.Close());
                 menu.Show(this, e.Location);
             }
