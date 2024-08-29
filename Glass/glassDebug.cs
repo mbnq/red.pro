@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace RED.mbnq
 {
-    public class DebugThings
+    public class GlassDebug
     {
         private bool isDebugEnabled = true;
         private Rectangle selectedRegion;
         private GlassHudOverlay displayOverlayForm;
-        public DebugThings(GlassHudOverlay overlayForm)
+        public GlassDebug(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
         }
 
         // New constructor accepting the selected region
-        public DebugThings(GlassHudOverlay overlayForm, Rectangle selectedRegion)
+        public GlassDebug(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;
@@ -223,7 +223,6 @@ namespace RED.mbnq
                 label.BringToFront();
             }
 
-            // end is here
             ToggleDebugMode();
         }
 

@@ -15,7 +15,7 @@ namespace RED.mbnq
         private bool isMoveEnabled = false;
         public bool isCircle = false;
         private Point lastMousePos;
-        private DebugThings debugInfoDisplay;
+        private GlassDebug debugInfoDisplay;
 
         // Offset fields as modifiers
         private float offsetX = 0f; // 0.31f
@@ -40,6 +40,34 @@ namespace RED.mbnq
         private Label opacityLabel;
 
         private bool isBorderVisible = true;
+        
+        public GlassHudOverlay(Rectangle mbDisplay, Rectangle selectedArea)
+        {
+            this.captureArea = mbDisplay;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.TopMost = true;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(mbDisplay.Right, mbDisplay.Top);
+            this.Size = mbDisplay.Size;
+            this.Opacity = 1.0;
+            this.DoubleBuffered = true;
+            this.ShowInTaskbar = false;
+
+            // Apply a circular region to the form
+            ApplyCircularRegion();
+
+            this.debugInfoDisplay = new GlassDebug(this, selectedArea); // Updated constructor call
+
+            InitializeTrackBars();
+
+            this.MouseClick += OverlayForm_MouseClick;
+
+            updateTimer = new System.Windows.Forms.Timer();
+            updateTimer.Interval = Program.mbFrameDelay;
+            updateTimer.Tick += (s, e) => this.Invalidate();
+            updateTimer.Start();
+            EnableFormMovement();
+        }
         private void ToggleFrameVisibility()
         {
             isBorderVisible = !isBorderVisible;
@@ -61,33 +89,6 @@ namespace RED.mbnq
 
             return new Rectangle(adjustedX, adjustedY, adjustedWidth, adjustedHeight);
         }
-        public GlassHudOverlay(Rectangle mbDisplay, Rectangle selectedArea)
-        {
-            this.captureArea = mbDisplay;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.TopMost = true;
-            this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(mbDisplay.Right, mbDisplay.Top);
-            this.Size = mbDisplay.Size;
-            this.Opacity = 1.0;
-            this.DoubleBuffered = true;
-
-            // Apply a circular region to the form
-            ApplyCircularRegion();
-
-            this.debugInfoDisplay = new DebugThings(this, selectedArea); // Updated constructor call
-
-            InitializeTrackBars();
-
-            this.MouseClick += OverlayForm_MouseClick;
-
-            updateTimer = new System.Windows.Forms.Timer();
-            updateTimer.Interval = Program.mbFrameDelay;
-            updateTimer.Tick += (s, e) => this.Invalidate();
-            updateTimer.Start();
-            EnableFormMovement();
-        }
-
         private void ApplyCircularRegion()
         {
             if (isCircle)
@@ -109,8 +110,6 @@ namespace RED.mbnq
                 }
             }
         }
-
-
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
