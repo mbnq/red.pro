@@ -151,9 +151,9 @@ namespace RED.mbnq
 
             refreshRateSlider = new TrackBar
             {
-                Minimum = 1,  // Minimum 1 millisecond
-                Maximum = 1000,  // Maximum 1000 milliseconds
-                Value = 100,  // Default value (100ms)
+                Minimum = 1,            // ms
+                Maximum = 1000,
+                Value = 5,
                 TickFrequency = 50,
                 Width = 200,
                 AutoSize = true,
@@ -165,7 +165,7 @@ namespace RED.mbnq
             zoomSlider.Location = new Point(10, opacitySlider.Location.Y - sliderSpacing);
             offsetYSlider.Location = new Point(10, zoomSlider.Location.Y - sliderSpacing);
             offsetXSlider.Location = new Point(10, offsetYSlider.Location.Y - sliderSpacing);
-            refreshRateSlider.Location = new Point(10, opacitySlider.Location.Y - sliderSpacing);
+            refreshRateSlider.Location = new Point(10, offsetYSlider.Location.Y - (sliderSpacing * 2));
 
             // don't forget to put all sliders here!
             List<TrackBar> sliders = new List<TrackBar>
