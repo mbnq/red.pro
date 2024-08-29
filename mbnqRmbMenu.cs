@@ -135,9 +135,9 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
 
             // Code to select a new capture area and display the overlay
-            Rectangle captureArea = Program.SelectCaptureArea();
-            Program.displayOverlay = new GlassHudOverlay(captureArea, captureArea); // Pass the same region for both for now
-            Program.displayOverlay.Show(); // Show the overlay
+            Rectangle captureArea = selector.SelectCaptureArea();
+            GlassHudOverlay.displayOverlay = new GlassHudOverlay(captureArea, captureArea); // Pass the same region for both for now
+            GlassHudOverlay.displayOverlay.Show(); // Show the overlay
         }
 
         // sounds mute toggle

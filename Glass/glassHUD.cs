@@ -205,5 +205,19 @@ namespace RED.mbnq
                 }
             }
         }
+
+        public static GlassHudOverlay displayOverlay;
+        public static void RestartWithNewArea()
+        {
+            if (displayOverlay != null)
+            {
+                displayOverlay.Hide(); // Hide current overlay
+
+                Rectangle newArea = selector.SelectCaptureArea();
+
+                displayOverlay.UpdateCaptureArea(newArea); // Update the area instead of recreating the form
+                displayOverlay.Show(); // Show the updated overlay
+            }
+        }
     }
 }

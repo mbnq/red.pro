@@ -9,7 +9,6 @@ namespace RED.mbnq
     static class Program
     {
         public static mbnqCrosshair mainDisplay;
-        public static GlassHudOverlay displayOverlay;
         public static int mbFrameDelay = 8;     // in ms, for glass hud
         public static float mbVersion = 0.042f;
 
@@ -58,35 +57,6 @@ namespace RED.mbnq
             };
 
             Application.Run(controlPanel); // This will run the main display and overlay together
-        }
-
-        public static Rectangle SelectCaptureArea()
-        {
-            using (var selector = new selector())
-            {
-                if (selector.ShowDialog() == DialogResult.OK)
-                {
-                    return selector.SelectedArea;
-                }
-                else
-                {
-                    Environment.Exit(0);
-                    return Rectangle.Empty; // Unreachable, but necessary for compilation
-                }
-            }
-        }
-
-        public static void RestartWithNewArea()
-        {
-            if (displayOverlay != null)
-            {
-                displayOverlay.Hide(); // Hide current overlay
-
-                Rectangle newArea = SelectCaptureArea();
-
-                displayOverlay.UpdateCaptureArea(newArea); // Update the area instead of recreating the form
-                displayOverlay.Show(); // Show the updated overlay
-            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace RED.mbnq
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
-                menu.Items.Add("Change Capture Region", null, (s, ea) => Program.RestartWithNewArea());
+                menu.Items.Add("Change Capture Region", null, (s, ea) => GlassHudOverlay.RestartWithNewArea());
                 menu.Items.Add(isMoveEnabled ? "Bind" : "Move", null, (s, ea) => ToggleMoveOption());
                 menu.Items.Add("Debug " + (debugInfoDisplay.IsDebugEnabled ? "Off" : "On"), null, (s, ea) => ToggleDebugMode());
                 menu.Items.Add("Toggle Border", null, (s, ea) => ToggleFrameVisibility());

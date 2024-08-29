@@ -155,5 +155,20 @@ namespace RED.mbnq
             }
             base.Dispose(disposing);
         }
+        public static Rectangle SelectCaptureArea()
+        {
+            using (var selector = new selector())
+            {
+                if (selector.ShowDialog() == DialogResult.OK)
+                {
+                    return selector.SelectedArea;
+                }
+                else
+                {
+                    Environment.Exit(0);
+                    return Rectangle.Empty; // Unreachable, but necessary for compilation
+                }
+            }
+        }
     }
 }
