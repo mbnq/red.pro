@@ -17,6 +17,9 @@ namespace RED.mbnq
         private Point lastMousePos;
         private GlassMenu debugInfoDisplay;
 
+        private DateTime lastFrameTime = DateTime.MinValue; // Initialize to MinValue
+        public double currentFps = 0.0;
+
         // Offset fields as modifiers
         private float offsetX = 0f; // 0.31f
         private float offsetY = 0f; // 0.18f
@@ -147,6 +150,20 @@ namespace RED.mbnq
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            DateTime currentFrameTime = DateTime.Now;
+
+            if (lastFrameTime != DateTime.MinValue)
+            {
+                // Calculate time difference between frames in seconds
+                double timeDelta = (currentFrameTime - lastFrameTime).TotalSeconds;
+
+                // Calculate FPS as the reciprocal of the time taken per frame
+                currentFps = 1.0 / timeDelta;
+            }
+
+            // Update lastFrameTime for the next frame
+            lastFrameTime = currentFrameTime;
+
             Graphics g = e.Graphics;
 
             // Adjust the capture area based on offsets and zoom
@@ -203,7 +220,6 @@ namespace RED.mbnq
                 }
             }
         }
-
 
         public static GlassHudOverlay displayOverlay;
         public static void RestartWithNewArea()

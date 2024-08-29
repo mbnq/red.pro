@@ -25,7 +25,6 @@ namespace RED.mbnq
             this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
         }
 
-
         // New constructor accepting the selected region
         public GlassMenu(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
@@ -51,6 +50,7 @@ namespace RED.mbnq
                 $"Selected region: Top-Left({selectedRegion.X},{selectedRegion.Y}) Size({selectedRegion.Width}x{selectedRegion.Height})",
                 $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
                 $"Frame Times Set: {Program.mbFrameDelay}ms {1000 / Program.mbFrameDelay}fps",
+                $"Real FPS: {displayOverlayForm.currentFps:F2}fps" // Access currentFps here
             };
 
             using (Font debugFont = new Font("Arial", 7))
