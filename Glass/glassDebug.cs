@@ -10,6 +10,15 @@ namespace RED.mbnq
         private bool isDebugEnabled = true;
         private Rectangle selectedRegion;
         private GlassHudOverlay displayOverlayForm;
+        public bool IsGlassMenuEnabled
+        {
+            get { return isDebugEnabled; }
+            set
+            {
+                isDebugEnabled = value;
+                displayOverlayForm.Invalidate(); // redraw when toggling debug mode
+            }
+        }
         public GlassDebug(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
@@ -21,15 +30,6 @@ namespace RED.mbnq
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;
-        }
-        public bool IsDebugEnabled
-        {
-            get { return isDebugEnabled; }
-            set
-            {
-                isDebugEnabled = value;
-                displayOverlayForm.Invalidate(); // redraw when toggling debug mode
-            }
         }
         public void UpdateSelectedRegion(Rectangle newSelectedRegion)
         {
@@ -79,16 +79,16 @@ namespace RED.mbnq
         int GlassZoomMax = 200;
         private void ToggleDebugMode()
         {
-            debugInfoDisplay.IsDebugEnabled = !debugInfoDisplay.IsDebugEnabled;
+            debugInfoDisplay.IsGlassMenuEnabled = !debugInfoDisplay.IsGlassMenuEnabled;
 
-            offsetXSlider.Visible = debugInfoDisplay.IsDebugEnabled;
-            offsetYSlider.Visible = debugInfoDisplay.IsDebugEnabled;
-            zoomSlider.Visible = debugInfoDisplay.IsDebugEnabled;
-            offsetXLabel.Visible = debugInfoDisplay.IsDebugEnabled;
-            offsetYLabel.Visible = debugInfoDisplay.IsDebugEnabled;
-            zoomLabel.Visible = debugInfoDisplay.IsDebugEnabled;
-            opacityLabel.Visible = debugInfoDisplay.IsDebugEnabled;
-            opacitySlider.Visible = debugInfoDisplay.IsDebugEnabled;
+            offsetXSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            offsetYSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            zoomSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            offsetXLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            offsetYLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            zoomLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            opacityLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            opacitySlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
         }
         private void InitializeTrackBars()
         {
