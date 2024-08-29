@@ -166,7 +166,7 @@ namespace RED.mbnq
                 else
                 {
                     Environment.Exit(0);
-                    return Rectangle.Empty; // Unreachable, but necessary for compilation
+                    return Rectangle.Empty; // will never get here but we need it for compilation
                 }
             }
         }
