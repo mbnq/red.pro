@@ -10,7 +10,7 @@ namespace RED.mbnq
     {
         public static mbnqCrosshair mainDisplay;
         public static int mbFrameDelay = 8;     // in ms, for glass hud
-        public static float mbVersion = 0.042f;
+        public static float mbVersion = 0.043f;
 
         [DllImport("user32.dll")]
         static extern bool SetProcessDPIAware();
