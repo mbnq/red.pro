@@ -59,6 +59,10 @@ namespace RED.mbnq
             this.Opacity = 1.0;
             this.DoubleBuffered = true;
             this.ShowInTaskbar = false;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
 
             // Apply a circular region to the form
             ApplyCircularRegion();
@@ -202,10 +206,6 @@ namespace RED.mbnq
                     }
                 }
             }
-
-            // Set opacity and double-buffering
-            this.Opacity = opacityFactor;
-            this.DoubleBuffered = true;
 
             // Draw debug information if enabled
             debugInfoDisplay.DrawDebugInfo(g);
