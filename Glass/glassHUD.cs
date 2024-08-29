@@ -82,13 +82,20 @@ namespace RED.mbnq
 
         public Rectangle GetAdjustedCaptureArea()
         {
-            int adjustedX = captureArea.Location.X + (int)(captureArea.Width * offsetX);
-            int adjustedY = captureArea.Location.Y + (int)(captureArea.Height * offsetY);
-            int adjustedWidth = (int)(captureArea.Width * zoomFactor);
-            int adjustedHeight = (int)(captureArea.Height * zoomFactor);
+            int newWidth = (int)(captureArea.Width * zoomFactor);
+            int newHeight = (int)(captureArea.Height * zoomFactor);
 
-            return new Rectangle(adjustedX, adjustedY, adjustedWidth, adjustedHeight);
+            // Calculate the offset to keep the zoom centered
+            int offsetXCentered = (captureArea.Width - newWidth) / 2;
+            int offsetYCentered = (captureArea.Height - newHeight) / 2;
+
+            // Calculate the new top-left position based on centered zoom
+            int adjustedX = captureArea.X + offsetXCentered + (int)(captureArea.Width * offsetX);
+            int adjustedY = captureArea.Y + offsetYCentered + (int)(captureArea.Height * offsetY);
+
+            return new Rectangle(adjustedX, adjustedY, newWidth, newHeight);
         }
+
         private void ApplyCircularRegion()
         {
             if (isCircle)
@@ -141,42 +148,32 @@ namespace RED.mbnq
             Graphics g = e.Graphics;
 
             // Adjust the capture area based on offsets and zoom
-            int adjustedX = captureArea.Location.X + (int)(captureArea.Width * offsetX);
-            int adjustedY = captureArea.Location.Y + (int)(captureArea.Height * offsetY);
-            Point adjustedLocation = new Point(adjustedX, adjustedY);
-            Rectangle adjustedCaptureArea = new Rectangle(adjustedLocation, captureArea.Size);
-
-            // Invert the zoom factor by subtracting it from a fixed value (e.g., 2.0f)
-            float invertedZoomFactor = 2.0f - zoomFactor;
-
-            // Apply the inverted zoom factor to the size of the capture area
-            int zoomedWidth = (int)(adjustedCaptureArea.Width * invertedZoomFactor);
-            int zoomedHeight = (int)(adjustedCaptureArea.Height * invertedZoomFactor);
+            Rectangle adjustedCaptureArea = GetAdjustedCaptureArea();
 
             // Create a bitmap to hold the captured screen area at the zoomed size
-            using (Bitmap bitmap = new Bitmap(zoomedWidth, zoomedHeight))
+            using (Bitmap bitmap = new Bitmap(adjustedCaptureArea.Width, adjustedCaptureArea.Height))
             {
                 using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
                 {
                     // Capture the screen into the bitmap
                     bitmapGraphics.CopyFromScreen(adjustedCaptureArea.Location, Point.Empty, adjustedCaptureArea.Size);
 
-                    Rectangle destRect2 = new Rectangle(0, 0, this.Width, this.Height);
+                    Rectangle destRect = new Rectangle(0, 0, this.Width, this.Height);
 
                     if (isCircle)
                     {
                         // Draw the captured bitmap, clipped to the circular region
                         using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
                         {
-                            path.AddEllipse(destRect2);
+                            path.AddEllipse(destRect);
                             e.Graphics.SetClip(path);
-                            e.Graphics.DrawImage(bitmap, destRect2);
+                            e.Graphics.DrawImage(bitmap, destRect);
                         }
                     }
                     else
                     {
                         // Draw the scaled bitmap onto the form
-                        g.DrawImage(bitmap, new Rectangle(0, 0, this.Width, this.Height));
+                        g.DrawImage(bitmap, destRect);
                     }
                 }
             }
@@ -204,6 +201,7 @@ namespace RED.mbnq
                 }
             }
         }
+
 
         public static GlassHudOverlay displayOverlay;
         public static void RestartWithNewArea()
