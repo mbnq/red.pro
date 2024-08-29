@@ -32,12 +32,14 @@ namespace RED.mbnq
         private TrackBar offsetYSlider;
         private TrackBar zoomSlider;
         private TrackBar opacitySlider;
+        private TrackBar refreshRateSlider;
 
         // Labels to display offset and zoom values
         private Label offsetXLabel;
         private Label offsetYLabel;
         private Label zoomLabel;
         private Label opacityLabel;
+        private Label refreshRateLabel;
 
         private bool isBorderVisible = true;
         

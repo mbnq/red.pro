@@ -16,7 +16,7 @@ namespace RED.mbnq
             set
             {
                 isDebugEnabled = value;
-                displayOverlayForm.Invalidate(); // redraw when toggling debug mode
+                displayOverlayForm.Invalidate(); // Redraw when toggling debug mode
             }
         }
         public GlassMenu(GlassHudOverlay overlayForm)
@@ -24,6 +24,7 @@ namespace RED.mbnq
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
         }
+
 
         // New constructor accepting the selected region
         public GlassMenu(GlassHudOverlay overlayForm, Rectangle selectedRegion)
@@ -89,6 +90,8 @@ namespace RED.mbnq
             zoomLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
             opacityLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
             opacitySlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            refreshRateLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            refreshRateSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
         }
         private void InitializeTrackBars()
         {
@@ -146,10 +149,23 @@ namespace RED.mbnq
             };
             opacitySlider.Scroll += (s, e) => UpdateOpacity();
 
+            refreshRateSlider = new TrackBar
+            {
+                Minimum = 1,  // Minimum 1 millisecond
+                Maximum = 1000,  // Maximum 1000 milliseconds
+                Value = 100,  // Default value (100ms)
+                TickFrequency = 50,
+                Width = 200,
+                AutoSize = true,
+                BackColor = mDefColGray
+            };
+            refreshRateSlider.Scroll += (s, e) => UpdateRefreshRate();
+
             opacitySlider.Location = new Point(10, this.Height - marginFromBottom - opacitySlider.Height);
             zoomSlider.Location = new Point(10, opacitySlider.Location.Y - sliderSpacing);
             offsetYSlider.Location = new Point(10, zoomSlider.Location.Y - sliderSpacing);
             offsetXSlider.Location = new Point(10, offsetYSlider.Location.Y - sliderSpacing);
+            refreshRateSlider.Location = new Point(10, opacitySlider.Location.Y - sliderSpacing);
 
             // don't forget to put all sliders here!
             List<TrackBar> sliders = new List<TrackBar>
@@ -157,7 +173,8 @@ namespace RED.mbnq
                 offsetXSlider,
                 offsetYSlider,
                 zoomSlider,
-                opacitySlider
+                opacitySlider,
+                refreshRateSlider
             };
 
             /* --- --- Here goes the labels --- --- */
@@ -203,13 +220,23 @@ namespace RED.mbnq
             };
             opacityLabel.Location = mbGetLabelLocation(opacitySlider, opacityLabel);
 
+            refreshRateLabel = new Label
+            {
+                Text = "Refresh Rate: 100ms",
+                ForeColor = mDefColWhite,
+                BackColor = mDefColGray,
+                AutoSize = true
+            };
+            refreshRateLabel.Location = mbGetLabelLocation(refreshRateSlider, refreshRateLabel);
+
             // don't forget to put all labels here!
             List<Label> labels = new List<Label>
             {
                 offsetXLabel,
                 offsetYLabel,
                 zoomLabel,
-                opacityLabel
+                opacityLabel,
+                refreshRateLabel
             };
 
             foreach (var slider in sliders)
@@ -252,6 +279,22 @@ namespace RED.mbnq
             opacityLabel.Text = $"Opacity: {opacitySlider.Value}%";
 
             this.Invalidate();
+        }
+        public void UpdateRefreshInterval(int newInterval)
+        {
+            updateTimer.Interval = newInterval;
+        }
+
+        // Define the UpdateRefreshRate method
+        public void UpdateRefreshRate()
+        {
+            int refreshRate = refreshRateSlider.Value;
+            refreshRateLabel.Text = $"Refresh Rate: {refreshRate}ms";
+
+            // Assuming displayOverlayForm has a method to update the refresh rate interval
+            this.UpdateRefreshInterval(refreshRate);
+
+            this.Invalidate();  // Ensure the form is invalidated for redraw
         }
     }
 }
