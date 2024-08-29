@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RED.mbnq
 {
-    public class GlassMenu
+    public class glassControls
     {
         private bool isGlassMenuEnabled = true;
         private Rectangle selectedRegion;
@@ -19,14 +19,14 @@ namespace RED.mbnq
                 displayOverlayForm.Invalidate(); // Redraw when toggling debug mode
             }
         }
-        public GlassMenu(GlassHudOverlay overlayForm)
+        public glassControls(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
         }
 
         // New constructor accepting the selected region
-        public GlassMenu(GlassHudOverlay overlayForm, Rectangle selectedRegion)
+        public glassControls(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;
@@ -127,7 +127,7 @@ namespace RED.mbnq
             zoomSlider = new TrackBar
             {
                 Minimum = 1,  // No zoom at 100%
-                Maximum = 199,  // Maximum zoom (200%)
+                Maximum = GlassZoomMax - 1,  // Maximum zoom (200%)
                 Value = 100,    // Start with no zoom (100%)
                 TickFrequency = 10,
                 Width = 200,

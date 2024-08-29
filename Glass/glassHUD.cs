@@ -13,7 +13,7 @@ namespace RED.mbnq
         private bool isMoveEnabled = false;
         public bool isCircle = false;
         private Point lastMousePos;
-        private GlassMenu debugInfoDisplay;
+        private glassControls debugInfoDisplay;
 
         private DateTime lastFrameTime = DateTime.MinValue; // Initialize to MinValue
         public double currentFps = 0.0;
@@ -64,7 +64,7 @@ namespace RED.mbnq
             // Apply a circular region to the form
             ApplyCircularRegion();
 
-            this.debugInfoDisplay = new GlassMenu(this, selectedArea); // Updated constructor call
+            this.debugInfoDisplay = new glassControls(this, selectedArea); // Updated constructor call
 
             InitializeTrackBars();
 
