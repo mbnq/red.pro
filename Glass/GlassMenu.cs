@@ -77,7 +77,7 @@ namespace RED.mbnq
         int marginFromBottom = 20;
         int sliderSpacing = 50;
         int GlassZoomMax = 200;
-        private void ToggleDebugMode()
+        private void ToggleGlassMenu()
         {
             debugInfoDisplay.IsGlassMenuEnabled = !debugInfoDisplay.IsGlassMenuEnabled;
 
@@ -223,7 +223,7 @@ namespace RED.mbnq
                 label.BringToFront();
             }
 
-            ToggleDebugMode();
+            ToggleGlassMenu();
         }
 
         private void UpdateOffsets()

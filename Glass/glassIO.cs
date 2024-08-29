@@ -15,7 +15,7 @@ namespace RED.mbnq
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
                 menu.Items.Add("Change Capture Region", null, (s, ea) => GlassHudOverlay.RestartWithNewArea());
                 menu.Items.Add(isMoveEnabled ? "Bind" : "Move", null, (s, ea) => ToggleMoveOption());
-                menu.Items.Add("Debug " + (debugInfoDisplay.IsGlassMenuEnabled ? "Off" : "On"), null, (s, ea) => ToggleDebugMode());
+                menu.Items.Add("Glass Menu " + (debugInfoDisplay.IsGlassMenuEnabled ? "Off" : "On"), null, (s, ea) => ToggleGlassMenu());
                 menu.Items.Add("Toggle Border", null, (s, ea) => ToggleFrameVisibility());
                 menu.Items.Add("Toggle Shape", null, (s, ea) => ToggleShape()); // Added line
                 menu.Items.Add("Close Glass", null, (s, ea) => this.Close());
