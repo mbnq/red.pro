@@ -101,8 +101,8 @@ namespace RED.mbnq
                 g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
 
                 // Your drawing operations
-                int centeredX = mbFunctions.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
-                int centeredY = mbFunctions.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
+                int centeredX = mbFnc.mGetPrimaryScreenCenter().X - (zoomSizeSet / 2);
+                int centeredY = mbFnc.mGetPrimaryScreenCenter().Y - (zoomSizeSet / 2);
 
                 using (Graphics captureGraphics = Graphics.FromImage(zoomBitmap))
                 {

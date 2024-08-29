@@ -103,7 +103,7 @@ namespace RED.mbnq
             if (File.Exists(customFilePath))
             {
                 // Calculate hash of the current .png file
-                string currentFileHash = mbFunctions.CalculateFileHash(customFilePath);
+                string currentFileHash = mbFnc.CalculateFileHash(customFilePath);
 
                 // Check for existing in backup files with same hash
                 var backupFiles = Directory.GetFiles(SaveLoad.SettingsDirectory, "old.*.custom.png");
@@ -112,7 +112,7 @@ namespace RED.mbnq
 
                 foreach (var backupFile in backupFiles)
                 {
-                    string backupFileHash = mbFunctions.CalculateFileHash(backupFile);
+                    string backupFileHash = mbFnc.CalculateFileHash(backupFile);
                     if (currentFileHash == backupFileHash)
                     {
                         shouldCreateBackup = false;

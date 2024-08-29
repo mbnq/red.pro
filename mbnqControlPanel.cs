@@ -245,7 +245,7 @@ namespace RED.mbnq
             /* --- --- --- Progress Bar --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
-                Location = new Point(mbFunctions.mGetPrimaryScreenCenter().X, mbFunctions.mGetPrimaryScreenCenter().Y),  // new System.Drawing.Point(1, 1),
+                Location = new Point(mbFnc.mGetPrimaryScreenCenter().X, mbFnc.mGetPrimaryScreenCenter().Y),  // new System.Drawing.Point(1, 1),
                 Size = new System.Drawing.Size(mCPWidth, 10),
                 Visible = false // Initially hidden
             }; 

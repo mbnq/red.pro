@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System;
 using System.IO;
-public static class mbFunctions
+public static class mbFnc
 {
 
     public struct PointCoordinates
