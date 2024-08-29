@@ -18,6 +18,8 @@ namespace RED.mbnq
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Change Capture Region", null, async (s, ea) => await GlassHudOverlay.RestartWithNewAreaAsync());
                 menu.Items.Add(new ToolStripSeparator());
+                menu.Items.Add("Copy Overlay to Clipboard", null, (s, ea) => mbFunctions.CopyOverlayToClipboard(this, GetAdjustedCaptureArea()));
+                menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add(isMoveEnabled ? "Bind" : "Unbind", null, (s, ea) => ToggleMoveOption());
                 menu.Items.Add("Toggle Border", null, (s, ea) => ToggleFrameVisibility());
                 menu.Items.Add("Toggle Shape", null, (s, ea) => ToggleShape());

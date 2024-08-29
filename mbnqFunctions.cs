@@ -54,5 +54,28 @@ public static class mbFunctions
             }
         }
     }
+
+    // capture overlay and copy to clipboard
+    // Capture overlay content from a GlassHudOverlay instance
+    public static Bitmap CaptureOverlayContent(Form overlayForm, Rectangle captureRect)
+    {
+        Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
+        using (Graphics g = Graphics.FromImage(bitmap))
+        {
+            g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
+        }
+        return bitmap;
+    }
+
+    // Copy overlay content to clipboard
+    public static void CopyOverlayToClipboard(Form overlayForm, Rectangle captureRect)
+    {
+        using (Bitmap bitmap = CaptureOverlayContent(overlayForm, captureRect))
+        {
+            Clipboard.SetImage(bitmap);
+        }
+    }
+    // ---------------------------------------
+    // ---------------------------------------
 }
 
