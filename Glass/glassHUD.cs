@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RED.mbnq
 {
@@ -150,7 +151,7 @@ namespace RED.mbnq
         }
 
         /* --- --- ---  --- --- --- */
-
+        public double GlassFrameTime { get; private set; }
         protected override void OnPaint(PaintEventArgs e)
         {
             DateTime currentFrameTime = DateTime.Now;
@@ -159,6 +160,8 @@ namespace RED.mbnq
             {
                 // Calculate time difference between frames in seconds
                 double timeDelta = (currentFrameTime - lastFrameTime).TotalSeconds;
+
+                GlassFrameTime = timeDelta;
 
                 // Calculate FPS as the reciprocal of the time taken per frame
                 currentFps = 1.0 / timeDelta;

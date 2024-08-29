@@ -49,7 +49,7 @@ namespace RED.mbnq
                 $"Debug Mode - mbnq - v.{Program.mbVersion} - {mbDateTime}",
                 // $"Selected region: Top-Left({selectedRegion.X},{selectedRegion.Y}) Size({selectedRegion.Width}x{selectedRegion.Height})",
                 $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
-                $"FPS: {(int)Math.Floor(displayOverlayForm.currentFps):F2}",
+                $"FPS: {(displayOverlayForm.currentFps):F2} Frame Time: {Math.Sqrt(displayOverlayForm.GlassFrameTime):F2}s",
                 ""
             };
 
