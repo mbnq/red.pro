@@ -56,7 +56,6 @@ public static class mbFnc
     }
 
     // capture overlay and copy to clipboard
-    // Capture overlay content from a GlassHudOverlay instance
     public static Bitmap CaptureOverlayContent(Form overlayForm, Rectangle captureRect)
     {
         Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
@@ -76,6 +75,21 @@ public static class mbFnc
         }
     }
     // ---------------------------------------
+    // currentFps = mbFnc.CalculateFps(ref lastFrameTime);
+    public static double CalculateFps(ref DateTime lastFrameTime)
+    {
+        DateTime currentFrameTime = DateTime.Now;
+
+        if (lastFrameTime != DateTime.MinValue)
+        {
+            double timeDelta = (currentFrameTime - lastFrameTime).TotalSeconds;
+            lastFrameTime = currentFrameTime;
+            return 1.0 / timeDelta;
+        }
+
+        lastFrameTime = currentFrameTime;
+        return 0.0;
+    }
     // ---------------------------------------
 }
 
