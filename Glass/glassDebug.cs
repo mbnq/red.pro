@@ -122,12 +122,11 @@ namespace RED.mbnq
 
             zoomSlider = new TrackBar
             {
-                Minimum = 1,
-                Maximum = 199,
-                Value = 100,
+                Minimum = 1,  // No zoom at 100%
+                Maximum = 199,  // Maximum zoom (200%)
+                Value = 100,    // Start with no zoom (100%)
                 TickFrequency = 10,
                 Width = 200,
-                // Location = new Point(10, this.Height),
                 AutoSize = true,
                 BackColor = mDefColGray
             };
@@ -239,7 +238,10 @@ namespace RED.mbnq
 
         private void UpdateZoom()
         {
-            zoomFactor = zoomSlider.Value / 100f;
+            // Reverse the zoom factor calculation
+            zoomFactor = (200 - zoomSlider.Value) / 100f;
+
+            // Update the label to reflect the correct zoom level
             zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
 
             this.Invalidate();
