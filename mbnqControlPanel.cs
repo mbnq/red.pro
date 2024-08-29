@@ -120,7 +120,7 @@ namespace RED.mbnq
             // this.BackColor = Color.FromArgb(255, 255, 58);               // not needed
             // this.DrawerBackgroundWithAccent = false;
         }
-    private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
+        private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (!autoSaveOnExit.Checked)
             {
@@ -267,9 +267,9 @@ namespace RED.mbnq
             set => autoSaveOnExit.Checked = value;
         }
 
-        /* --- --- --- Custom overlay --- --- --- */
+        /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
 
-        // Load and set the new custom overlay and refresh display
+        // Load and set the new Custom .png Crosshair Ovelray and refresh display
         public void LoadCustomOverlay()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
