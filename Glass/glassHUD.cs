@@ -214,6 +214,7 @@ namespace RED.mbnq
                 }
                 // Draw debug information if enabled
                 debugInfoDisplay.DrawDebugInfo(g);
+                this.Opacity = opacityFactor;
 
                 // Draw a border around the control if enabled
                 if (isBorderVisible)
