@@ -180,6 +180,13 @@ namespace RED.mbnq
             {
                 Graphics g = bufferedGraphics.Graphics;
 
+                // Your existing drawing code, but now using 'g' instead of 'e.Graphics'
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.None;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+
                 // Adjust the capture area based on offsets and zoom
                 Rectangle adjustedCaptureArea = GetAdjustedCaptureArea();
 
