@@ -49,8 +49,8 @@ namespace RED.mbnq
                 $"Debug Mode - mbnq - v.{Program.mbVersion} - {mbDateTime}",
                 $"Selected region: Top-Left({selectedRegion.X},{selectedRegion.Y}) Size({selectedRegion.Width}x{selectedRegion.Height})",
                 $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
-                $"Frame Times Set: {Program.mbFrameDelay}ms {1000 / Program.mbFrameDelay}fps",
-                $"Real FPS: {displayOverlayForm.currentFps:F2}fps" // Access currentFps here
+                $"Frame Times Set: 0ms {displayOverlayForm.currentFps:F2}fps",
+                ""
             };
 
             using (Font debugFont = new Font("Arial", 7))
@@ -289,6 +289,8 @@ namespace RED.mbnq
         public void UpdateRefreshRate()
         {
             int refreshRate = refreshRateSlider.Value;
+
+
             refreshRateLabel.Text = $"Refresh Rate: {refreshRate}ms";
 
             // Assuming displayOverlayForm has a method to update the refresh rate interval
