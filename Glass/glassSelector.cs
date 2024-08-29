@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace RED.mbnq
 {
@@ -21,7 +20,7 @@ namespace RED.mbnq
             backgroundScreenshot = CaptureScreen();
 
             this.FormBorderStyle = FormBorderStyle.None;
-            this.Opacity = 1.0;
+            this.Opacity = 0.8;
             this.DoubleBuffered = true;
             this.Cursor = Cursors.Cross;
             this.TopMost = true;
