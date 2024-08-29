@@ -46,6 +46,7 @@ namespace RED.mbnq
 
         private bool isBorderVisible = true;
         
+        /* --- --- ---  --- --- --- */
         public GlassHudOverlay(Rectangle mbDisplay, Rectangle selectedArea)
         {
             this.captureArea = mbDisplay;
@@ -73,6 +74,9 @@ namespace RED.mbnq
             updateTimer.Start();
             EnableFormMovement();
         }
+
+        /* --- --- ---  --- --- --- */
+
         private void ToggleFrameVisibility()
         {
             isBorderVisible = !isBorderVisible;
@@ -84,7 +88,6 @@ namespace RED.mbnq
             ApplyCircularRegion(); // Reapply the shape
             this.Invalidate(); // Trigger a repaint to update the shape
         }
-
         public Rectangle GetAdjustedCaptureArea()
         {
             int newWidth = (int)(captureArea.Width * zoomFactor);
@@ -100,7 +103,6 @@ namespace RED.mbnq
 
             return new Rectangle(adjustedX, adjustedY, newWidth, newHeight);
         }
-
         private void ApplyCircularRegion()
         {
             if (isCircle)
@@ -128,7 +130,6 @@ namespace RED.mbnq
             // Reapply the circular region whenever the form is resized
             ApplyCircularRegion();
         }
-
         public Rectangle CaptureArea => captureArea;
 
         public async void UpdateCaptureArea(Rectangle newCaptureArea)
@@ -147,6 +148,8 @@ namespace RED.mbnq
             // Invalidate the form on the main thread to trigger a repaint
             this.Invalidate();
         }
+
+        /* --- --- ---  --- --- --- */
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -220,6 +223,8 @@ namespace RED.mbnq
                 }
             }
         }
+
+        /* --- --- ---  --- --- --- */
 
         public static GlassHudOverlay displayOverlay;
         public static void RestartWithNewArea()

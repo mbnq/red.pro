@@ -78,7 +78,6 @@ namespace RED.mbnq
                 this.Invalidate(); // Redraw the selection rectangle
             }
         }
-
         private void ScreenAreaSelector_MouseUp(object sender, MouseEventArgs e)
         {
             if (selecting)
@@ -105,7 +104,6 @@ namespace RED.mbnq
                 }
             }
         }
-
         private void ScreenAreaSelector_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -114,7 +112,6 @@ namespace RED.mbnq
                 this.Close();
             }
         }
-
         private Rectangle GetRectangle(Point p1, Point p2)
         {
             int x = Math.Min(p1.X, p2.X);
@@ -123,7 +120,6 @@ namespace RED.mbnq
             int height = Math.Abs(p2.Y - p1.Y);
             return new Rectangle(x, y, width, height);
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -145,7 +141,6 @@ namespace RED.mbnq
                 e.Graphics.DrawRectangle(selectionPen, selectionRect);
             }
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
