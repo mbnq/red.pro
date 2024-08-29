@@ -251,7 +251,7 @@
     <Compile Include="mbnqControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Glass\glassDebug.cs" />
+    <Compile Include="Glass\GlassMenu.cs" />
     <Compile Include="Glass\glassIO.cs">
       <SubType>Form</SubType>
     </Compile>

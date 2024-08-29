@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RED.mbnq
 {
-    public class GlassDebug
+    public class GlassMenu
     {
         private bool isDebugEnabled = true;
         private Rectangle selectedRegion;
@@ -19,14 +19,14 @@ namespace RED.mbnq
                 displayOverlayForm.Invalidate(); // redraw when toggling debug mode
             }
         }
-        public GlassDebug(GlassHudOverlay overlayForm)
+        public GlassMenu(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
         }
 
         // New constructor accepting the selected region
-        public GlassDebug(GlassHudOverlay overlayForm, Rectangle selectedRegion)
+        public GlassMenu(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;

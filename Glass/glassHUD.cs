@@ -15,7 +15,7 @@ namespace RED.mbnq
         private bool isMoveEnabled = false;
         public bool isCircle = false;
         private Point lastMousePos;
-        private GlassDebug debugInfoDisplay;
+        private GlassMenu debugInfoDisplay;
 
         // Offset fields as modifiers
         private float offsetX = 0f; // 0.31f
@@ -56,7 +56,7 @@ namespace RED.mbnq
             // Apply a circular region to the form
             ApplyCircularRegion();
 
-            this.debugInfoDisplay = new GlassDebug(this, selectedArea); // Updated constructor call
+            this.debugInfoDisplay = new GlassMenu(this, selectedArea); // Updated constructor call
 
             InitializeTrackBars();
 
