@@ -76,6 +76,7 @@ namespace RED.mbnq
         Color mDefColWhite = Color.White;
         int marginFromBottom = 20;
         int sliderSpacing = 50;
+        int GlassZoomMax = 200;
         private void ToggleDebugMode()
         {
             debugInfoDisplay.IsDebugEnabled = !debugInfoDisplay.IsDebugEnabled;
@@ -235,11 +236,10 @@ namespace RED.mbnq
 
             this.Invalidate();
         }
-
         private void UpdateZoom()
         {
             // Reverse the zoom factor calculation
-            zoomFactor = (200 - zoomSlider.Value) / 100f;
+            zoomFactor = (GlassZoomMax - zoomSlider.Value) / 100f;
 
             // Update the label to reflect the correct zoom level
             zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
