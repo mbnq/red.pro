@@ -6,7 +6,7 @@
  *  - fps
  *  - advanced settings
  *  - rotate crosshair
- * 
+ *  - streamowanie szkiełek
  * 
  * 
  */
