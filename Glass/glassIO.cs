@@ -16,9 +16,9 @@ namespace RED.mbnq
 
                 menu.Items.Add((debugInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => ToggleGlassMenu());  // Open Menu
                 menu.Items.Add(new ToolStripSeparator());
-                menu.Items.Add("Change Capture Region", null, (s, ea) => GlassHudOverlay.RestartWithNewArea());
+                menu.Items.Add("Change Capture Region", null, (s, ea) => GlassHudOverlay.RestartWithNewAreaAsync());
                 menu.Items.Add(new ToolStripSeparator());
-                menu.Items.Add(isMoveEnabled ? "Bind" : "Move", null, (s, ea) => ToggleMoveOption());
+                menu.Items.Add(isMoveEnabled ? "Bind" : "Unbind", null, (s, ea) => ToggleMoveOption());
                 menu.Items.Add("Toggle Border", null, (s, ea) => ToggleFrameVisibility());
                 menu.Items.Add("Toggle Shape", null, (s, ea) => ToggleShape());
                 menu.Items.Add(new ToolStripSeparator());

@@ -227,17 +227,24 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
 
         public static GlassHudOverlay displayOverlay;
-        public static void RestartWithNewArea()
+        public static async Task RestartWithNewAreaAsync()
         {
             if (displayOverlay != null)
             {
-                displayOverlay.Hide(); // Hide current overlay
+                await Task.Run(() =>
+                {
+                    displayOverlay.Hide(); // Hide current overlay
+                });
 
-                Rectangle newArea = selector.SelectCaptureArea();
+                Rectangle newArea = await Task.Run(() => selector.SelectCaptureArea());
 
-                displayOverlay.UpdateCaptureArea(newArea); // Update the area instead of recreating the form
-                displayOverlay.Show(); // Show the updated overlay
+                await Task.Run(() =>
+                {
+                    displayOverlay.UpdateCaptureArea(newArea); // Update the area instead of recreating the form
+                    displayOverlay.Show(); // Show the updated overlay
+                });
             }
         }
+
     }
 }
