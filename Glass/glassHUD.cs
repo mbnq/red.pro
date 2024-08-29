@@ -28,16 +28,16 @@ namespace RED.mbnq
         private float opacityFactor = 1.0f;
 
         // TrackBar controls for adjusting offsets and zoom
-        private TrackBar? offsetXSlider;
-        private TrackBar? offsetYSlider;
-        private TrackBar? zoomSlider;
-        private TrackBar? opacitySlider;
+        private TrackBar offsetXSlider;
+        private TrackBar offsetYSlider;
+        private TrackBar zoomSlider;
+        private TrackBar opacitySlider;
 
         // Labels to display offset and zoom values
-        private Label? offsetXLabel;
-        private Label? offsetYLabel;
-        private Label? zoomLabel;
-        private Label? opacityLabel;
+        private Label offsetXLabel;
+        private Label offsetYLabel;
+        private Label zoomLabel;
+        private Label opacityLabel;
 
         private bool isBorderVisible = true;
         private void ToggleFrameVisibility()

@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     public partial class GlassHudOverlay
     {
-        private void OverlayForm_MouseClick(object? sender, MouseEventArgs e)
+        private void OverlayForm_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -23,7 +23,7 @@ namespace RED.mbnq
             }
         }
 
-        private void OverlayForm_MouseDown(object? sender, MouseEventArgs e)
+        private void OverlayForm_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && isMoveEnabled)
             {
@@ -32,7 +32,7 @@ namespace RED.mbnq
             }
         }
 
-        private void OverlayForm_MouseMove(object? sender, MouseEventArgs e)
+        private void OverlayForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMoving)
             {
@@ -41,7 +41,7 @@ namespace RED.mbnq
             }
         }
 
-        private void OverlayForm_MouseUp(object? sender, MouseEventArgs e)
+        private void OverlayForm_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
