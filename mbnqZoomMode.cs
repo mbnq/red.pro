@@ -129,8 +129,6 @@ namespace RED.mbnq
             }
         }
 
-
-
         // tv
 
         public static void ShowZoomOverlay()
@@ -203,6 +201,4 @@ namespace RED.mbnq
             ApplyCircularRegion();
         }
     }
-
-
 }
