@@ -50,7 +50,7 @@ namespace RED.mbnq
 
             // Initialize IP Timer
             ipTimer = new System.Windows.Forms.Timer();
-            ipTimer.Interval = 20000; // 20 seconds
+            ipTimer.Interval = 10000; // 20 seconds
             ipTimer.Tick += async (s, e) => await UpdateIpAddressAsync();
             ipTimer.Start();
 
