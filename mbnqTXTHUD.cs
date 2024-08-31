@@ -137,13 +137,27 @@ namespace RED.mbnq
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    string ipAddress = await client.GetStringAsync("https://mbnq.pl/myip/");
+                    // First attempt to fetch IP from https://api.my-ip.io/v2/ip.txt
+                    string ipAddress = await client.GetStringAsync("https://api.my-ip.io/v2/ip.txt");
                     return ipAddress.Trim();
                 }
             }
-            catch (Exception)
+            catch
             {
-                return "Unavailable";
+                // If the first attempt fails, try https://mbnq.pl/myip/
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        string ipAddress = await client.GetStringAsync("https://mbnq.pl/myip/");
+                        return ipAddress.Trim();
+                    }
+                }
+                catch
+                {
+                    // If both attempts fail, return "Unavailable"
+                    return "Unavailable";
+                }
             }
         }
 
