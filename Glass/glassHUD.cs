@@ -82,14 +82,15 @@ namespace RED.mbnq
         private void ToggleFrameVisibility()
         {
             isBorderVisible = !isBorderVisible;
-            this.Invalidate(); // Request the form to be repainted with the new border setting
+            this.Invalidate();                  // Request the form to be repainted with the new border setting
             Sounds.PlayClickSoundOnce();
         }
         private void ToggleShape()
         {
-            isCircle = !isCircle; // Toggle the shape flag
-            ApplyCircularRegion(); // Reapply the shape
-            this.Invalidate(); // Trigger a repaint to update the shape
+            isCircle = !isCircle;               // Toggle the shape flag
+            ApplyCircularRegion();              // Reapply the shape
+            this.Invalidate();                  // Trigger a repaint to update the shape
+            // Sounds.PlayClickSoundOnce();     // we have it inside toggleshape function
         }
         public Rectangle GetAdjustedCaptureArea()
         {
