@@ -18,10 +18,15 @@ namespace RED.mbnq
         private System.Windows.Forms.Timer ipTimer;
         private string currentPingAddress = "8.8.8.8";
 
+        // Fields to track mouse movements
+        private bool isDragging = false;
+        private Point startPoint = new Point(0, 0);
+
         public mbnqTXTHUD()
         {
             InitializeComponent();
             InitializeTimers();
+            InitializeMouseEvents();
         }
 
         #region Initialization Methods
@@ -50,13 +55,44 @@ namespace RED.mbnq
 
             // Initialize IP Timer
             ipTimer = new System.Windows.Forms.Timer();
-            ipTimer.Interval = 10000; // 20 seconds
+            ipTimer.Interval = 1000; // 20 seconds
             ipTimer.Tick += async (s, e) => await UpdateIpAddressAsync();
             ipTimer.Start();
 
             // Initialize Display Texts with placeholders
             displayTexts.Add("Ping: -- ms");
-            displayTexts.Add("IP: Checking...");
+            displayTexts.Add("IP: Fetching...");
+        }
+
+        private void InitializeMouseEvents()
+        {
+            this.MouseDown += new MouseEventHandler(TXTHUD_MouseDown);
+            this.MouseMove += new MouseEventHandler(TXTHUD_MouseMove);
+            this.MouseUp += new MouseEventHandler(TXTHUD_MouseUp);
+        }
+
+        #endregion
+
+        #region Mouse Events
+
+        private void TXTHUD_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDragging = true;
+            startPoint = new Point(e.X, e.Y);
+        }
+
+        private void TXTHUD_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - startPoint.X, p.Y - startPoint.Y);
+            }
+        }
+
+        private void TXTHUD_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
         }
 
         #endregion
