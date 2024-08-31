@@ -55,7 +55,7 @@ namespace RED.mbnq
 
             // Initialize IP Timer
             ipTimer = new System.Windows.Forms.Timer();
-            ipTimer.Interval = 1000; // 20 seconds
+            ipTimer.Interval = 10000; // 20 seconds
             ipTimer.Tick += async (s, e) => await UpdateIpAddressAsync();
             ipTimer.Start();
 
@@ -169,33 +169,66 @@ namespace RED.mbnq
 
         private async Task<string> GetIpAddressAsync()
         {
-            try
+            string ipAddress = null;
+
+            using (HttpClient client = new HttpClient())
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    // First attempt to fetch IP from https://api.my-ip.io/v2/ip.txt
-                    string ipAddress = await client.GetStringAsync("https://api.my-ip.io/v2/ip.txt");
-                    return ipAddress.Trim();
-                }
-            }
-            catch
-            {
-                // If the first attempt fails, try https://mbnq.pl/myip/
                 try
                 {
-                    using (HttpClient client = new HttpClient())
+                    ipAddress = await client.GetStringAsync("https://api.seeip.org/");
+                    return ipAddress.Trim();
+                }
+                catch (HttpRequestException ex)
+                {
+                    Debug.WriteLine($"Failed to fetch IP from https://api.seeip.org/: {ex.Message}");
+                }
+
+                if (string.IsNullOrEmpty(ipAddress))
+                {
+                    try
                     {
-                        string ipAddress = await client.GetStringAsync("https://mbnq.pl/myip/");
+                        ipAddress = await client.GetStringAsync("https://api.my-ip.io/v2/ip.txt");
                         return ipAddress.Trim();
                     }
+                    catch (HttpRequestException ex)
+                    {
+                        Debug.WriteLine($"Failed to fetch IP from https://api.my-ip.io/v2/ip.txt: {ex.Message}");
+                    }
                 }
-                catch
+                
+                if (string.IsNullOrEmpty(ipAddress))
                 {
-                    // If both attempts fail, return "Unavailable"
-                    return "Unavailable";
+                    try
+                    {
+                        ipAddress = await client.GetStringAsync("https://wtfismyip.com/text/");
+                        return ipAddress.Trim();
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        Debug.WriteLine($"Failed to fetch IP from https://wtfismyip.com/text/: {ex.Message}");
+                    }
                 }
+
+
+                if (string.IsNullOrEmpty(ipAddress))
+                {
+                    try
+                    {
+                        // Second attempt: https://mbnq.pl/myip/
+                        ipAddress = await client.GetStringAsync("https://mbnq.pl/myip/");
+                        return ipAddress.Trim();
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        // Log the exception if needed
+                        Debug.WriteLine($"Failed to fetch IP from https://mbnq.pl/myip/: {ex.Message}");
+                    }
+                } 
             }
+            // If all attempts fail, return "Unavailable"
+            return "Unavailable";
         }
+
 
         #endregion
 
