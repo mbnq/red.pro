@@ -144,22 +144,24 @@ namespace RED.mbnq
             {
                 textHUD = new mbnqTXTHUD();
                 textHUD.Show();
-                textHUD.DisplayPingResult("8.8.8.8"); // Display the ping result for 8.8.8.8
+                textHUD.StartPingLoop("8.8.8.8"); // Start continuous ping loop for 8.8.8.8
                 textHUDMenuItem.Text = "Hide Text HUD";
             }
             else if (textHUD.Visible)
             {
                 textHUD.Hide();
+                textHUD.StopPingLoop(); // Stop the loop when hiding
                 textHUDMenuItem.Text = "Show Text HUD";
             }
             else
             {
                 textHUD.Show();
                 textHUD.BringToFront();
-                textHUD.DisplayPingResult("8.8.8.8"); // Display the ping result for 8.8.8.8
+                textHUD.StartPingLoop("8.8.8.8"); // Restart the loop if shown again
                 textHUDMenuItem.Text = "Hide Text HUD";
             }
         }
+
 
         // Event handler for the new capture region menu item
         private void NewCaptureRegionMenuItem_Click(object sender, EventArgs e)

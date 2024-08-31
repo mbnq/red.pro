@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,22 +12,23 @@ namespace RED.mbnq
     public class mbnqTXTHUD : Form
     {
         private List<string> displayTexts = new List<string>();
-        private Timer updateTimer;
+        private CancellationTokenSource cancellationTokenSource;
+        private System.Windows.Forms.Timer updateTimer;  // Explicitly use the Windows Forms Timer
 
         public mbnqTXTHUD()
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(0, 0); // Top-left corner
-            this.Size = new Size(400, 100); // Adjust size as needed
+            this.Size = new Size(400, 50); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
-            this.Opacity = 0.75; // Set transparency
+            this.Opacity = 0.65; // Set transparency
             this.ShowInTaskbar = false;
             this.DoubleBuffered = true;
             this.Paint += TXTHUD_Paint;
 
-            updateTimer = new Timer();
+            updateTimer = new System.Windows.Forms.Timer();  // Explicitly use the Windows Forms Timer
             updateTimer.Interval = 1000; // Update every second
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
@@ -59,10 +61,33 @@ namespace RED.mbnq
             }
         }
 
-        public async void DisplayPingResult(string address)
+        public void StartPingLoop(string address)
         {
-            string pingResult = await GetPingResultAsync(address);
-            AddText($"Ping {address}: {pingResult} ms");
+            cancellationTokenSource = new CancellationTokenSource();
+            var token = cancellationTokenSource.Token;
+
+            Task.Run(async () =>
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    string pingResult = await GetPingResultAsync(address);
+                    UpdatePingText($"Ping {address}: {pingResult} ms");
+                    await Task.Delay(1000); // Update every second
+                }
+            }, token);
+        }
+
+        private void UpdatePingText(string newText)
+        {
+            if (displayTexts.Count > 0)
+            {
+                displayTexts[0] = newText; // Assume first line is the ping text
+            }
+            else
+            {
+                AddText(newText);
+            }
+            this.Invalidate(); // Redraw with the updated text
         }
 
         private Task<string> GetPingResultAsync(string address)
@@ -94,8 +119,14 @@ namespace RED.mbnq
             });
         }
 
+        public void StopPingLoop()
+        {
+            cancellationTokenSource?.Cancel();
+        }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            StopPingLoop();
             updateTimer.Stop();
             updateTimer.Dispose();
             base.OnFormClosing(e);
