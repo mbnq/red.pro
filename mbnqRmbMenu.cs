@@ -146,7 +146,7 @@ namespace RED.mbnq
             }
 
             textHUD.ToggleOverlay();
-            textHUDMenuItem.Text = textHUD.Visible ? "Hide Text HUD" : "Show Text HUD";
+            textHUDMenuItem.Text = textHUD.Visible ? "Hide Text HUD" : "Show Text HUD"; // rename it to Console Hud?
         }
 
         // Event handler for the new capture region menu item

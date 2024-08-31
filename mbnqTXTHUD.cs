@@ -13,137 +13,60 @@ namespace RED.mbnq
     public class mbnqTXTHUD : Form
     {
         private List<string> displayTexts = new List<string>();
-        private CancellationTokenSource cancellationTokenSource;
-        private System.Windows.Forms.Timer updateTimer;
+        private CancellationTokenSource pingCancellationTokenSource;
+        private System.Windows.Forms.Timer pingTimer;
+        private System.Windows.Forms.Timer ipTimer;
+        private string currentPingAddress = "8.8.8.8";
 
         public mbnqTXTHUD()
         {
+            InitializeComponent();
+            InitializeTimers();
+        }
+
+        #region Initialization Methods
+
+        private void InitializeComponent()
+        {
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(0, 0); // Top-left corner
-            this.Size = new Size(400, 50); // Adjust size as needed
+            this.Location = new Point(10, 10); // Slight offset from top-left corner
+            this.Size = new Size(300, 60); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
-            this.Opacity = 0.65; // Set transparency
+            this.Opacity = 0.8; // Set transparency
             this.ShowInTaskbar = false;
             this.DoubleBuffered = true;
             this.Paint += TXTHUD_Paint;
-
-            updateTimer = new System.Windows.Forms.Timer();
-            updateTimer.Interval = 1000; // Update every second
-            updateTimer.Tick += async (s, e) => await UpdateHUDAsync();
-            updateTimer.Start();
         }
 
-        public void AddText(string text)
+        private void InitializeTimers()
         {
-            displayTexts.Add(text);
-            this.Invalidate(); // Redraw with the new text
+            // Initialize Ping Timer
+            pingTimer = new System.Windows.Forms.Timer();
+            pingTimer.Interval = 1000; // 1 second
+            pingTimer.Tick += async (s, e) => await UpdatePingAsync();
+            pingTimer.Start();
+
+            // Initialize IP Timer
+            ipTimer = new System.Windows.Forms.Timer();
+            ipTimer.Interval = 20000; // 20 seconds
+            ipTimer.Tick += async (s, e) => await UpdateIpAddressAsync();
+            ipTimer.Start();
+
+            // Initialize Display Texts with placeholders
+            displayTexts.Add("Ping: -- ms");
+            displayTexts.Add("IP: Fetching...");
         }
 
-        public void ClearTexts()
+        #endregion
+
+        #region Update Methods
+
+        private async Task UpdatePingAsync()
         {
-            displayTexts.Clear();
-            this.Invalidate(); // Redraw after clearing
-        }
-
-        private void TXTHUD_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            using (Brush brush = new SolidBrush(Color.White))
-            {
-                float yPosition = 10f;
-                foreach (var text in displayTexts)
-                {
-                    g.DrawString(text, this.Font, brush, new PointF(10, yPosition));
-                    yPosition += 20f; // Adjust line spacing as needed
-                }
-            }
-        }
-
-        public void StartPingLoop(string address)
-        {
-            cancellationTokenSource = new CancellationTokenSource();
-            var token = cancellationTokenSource.Token;
-
-            Task.Run(async () =>
-            {
-                while (!token.IsCancellationRequested)
-                {
-                    string pingResult = await GetPingResultAsync(address);
-                    UpdatePingText($"Ping {address}: {pingResult} ms");
-                    await Task.Delay(1000); // Update every second
-                }
-            }, token);
-        }
-
-        private void UpdatePingText(string newText)
-        {
-            if (displayTexts.Count > 0)
-            {
-                displayTexts[0] = newText; // Assume first line is the ping text
-            }
-            else
-            {
-                AddText(newText);
-            }
-            this.Invalidate(); // Redraw with the updated text
-        }
-
-        private Task<string> GetPingResultAsync(string address)
-        {
-            return Task.Run(() =>
-            {
-                using (Process p = new Process())
-                {
-                    p.StartInfo.FileName = "ping";
-                    p.StartInfo.Arguments = address + " -n 1"; // Ping once
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.Start();
-                    string output = p.StandardOutput.ReadToEnd();
-                    p.WaitForExit();
-
-                    // Extract the ping time from the output
-                    var pingTimeLine = output.Split('\n').FirstOrDefault(line => line.Contains("time="));
-                    if (pingTimeLine != null)
-                    {
-                        var pingTimeStart = pingTimeLine.IndexOf("time=") + 5;
-                        var pingTimeEnd = pingTimeLine.IndexOf("ms", pingTimeStart);
-                        return pingTimeLine.Substring(pingTimeStart, pingTimeEnd - pingTimeStart).Trim();
-                    }
-
-                    return "N/A";
-                }
-            });
-        }
-
-        public void StopPingLoop()
-        {
-            cancellationTokenSource?.Cancel();
-        }
-
-        public void ToggleOverlay(string pingAddress = "8.8.8.8")
-        {
-            if (this.Visible)
-            {
-                this.Hide();
-                StopPingLoop();
-            }
-            else
-            {
-                this.Show();
-                this.BringToFront();
-                StartPingLoop(pingAddress);
-            }
-        }
-
-        private async Task UpdateHUDAsync()
-        {
-            await UpdateIpAddressAsync();
-            this.Invalidate(); // Redraw the HUD
+            string pingResult = await GetPingResultAsync(currentPingAddress);
+            UpdatePingText($"Ping {currentPingAddress}: {pingResult} ms");
         }
 
         private async Task UpdateIpAddressAsync()
@@ -152,15 +75,59 @@ namespace RED.mbnq
             UpdateIpText($"IP: {ipAddress}");
         }
 
+        #endregion
+
+        #region Text Update Methods
+
+        private void UpdatePingText(string newText)
+        {
+            displayTexts[0] = newText;
+            this.Invalidate(); // Redraw with the updated text
+        }
+
         private void UpdateIpText(string newText)
         {
-            if (displayTexts.Count > 1)
+            displayTexts[1] = newText;
+            this.Invalidate(); // Redraw with the updated text
+        }
+
+        #endregion
+
+        #region Data Retrieval Methods
+
+        private async Task<string> GetPingResultAsync(string address)
+        {
+            try
             {
-                displayTexts[1] = newText; // Assume second line is the IP text
+                using (Process p = new Process())
+                {
+                    p.StartInfo.FileName = "ping";
+                    p.StartInfo.Arguments = $"{address} -n 1";
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.Start();
+
+                    string output = await p.StandardOutput.ReadToEndAsync();
+                    p.WaitForExit();
+
+                    var pingTimeLine = output.Split('\n').FirstOrDefault(line => line.Contains("time="));
+                    if (!string.IsNullOrEmpty(pingTimeLine))
+                    {
+                        int timeIndex = pingTimeLine.IndexOf("time=") + 5;
+                        int msIndex = pingTimeLine.IndexOf("ms", timeIndex);
+                        string timeValue = pingTimeLine.Substring(timeIndex, msIndex - timeIndex).Trim();
+                        return timeValue;
+                    }
+                    else
+                    {
+                        return "Timeout";
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                AddText(newText);
+                return "Error";
             }
         }
 
@@ -174,18 +141,77 @@ namespace RED.mbnq
                     return ipAddress.Trim();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return $"Error: {ex.Message}";
+                return "Unavailable";
             }
         }
 
+        #endregion
+
+        #region UI Methods
+
+        private void TXTHUD_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
+            using (Brush brush = new SolidBrush(Color.White))
+            using (Font font = new Font("Segoe UI", 12, FontStyle.Bold))
+            {
+                float yPosition = 10f;
+                foreach (var text in displayTexts)
+                {
+                    g.DrawString(text, font, brush, new PointF(10, yPosition));
+                    yPosition += 25f; // Adjust line spacing as needed
+                }
+            }
+        }
+
+        public void ToggleOverlay(string pingAddress = "8.8.8.8")
+        {
+            currentPingAddress = pingAddress;
+
+            if (this.Visible)
+            {
+                this.Hide();
+                StopTimers();
+            }
+            else
+            {
+                this.Show();
+                StartTimers();
+            }
+        }
+
+        #endregion
+
+        #region Timer Control Methods
+
+        private void StartTimers()
+        {
+            pingTimer?.Start();
+            ipTimer?.Start();
+        }
+
+        private void StopTimers()
+        {
+            pingTimer?.Stop();
+            ipTimer?.Stop();
+        }
+
+        #endregion
+
+        #region Cleanup
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            StopPingLoop();
-            updateTimer.Stop();
-            updateTimer.Dispose();
+            StopTimers();
+            pingTimer.Dispose();
+            ipTimer.Dispose();
             base.OnFormClosing(e);
         }
+
+        #endregion
     }
 }
