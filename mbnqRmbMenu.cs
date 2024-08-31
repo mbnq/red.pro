@@ -144,6 +144,7 @@ namespace RED.mbnq
             {
                 textHUD = new mbnqTXTHUD();
                 textHUD.Show();
+                textHUD.DisplayPingResult("8.8.8.8"); // Display the ping result for 8.8.8.8
                 textHUDMenuItem.Text = "Hide Text HUD";
             }
             else if (textHUD.Visible)
@@ -155,6 +156,7 @@ namespace RED.mbnq
             {
                 textHUD.Show();
                 textHUD.BringToFront();
+                textHUD.DisplayPingResult("8.8.8.8"); // Display the ping result for 8.8.8.8
                 textHUDMenuItem.Text = "Hide Text HUD";
             }
         }
