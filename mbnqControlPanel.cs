@@ -135,8 +135,12 @@ namespace RED.mbnq
             {
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
+
+                // Position the ControlPanel relative to the mbnqCrosshair, if necessary
+                PositionControlPanelRelativeToCrosshair();
             }
         }
+
         private void InitializeComponent()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
@@ -504,6 +508,47 @@ namespace RED.mbnq
                 MessageBox.Show("Overlay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
+        private void PositionControlPanelRelativeToCrosshair()
+        {
+            if (MainDisplay != null)
+            {
+                // Get the bounds of the primary screen 
+                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+                // Get the rectangle representing the ControlPanel's current bounds
+                Rectangle controlPanelBounds = new Rectangle(this.Left, this.Top, this.Width, this.Height);
+
+                // Get the rectangle representing the mbnqCrosshair's bounds
+                Rectangle crosshairBounds = new Rectangle(MainDisplay.Left, MainDisplay.Top, MainDisplay.Width, MainDisplay.Height);
+
+                // Check if the crosshair is within the control panel's region
+                if (controlPanelBounds.IntersectsWith(crosshairBounds))
+                {
+                    // Decide whether to place the control panel to the left or right of the crosshair
+                    int panelWidth = this.Width;
+                    int newLeft = (MainDisplay.Left + (MainDisplay.Width + 20)); // Default to the right
+                    int newTop = (MainDisplay.Top / 2); // Align vertically with the crosshair
+
+                    // Check if the control panel would go off the screen on the right
+                    if (newLeft + panelWidth > screenBounds.Right)
+                    {
+                        // If it would go off-screen, place it to the left of the crosshair
+                        newLeft = MainDisplay.Left - panelWidth - 20;
+                    }
+
+                    // Ensure the control panel doesn't go off the screen on the left
+                    if (newLeft < screenBounds.Left)
+                    {
+                        newLeft = screenBounds.Left;
+                    }
+
+                    // Set the new position for the control panel
+                    this.Left = newLeft;
+                    this.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - this.Height, newTop)); // Ensure within vertical bounds
+                }
+            }
+        }
+
         private void CenterButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
