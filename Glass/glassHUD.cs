@@ -142,15 +142,42 @@ namespace RED.mbnq
             this.Location = new Point(newCaptureArea.Right + 20, newCaptureArea.Top);
             this.Size = newCaptureArea.Size;
 
-            // Offload the potentially time-consuming debug update to a background thread
+            // Offload the potentially time-consuming bitmap creation to a background thread
+            var bitmap = await Task.Run(() =>
+            {
+                // Create a bitmap with the size of the new capture area
+                Bitmap generatedBitmap = new Bitmap(newCaptureArea.Width, newCaptureArea.Height);
+                using (Graphics bitmapGraphics = Graphics.FromImage(generatedBitmap))
+                {
+                    // Capture the screen into the bitmap
+                    bitmapGraphics.CopyFromScreen(newCaptureArea.Location, Point.Empty, newCaptureArea.Size);
+                }
+                return generatedBitmap;
+            });
+
+            // Now, update the UI on the main thread
+            this.Invoke((Action)(() =>
+            {
+                using (Graphics g = this.CreateGraphics())
+                {
+                    // Draw the bitmap on the form
+                    g.DrawImage(bitmap, new Rectangle(0, 0, this.Width, this.Height));
+                }
+
+                // Trigger a repaint to update the form
+                this.Invalidate();
+            }));
+
+            // Optionally update debug information in the background
             await Task.Run(() =>
             {
                 glassInfoDisplay.UpdateSelectedRegion(newCaptureArea);
             });
 
             // Invalidate the form on the main thread to trigger a repaint
-            this.Invalidate();
+            this.Invoke((Action)(() => this.Invalidate()));
         }
+
 
         /* --- --- ---  --- --- --- */
         public double GlassFrameTime { get; private set; }
