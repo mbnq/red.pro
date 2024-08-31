@@ -55,7 +55,7 @@ namespace RED.mbnq
             centerMenuItem.Click += centerMenuItem_Click;
 
             // Text HUD
-            textHUDMenuItem = new ToolStripMenuItem("Text HUD");
+            textHUDMenuItem = new ToolStripMenuItem("Show Text Console");
             textHUDMenuItem.Click += TextHUDMenuItem_Click;
 
             // Initialize menu item Save settings
@@ -146,7 +146,7 @@ namespace RED.mbnq
             }
 
             textHUD.ToggleOverlay();
-            textHUDMenuItem.Text = textHUD.Visible ? "Hide Text HUD" : "Show Text HUD"; // rename it to Console Hud?
+            textHUDMenuItem.Text = textHUD.Visible ? "Hide Text Console" : "Show Text Console"; // rename it to Console Hud?
         }
 
         // Event handler for the new capture region menu item

@@ -56,7 +56,7 @@ namespace RED.mbnq
 
             // Initialize Display Texts with placeholders
             displayTexts.Add("Ping: -- ms");
-            displayTexts.Add("IP: Fetching...");
+            displayTexts.Add("IP: Checking...");
         }
 
         #endregion
@@ -157,7 +157,7 @@ namespace RED.mbnq
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             using (Brush brush = new SolidBrush(Color.White))
-            using (Font font = new Font("Segoe UI", 12, FontStyle.Bold))
+            using (Font font = new Font("Consolas", 10, FontStyle.Regular))
             {
                 float yPosition = 10f;
                 foreach (var text in displayTexts)
