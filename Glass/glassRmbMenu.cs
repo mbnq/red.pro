@@ -12,24 +12,45 @@ namespace RED.mbnq
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
                 Sounds.PlayClickSoundOnce();
 
-                menu.Items.Add((debugInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => ToggleGlassMenu());  // Open Menu
+                menu.Items.Add((debugInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => { 
+                    ToggleGlassMenu();
+                    Sounds.PlayClickSoundOnce();
+                });  // Open Menu
+
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Change Capture Region", null, async (s, ea) =>
                 {
                     Sounds.PlayClickSoundOnce();
                     await GlassHudOverlay.RestartWithNewAreaAsync();
                 });
+
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Copy to Clipboard", null, (s, ea) => { 
                     mbFnc.CopyOverlayToClipboard(this, GetAdjustedCaptureArea());
                     Sounds.PlayClickSoundOnce();
                 });
+
                 menu.Items.Add(new ToolStripSeparator());
-                menu.Items.Add(isMoveEnabled ? "Bind" : "Unbind", null, (s, ea) => ToggleMoveOption());
-                menu.Items.Add("Toggle Border", null, (s, ea) => ToggleFrameVisibility());
-                menu.Items.Add("Toggle Shape", null, (s, ea) => ToggleShape());
+                menu.Items.Add(isMoveEnabled ? "Bind" : "Unbind", null, (s, ea) => { 
+                    ToggleMoveOption();
+                    Sounds.PlayClickSoundOnce();
+                });
+
+                menu.Items.Add("Toggle Border", null, (s, ea) => { 
+                    ToggleFrameVisibility();
+                    Sounds.PlayClickSoundOnce();
+                });
+                menu.Items.Add("Toggle Shape", null, (s, ea) => { 
+                    ToggleShape();
+                    Sounds.PlayClickSoundOnce();
+                });
+
                 menu.Items.Add(new ToolStripSeparator());
-                menu.Items.Add("Close Glass", null, (s, ea) => this.Close());
+                menu.Items.Add("Close Glass", null, (s, ea) => { 
+                    this.Close();
+                    Sounds.PlayClickSoundOnce();
+                });
+
                 menu.Show(this, e.Location);
             }
         }

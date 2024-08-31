@@ -93,7 +93,6 @@ namespace RED.mbnq
                 if (SelectedArea.Width >= 10 && SelectedArea.Height >= 10)
                 {
                     this.DialogResult = DialogResult.OK;
-                    Sounds.PlayClickSoundOnce();
                     this.Close();
                 }
                 else
@@ -101,7 +100,6 @@ namespace RED.mbnq
                     // Optionally, re-enter selection mode if the selection is too small
                     selecting = true;
                     startPoint = endPoint;
-                    Sounds.PlayClickSoundOnce();
                 }
             }
         }
