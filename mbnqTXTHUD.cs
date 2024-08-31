@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
 
 namespace RED.mbnq
 {
@@ -28,10 +29,34 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += TXTHUD_Paint;
 
-            updateTimer = new System.Windows.Forms.Timer();  // Explicitly use the Windows Forms Timer
-            updateTimer.Interval = 1000; // Update every second
-            updateTimer.Tick += (s, e) => this.Invalidate();
+            updateTimer = new System.Windows.Forms.Timer();
+            updateTimer.Interval = 1000;
+            updateTimer.Tick += async (s, e) => await UpdateHUDAsync();
             updateTimer.Start();
+        }
+
+        private async Task UpdateHUDAsync()
+        {
+            await UpdateIpAddressAsync();
+            this.Invalidate(); // Redraw the HUD
+        }
+
+        private async Task UpdateIpAddressAsync()
+        {
+            string ipAddress = await GetIpAddressAsync();
+            UpdateIpText($"IP: {ipAddress}");
+        }
+
+        private void UpdateIpText(string newText)
+        {
+            if (displayTexts.Count > 1)
+            {
+                displayTexts[1] = newText; // Assume second line is the IP text
+            }
+            else
+            {
+                AddText(newText);
+            }
         }
 
         public void AddText(string text)
@@ -122,6 +147,22 @@ namespace RED.mbnq
         public void StopPingLoop()
         {
             cancellationTokenSource?.Cancel();
+        }
+
+        public async Task<string> GetIpAddressAsync()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string ipAddress = await client.GetStringAsync("https://mbnq.pl/myip/");
+                    return ipAddress.Trim();
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error: {ex.Message}";
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
