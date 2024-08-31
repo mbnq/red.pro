@@ -282,7 +282,7 @@ namespace RED.mbnq
         }
         public void UpdateRefreshInterval(int newInterval)
         {
-            updateTimer.Interval = newInterval;
+            updateTimer2.Interval = newInterval;
         }
 
         // Define the UpdateRefreshRate method
