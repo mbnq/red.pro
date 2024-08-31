@@ -13,7 +13,7 @@ namespace RED.mbnq
     public class mbnqTXTHUD : Form
     {
         private List<string> displayTexts = new List<string>();
-        private CancellationTokenSource pingCancellationTokenSource;
+        // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
         private string currentPingAddress = "8.8.8.8";
@@ -49,7 +49,7 @@ namespace RED.mbnq
         {
             // Initialize Ping Timer
             pingTimer = new System.Windows.Forms.Timer();
-            pingTimer.Interval = 1000; // 1 second
+            pingTimer.Interval = 1000; // 1000 1 second
             pingTimer.Tick += async (s, e) => await UpdatePingAsync();
             pingTimer.Start();
 
