@@ -197,7 +197,7 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomOverlay();
-            controlPanel.MainDisplay.SetCustomOverlay();
+            controlPanel.MainDisplay.SetCustomPNG();
             UpdateMenuItems();
 
             // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
@@ -209,7 +209,7 @@ namespace RED.mbnq
             }
 
             // refresh
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
         }
 
         // remove custom .png
@@ -228,7 +228,7 @@ namespace RED.mbnq
             }
 
             // refresh
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
         }
 
         /* --- --- ---  --- --- --- */

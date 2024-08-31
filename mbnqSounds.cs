@@ -49,7 +49,7 @@ namespace RED.mbnq
         {
             if (IsSoundEnabled)
             {
-                clickSoundPlayer.Play();
+                Task.Run(() => clickSoundPlayer.Play());
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Playing Click sound once.");
             }
         }

@@ -75,7 +75,7 @@ namespace RED.mbnq
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
-            UpdateMainDisplay();
+            updateMainCrosshair();
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
         }
 
@@ -129,7 +129,7 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
-            UpdateMainDisplay();
+            updateMainCrosshair();
 
             if (MainDisplay != null)
             {
@@ -196,7 +196,7 @@ namespace RED.mbnq
             panel.Controls.Add(offsetYSlider.Panel);
 
             // Timer Interval aka Refresh Rate aka Redraw Rate
-            var timerIntervalSlider = CreateLabeledSlider("Refresh Rate", 10, 1000, 1000);
+            var timerIntervalSlider = CreateLabeledSlider("Refresh", 10, 1000, 1000);
             timerInterval = timerIntervalSlider.Slider;
             panel.Controls.Add(timerIntervalSlider.Panel);
 
@@ -293,8 +293,8 @@ namespace RED.mbnq
 
                     File.Copy(filePath, destinationPath);
 
-                    MainDisplay.SetCustomOverlay();
-                    UpdateMainDisplay();
+                    MainDisplay.SetCustomPNG();
+                    updateMainCrosshair();
 
                 }
             }
@@ -304,7 +304,7 @@ namespace RED.mbnq
         public void RemoveCustomOverlay()
         {
             MainDisplay.RemoveCustomOverlay();
-            UpdateMainDisplay();
+            updateMainCrosshair();
         }
 
         // Apply custon overlay
@@ -320,7 +320,7 @@ namespace RED.mbnq
                         if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
                         {
                             UpdateLabels();
-                            mainDisplay.SetCustomOverlay();
+                            mainDisplay.SetCustomPNG();
                         }
                         else
                         {
@@ -336,7 +336,7 @@ namespace RED.mbnq
                     Sounds.PlayClickSoundOnce();
                 }
             }
-            UpdateMainDisplay();
+            updateMainCrosshair();
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
@@ -365,7 +365,7 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                UpdateMainDisplay();
+                updateMainCrosshair();
             };
 
             // Handle double-click to reset to default value
@@ -373,7 +373,7 @@ namespace RED.mbnq
             {
                 materialSlider.Value = defaultValue;
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                UpdateMainDisplay();
+                updateMainCrosshair();
                 Sounds.PlayClickSound();
             };
 
@@ -391,7 +391,7 @@ namespace RED.mbnq
 
             return new LabeledSlider(panel, materialSlider);
         }
-        public void UpdateMainDisplay() // overlay
+        public void updateMainCrosshair() // overlay
         {
             if (MainDisplay != null)
             {
@@ -501,7 +501,7 @@ namespace RED.mbnq
                 MainDisplay.Show();
                 MainDisplay.BringToFront();
                 MainDisplay.Invalidate();
-                UpdateMainDisplay();
+                updateMainCrosshair();
             }
             else
             {
@@ -564,12 +564,12 @@ namespace RED.mbnq
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveLoad.SaveSettings(this);
-            UpdateMainDisplay();
+            updateMainCrosshair();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
             SaveLoad.LoadSettings(this);
-            UpdateMainDisplay();
+            updateMainCrosshair();
         }
 
         /* --- --- ---  --- --- --- */

@@ -7,7 +7,7 @@ namespace RED.mbnq
 {
     public partial class GlassHudOverlay
     {
-        private Action playSND = Sounds.PlayClickSound;     // PlayClickSoundOnce
+        private Action playSND = Sounds.PlayClickSoundOnce;     // PlayClickSoundOnce
         private void OverlayForm_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)

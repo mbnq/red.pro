@@ -47,7 +47,7 @@ namespace RED.mbnq
 
         }
         string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-        public void SetCustomOverlay()
+        public void SetCustomPNG()
         {
 
             try

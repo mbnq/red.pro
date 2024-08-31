@@ -115,7 +115,7 @@ namespace RED.mbnq
 
             controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
             controlPanel.mbProgressBar0.Value = 0;
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
 
             sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
             sb.AppendLine("[MainDisplay]");
@@ -133,7 +133,7 @@ namespace RED.mbnq
             sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomModeEnabled}");
 
             controlPanel.mbProgressBar0.Value = 30;
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
 
             // Save overlay absolute position
             if (controlPanel.MainDisplay != null)
@@ -143,7 +143,7 @@ namespace RED.mbnq
             }
 
             controlPanel.mbProgressBar0.Value = 50;
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
 
             byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
             File.WriteAllBytes(settingsFilePath, encryptedData);
@@ -157,7 +157,7 @@ namespace RED.mbnq
 
             controlPanel.mbProgressBar0.Value = 100;
             controlPanel.mbProgressBar0.Visible = false;
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
         }
 
         /* --- --- --- loading --- --- --- */
@@ -220,7 +220,7 @@ namespace RED.mbnq
 
             controlPanel.mbProgressBar0.Value = 60;
 
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
 
             if (showMessage)
             {
@@ -232,7 +232,7 @@ namespace RED.mbnq
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
             controlPanel.mbProgressBar0.Value = 100;
             controlPanel.mbProgressBar0.Visible = false;
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
 
         }
 
@@ -278,7 +278,7 @@ namespace RED.mbnq
 
             if (fileCreated)
             {
-                controlPanel.UpdateMainDisplay();
+                controlPanel.updateMainCrosshair();
             }
 
             controlPanel.mSettingsLoaded = 1;

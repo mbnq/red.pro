@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     static class Program
     {
-        public static mbnqCrosshair mainDisplay;
+        public static mbnqCrosshair mainCrosshair;
         public static int mbFrameDelay = 8;     // in ms, for glass hud
         public static float mbVersion = 0.043f;
 
@@ -18,18 +18,18 @@ namespace RED.mbnq
         [STAThread]
         static void Main()
         {
-            SetProcessDPIAware();
+            SetProcessDPIAware();   // this is co crucial to deal with windows DPI desktop scaling...
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Initialize MainDisplay
-            mainDisplay = new mbnqCrosshair();
+            mainCrosshair = new mbnqCrosshair();
 
             // Initialize ControlPanel
             ControlPanel controlPanel = new ControlPanel
             {
-                MainDisplay = mainDisplay,
+                MainDisplay = mainCrosshair,
             };
 
             ZoomMode.InitializeZoomMode(controlPanel);
@@ -42,11 +42,11 @@ namespace RED.mbnq
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
-                mainDisplay.SetCustomOverlay();
+                mainCrosshair.SetCustomPNG();
             }
 
             // Update the main display after settings have loaded
-            controlPanel.UpdateMainDisplay();
+            controlPanel.updateMainCrosshair();
 
             controlPanel.FormClosing += (sender, e) =>
             {
