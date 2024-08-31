@@ -245,18 +245,17 @@ namespace RED.mbnq
             {
                 await Task.Run(() =>
                 {
-                    displayOverlay.Hide(); // Hide current overlay
+                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.Hide())); // Hide current overlay on the main thread
                 });
 
                 Rectangle newArea = await Task.Run(() => selector.SelectCaptureArea());
 
                 await Task.Run(() =>
                 {
-                    displayOverlay.UpdateCaptureArea(newArea); // Update the area instead of recreating the form
-                    displayOverlay.Show(); // Show the updated overlay
+                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.UpdateCaptureArea(newArea))); // Update the area on the main thread
+                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.Show())); // Show the updated overlay on the main thread
                 });
             }
         }
-
     }
 }
