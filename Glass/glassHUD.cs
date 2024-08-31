@@ -13,7 +13,7 @@ namespace RED.mbnq
         private bool isMoveEnabled = false;
         public bool isCircle = false;
         private Point lastMousePos;
-        private glassControls debugInfoDisplay;
+        private glassControls glassInfoDisplay;
 
         private DateTime lastFrameTime = DateTime.MinValue; // Initialize to MinValue
         public double currentFps = 0.0;
@@ -64,7 +64,7 @@ namespace RED.mbnq
             // Apply a circular region to the form
             ApplyCircularRegion();
 
-            this.debugInfoDisplay = new glassControls(this, selectedArea); // Updated constructor call
+            this.glassInfoDisplay = new glassControls(this, selectedArea); // Updated constructor call
 
             InitializeTrackBars();
 
@@ -144,7 +144,7 @@ namespace RED.mbnq
             // Offload the potentially time-consuming debug update to a background thread
             await Task.Run(() =>
             {
-                debugInfoDisplay.UpdateSelectedRegion(newCaptureArea);
+                glassInfoDisplay.UpdateSelectedRegion(newCaptureArea);
             });
 
             // Invalidate the form on the main thread to trigger a repaint
@@ -177,7 +177,7 @@ namespace RED.mbnq
                 Graphics g = bufferedGraphics.Graphics;
 
                 // Your existing drawing code, but now using 'g' instead of 'e.Graphics'
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;      // Bilinear
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.None;
                 g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
@@ -213,7 +213,7 @@ namespace RED.mbnq
                     } 
                 }
                 // Draw debug information if enabled
-                debugInfoDisplay.DrawDebugInfo(g);
+                glassInfoDisplay.DrawDebugInfo(g);
                 this.Opacity = opacityFactor;
 
                 // Draw a border around the control if enabled

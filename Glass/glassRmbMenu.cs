@@ -15,7 +15,7 @@ namespace RED.mbnq
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
                 playSND();
 
-                menu.Items.Add((debugInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => { 
+                menu.Items.Add((glassInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => { 
                     ToggleGlassMenu();
                     playSND();
                 });  // Open Menu

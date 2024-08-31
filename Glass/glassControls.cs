@@ -80,18 +80,18 @@ namespace RED.mbnq
         int GlassZoomMax = 200;
         private void ToggleGlassMenu()
         {
-            debugInfoDisplay.IsGlassMenuEnabled = !debugInfoDisplay.IsGlassMenuEnabled;
+            glassInfoDisplay.IsGlassMenuEnabled = !glassInfoDisplay.IsGlassMenuEnabled;
 
-            offsetXSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            offsetYSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            zoomSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            offsetXLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            offsetYLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            zoomLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            opacityLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            opacitySlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            refreshRateLabel.Visible = debugInfoDisplay.IsGlassMenuEnabled;
-            refreshRateSlider.Visible = debugInfoDisplay.IsGlassMenuEnabled;
+            offsetXSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            offsetYSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            zoomSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            offsetXLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            offsetYLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            zoomLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            opacityLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            opacitySlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            refreshRateLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            refreshRateSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
         }
         private void InitializeTrackBars()
         {
