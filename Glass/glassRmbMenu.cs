@@ -10,6 +10,7 @@ namespace RED.mbnq
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
+                Sounds.PlayClickSoundOnce();
 
                 menu.Items.Add((debugInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => ToggleGlassMenu());  // Open Menu
                 menu.Items.Add(new ToolStripSeparator());
