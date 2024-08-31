@@ -143,26 +143,11 @@ namespace RED.mbnq
             if (textHUD == null || textHUD.IsDisposed)
             {
                 textHUD = new mbnqTXTHUD();
-                textHUD.Show();
-                textHUD.StartPingLoop("8.8.8.8");
-                textHUDMenuItem.Text = "Hide Text HUD";
             }
-            else if (textHUD.Visible)
-            {
-                textHUD.Hide();
-                textHUD.StopPingLoop();
-                textHUDMenuItem.Text = "Show Text HUD";
-            }
-            else
-            {
-                textHUD.Show();
-                textHUD.BringToFront();
-                textHUD.StartPingLoop("8.8.8.8");
-                textHUDMenuItem.Text = "Hide Text HUD";
-            }
+
+            textHUD.ToggleOverlay();
+            textHUDMenuItem.Text = textHUD.Visible ? "Hide Text HUD" : "Show Text HUD";
         }
-
-
 
         // Event handler for the new capture region menu item
         private void NewCaptureRegionMenuItem_Click(object sender, EventArgs e)

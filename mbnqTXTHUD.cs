@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Http;
 
 namespace RED.mbnq
 {
@@ -14,7 +14,7 @@ namespace RED.mbnq
     {
         private List<string> displayTexts = new List<string>();
         private CancellationTokenSource cancellationTokenSource;
-        private System.Windows.Forms.Timer updateTimer;  // Explicitly use the Windows Forms Timer
+        private System.Windows.Forms.Timer updateTimer;
 
         public mbnqTXTHUD()
         {
@@ -30,33 +30,9 @@ namespace RED.mbnq
             this.Paint += TXTHUD_Paint;
 
             updateTimer = new System.Windows.Forms.Timer();
-            updateTimer.Interval = 1000;
+            updateTimer.Interval = 1000; // Update every second
             updateTimer.Tick += async (s, e) => await UpdateHUDAsync();
             updateTimer.Start();
-        }
-
-        private async Task UpdateHUDAsync()
-        {
-            await UpdateIpAddressAsync();
-            this.Invalidate(); // Redraw the HUD
-        }
-
-        private async Task UpdateIpAddressAsync()
-        {
-            string ipAddress = await GetIpAddressAsync();
-            UpdateIpText($"IP: {ipAddress}");
-        }
-
-        private void UpdateIpText(string newText)
-        {
-            if (displayTexts.Count > 1)
-            {
-                displayTexts[1] = newText; // Assume second line is the IP text
-            }
-            else
-            {
-                AddText(newText);
-            }
         }
 
         public void AddText(string text)
@@ -149,7 +125,46 @@ namespace RED.mbnq
             cancellationTokenSource?.Cancel();
         }
 
-        public async Task<string> GetIpAddressAsync()
+        public void ToggleOverlay(string pingAddress = "8.8.8.8")
+        {
+            if (this.Visible)
+            {
+                this.Hide();
+                StopPingLoop();
+            }
+            else
+            {
+                this.Show();
+                this.BringToFront();
+                StartPingLoop(pingAddress);
+            }
+        }
+
+        private async Task UpdateHUDAsync()
+        {
+            await UpdateIpAddressAsync();
+            this.Invalidate(); // Redraw the HUD
+        }
+
+        private async Task UpdateIpAddressAsync()
+        {
+            string ipAddress = await GetIpAddressAsync();
+            UpdateIpText($"IP: {ipAddress}");
+        }
+
+        private void UpdateIpText(string newText)
+        {
+            if (displayTexts.Count > 1)
+            {
+                displayTexts[1] = newText; // Assume second line is the IP text
+            }
+            else
+            {
+                AddText(newText);
+            }
+        }
+
+        private async Task<string> GetIpAddressAsync()
         {
             try
             {
