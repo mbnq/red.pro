@@ -160,7 +160,7 @@ namespace RED.mbnq
         private void centerMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.CenterMainDisplay();
+            controlPanel.CenterCrosshairOverlay();
         }
 
         // saveLoad settings

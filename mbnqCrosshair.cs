@@ -18,7 +18,7 @@ namespace RED.mbnq
     public class mbnqCrosshair : Form
     {
         private Timer updateTimer;
-        private Image customOverlay;
+        private Image crosshairOverlay;
 
         public mbnqCrosshair()
         {
@@ -61,8 +61,8 @@ namespace RED.mbnq
                             if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
                             {
                                 // Dispose of the existing overlay if it exists
-                                customOverlay?.Dispose();
-                                customOverlay = new Bitmap(img);
+                                crosshairOverlay?.Dispose();
+                                crosshairOverlay = new Bitmap(img);
                                 this.Invalidate();
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
                             }
@@ -71,7 +71,7 @@ namespace RED.mbnq
                                 MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                                 Sounds.PlayClickSoundOnce();
                                 File.Delete(filePath);
-                                customOverlay = null;
+                                crosshairOverlay = null;
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
                             }
                         }
@@ -81,7 +81,7 @@ namespace RED.mbnq
                 {
                     // MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
-                    customOverlay = null;
+                    crosshairOverlay = null;
                     Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay file does not exist.");
                 }
             }
@@ -89,7 +89,7 @@ namespace RED.mbnq
             {
                 MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
                 Sounds.PlayClickSoundOnce();
-                customOverlay = null;
+                crosshairOverlay = null;
                 if (ControlPanel.mIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Exception occurred while loading custom overlay: {ex.Message}");
             }
@@ -132,8 +132,8 @@ namespace RED.mbnq
                 }
 
                 // Dispose of the overlay
-                customOverlay?.Dispose();
-                customOverlay = null;
+                crosshairOverlay?.Dispose();
+                crosshairOverlay = null;
 
                 // Refresh the display
                 this.Invalidate();
@@ -153,10 +153,10 @@ namespace RED.mbnq
             g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;         // HighQuality or HighSpeed or AssumeLinear or Default
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;           // AntiAlias or ClearTypeGridFit or SingleBitPerPixelGridFit or SingleBitPerPixel or SystemDefault
 
-            if (customOverlay != null)
+            if (crosshairOverlay != null)
             {
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Drawing custom overlay.");
-                g.DrawImage(customOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                g.DrawImage(crosshairOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             }
             else
             {
@@ -176,14 +176,14 @@ namespace RED.mbnq
         {
             if (disposing)
             {
-                customOverlay?.Dispose();
+                crosshairOverlay?.Dispose();
                 Cursor.Show();
             }
             base.Dispose(disposing);
         }
         public bool HasCustomOverlay
         {
-            get { return customOverlay != null; }
+            get { return crosshairOverlay != null; }
         }
 
         /* --- --- --- Let's sure overlay is non-clickable --- --- --- */

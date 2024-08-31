@@ -479,7 +479,7 @@ namespace RED.mbnq
                 return value - 1000;
             }
         }
-        public void CenterMainDisplay()
+        public void CenterCrosshairOverlay()
         {
             if (MainDisplay != null)
             {
@@ -552,7 +552,7 @@ namespace RED.mbnq
         private void CenterButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            CenterMainDisplay();
+            CenterCrosshairOverlay();
         }
 
         /* --- --- --- Mouse --- --- --- */
