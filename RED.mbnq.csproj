@@ -266,6 +266,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mbnqFunctions.cs" />
+    <Compile Include="mbnqTXTHUD.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources2.Designer.cs">

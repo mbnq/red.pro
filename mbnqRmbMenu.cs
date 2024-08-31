@@ -17,7 +17,8 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem;    // openSettingsDirMenuItem
+        private mbnqTXTHUD textHUD;
+        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textHUDMenuItem;    // openSettingsDirMenuItem
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -52,6 +53,10 @@ namespace RED.mbnq
             // Initialize menu item Center Overlay
             centerMenuItem = new ToolStripMenuItem("Center Overlay");
             centerMenuItem.Click += centerMenuItem_Click;
+
+            // Text HUD
+            textHUDMenuItem = new ToolStripMenuItem("Text HUD");
+            textHUDMenuItem.Click += TextHUDMenuItem_Click;
 
             // Initialize menu item Save settings
             saveMenuItem = new ToolStripMenuItem("Save settings");
@@ -90,6 +95,7 @@ namespace RED.mbnq
             this.Items.Add(separator4);
             this.Items.Add(toggleZoomMenuItem);
             this.Items.Add(toggleSoundMenuItem);
+            this.Items.Add(textHUDMenuItem);
             this.Items.Add(separator3);
             // this.Items.Add(centerMenuItem);
             this.Items.Add(newCaptureRegionMenuItem);
@@ -126,6 +132,30 @@ namespace RED.mbnq
             {
                 MaterialMessageBox.Show($"Failed to open settings directory: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                 Sounds.PlayClickSoundOnce();
+            }
+        }
+
+        // text hud
+        private void TextHUDMenuItem_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            if (textHUD == null || textHUD.IsDisposed)
+            {
+                textHUD = new mbnqTXTHUD();
+                textHUD.Show();
+                textHUDMenuItem.Text = "Hide Text HUD";
+            }
+            else if (textHUD.Visible)
+            {
+                textHUD.Hide();
+                textHUDMenuItem.Text = "Show Text HUD";
+            }
+            else
+            {
+                textHUD.Show();
+                textHUD.BringToFront();
+                textHUDMenuItem.Text = "Hide Text HUD";
             }
         }
 
