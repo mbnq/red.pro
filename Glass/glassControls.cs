@@ -153,7 +153,7 @@ namespace RED.mbnq
             {
                 Minimum = 1,            // ms
                 Maximum = 1000,
-                Value = 5,
+                Value = Program.mbFrameDelay,
                 TickFrequency = 50,
                 Width = 200,
                 AutoSize = true,
@@ -222,7 +222,7 @@ namespace RED.mbnq
 
             refreshRateLabel = new Label
             {
-                Text = "Refresh Rate: 100ms",
+                Text = $"Refresh Rate: {Program.mbFrameDelay}",
                 ForeColor = mDefColWhite,
                 BackColor = mDefColGray,
                 AutoSize = true
