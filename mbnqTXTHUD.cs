@@ -22,6 +22,15 @@ namespace RED.mbnq
         private bool isDragging = false;
         private Point startPoint = new Point(0, 0);
 
+        // Field to track how often TXTHUD_Paint is being drawn
+        private int paintCounter = 0;
+
+        // Field to track the last draw time
+        private DateTime lastDrawTime = DateTime.MinValue;
+
+        // Draw limit, refresh overlay if this amount of seconds passed
+        private double throttlePaintTime = 1.00f;
+
         public mbnqTXTHUD()
         {
             InitializeComponent();
@@ -36,13 +45,18 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 60); // Adjust size as needed
+            this.Size = new Size(300, 100); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
             this.ShowInTaskbar = false;
             this.DoubleBuffered = true;
             this.Paint += TXTHUD_Paint;
+
+            // Initialize Display Texts with placeholders
+            displayTexts.Add("Ping: -- ms");
+            displayTexts.Add("IP: Fetching...");
+            displayTexts.Add("Console Draw Count: 0"); // Initialize the third line for the draw count
         }
 
         private void InitializeTimers()
@@ -58,10 +72,6 @@ namespace RED.mbnq
             ipTimer.Interval = 10000; // 20 seconds
             ipTimer.Tick += async (s, e) => await UpdateIpAddressAsync();
             ipTimer.Start();
-
-            // Initialize Display Texts with placeholders
-            displayTexts.Add("Ping: -- ms");
-            displayTexts.Add("IP: Fetching...");
         }
 
         private void InitializeMouseEvents()
@@ -118,13 +128,19 @@ namespace RED.mbnq
         private void UpdatePingText(string newText)
         {
             displayTexts[0] = newText;
-            this.Invalidate(); // Redraw with the updated text
+            this.ThrottlePaint(); // Redraw with the updated text
         }
 
         private void UpdateIpText(string newText)
         {
             displayTexts[1] = newText;
-            this.Invalidate(); // Redraw with the updated text
+            this.ThrottlePaint(); // Redraw with the updated text
+        }
+
+        private void UpdateDrawCountText()
+        {
+            displayTexts[2] = $"Console Draw Count: {paintCounter}";
+            this.ThrottlePaint(); // Redraw with the updated draw count
         }
 
         #endregion
@@ -233,10 +249,30 @@ namespace RED.mbnq
 
         #endregion
 
+        #region Throttle Paint Method
+
+        private void ThrottlePaint()
+        {
+            // Check if at least 1 second has passed since the last draw
+            if ((DateTime.Now - lastDrawTime).TotalSeconds >= throttlePaintTime)
+            {
+                this.Invalidate(); // Redraw with the updated text
+                lastDrawTime = DateTime.Now; // Update the last draw time
+            }
+        }
+
+        #endregion
+
         #region UI Methods
 
         private void TXTHUD_Paint(object sender, PaintEventArgs e)
         {
+            // Increment the draw counter
+            paintCounter++;
+
+            // Update the third line with the current draw count
+            UpdateDrawCountText();
+
             Graphics g = e.Graphics;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
