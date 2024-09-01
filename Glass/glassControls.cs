@@ -282,7 +282,7 @@ namespace RED.mbnq
         }
         public void UpdateRefreshInterval(int newInterval)
         {
-            updateTimer2.Interval = newInterval;
+            glassRefreshTimer.Interval = newInterval;
         }
 
         // Define the UpdateRefreshRate method

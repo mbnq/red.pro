@@ -9,7 +9,7 @@ namespace RED.mbnq
     public partial class GlassHudOverlay : Form
     {
         private Rectangle captureArea;
-        private System.Windows.Forms.Timer updateTimer2;
+        private System.Windows.Forms.Timer glassRefreshTimer;
         private bool isMoving = false;
         private bool isMoveEnabled = false;
         public bool isCircle = false;
@@ -71,10 +71,10 @@ namespace RED.mbnq
 
             this.MouseClick += OverlayForm_MouseClick;
 
-            updateTimer2 = new System.Windows.Forms.Timer();
-            updateTimer2.Interval = Program.mbFrameDelay;
-            updateTimer2.Tick += (s, e) => this.Invalidate();
-            updateTimer2.Start();
+            glassRefreshTimer = new System.Windows.Forms.Timer();
+            glassRefreshTimer.Interval = Program.mbFrameDelay;
+            glassRefreshTimer.Tick += (s, e) => this.Invalidate();
+            glassRefreshTimer.Start();
             EnableFormMovement();
         }
 

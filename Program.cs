@@ -9,7 +9,7 @@ namespace RED.mbnq
     static class Program
     {
         public static mbnqCrosshair mainCrosshair;
-        public static int mbFrameDelay = 8;     // in ms, for glass hud
+        public static int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps
         public static float mbVersion = 0.047f;
 
         [DllImport("user32.dll")]
