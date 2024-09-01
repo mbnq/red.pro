@@ -19,7 +19,7 @@ namespace RED.mbnq
         public static readonly bool mIsDebugOn = true;          // debug mode
         public static readonly bool mPBIsOn = false;            // progress bar
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, timerInterval, zoomLevel;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         private Button saveButton, loadButton, centerButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
@@ -30,7 +30,7 @@ namespace RED.mbnq
         public int mSettingsLoaded = 0;
 
         private static readonly int mCPWidth = 262;
-        private static readonly int mCPHeight = 800;
+        private static readonly int mCPHeight = 730;
         private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
@@ -194,11 +194,6 @@ namespace RED.mbnq
             var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000, 1000);
             offsetY = offsetYSlider.Slider;
             panel.Controls.Add(offsetYSlider.Panel);
-
-            // Timer Interval aka Refresh Rate aka Redraw Rate
-            var timerIntervalSlider = CreateLabeledSlider("Refresh", 10, 2000, 1000);
-            timerInterval = timerIntervalSlider.Slider;
-            panel.Controls.Add(timerIntervalSlider.Panel);
 
             /* --- --- ---  Buttons --- --- --- */
 
@@ -460,7 +455,6 @@ namespace RED.mbnq
             zoomLevel.Parent.Controls[0].Text = $"Zoom Level: {zoomLevel.Value}";
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
-            timerInterval.Parent.Controls[0].Text = $"Refresh Rate: {timerInterval.Value} ms";
         }
 
         /* --- --- --- Center Button --- --- --- */
@@ -581,7 +575,6 @@ namespace RED.mbnq
         public int TransparencyValue { get => transparency.Value; set => transparency.Value = value; }
         public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
         public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
-        public int TimerIntervalValue { get => timerInterval.Value; set => timerInterval.Value = value; }
 
     }
 
