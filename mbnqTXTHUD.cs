@@ -12,10 +12,12 @@ namespace RED.mbnq
 {
     public class mbnqTXTHUD : Form
     {
+        private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
         // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
+        private System.Windows.Forms.Timer generalDisplayTimer;
         private string currentPingAddress = "8.8.8.8";
 
         // Fields to track mouse movements
@@ -31,6 +33,8 @@ namespace RED.mbnq
         // Draw limit, refresh overlay if this amount of seconds passed
         private double throttlePaintTime = 1.00f;
 
+
+
         public mbnqTXTHUD()
         {
             InitializeComponent();
@@ -45,7 +49,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 100); // Adjust size as needed
+            this.Size = new Size(300, 120); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
@@ -57,6 +61,7 @@ namespace RED.mbnq
             displayTexts.Add("Ping: -- ms");
             displayTexts.Add("IP: Fetching...");
             displayTexts.Add("Console Draw Count: 0"); // Initialize the third line for the draw count
+            displayTexts.Add("CPU: -- %"); // Placeholder for CPU usage
         }
 
         private void InitializeTimers()
@@ -72,6 +77,12 @@ namespace RED.mbnq
             ipTimer.Interval = 10000; // 20 seconds
             ipTimer.Tick += async (s, e) => await UpdateIpAddressAsync();
             ipTimer.Start();
+
+            // Initialize General Display Timer
+            generalDisplayTimer = new System.Windows.Forms.Timer();
+            generalDisplayTimer.Interval = 1000; // 1 second
+            generalDisplayTimer.Tick += (s, e) => UpdateGeneralDisplay();
+            generalDisplayTimer.Start();
         }
 
         private void InitializeMouseEvents()
@@ -143,10 +154,25 @@ namespace RED.mbnq
             this.ThrottlePaint(); // Redraw with the updated draw count
         }
 
+        private void UpdateCpuUsageText()
+        {
+            displayTexts[3] = $"CPU: {GetCpuUsage()}";
+            ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
+        }
+
+        private void UpdateGeneralDisplay()
+        {
+            UpdateCpuUsageText();
+            ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
+        }
+
         #endregion
 
         #region Data Retrieval Methods
-
+        private string GetCpuUsage()
+        {
+            return $"{cpuCounter.NextValue():F1} % CPU";
+        }
         private async Task<string> GetPingResultAsync(string address)
         {
             try
