@@ -16,7 +16,7 @@ namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
-        public static readonly bool mIsDebugOn = true;          // debug mode
+        public static bool mIsDebugOn = false;          // debug mode
         public static readonly bool mPBIsOn = false;            // progress bar
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
@@ -24,13 +24,13 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
         public mbnqCrosshair mainDisplay;
-        private CheckBox autoSaveOnExit;
+        private CheckBox autoSaveOnExit, mbDebugonCheckbox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
 
         private static readonly int mCPWidth = 262;
-        private static readonly int mCPHeight = 730;
+        private static readonly int mCPHeight = 765;
         private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
@@ -77,6 +77,7 @@ namespace RED.mbnq
 
             updateMainCrosshair();
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+            mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
         }
 
         // don't remove this one
@@ -125,6 +126,17 @@ namespace RED.mbnq
             if (!autoSaveOnExit.Checked)
             {
                 SaveLoad.SaveSettings(this, false);
+            }
+        }
+        private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDebugonCheckbox.Checked)
+            {
+                mIsDebugOn = true;
+            }
+            else
+            {
+                mIsDebugOn = false;
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -241,6 +253,19 @@ namespace RED.mbnq
                 }
             };
 
+            // Debug mode
+            mbDebugonCheckbox = new MaterialCheckbox
+            {
+                Text = "Debug   ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Left
+            };
+
+            mbDebugonCheckbox.CheckedChanged += (s, e) =>
+            {
+                Sounds.PlayClickSound();
+            };
+
             /* --- --- --- Progress Bar --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
@@ -257,6 +282,7 @@ namespace RED.mbnq
             // panel.Controls.Add(saveButton);
             // panel.Controls.Add(loadButton);
             panel.Controls.Add(autoSaveOnExit);
+            panel.Controls.Add(mbDebugonCheckbox);
 
             this.Controls.Add(panel);
         }
