@@ -12,7 +12,7 @@ namespace RED.mbnq
         private static bool isZooming = false;
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
-        private static int zoomSizeSet = 128;   // Define the zoom area to capture, smaller size for more zoom
+        private static int zoomSizeSet = 128;   // Define the zoom area to capture, smaller size for more zoom 
         public static int zoomMultiplier = 1;
         public static bool IsZoomModeEnabled { get; private set; } = false;
         public static void ToggleZoomMode()
