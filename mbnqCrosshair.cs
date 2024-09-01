@@ -39,7 +39,7 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
-            // this.Enabled = false;            // Comment this out if the overlay should still display correctly without disabling the form entirely
+            // this.Enabled = false;            // Comment this out if the overlay should still display correctly without disabling the form entirely 
 
             // The update timer
             updateTimer = new Timer();
