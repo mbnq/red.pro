@@ -163,6 +163,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return "Error";
             }
         }
