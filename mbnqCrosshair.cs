@@ -17,7 +17,7 @@ namespace RED.mbnq
 {
     public class mbnqCrosshair : Form
     {
-        private Timer updateTimer;
+        private Timer crosshairRefreshTimer;
         private Image crosshairOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
         private int paintCallCount = 0;
@@ -42,10 +42,10 @@ namespace RED.mbnq
             // this.Enabled = false;            // Comment this out if the overlay should still display correctly without disabling the form entirely 
 
             // The update timer
-            updateTimer = new Timer();
-            updateTimer.Interval = 2000;
-            updateTimer.Tick += (s, e) => this.Invalidate();
-            updateTimer.Start();
+            crosshairRefreshTimer = new Timer();
+            crosshairRefreshTimer.Interval = 5000;
+            crosshairRefreshTimer.Tick += (s, e) => this.Invalidate();
+            crosshairRefreshTimer.Start();
 
         }
         string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");

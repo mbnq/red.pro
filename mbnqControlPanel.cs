@@ -16,7 +16,7 @@ namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
-        public static bool mIsDebugOn = false;          // debug mode
+        public static bool mIsDebugOn = false;                  // debug mode, there is checkbox for it so shouldn't be changed manually here
         public static readonly bool mPBIsOn = false;            // progress bar
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
@@ -258,7 +258,8 @@ namespace RED.mbnq
             {
                 Text = "Debug   ",
                 AutoSize = true,
-                Anchor = AnchorStyles.Left
+                Anchor = AnchorStyles.Left,
+                Enabled = true
             };
 
             mbDebugonCheckbox.CheckedChanged += (s, e) =>

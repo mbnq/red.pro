@@ -163,7 +163,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: {ex.Message}");
                 return "Error";
             }
         }
