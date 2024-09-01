@@ -43,7 +43,7 @@ namespace RED.mbnq
 
             // The update timer
             updateTimer = new Timer();
-            // updateTimer.Interval = 1000;
+            updateTimer.Interval = 2000;
             updateTimer.Tick += (s, e) => this.Invalidate();
             updateTimer.Start();
 
