@@ -66,12 +66,18 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 256); // Adjust size as needed
+            this.Size = new Size(300, 260); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
             this.ShowInTaskbar = false;
+            this.ShowIcon = false;
             this.DoubleBuffered = true;
+            this.ControlBox = false;
+            this.SizeGripStyle = SizeGripStyle.Show;
+            this.Padding = new Padding(10);
+            // this.Cursor = Cursors.NoMove2D;
+
             this.Paint += TXTHUD_Paint;
 
             initialWidth = this.Size.Width;
@@ -94,7 +100,7 @@ namespace RED.mbnq
                     "close",
                     "help"
                 },
-                MaxLength = 40,
+                MaxLength = 32,
                 ForeColor = Color.White,
                 BackColor = Color.Black,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -103,9 +109,12 @@ namespace RED.mbnq
                 Width = this.Width - 20,
                 Height = 20
             };
+
             commandTextBox.KeyDown += CommandTextBox_KeyDown; // Event handler for Enter key
             commandTextBox.TextChanged += CommandTextBox_TextChanged; // Event handler for text changes
+
             this.Controls.Add(commandTextBox);
+
             ToggleShowCommandBox(isGlobalDebugOn);
 
             // Initialize Display Texts with placeholders
