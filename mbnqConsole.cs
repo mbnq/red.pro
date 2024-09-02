@@ -55,7 +55,7 @@ namespace RED.mbnq
             AdjustSize();
             CaptureDebugMessages();
 
-            isGlobalDebugOn = ControlPanel.mIsDebugOn; // Initialize with the current value
+            isGlobalDebugOn = true; // ControlPanel.mIsDebugOn if you want to disable input textbox when global debug is off
             ToggleShowCommandBox(isGlobalDebugOn);
         }
 
@@ -209,12 +209,14 @@ namespace RED.mbnq
         {
             UpdateCpuUsageText();
 
-            // Check if the debug state has changed
+            /*
+            // Check if the debug state has changed, needs isGlobalDebugOn to be changed to ControlPanel.mIsDebugOn 
             if (ControlPanel.mIsDebugOn != isGlobalDebugOn)
             {
                 isGlobalDebugOn = ControlPanel.mIsDebugOn;
                 ToggleShowCommandBox(isGlobalDebugOn);
             }
+            */
 
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
