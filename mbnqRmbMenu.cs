@@ -17,7 +17,7 @@ namespace RED.mbnq
     public class rmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
-        private mbnqTXTHUD textHUD;
+        private mbnqConsole textHUD;
         private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textHUDMenuItem;    // openSettingsDirMenuItem
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
@@ -55,7 +55,7 @@ namespace RED.mbnq
             centerMenuItem.Click += centerMenuItem_Click;
 
             // Text HUD
-            textHUDMenuItem = new ToolStripMenuItem("Show Text Console");
+            textHUDMenuItem = new ToolStripMenuItem("Show Debug Console");
             textHUDMenuItem.Click += TextHUDMenuItem_Click;
 
             // Initialize menu item Save settings
@@ -142,11 +142,11 @@ namespace RED.mbnq
 
             if (textHUD == null || textHUD.IsDisposed)
             {
-                textHUD = new mbnqTXTHUD();
+                textHUD = new mbnqConsole();
             }
 
             textHUD.ToggleOverlay();
-            textHUDMenuItem.Text = textHUD.Visible ? "Hide Text Console" : "Show Text Console"; // rename it to Console Hud?
+            textHUDMenuItem.Text = textHUD.Visible ? "Hide Debug Console" : "Show Debug Console"; // rename it to Console Hud?
         }
 
         // Event handler for the new capture region menu item

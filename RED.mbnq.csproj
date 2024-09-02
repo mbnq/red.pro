@@ -266,7 +266,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mbnqFunctions.cs" />
-    <Compile Include="mbnqTXTHUD.cs">
+    <Compile Include="mbnqConsole.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />

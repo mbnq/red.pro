@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace RED.mbnq
 {
-    public class mbnqTXTHUD : Form
+    public class mbnqConsole : Form
     {
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
@@ -39,7 +39,7 @@ namespace RED.mbnq
 
 
 
-        public mbnqTXTHUD()
+        public mbnqConsole()
         {
             InitializeComponent();
             InitializeTimers();
@@ -211,9 +211,9 @@ namespace RED.mbnq
 
         private class DebugListener : TraceListener
         {
-            private readonly mbnqTXTHUD parentForm;
+            private readonly mbnqConsole parentForm;
 
-            public DebugListener(mbnqTXTHUD parent)
+            public DebugListener(mbnqConsole parent)
             {
                 parentForm = parent;
             }
