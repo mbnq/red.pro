@@ -490,6 +490,7 @@ namespace RED.mbnq
                     };
                     Process.Start(processInfo);
                 }
+
                 else if (command.StartsWith("set ", StringComparison.OrdinalIgnoreCase))
                 {
                     // Handle setting variables in the program
@@ -507,6 +508,9 @@ namespace RED.mbnq
                         Debug.WriteLine("Invalid set command format. Use: set <VariableName> <Value>");
                     }
                 }
+
+
+                // console dedicated commands
                 else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
                 {
                     Debug.WriteLine("Invalid set command format. Use: set <VariableName> <Value>\nTest");
