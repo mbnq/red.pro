@@ -688,7 +688,7 @@ namespace RED.mbnq
         }
         private void CommandTextBox_TextChanged(object sender, EventArgs e)
         {
-            RED.mbnq.Sounds.PlayClickSound();
+            RED.mbnq.Sounds.PlayClickSoundOnce();
         }
         /*private void ListTextArrayPositions()
         {
