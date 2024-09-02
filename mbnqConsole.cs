@@ -82,6 +82,7 @@ namespace RED.mbnq
                 Height = 20
             };
             commandTextBox.KeyDown += CommandTextBox_KeyDown; // Event handler for Enter key
+            commandTextBox.TextChanged += CommandTextBox_TextChanged; // Event handler for text changes
             this.Controls.Add(commandTextBox);
             ToggleShowCommandBox(isGlobalDebugOn);
 
@@ -597,6 +598,10 @@ namespace RED.mbnq
             {
                 commandTextBox.Visible = isVisible;
             }
+        }
+        private void CommandTextBox_TextChanged(object sender, EventArgs e)
+        {
+            RED.mbnq.Sounds.PlayClickSound();
         }
 
         #endregion
