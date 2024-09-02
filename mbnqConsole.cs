@@ -18,6 +18,7 @@ namespace RED.mbnq
         private string lastDebugMessage = string.Empty;
         private int initialWidth;
         private int initialHeight;
+        private TextBox commandTextBox;
         // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
@@ -65,6 +66,19 @@ namespace RED.mbnq
 
             initialWidth = this.Size.Width;
             initialHeight = this.Size.Height;
+
+            commandTextBox = new TextBox
+            {
+                ForeColor = Color.White,
+                BackColor = Color.Black,
+                BorderStyle = BorderStyle.None,
+                Font = new Font("Consolas", 10, FontStyle.Regular),
+                Location = new Point(10, this.Height - 30), // Adjust position as needed
+                Width = this.Width - 20,
+                Height = 20
+            };
+            commandTextBox.KeyDown += CommandTextBox_KeyDown; // Event handler for Enter key
+            this.Controls.Add(commandTextBox);
 
             // Initialize Display Texts with placeholders
             displayTexts.Add("Ping: -- ms");
@@ -440,5 +454,48 @@ namespace RED.mbnq
         }
 
         #endregion
+
+        private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Prevents the "ding" sound on Enter
+
+                string command = commandTextBox.Text;
+                if (!string.IsNullOrWhiteSpace(command))
+                {
+                    ExecuteCommand(command);
+                    commandTextBox.Clear();
+                }
+            }
+        }
+
+        private void ExecuteCommand(string command)
+        {
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
+                {
+                    RedirectStandardOutput = false,
+                    UseShellExecute = true,
+                    CreateNoWindow = false // This will show the console window
+                };
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error executing command: {ex.Message}");
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (commandTextBox != null)
+            {
+                commandTextBox.Location = new Point(10, this.Height - 30);
+                commandTextBox.Width = this.Width - 20;
+            }
+        }
     }
 }
