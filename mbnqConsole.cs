@@ -50,7 +50,7 @@ namespace RED.mbnq
             CaptureDebugMessages();
 
             isGlobalDebugOn = ControlPanel.mIsDebugOn; // Initialize with the current value
-            ToggleCommandTextBoxVisibility(isGlobalDebugOn);
+            ToggleShowCommandBox(isGlobalDebugOn);
         }
 
         #region Initialization Methods
@@ -77,17 +77,18 @@ namespace RED.mbnq
                 BackColor = Color.Black,
                 BorderStyle = BorderStyle.FixedSingle,
                 Font = new Font("Consolas", 10, FontStyle.Regular),
-                Location = new Point(10, this.Height - 30), // Adjust position as needed
+                Location = new Point(10, this.Height + 20), // Adjust position as needed
                 Width = this.Width - 20,
                 Height = 20
             };
             commandTextBox.KeyDown += CommandTextBox_KeyDown; // Event handler for Enter key
             this.Controls.Add(commandTextBox);
-            ToggleCommandTextBoxVisibility(isGlobalDebugOn);
+            ToggleShowCommandBox(isGlobalDebugOn);
 
             // Initialize Display Texts with placeholders
-            displayTexts.Add("Ping: -- ms");
-            displayTexts.Add("IP: Fetching...");
+            displayTexts.Add($"RED.PRO ver.{Program.mbVersion}.2024 - mbnq.pl"); // this is [0] now
+            displayTexts.Add("Ping: -- ms");                                      // [1]
+            displayTexts.Add("IP: Fetching...");                                  // [2]
             displayTexts.Add("Console Draw Count: 0"); // Initialize the third line for the draw count
             displayTexts.Add("CPU: -- %"); // Placeholder for CPU usage
             displayTexts.Add("Debug: --"); // Placeholder for CPU usage
@@ -169,25 +170,25 @@ namespace RED.mbnq
 
         private void UpdatePingText(string newText)
         {
-            displayTexts[0] = newText;
+            displayTexts[1] = newText;
             this.ThrottlePaint(); // Redraw with the updated text
         }
 
         private void UpdateIpText(string newText)
         {
-            displayTexts[1] = newText;
+            displayTexts[2] = newText;
             this.ThrottlePaint(); // Redraw with the updated text
         }
 
         private void UpdateDrawCountText()
         {
-            displayTexts[2] = $"Console Draw Count: {paintCounter}";
+            displayTexts[3] = $"Console Draw Count: {paintCounter}";
             this.ThrottlePaint(); // Redraw with the updated draw count
         }
 
         private void UpdateCpuUsageText()
         {
-            displayTexts[3] = $"CPU: {GetCpuUsage()}";
+            displayTexts[4] = $"CPU: {GetCpuUsage()}";
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
 
@@ -199,7 +200,7 @@ namespace RED.mbnq
             if (ControlPanel.mIsDebugOn != isGlobalDebugOn)
             {
                 isGlobalDebugOn = ControlPanel.mIsDebugOn;
-                ToggleCommandTextBoxVisibility(isGlobalDebugOn);
+                ToggleShowCommandBox(isGlobalDebugOn);
             }
 
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
@@ -227,7 +228,7 @@ namespace RED.mbnq
         {
             if (displayTexts.Count >= 5)
             {
-                displayTexts[4] = newText;
+                displayTexts[5] = newText;
             }
             else
             {
@@ -582,7 +583,7 @@ namespace RED.mbnq
                 Debug.WriteLine($"Error setting variable: {ex.Message}");
             }
         }
-        private void ToggleCommandTextBoxVisibility(bool isVisible)
+        private void ToggleShowCommandBox(bool isVisible)
         {
             if (commandTextBox != null)
             {
