@@ -573,7 +573,12 @@ namespace RED.mbnq
                         Debug.WriteLine("Invalid format. Use: set <VariableName> <Value>");
                     }
                 }
-                
+
+                else if (command.StartsWith("list text", StringComparison.OrdinalIgnoreCase))
+                {
+                    ListTextArrayPositions();
+                }
+
                 else if (command.StartsWith("toggle text", StringComparison.OrdinalIgnoreCase))
                 {
                     var parts = command.Split(' ');
@@ -666,6 +671,21 @@ namespace RED.mbnq
         private void CommandTextBox_TextChanged(object sender, EventArgs e)
         {
             RED.mbnq.Sounds.PlayClickSound();
+        }
+        /*private void ListTextArrayPositions()
+        {
+            for (int i = 0; i < displayTexts.Count; i++)
+            {
+                Debug.WriteLine($"[{i}]"); //  {displayTexts[i]}{Environment.NewLine}
+                AdjustSize(); // Make sure the form is adjusted to fit the new text
+            }
+        }*/
+        private void ListTextArrayPositions()
+        {
+            for (int i = 0; i < displayTexts.Count; i++)
+            {
+                Debug.WriteLine($"Index numbers: 0 - {i}");
+            }
         }
 
         #endregion
