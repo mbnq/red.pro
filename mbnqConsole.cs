@@ -14,6 +14,7 @@ namespace RED.mbnq
     {
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
+        private List<bool> displayTextVisibility = new List<bool>();
         // console
         private string lastDebugMessage = string.Empty;
         private int initialWidth;
@@ -88,11 +89,17 @@ namespace RED.mbnq
 
             // Initialize Display Texts with placeholders
             displayTexts.Add($"RED.PRO ver.{Program.mbVersion}.2024 - mbnq.pl"); // this is [0] now
+            displayTextVisibility.Add(true);
             displayTexts.Add("Ping: -- ms");                                      // [1]
+            displayTextVisibility.Add(true);
             displayTexts.Add("IP: Fetching...");                                  // [2]
+            displayTextVisibility.Add(true);
             displayTexts.Add("Console Draw Count: 0"); // Initialize the third line for the draw count
+            displayTextVisibility.Add(true);
             displayTexts.Add("CPU: -- %"); // Placeholder for CPU usage
+            displayTextVisibility.Add(true);
             displayTexts.Add("Debug: --"); // Placeholder for CPU usage
+            displayTextVisibility.Add(true);
 
             AdjustSize();
         }
@@ -418,13 +425,17 @@ namespace RED.mbnq
             using (Font font = new Font("Consolas", 10, FontStyle.Regular))
             {
                 float yPosition = 10f;
-                foreach (var text in displayTexts)
+                for (int i = 0; i < displayTexts.Count; i++)
                 {
-                    g.DrawString(text, font, brush, new PointF(10, yPosition));
-                    yPosition += 25f; // Adjust line spacing as needed
+                    if (displayTextVisibility[i])
+                    {
+                        g.DrawString(displayTexts[i], font, brush, new PointF(10, yPosition));
+                        yPosition += 25f; // Adjust line spacing as needed
+                    }
                 }
             }
         }
+
 
         public void ToggleOverlay(string pingAddress = "8.8.8.8")
         {
@@ -526,7 +537,20 @@ namespace RED.mbnq
                         Debug.WriteLine("Invalid format. Use: set <VariableName> <Value>");
                     }
                 }
-
+                
+                else if (command.StartsWith("toggle text", StringComparison.OrdinalIgnoreCase))
+                {
+                    var parts = command.Split(' ');
+                    if (parts.Length == 3 && int.TryParse(parts[2], out int index) && index >= 0 && index < displayTextVisibility.Count)
+                    {
+                        displayTextVisibility[index] = !displayTextVisibility[index];
+                        ThrottlePaint(); // Redraw the HUD
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Invalid toggle command or index out of range.");
+                    }
+                }
 
                 // console dedicated commands
                 else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
@@ -534,7 +558,8 @@ namespace RED.mbnq
                     Debug.WriteLine("Syntax:" +
                         "\nUse: set <VariableName> <Value>" +
                         "\nUse: cmd <windows CMD Command> <attributes>" +
-                        "\nUse: exit or quit or close"
+                        "\nUse: toggle text <text id number>"+
+                        "\nUse: exit or quit"
                     );
                 }
                 else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
@@ -554,7 +579,6 @@ namespace RED.mbnq
             {
                 Debug.WriteLine($"Error executing command: {ex.Message}");
             }
-
         }
 
         protected override void OnResize(EventArgs e)
