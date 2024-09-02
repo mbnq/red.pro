@@ -18,6 +18,7 @@ namespace RED.mbnq
         private string lastDebugMessage = string.Empty;
         private int initialWidth;
         private int initialHeight;
+        private bool isGlobalDebugOn;
         private TextBox commandTextBox;
         // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
@@ -47,6 +48,9 @@ namespace RED.mbnq
             InitializeMouseEvents();
             AdjustSize();
             CaptureDebugMessages();
+
+            isGlobalDebugOn = ControlPanel.mIsDebugOn; // Initialize with the current value
+            ToggleCommandTextBoxVisibility(isGlobalDebugOn);
         }
 
         #region Initialization Methods
@@ -56,7 +60,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 200); // Adjust size as needed
+            this.Size = new Size(300, 160); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
@@ -71,7 +75,7 @@ namespace RED.mbnq
             {
                 ForeColor = Color.White,
                 BackColor = Color.Black,
-                BorderStyle = BorderStyle.None,
+                BorderStyle = BorderStyle.FixedSingle,
                 Font = new Font("Consolas", 10, FontStyle.Regular),
                 Location = new Point(10, this.Height - 30), // Adjust position as needed
                 Width = this.Width - 20,
@@ -79,6 +83,7 @@ namespace RED.mbnq
             };
             commandTextBox.KeyDown += CommandTextBox_KeyDown; // Event handler for Enter key
             this.Controls.Add(commandTextBox);
+            ToggleCommandTextBoxVisibility(isGlobalDebugOn);
 
             // Initialize Display Texts with placeholders
             displayTexts.Add("Ping: -- ms");
@@ -189,6 +194,14 @@ namespace RED.mbnq
         private void UpdateGeneralDisplay()
         {
             UpdateCpuUsageText();
+
+            // Check if the debug state has changed
+            if (ControlPanel.mIsDebugOn != isGlobalDebugOn)
+            {
+                isGlobalDebugOn = ControlPanel.mIsDebugOn;
+                ToggleCommandTextBoxVisibility(isGlobalDebugOn);
+            }
+
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
 
@@ -569,6 +582,14 @@ namespace RED.mbnq
                 Debug.WriteLine($"Error setting variable: {ex.Message}");
             }
         }
+        private void ToggleCommandTextBoxVisibility(bool isVisible)
+        {
+            if (commandTextBox != null)
+            {
+                commandTextBox.Visible = isVisible;
+            }
+        }
+
         #endregion
     }
 }
