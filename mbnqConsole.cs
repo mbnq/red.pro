@@ -455,6 +455,8 @@ namespace RED.mbnq
 
         #endregion
 
+        #region Console
+
         private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -497,5 +499,7 @@ namespace RED.mbnq
                 commandTextBox.Width = this.Width - 20;
             }
         }
+
+        #endregion
     }
 }
