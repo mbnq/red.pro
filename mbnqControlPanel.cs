@@ -77,6 +77,8 @@ namespace RED.mbnq
 
             updateMainCrosshair();
             autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+
+            mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
             mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
         }
 
