@@ -44,8 +44,8 @@ namespace RED.mbnq
             InitializeComponent();
             InitializeTimers();
             InitializeMouseEvents();
-            CaptureDebugMessages();
             AdjustSize();
+            CaptureDebugMessages();
         }
 
         #region Initialization Methods
@@ -185,8 +185,15 @@ namespace RED.mbnq
         // Capturing and displaying debug messages
         private void CaptureDebugMessages()
         {
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new DebugListener(this));
+            if (ControlPanel.mIsDebugOn)
+            {
+                Debug.Listeners.Clear();
+                Debug.Listeners.Add(new DebugListener(this)); 
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void UpdateDebugMessage(string message)
