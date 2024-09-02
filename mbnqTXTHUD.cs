@@ -14,6 +14,7 @@ namespace RED.mbnq
     {
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
+        private string lastDebugMessage = string.Empty;
         // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
@@ -40,6 +41,8 @@ namespace RED.mbnq
             InitializeComponent();
             InitializeTimers();
             InitializeMouseEvents();
+            CaptureDebugMessages();
+            AdjustSize();
         }
 
         #region Initialization Methods
@@ -49,7 +52,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 120); // Adjust size as needed
+            this.Size = new Size(300, 200); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
@@ -169,6 +172,55 @@ namespace RED.mbnq
         #endregion
 
         #region Data Retrieval Methods
+
+        // Capturing and displaying debug messages
+        private void CaptureDebugMessages()
+        {
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new DebugListener(this));
+        }
+
+        private void UpdateDebugMessage(string message)
+        {
+            lastDebugMessage = message;
+            UpdateDebugText($"Debug: {message}");
+        }
+
+        private void UpdateDebugText(string newText)
+        {
+            if (displayTexts.Count >= 5)
+            {
+                displayTexts[4] = newText;
+            }
+            else
+            {
+                displayTexts.Add(newText);
+            }
+            AdjustSize(); // Adjust size based on the new content
+            this.ThrottlePaint(); // Redraw with the updated text
+        }
+
+        private class DebugListener : TraceListener
+        {
+            private readonly mbnqTXTHUD parentForm;
+
+            public DebugListener(mbnqTXTHUD parent)
+            {
+                parentForm = parent;
+            }
+
+            public override void Write(string message)
+            {
+                parentForm.UpdateDebugMessage(message);
+            }
+
+            public override void WriteLine(string message)
+            {
+                parentForm.UpdateDebugMessage(message);
+            }
+        }
+
+        // cpu usage
         private string GetCpuUsage()
         {
             return $"{cpuCounter.NextValue():F1} % CPU";
@@ -290,6 +342,25 @@ namespace RED.mbnq
         #endregion
 
         #region UI Methods
+        private void AdjustSize()
+        {
+            using (Graphics g = this.CreateGraphics())
+            {
+                using (Font font = new Font("Consolas", 10, FontStyle.Regular))
+                {
+                    // Calculate the required height based on the number of lines and their height
+                    int lineHeight = (int)g.MeasureString("Test", font).Height;
+                    int textHeight = lineHeight * displayTexts.Count;
+
+                    // Calculate the required width based on the longest line
+                    int maxWidth = displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max();
+
+                    // Adjust form size with some padding
+                    int padding = 20; // Padding for aesthetics
+                    this.Size = new Size(maxWidth + padding, textHeight + padding);
+                }
+            }
+        }
 
         private void TXTHUD_Paint(object sender, PaintEventArgs e)
         {
@@ -326,6 +397,7 @@ namespace RED.mbnq
             else
             {
                 this.Show();
+                AdjustSize(); // Adjust size when overlay is shown
                 StartTimers();
             }
         }
