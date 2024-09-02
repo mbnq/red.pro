@@ -519,7 +519,7 @@ namespace RED.mbnq
                     }
                     else
                     {
-                        Debug.WriteLine("Invalid set command format. Use: set <VariableName> <Value>");
+                        Debug.WriteLine("Invalid format. Use: set <VariableName> <Value>");
                     }
                 }
 
@@ -527,12 +527,18 @@ namespace RED.mbnq
                 // console dedicated commands
                 else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.WriteLine("Use: set <VariableName> <Value>");
-                    Debug.WriteLine("Use: cmd <windows CMD Command> <attributes>");
+                    Debug.WriteLine("Use: set <VariableName> <Value>" +
+                        "\nUse: cmd <windows CMD Command> <attributes>"
+                    );
+                    AdjustSize();
                 }
                 else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
                     Debug.WriteLine("");
+                }
+                else if (new[] { "exit", "quit", "close" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Application.Exit();
                 }
                 else
                 {
@@ -544,7 +550,6 @@ namespace RED.mbnq
                 Debug.WriteLine($"Error executing command: {ex.Message}");
             }
 
-            AdjustSize();
         }
 
         protected override void OnResize(EventArgs e)
