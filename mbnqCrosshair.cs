@@ -157,7 +157,7 @@ namespace RED.mbnq
                 double callsPerSecond = paintCallCount / elapsedTime.TotalSeconds;
 
                 // Log the rate
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Drawing custom overlay at {DateTime.Now}. Rate: {callsPerSecond:F2} times per second.");
+                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Drawing custom overlay at {DateTime.Now}. Rate: {callsPerSecond:F2} times per second.");
 
                 // Reset the counter and timer
                 paintCallCount = 0;

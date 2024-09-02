@@ -14,7 +14,10 @@ namespace RED.mbnq
     {
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
+        // console
         private string lastDebugMessage = string.Empty;
+        private int initialWidth;
+        private int initialHeight;
         // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
@@ -60,11 +63,17 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += TXTHUD_Paint;
 
+            initialWidth = this.Size.Width;
+            initialHeight = this.Size.Height;
+
             // Initialize Display Texts with placeholders
             displayTexts.Add("Ping: -- ms");
             displayTexts.Add("IP: Fetching...");
             displayTexts.Add("Console Draw Count: 0"); // Initialize the third line for the draw count
             displayTexts.Add("CPU: -- %"); // Placeholder for CPU usage
+            displayTexts.Add("Debug: --"); // Placeholder for CPU usage
+
+            AdjustSize();
         }
 
         private void InitializeTimers()
@@ -350,14 +359,13 @@ namespace RED.mbnq
                 {
                     // Calculate the required height based on the number of lines and their height
                     int lineHeight = (int)g.MeasureString("Test", font).Height;
-                    int textHeight = lineHeight * displayTexts.Count;
+                    int requiredHeight = lineHeight * displayTexts.Count + 20; // Adding padding
 
-                    // Calculate the required width based on the longest line
-                    int maxWidth = displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max();
+                    // Ensure the width does not shrink below the initial width
+                    int requiredWidth = Math.Max(initialWidth, displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max() + 20);
 
-                    // Adjust form size with some padding
-                    int padding = 20; // Padding for aesthetics
-                    this.Size = new Size(maxWidth + padding, textHeight + padding);
+                    // Adjust the form size: increase the height if the required height is greater than the current height
+                    this.Size = new Size(requiredWidth, Math.Max(initialHeight, requiredHeight));
                 }
             }
         }
