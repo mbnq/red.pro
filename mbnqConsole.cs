@@ -185,15 +185,9 @@ namespace RED.mbnq
         // Capturing and displaying debug messages
         private void CaptureDebugMessages()
         {
-            if (ControlPanel.mIsDebugOn)
-            {
                 Debug.Listeners.Clear();
                 Debug.Listeners.Add(new DebugListener(this)); 
-            }
-            else
-            {
-                return;
-            }
+                Debug.Listeners.Add(new DefaultTraceListener());
         }
 
         private void UpdateDebugMessage(string message)
