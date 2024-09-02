@@ -60,7 +60,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 160); // Adjust size as needed
+            this.Size = new Size(300, 200); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
@@ -527,7 +527,8 @@ namespace RED.mbnq
                 // console dedicated commands
                 else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.WriteLine("Invalid set command format. Use: set <VariableName> <Value>\nTest");
+                    Debug.WriteLine("Use: set <VariableName> <Value>");
+                    Debug.WriteLine("Use: cmd <windows CMD Command> <attributes>");
                 }
                 else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
@@ -542,6 +543,8 @@ namespace RED.mbnq
             {
                 Debug.WriteLine($"Error executing command: {ex.Message}");
             }
+
+            AdjustSize();
         }
 
         protected override void OnResize(EventArgs e)
