@@ -60,7 +60,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 200); // Adjust size as needed
+            this.Size = new Size(300, 256); // Adjust size as needed
             this.TopMost = true;
             this.BackColor = Color.Black; // Set background color
             this.Opacity = 0.8; // Set transparency
@@ -235,9 +235,11 @@ namespace RED.mbnq
             {
                 displayTexts.Add(newText);
             }
-            AdjustSize(); // Adjust size based on the new content
+
+            AdjustSize(); // Adjust the form size to accommodate the updated debug text
             this.ThrottlePaint(); // Redraw with the updated text
         }
+
 
         private class DebugListener : TraceListener
         {
@@ -400,6 +402,7 @@ namespace RED.mbnq
             }
         }
 
+
         private void TXTHUD_Paint(object sender, PaintEventArgs e)
         {
             // Increment the draw counter
@@ -528,10 +531,11 @@ namespace RED.mbnq
                 // console dedicated commands
                 else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.WriteLine("Use: set <VariableName> <Value>" +
-                        "\nUse: cmd <windows CMD Command> <attributes>"
+                    Debug.WriteLine("Syntax:" +
+                        "\nUse: set <VariableName> <Value>" +
+                        "\nUse: cmd <windows CMD Command> <attributes>" +
+                        "\nUse: exit or quit or close"
                     );
-                    AdjustSize();
                 }
                 else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
