@@ -12,15 +12,20 @@ namespace RED.mbnq
 {
     public class mbnqConsole : Form
     {
+        // important stuff
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
         private List<bool> displayTextVisibility = new List<bool>();
+
         // console
         private string lastDebugMessage = string.Empty;
         private int initialWidth;
         private int initialHeight;
         private bool isGlobalDebugOn;
         private TextBox commandTextBox;
+        private List<string> commandHistory = new List<string>();
+        private int historyIndex = -1;
+
         // private CancellationTokenSource pingCancellationTokenSource;
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
@@ -496,7 +501,38 @@ namespace RED.mbnq
                 if (!string.IsNullOrWhiteSpace(command))
                 {
                     ExecuteCommand(command);
+                    commandHistory.Insert(0, command); // Add command to history
+                    historyIndex = -1; // Reset history index
                     commandTextBox.Clear();
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (commandHistory.Count > 0)
+                {
+                    if (historyIndex < commandHistory.Count - 1)
+                    {
+                        historyIndex++;
+                        commandTextBox.Text = commandHistory[historyIndex];
+                        commandTextBox.SelectionStart = commandTextBox.Text.Length; // Move cursor to the end
+                    }
+                }
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (commandHistory.Count > 0)
+                {
+                    if (historyIndex > 0)
+                    {
+                        historyIndex--;
+                        commandTextBox.Text = commandHistory[historyIndex];
+                        commandTextBox.SelectionStart = commandTextBox.Text.Length; // Move cursor to the end
+                    }
+                    else
+                    {
+                        historyIndex = -1;
+                        commandTextBox.Clear();
+                    }
                 }
             }
         }
