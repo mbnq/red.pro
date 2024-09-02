@@ -18,7 +18,7 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textHUDMenuItem;    // openSettingsDirMenuItem
+        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textConsoleMenuItem;    // openSettingsDirMenuItem
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -54,9 +54,9 @@ namespace RED.mbnq
             centerMenuItem = new ToolStripMenuItem("Center Overlay");
             centerMenuItem.Click += centerMenuItem_Click;
 
-            // Text HUD
-            textHUDMenuItem = new ToolStripMenuItem("Show Debug Console");
-            textHUDMenuItem.Click += TextHUDMenuItem_Click;
+            // Text Console HUD
+            textConsoleMenuItem = new ToolStripMenuItem("Show Debug Console");
+            textConsoleMenuItem.Click += TextHUDMenuItem_Click;
 
             // Initialize menu item Save settings
             saveMenuItem = new ToolStripMenuItem("Save settings");
@@ -95,7 +95,7 @@ namespace RED.mbnq
             this.Items.Add(separator4);
             this.Items.Add(toggleZoomMenuItem);
             this.Items.Add(toggleSoundMenuItem);
-            this.Items.Add(textHUDMenuItem);
+            this.Items.Add(textConsoleMenuItem);
             this.Items.Add(separator3);
             // this.Items.Add(centerMenuItem);
             this.Items.Add(newCaptureRegionMenuItem);
@@ -105,7 +105,6 @@ namespace RED.mbnq
             this.Items.Add(closeMenuItem);
 
             UpdateMenuItems();
-
         }
 
         /* --- --- --- --- --- --- */
@@ -146,7 +145,7 @@ namespace RED.mbnq
             }
 
             textHUD.ToggleOverlay();
-            textHUDMenuItem.Text = textHUD.Visible ? "Hide Debug Console" : "Show Debug Console"; // rename it to Console Hud?
+            textConsoleMenuItem.Text = textHUD.Visible ? "Hide Debug Console" : "Show Debug Console"; // rename it to Console Hud?
         }
 
         // Event handler for the new capture region menu item

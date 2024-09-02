@@ -366,7 +366,7 @@ namespace RED.mbnq
                 {
                     // Calculate the required height based on the number of lines and their height
                     int lineHeight = (int)g.MeasureString("Test", font).Height;
-                    int requiredHeight = lineHeight * displayTexts.Count + 20; // Adding padding
+                    int requiredHeight = lineHeight * displayTexts.Count; // Adding padding
 
                     // Ensure the width does not shrink below the initial width
                     int requiredWidth = Math.Max(initialWidth, displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max() + 20);
