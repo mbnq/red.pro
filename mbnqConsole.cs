@@ -79,6 +79,22 @@ namespace RED.mbnq
 
             commandTextBox = new TextBox
             {
+                // Text = "Enter command here",
+                // ScrollBars = ScrollBars.Both,
+                AcceptsTab = false,
+                AutoCompleteMode = AutoCompleteMode.Suggest,
+                AutoCompleteSource = AutoCompleteSource.CustomSource,
+                AutoCompleteCustomSource = new AutoCompleteStringCollection {
+                    "cmd ",
+                    "set ",
+                    "list text",
+                    "toggle text ",
+                    "exit",
+                    "quit",
+                    "close",
+                    "help"
+                },
+                MaxLength = 40,
                 ForeColor = Color.White,
                 BackColor = Color.Black,
                 BorderStyle = BorderStyle.FixedSingle,
