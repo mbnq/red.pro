@@ -662,7 +662,7 @@ namespace RED.mbnq
         {
             try
             {
-                // Assume the variable is in the ControlPanel class
+                // Assume the variable is in the ControlPanel class 
                 var controlPanelType = typeof(ControlPanel);
                 var field = controlPanelType.GetField(variableName, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
 
