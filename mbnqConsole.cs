@@ -555,12 +555,12 @@ namespace RED.mbnq
                 // console dedicated commands
                 else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.WriteLine("Syntax:" +
-                        "\nUse: set <VariableName> <Value>" +
-                        "\nUse: cmd <windows CMD Command> <attributes>" +
-                        "\nUse: toggle text <text id number>"+
-                        "\nUse: exit or quit"
-                    );
+                    Debug.WriteLine("Opening command list page...");
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "https://github.com/mbnq/RED.mbnq/wiki/Console-Commands",
+                        UseShellExecute = true
+                    });
                 }
                 else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
