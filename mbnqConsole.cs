@@ -476,13 +476,49 @@ namespace RED.mbnq
         {
             try
             {
-                ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe", "/c " + command)
+                // Check if the command starts with "cmd "
+                if (command.StartsWith("cmd ", StringComparison.OrdinalIgnoreCase))
                 {
-                    RedirectStandardOutput = false,
-                    UseShellExecute = true,
-                    CreateNoWindow = false // This will show the console window
-                };
-                Process.Start(processInfo);
+                    // Remove the "cmd " prefix to get the actual command
+                    string windowsCommand = command.Substring(4);
+
+                    ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe", "/c " + windowsCommand)
+                    {
+                        RedirectStandardOutput = false,
+                        UseShellExecute = true,
+                        CreateNoWindow = false // This will show the console window
+                    };
+                    Process.Start(processInfo);
+                }
+                else if (command.StartsWith("set ", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Handle setting variables in the program
+                    var parts = command.Split(new[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (parts.Length == 3)
+                    {
+                        string variableName = parts[1];
+                        string value = parts[2];
+
+                        SetVariable(variableName, value);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Invalid set command format. Use: set <VariableName> <Value>");
+                    }
+                }
+                else if (command.StartsWith("help", StringComparison.OrdinalIgnoreCase))
+                {
+                    Debug.WriteLine("Invalid set command format. Use: set <VariableName> <Value>\nTest");
+                }
+                else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Debug.WriteLine("");
+                }
+                else
+                {
+                    Debug.WriteLine("Unknown command. Use: help");
+                }
             }
             catch (Exception ex)
             {
@@ -499,7 +535,36 @@ namespace RED.mbnq
                 commandTextBox.Width = this.Width - 20;
             }
         }
+        private void SetVariable(string variableName, string value)
+        {
+            try
+            {
+                // Assume the variable is in the ControlPanel class
+                var controlPanelType = typeof(ControlPanel);
+                var field = controlPanelType.GetField(variableName, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
 
+                if (field != null)
+                {
+                    if (field.FieldType == typeof(bool))
+                    {
+                        field.SetValue(null, Convert.ToBoolean(value));
+                        Debug.WriteLine($"{variableName} set to {value}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"Unsupported variable type for {variableName}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"Variable {variableName} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error setting variable: {ex.Message}");
+            }
+        }
         #endregion
     }
 }
