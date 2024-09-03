@@ -137,10 +137,10 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
 
             // Save overlay absolute position
-            if (controlPanel.MainDisplay != null)
+            if (controlPanel.mbnqCrosshairOverlay != null)
             {
-                sb.AppendLine($"PositionX={controlPanel.MainDisplay.Left}");
-                sb.AppendLine($"PositionY={controlPanel.MainDisplay.Top}");
+                sb.AppendLine($"PositionX={controlPanel.mbnqCrosshairOverlay.Left}");
+                sb.AppendLine($"PositionY={controlPanel.mbnqCrosshairOverlay.Top}");
             }
 
             controlPanel.mbProgressBar0.Value = 50;
@@ -208,10 +208,10 @@ namespace RED.mbnq
                     controlPanel.mbAOnTopChecked = bool.Parse(line.Substring("mbAOnTop=".Length));
 
 
-                else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
-                    controlPanel.MainDisplay.Left = int.Parse(line.Substring("PositionX=".Length));
-                else if (line.StartsWith("PositionY=") && controlPanel.MainDisplay != null)
-                    controlPanel.MainDisplay.Top = int.Parse(line.Substring("PositionY=".Length));
+                else if (line.StartsWith("PositionX=") && controlPanel.mbnqCrosshairOverlay != null)
+                    controlPanel.mbnqCrosshairOverlay.Left = int.Parse(line.Substring("PositionX=".Length));
+                else if (line.StartsWith("PositionY=") && controlPanel.mbnqCrosshairOverlay != null)
+                    controlPanel.mbnqCrosshairOverlay.Top = int.Parse(line.Substring("PositionY=".Length));
                 else if (line.StartsWith("SoundEnabled="))
                     Sounds.IsSoundEnabled = bool.Parse(line.Substring("SoundEnabled=".Length));
                 else if (line.StartsWith("ZoomEnabled="))

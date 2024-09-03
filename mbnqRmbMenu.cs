@@ -216,7 +216,7 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomOverlay();
-            controlPanel.MainDisplay.SetCustomPNG();
+            controlPanel.mbnqCrosshairOverlay.SetCustomPNG();
             UpdateMenuItems();
 
             // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
@@ -235,7 +235,7 @@ namespace RED.mbnq
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.MainDisplay.RemoveCustomOverlay();
+            controlPanel.mbnqCrosshairOverlay.RemoveCustomOverlay();
             controlPanel.RemoveCustomOverlay();
             UpdateMenuItems();
             SaveLoad.LoadSettings(controlPanel, false);

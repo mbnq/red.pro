@@ -82,7 +82,7 @@ namespace RED.mbnq
         // camera
         private static void ZoomForm_Paint(object sender, PaintEventArgs e)
         {
-            if (controlPanel == null || controlPanel.MainDisplay == null) return;
+            if (controlPanel == null || controlPanel.mbnqCrosshairOverlay == null) return;
 
             // Create a BufferedGraphicsContext
             BufferedGraphicsContext context = BufferedGraphicsManager.Current;

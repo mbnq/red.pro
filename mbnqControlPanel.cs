@@ -82,7 +82,7 @@ namespace RED.mbnq
         }*/
 
         // main display init
-        public mbnqCrosshair MainDisplay
+        public mbnqCrosshair mbnqCrosshairOverlay
         {
             get { return mbnqCrosshairDisplay; }
             set
@@ -93,10 +93,10 @@ namespace RED.mbnq
         }
         private void InitializeMainDisplayPosition()
         {
-            if (MainDisplay != null)
+            if (mbnqCrosshairOverlay != null)
             {
                 Point centeredPosition = GetCenteredPosition();
-                MainDisplay.Location = centeredPosition;
+                mbnqCrosshairOverlay.Location = centeredPosition;
             }
         }
         public void InitializeMaterialSkin()
@@ -123,8 +123,8 @@ namespace RED.mbnq
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
 
             // Calculate the center of the primary screen
-            int centeredX = (screenBounds.Width - MainDisplay.Width) / 2;
-            int centeredY = (screenBounds.Height - MainDisplay.Height) / 2;
+            int centeredX = (screenBounds.Width - mbnqCrosshairOverlay.Width) / 2;
+            int centeredY = (screenBounds.Height - mbnqCrosshairOverlay.Height) / 2;
 
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
@@ -161,10 +161,10 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         {
             updateMainCrosshair();
 
-            if (MainDisplay != null)
+            if (mbnqCrosshairOverlay != null)
             {
-                MainDisplay.Show();
-                MainDisplay.BringToFront();
+                mbnqCrosshairOverlay.Show();
+                mbnqCrosshairOverlay.BringToFront();
 
                 // Position the ControlPanel relative to the mbnqCrosshair, if necessary
                 PositionControlPanelRelativeToCrosshair();
@@ -314,7 +314,6 @@ private void ControlPanel_Shown(object sender, EventArgs e)
             panel.Controls.Add(mbAOnTopCheckBox);
 
             this.Controls.Add(panel);
-            mbInitSize = this.Size;
         }
 
         /* for save and load these controls */
@@ -357,7 +356,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
 
                     File.Copy(filePath, destinationPath);
 
-                    MainDisplay.SetCustomPNG();
+                    mbnqCrosshairOverlay.SetCustomPNG();
                     updateMainCrosshair();
 
                 }
@@ -367,7 +366,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         // Remove the overlay and refresh display
         public void RemoveCustomOverlay()
         {
-            MainDisplay.RemoveCustomOverlay();
+            mbnqCrosshairOverlay.RemoveCustomOverlay();
             updateMainCrosshair();
         }
 
@@ -457,7 +456,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         }
         public void updateMainCrosshair() // overlay
         {
-            if (MainDisplay != null)
+            if (mbnqCrosshairOverlay != null)
             {
                 // Get the centered position
                 Point centeredPosition = GetCenteredPosition();
@@ -470,16 +469,16 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 int newLeft = centeredPosition.X + translatedOffsetX;
                 int newTop = centeredPosition.Y + translatedOffsetY;
 
-                MainDisplay.Left = newLeft;
-                MainDisplay.Top = newTop;
+                mbnqCrosshairOverlay.Left = newLeft;
+                mbnqCrosshairOverlay.Top = newTop;
 
                 // Update size
-                MainDisplay.Size = new Size(size.Value, size.Value);
+                mbnqCrosshairOverlay.Size = new Size(size.Value, size.Value);
 
-                if (MainDisplay.HasCustomOverlay)  // Check if custom overlay exists
+                if (mbnqCrosshairOverlay.HasCustomOverlay)  // Check if custom overlay exists
                 {
-                    MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-                    MainDisplay.TransparencyKey = MainDisplay.BackColor;
+                    mbnqCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                    mbnqCrosshairOverlay.TransparencyKey = mbnqCrosshairOverlay.BackColor;
 
                     // Disable color sliders
                     // colorR.Enabled = false;
@@ -489,7 +488,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 else
                 {
                     // If no custom overlay, use the selected color from sliders
-                    MainDisplay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                    mbnqCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
 
                     // Enable color sliders
                     colorR.Enabled = true;
@@ -501,16 +500,16 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
 
                 // Update opacity
-                MainDisplay.Opacity = transparency.Value / 100.0;
+                mbnqCrosshairOverlay.Opacity = transparency.Value / 100.0;
 
                 // Ensure it is within the screen bounds
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-                MainDisplay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - MainDisplay.Width, MainDisplay.Left));
-                MainDisplay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - MainDisplay.Height, MainDisplay.Top));
+                mbnqCrosshairOverlay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - mbnqCrosshairOverlay.Width, mbnqCrosshairOverlay.Left));
+                mbnqCrosshairOverlay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - mbnqCrosshairOverlay.Height, mbnqCrosshairOverlay.Top));
 
-                MainDisplay.Show();
-                MainDisplay.BringToFront();
-                MainDisplay.Invalidate();
+                mbnqCrosshairOverlay.Show();
+                mbnqCrosshairOverlay.BringToFront();
+                mbnqCrosshairOverlay.Invalidate();
             }
             UpdateLabels();
         }
@@ -544,7 +543,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         }
         public void CenterCrosshairOverlay()
         {
-            if (MainDisplay != null)
+            if (mbnqCrosshairOverlay != null)
             {
                 // Reset the offset values to the midpoint, which corresponds to 0 in the new translation
                 offsetX.Value = 1000;
@@ -557,13 +556,13 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 Point centeredPosition = GetCenteredPosition();
 
                 // Apply the centered position directly without offsets as offsets are now at their midpoint (0 translated)
-                MainDisplay.Left = centeredPosition.X;
-                MainDisplay.Top = centeredPosition.Y;
+                mbnqCrosshairOverlay.Left = centeredPosition.X;
+                mbnqCrosshairOverlay.Top = centeredPosition.Y;
 
                 // ensure overlay is visible 
-                MainDisplay.Show();
-                MainDisplay.BringToFront();
-                MainDisplay.Invalidate();
+                mbnqCrosshairOverlay.Show();
+                mbnqCrosshairOverlay.BringToFront();
+                mbnqCrosshairOverlay.Invalidate();
                 updateMainCrosshair();
             }
             else
@@ -586,7 +585,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         /* --- --- ---  --- --- --- */
         private void PositionControlPanelRelativeToCrosshair()
         {
-            if (MainDisplay != null)
+            if (mbnqCrosshairOverlay != null)
             {
                 // Get the bounds of the primary screen 
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
@@ -595,21 +594,21 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 Rectangle controlPanelBounds = new Rectangle(this.Left, this.Top, this.Width, this.Height);
 
                 // Get the rectangle representing the mbnqCrosshair's bounds
-                Rectangle crosshairBounds = new Rectangle(MainDisplay.Left, MainDisplay.Top, MainDisplay.Width, MainDisplay.Height);
+                Rectangle crosshairBounds = new Rectangle(mbnqCrosshairOverlay.Left, mbnqCrosshairOverlay.Top, mbnqCrosshairOverlay.Width, mbnqCrosshairOverlay.Height);
 
                 // Check if the crosshair is within the control panel's region
                 if (controlPanelBounds.IntersectsWith(crosshairBounds))
                 {
                     // Decide whether to place the control panel to the left or right of the crosshair
                     int panelWidth = this.Width;
-                    int newLeft = (MainDisplay.Left + (MainDisplay.Width + 20)); // Default to the right
-                    int newTop = (MainDisplay.Top / 2); // Align vertically with the crosshair
+                    int newLeft = (mbnqCrosshairOverlay.Left + (mbnqCrosshairOverlay.Width + 20)); // Default to the right
+                    int newTop = (mbnqCrosshairOverlay.Top / 2); // Align vertically with the crosshair
 
                     // Check if the control panel would go off the screen on the right
                     if (newLeft + panelWidth > screenBounds.Right)
                     {
                         // If it would go off-screen, place it to the left of the crosshair
-                        newLeft = MainDisplay.Left - panelWidth - 20;
+                        newLeft = mbnqCrosshairOverlay.Left - panelWidth - 20;
                     }
 
                     // Ensure the control panel doesn't go off the screen on the left
