@@ -92,6 +92,7 @@ namespace RED.mbnq
                 AutoCompleteSource = AutoCompleteSource.CustomSource,
                 AutoCompleteCustomSource = new AutoCompleteStringCollection {
                     "cmd ",
+                    "read ",
                     "set ",
                     "list text",
                     "toggle text ",
@@ -701,6 +702,8 @@ namespace RED.mbnq
         {
             try
             {
+                bool found = false;
+
                 // Iterate through all loaded assemblies
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
@@ -716,16 +719,18 @@ namespace RED.mbnq
 
                         if (field != null)
                         {
+                            found = true;
                             // Get the value of the field (null for static fields)
                             var value = field.IsStatic ? field.GetValue(null) : field.GetValue(Activator.CreateInstance(type));
                             Debug.WriteLine($"{type.FullName}.{variableName} = {value}");
-                            return;
                         }
                     }
                 }
 
-                // If no field was found
-                Debug.WriteLine($"Variable {variableName} not found in any loaded type.");
+                if (!found)
+                {
+                    Debug.WriteLine($"Variable {variableName} not found in any loaded type.");
+                }
             }
             catch (Exception ex)
             {
