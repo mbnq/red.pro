@@ -20,7 +20,7 @@ namespace RED.mbnq
         public static readonly bool mPBIsOn = false;            // progress bar
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        private Button saveButton, loadButton, centerButton;
+        private Button centerButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
         public mbnqCrosshair mbnqCrosshairDisplay;
@@ -227,23 +227,6 @@ private void ControlPanel_Shown(object sender, EventArgs e)
 
             /* --- --- ---  Buttons --- --- --- */
 
-            // Save and Load (disabled atm at addcontrols)
-            saveButton = new MaterialButton
-            {
-                Text = "Save Settings",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            saveButton.Click += SaveButton_Click;
-
-            loadButton = new MaterialButton
-            {
-                Text = "Load Settings",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            loadButton.Click += LoadButton_Click;
-
             // Center aka Force Center
             centerButton = new MaterialButton
             {
@@ -312,8 +295,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
 
             /* --- --- ---  Add Controls --- --- --- */
             panel.Controls.Add(centerButton);
-            // panel.Controls.Add(saveButton);
-            // panel.Controls.Add(loadButton);
+
             panel.Controls.Add(mbAutoSaveCheckbox);
             panel.Controls.Add(mbDebugonCheckbox);
             panel.Controls.Add(mbAOnTopCheckBox);
@@ -613,17 +595,6 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            SaveLoad.SaveSettings(this);
-            updateMainCrosshair();
-        }
-        private void LoadButton_Click(object sender, EventArgs e)
-        {
-            SaveLoad.LoadSettings(this);
-            updateMainCrosshair();
         }
 
         /* --- --- ---  --- --- --- */
