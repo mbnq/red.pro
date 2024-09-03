@@ -24,7 +24,7 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox autoSaveOnExit, mbDebugonCheckbox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
@@ -63,7 +63,7 @@ namespace RED.mbnq
             // this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
             updateMainCrosshair();
-            autoSaveOnExit.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+            mbAutoSaveCheckbox.CheckedChanged += AutoSaveOnExit_CheckedChanged;
 
             mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
             mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
@@ -125,7 +125,7 @@ namespace RED.mbnq
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
-            if (!autoSaveOnExit.Checked)
+            if (!mbAutoSaveCheckbox.Checked)
             {
                 SaveLoad.SaveSettings(this, false);
             }
@@ -239,14 +239,14 @@ namespace RED.mbnq
 
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
-            autoSaveOnExit = new MaterialCheckbox
+            mbAutoSaveCheckbox = new MaterialCheckbox
             {
                 Text = "Save on Exit   ",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left
             };
 
-            autoSaveOnExit.CheckedChanged += (s, e) =>
+            mbAutoSaveCheckbox.CheckedChanged += (s, e) =>
             {
                 AutoSaveOnExit_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
@@ -284,15 +284,15 @@ namespace RED.mbnq
             panel.Controls.Add(centerButton);
             // panel.Controls.Add(saveButton);
             // panel.Controls.Add(loadButton);
-            panel.Controls.Add(autoSaveOnExit);
+            panel.Controls.Add(mbAutoSaveCheckbox);
             panel.Controls.Add(mbDebugonCheckbox);
 
             this.Controls.Add(panel);
         }
         public bool AutoSaveOnExitChecked
         {
-            get => autoSaveOnExit.Checked;
-            set => autoSaveOnExit.Checked = value;
+            get => mbAutoSaveCheckbox.Checked;
+            set => mbAutoSaveCheckbox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
