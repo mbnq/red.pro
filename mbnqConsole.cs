@@ -101,6 +101,8 @@ namespace RED.mbnq
                     "quit",
                     "close",
                     "restart",
+                    "reboot",
+                    "reinit",
                     "help"
                 },
                 MaxLength = 128,
