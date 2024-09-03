@@ -302,10 +302,18 @@ private void ControlPanel_Shown(object sender, EventArgs e)
 
             this.Controls.Add(panel);
         }
+
+        /* for save and load these controls */
+
         public bool AutoSaveOnExitChecked
         {
             get => mbAutoSaveCheckbox.Checked;
             set => mbAutoSaveCheckbox.Checked = value;
+        }
+        public bool mbDebugonChecked
+        {
+            get => mbDebugonCheckbox.Checked;
+            set => mbDebugonCheckbox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */

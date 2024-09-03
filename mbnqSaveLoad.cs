@@ -128,6 +128,7 @@ namespace RED.mbnq
             sb.AppendLine($"OffsetX={controlPanel.OffsetXValue}");
             sb.AppendLine($"OffsetY={controlPanel.OffsetYValue}");
             sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}");
+            sb.AppendLine($"mbDebugon={controlPanel.mbDebugonChecked}");
             sb.AppendLine($"SoundEnabled={Sounds.IsSoundEnabled}");
             sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomModeEnabled}");
 
@@ -197,8 +198,13 @@ namespace RED.mbnq
                     controlPanel.OffsetXValue = int.Parse(line.Substring("OffsetX=".Length));
                 else if (line.StartsWith("OffsetY="))
                     controlPanel.OffsetYValue = int.Parse(line.Substring("OffsetY=".Length));
+
                 else if (line.StartsWith("AutoSaveOnExit="))
                     controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length));
+                else if (line.StartsWith("mbDebugon="))
+                    controlPanel.mbDebugonChecked = bool.Parse(line.Substring("mbDebugon=".Length));
+
+
                 else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
                     controlPanel.MainDisplay.Left = int.Parse(line.Substring("PositionX=".Length));
                 else if (line.StartsWith("PositionY=") && controlPanel.MainDisplay != null)
@@ -256,6 +262,7 @@ namespace RED.mbnq
                 sb.AppendLine("OffsetX=1000");
                 sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("AutoSaveOnExit=True");
+                sb.AppendLine("mbDebugonChecked=False");
                 sb.AppendLine("SoundEnabled=True");
                 sb.AppendLine("ZoomEnabled=False");
 
