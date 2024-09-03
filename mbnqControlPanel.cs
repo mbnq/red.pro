@@ -35,19 +35,6 @@ namespace RED.mbnq
 
         public const int mPNGMaxWidth = 1920;
         public const int mPNGMaxHeight = 1080;
-
-        // this is for center crosshair button
-        public Point GetCenteredPosition()
-        {
-            // Get the bounds of the primary screen 
-            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-
-            // Calculate the center of the primary screen
-            int centeredX = (screenBounds.Width - MainDisplay.Width) / 2;
-            int centeredY = (screenBounds.Height - MainDisplay.Height) / 2;
-
-            return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
-        }
         public ControlPanel()
         {
             InitializeComponent();
@@ -122,6 +109,19 @@ namespace RED.mbnq
             );
             // this.BackColor = Color.FromArgb(255, 255, 58);               // not needed
             // this.DrawerBackgroundWithAccent = false;
+        }
+
+        // this is for center crosshair button
+        public Point GetCenteredPosition()
+        {
+            // Get the bounds of the primary screen 
+            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+            // Calculate the center of the primary screen
+            int centeredX = (screenBounds.Width - MainDisplay.Width) / 2;
+            int centeredY = (screenBounds.Height - MainDisplay.Height) / 2;
+
+            return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
