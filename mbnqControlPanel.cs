@@ -46,8 +46,9 @@ namespace RED.mbnq
             this.Icon = Properties.Resources.mbnqIcon;
             this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
+
             // this.TopMost = true;                             // not ready yet
 
             SaveLoad.EnsureSettingsFileExists(this);
@@ -59,8 +60,8 @@ namespace RED.mbnq
             rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for the sound
 
             this.Size = new Size(mCPWidth, mCPHeight);          // global controlpanel window size
-            // this.AutoSize = true;
-            // this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             updateMainCrosshair();
             mbAutoSaveCheckbox.CheckedChanged += AutoSaveOnExit_CheckedChanged;
@@ -73,11 +74,11 @@ namespace RED.mbnq
         }
 
         // don't remove this one
-        protected override void OnResize(EventArgs e)
+        /*protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
             this.Size = new Size(mCPWidth, mCPHeight);
-        }
+        }*/
 
         // main display init
         public mbnqCrosshair MainDisplay
@@ -179,6 +180,10 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 FlowDirection = FlowDirection.TopDown,
                 Location = new Point(0, 0),
                 Margin = new Padding(1),
+                // Enabled = false,
+                // MinimumSize = new Size(200, 100),
+                // MaximumSize = new Size(400, 300),
+                // BorderStyle = BorderStyle.FixedSingle,
                 // AutoScroll = true,
                 // AutoScrollMinSize = new Size(0, 1),
                 // BackgroundImage = Properties.Resources.mbnqBackground0,
