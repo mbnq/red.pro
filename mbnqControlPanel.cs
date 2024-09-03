@@ -134,19 +134,7 @@ namespace RED.mbnq
         }
         private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (mbDebugonCheckbox.Checked)
-            {
-                this.TopMost = true;
-            }
-            else
-            {
-                this.TopMost = false;
-            }
-        }
-
-        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbAOnTopCheckBox.Checked)
+            if (mbDebugonCheckbox.Checked) 
             {
                 mIsDebugOn = true;
             }
@@ -155,7 +143,18 @@ namespace RED.mbnq
                 mIsDebugOn = false;
             }
         }
-        private void ControlPanel_Shown(object sender, EventArgs e)
+        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbAOnTopCheckBox.Checked)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
+private void ControlPanel_Shown(object sender, EventArgs e)
         {
             updateMainCrosshair();
 
@@ -286,7 +285,7 @@ namespace RED.mbnq
                 Sounds.PlayClickSound();
             };
 
-            // Debug mode
+            // Always on the top
             mbAOnTopCheckBox = new MaterialCheckbox
             {
                 Text = "Always on top   ",
