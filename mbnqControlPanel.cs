@@ -3,6 +3,12 @@
     mbnq00 on gmail
 
     That's the main code
+
+
+
+    - naprawic w debugu przywracanie ostatniej komenty klawiszem up kursor wraca jedna litere od konca
+    - pracowac nad wylaczeniem resize
+
 */
 
 using MaterialSkin.Controls;
