@@ -30,7 +30,7 @@ namespace RED.mbnq
         public int mSettingsLoaded = 0;
 
         private static readonly int mCPWidth = 262;
-        private static readonly int mCPHeight = 765;
+        private static readonly int mCPHeight = 810;
         private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
@@ -176,13 +176,16 @@ namespace RED.mbnq
             panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown
-                // Location = new Point(0, 0)
+                FlowDirection = FlowDirection.TopDown,
+                Location = new Point(0, 0),
+                Margin = new Padding(1),
                 // AutoScroll = true,
+                // AutoScrollMinSize = new Size(0, 1),
                 // BackgroundImage = Properties.Resources.mbnqBackground0,
                 // BackgroundImageLayout = ImageLayout.Center,
-                // WrapContents = false
+                WrapContents = false
             };
+            panel.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
 
             /* --- --- ---  Sliders --- --- --- */
             // label, min, max, def
@@ -255,7 +258,7 @@ namespace RED.mbnq
             // Save on Exit
             mbAutoSaveCheckbox = new MaterialCheckbox
             {
-                Text = "Save on Exit   ",
+                Text = "Save on Exit",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left
             };
@@ -288,7 +291,7 @@ namespace RED.mbnq
             {
                 Text = "Always on top   ",
                 AutoSize = true,
-                Anchor = AnchorStyles.Right,
+                Anchor = AnchorStyles.Left,
                 Enabled = true
             };
 
