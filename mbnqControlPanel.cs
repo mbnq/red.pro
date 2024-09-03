@@ -24,7 +24,7 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
@@ -67,6 +67,8 @@ namespace RED.mbnq
 
             mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
             mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
+
+            mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
         }
 
         // don't remove this one
@@ -133,6 +135,18 @@ namespace RED.mbnq
         private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             if (mbDebugonCheckbox.Checked)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
+
+        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbAOnTopCheckBox.Checked)
             {
                 mIsDebugOn = true;
             }
@@ -269,6 +283,20 @@ namespace RED.mbnq
                 Sounds.PlayClickSound();
             };
 
+            // Debug mode
+            mbAOnTopCheckBox = new MaterialCheckbox
+            {
+                Text = "Always on top   ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Right,
+                Enabled = true
+            };
+
+            mbAOnTopCheckBox.CheckedChanged += (s, e) =>
+            {
+                Sounds.PlayClickSound();
+            };
+
             /* --- --- --- Progress Bar --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
@@ -286,6 +314,7 @@ namespace RED.mbnq
             // panel.Controls.Add(loadButton);
             panel.Controls.Add(mbAutoSaveCheckbox);
             panel.Controls.Add(mbDebugonCheckbox);
+            panel.Controls.Add(mbAOnTopCheckBox);
 
             this.Controls.Add(panel);
         }
