@@ -68,6 +68,7 @@ namespace RED.mbnq
             mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
             mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
 
+            mbAOnTopCheckBox.Checked = this.TopMost;
             mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
         }
 
@@ -314,6 +315,11 @@ private void ControlPanel_Shown(object sender, EventArgs e)
         {
             get => mbDebugonCheckbox.Checked;
             set => mbDebugonCheckbox.Checked = value;
+        }
+        public bool mbAOnTopChecked
+        {
+            get => mbAOnTopCheckBox.Checked;
+            set => mbAOnTopCheckBox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */

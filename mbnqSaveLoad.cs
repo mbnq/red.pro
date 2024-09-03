@@ -129,6 +129,7 @@ namespace RED.mbnq
             sb.AppendLine($"OffsetY={controlPanel.OffsetYValue}");
             sb.AppendLine($"AutoSaveOnExit={controlPanel.AutoSaveOnExitChecked}");
             sb.AppendLine($"mbDebugon={controlPanel.mbDebugonChecked}");
+            sb.AppendLine($"mbAOnTop={controlPanel.mbAOnTopChecked}");
             sb.AppendLine($"SoundEnabled={Sounds.IsSoundEnabled}");
             sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomModeEnabled}");
 
@@ -203,6 +204,8 @@ namespace RED.mbnq
                     controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length));
                 else if (line.StartsWith("mbDebugon="))
                     controlPanel.mbDebugonChecked = bool.Parse(line.Substring("mbDebugon=".Length));
+                else if (line.StartsWith("mbAOnTop="))
+                    controlPanel.mbAOnTopChecked = bool.Parse(line.Substring("mbAOnTop=".Length));
 
 
                 else if (line.StartsWith("PositionX=") && controlPanel.MainDisplay != null)
@@ -263,6 +266,7 @@ namespace RED.mbnq
                 sb.AppendLine("OffsetY=1000");
                 sb.AppendLine("AutoSaveOnExit=True");
                 sb.AppendLine("mbDebugonChecked=False");
+                sb.AppendLine("mbAOnTop=False");
                 sb.AppendLine("SoundEnabled=True");
                 sb.AppendLine("ZoomEnabled=False");
 
