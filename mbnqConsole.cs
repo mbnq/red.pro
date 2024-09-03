@@ -94,6 +94,7 @@ namespace RED.mbnq
                     "cmd ",
                     "read ",
                     "set ",
+                    "do ",
                     "list text",
                     "toggle text ",
                     "exit",
@@ -616,6 +617,15 @@ namespace RED.mbnq
                     ReadVariableAnywhere(variableName);
                 }
 
+                else if (command.StartsWith("do ", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Extract the method call details from the command
+                    string methodCall = command.Substring(3).Trim();
+
+                    // Call a method to execute the function
+                    InvokeProgramFunction(methodCall);
+                }
+
                 else if (command.StartsWith("toggle text", StringComparison.OrdinalIgnoreCase))
                 {
                     var parts = command.Split(' ');
@@ -737,7 +747,62 @@ namespace RED.mbnq
                 Debug.WriteLine($"Error reading variable: {ex.Message}");
             }
         }
+        private void InvokeProgramFunction(string methodCall)
+        {
+            try
+            {
+                // Extract method name and arguments from the input string
+                var methodName = methodCall.Split('(')[0].Trim();
+                var argumentsPart = methodCall.Split('(')[1].Trim(' ', ')');
+                var arguments = argumentsPart.Split(',').Select(arg => arg.Trim()).ToArray();
 
+                bool methodFound = false;
+
+                // Iterate through all loaded assemblies
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    // Iterate through all types in each assembly
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        // Look for a method with the specified name
+                        var method = type.GetMethod(methodName,
+                            System.Reflection.BindingFlags.Public |
+                            System.Reflection.BindingFlags.NonPublic |
+                            System.Reflection.BindingFlags.Static |
+                            System.Reflection.BindingFlags.Instance);
+
+                        if (method != null)
+                        {
+                            methodFound = true;
+
+                            // Convert arguments to the correct types
+                            var parameters = method.GetParameters();
+                            object[] typedArguments = new object[parameters.Length];
+
+                            for (int i = 0; i < parameters.Length; i++)
+                            {
+                                typedArguments[i] = Convert.ChangeType(arguments[i], parameters[i].ParameterType);
+                            }
+
+                            // Invoke the method
+                            var result = method.Invoke(method.IsStatic ? null : Activator.CreateInstance(type), typedArguments);
+
+                            Debug.WriteLine($"{methodName} returned: {result}");
+                            return;
+                        }
+                    }
+                }
+
+                if (!methodFound)
+                {
+                    Debug.WriteLine($"Method {methodName} not found in any loaded type.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error invoking method: {ex.Message}");
+            }
+        }
         private void ToggleShowCommandBox(bool isVisible)
         {
             if (commandTextBox != null)
