@@ -100,6 +100,7 @@ namespace RED.mbnq
                     "exit",
                     "quit",
                     "close",
+                    "restart",
                     "help"
                 },
                 MaxLength = 128,
@@ -658,6 +659,10 @@ namespace RED.mbnq
                 {
                     Application.Exit();
                 }
+                else if (new[] { "restart", "reboot", "reinit" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                {
+                    RestartApplication();
+                }
                 else
                 {
                     Debug.WriteLine("Unknown command. Use: help");
@@ -801,6 +806,24 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error invoking method: {ex.Message}");
+            }
+        }
+        private void RestartApplication()
+        {
+            try
+            {
+                // Get the path to the current executable
+                string executablePath = Application.ExecutablePath;
+
+                // Start a new instance of the application
+                Process.Start(executablePath);
+
+                // Exit the current application
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error restarting application: {ex.Message}");
             }
         }
         private void ToggleShowCommandBox(bool isVisible)

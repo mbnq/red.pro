@@ -157,7 +157,7 @@ namespace RED.mbnq
                 this.TopMost = false;
             }
         }
-private void ControlPanel_Shown(object sender, EventArgs e)
+        private void ControlPanel_Shown(object sender, EventArgs e)
         {
             updateMainCrosshair();
 
