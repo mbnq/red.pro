@@ -28,6 +28,7 @@ namespace RED.mbnq
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
+        private Size mbInitSize;
 
         private static readonly int mCPWidth = 262;
         private static readonly int mCPHeight = 810;
@@ -313,6 +314,7 @@ private void ControlPanel_Shown(object sender, EventArgs e)
             panel.Controls.Add(mbAOnTopCheckBox);
 
             this.Controls.Add(panel);
+            mbInitSize = this.Size;
         }
 
         /* for save and load these controls */

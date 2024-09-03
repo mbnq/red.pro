@@ -100,7 +100,7 @@ namespace RED.mbnq
                     "close",
                     "help"
                 },
-                MaxLength = 32,
+                MaxLength = 128,
                 ForeColor = Color.White,
                 BackColor = Color.Black,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -234,14 +234,14 @@ namespace RED.mbnq
         {
             UpdateCpuUsageText();
 
-            /*
+
             // Check if the debug state has changed, needs isGlobalDebugOn to be changed to ControlPanel.mIsDebugOn 
             if (ControlPanel.mIsDebugOn != isGlobalDebugOn)
             {
                 isGlobalDebugOn = ControlPanel.mIsDebugOn;
                 ToggleShowCommandBox(isGlobalDebugOn);
             }
-            */
+
 
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
@@ -606,6 +606,15 @@ namespace RED.mbnq
                     ListTextArrayPositions();
                 }
 
+                else if (command.StartsWith("read ", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Extract the variable name from the command
+                    string variableName = command.Substring(5).Trim();
+
+                    // Call a method to read the variable value
+                    ReadVariableAnywhere(variableName);
+                }
+
                 else if (command.StartsWith("toggle text", StringComparison.OrdinalIgnoreCase))
                 {
                     var parts = command.Split(' ');
@@ -688,6 +697,42 @@ namespace RED.mbnq
                 Debug.WriteLine($"Error setting variable: {ex.Message}");
             }
         }
+        private void ReadVariableAnywhere(string variableName)
+        {
+            try
+            {
+                // Iterate through all loaded assemblies
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    // Iterate through all types in each assembly
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        // Look for the field in the current type
+                        var field = type.GetField(variableName,
+                            System.Reflection.BindingFlags.Public |
+                            System.Reflection.BindingFlags.NonPublic |
+                            System.Reflection.BindingFlags.Static |
+                            System.Reflection.BindingFlags.Instance);
+
+                        if (field != null)
+                        {
+                            // Get the value of the field (null for static fields)
+                            var value = field.IsStatic ? field.GetValue(null) : field.GetValue(Activator.CreateInstance(type));
+                            Debug.WriteLine($"{type.FullName}.{variableName} = {value}");
+                            return;
+                        }
+                    }
+                }
+
+                // If no field was found
+                Debug.WriteLine($"Variable {variableName} not found in any loaded type.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error reading variable: {ex.Message}");
+            }
+        }
+
         private void ToggleShowCommandBox(bool isVisible)
         {
             if (commandTextBox != null)
