@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     public partial class GlassHudOverlay : Form
     {
-        private Rectangle captureArea;
+        private Rectangle glassCaptureArea;
         private System.Windows.Forms.Timer glassRefreshTimer;
         private bool isMoving = false;
         private bool isMoveEnabled = false;
@@ -48,7 +48,7 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
         public GlassHudOverlay(Rectangle mbDisplay, Rectangle selectedArea)
         {
-            this.captureArea = mbDisplay;
+            this.glassCaptureArea = mbDisplay;
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
             this.StartPosition = FormStartPosition.Manual;
@@ -93,16 +93,16 @@ namespace RED.mbnq
         }
         public Rectangle GetAdjustedCaptureArea()
         {
-            int newWidth = (int)(captureArea.Width * zoomFactor);
-            int newHeight = (int)(captureArea.Height * zoomFactor);
+            int newWidth = (int)(glassCaptureArea.Width * zoomFactor);
+            int newHeight = (int)(glassCaptureArea.Height * zoomFactor);
 
             // Calculate the offset to keep the zoom centered
-            int offsetXCentered = (captureArea.Width - newWidth) / 2;
-            int offsetYCentered = (captureArea.Height - newHeight) / 2;
+            int offsetXCentered = (glassCaptureArea.Width - newWidth) / 2;
+            int offsetYCentered = (glassCaptureArea.Height - newHeight) / 2;
 
             // Calculate the new top-left position based on centered zoom
-            int adjustedX = captureArea.X + offsetXCentered + (int)(captureArea.Width * offsetX);
-            int adjustedY = captureArea.Y + offsetYCentered + (int)(captureArea.Height * offsetY);
+            int adjustedX = glassCaptureArea.X + offsetXCentered + (int)(glassCaptureArea.Width * offsetX);
+            int adjustedY = glassCaptureArea.Y + offsetYCentered + (int)(glassCaptureArea.Height * offsetY);
 
             return new Rectangle(adjustedX, adjustedY, newWidth, newHeight);
         }
@@ -133,12 +133,12 @@ namespace RED.mbnq
             // Reapply the circular region whenever the form is resized
             ApplyCircularRegion();
         }
-        public Rectangle CaptureArea => captureArea;
+        public Rectangle CaptureArea => glassCaptureArea;
 
         public async void UpdateCaptureArea(Rectangle newCaptureArea)
         {
             // Update UI-related properties on the main thread
-            this.captureArea = newCaptureArea;
+            this.glassCaptureArea = newCaptureArea;
             this.Location = new Point(newCaptureArea.Right + 20, newCaptureArea.Top);
             this.Size = newCaptureArea.Size;
 
