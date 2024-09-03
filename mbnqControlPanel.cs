@@ -266,7 +266,10 @@ private void ControlPanel_Shown(object sender, EventArgs e)
 
             mbDebugonCheckbox.CheckedChanged += (s, e) =>
             {
-                Sounds.PlayClickSound();
+                if (mSettingsLoaded > 0)
+                {
+                    Sounds.PlayClickSound();
+                }
             };
 
             // Always on the top
@@ -280,7 +283,10 @@ private void ControlPanel_Shown(object sender, EventArgs e)
 
             mbAOnTopCheckBox.CheckedChanged += (s, e) =>
             {
-                Sounds.PlayClickSound();
+                if (mSettingsLoaded > 0)
+                {
+                    Sounds.PlayClickSound();
+                }
             };
 
             /* --- --- --- Progress Bar --- --- --- */
@@ -558,6 +564,19 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                 MessageBox.Show("Overlay is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
+        private void CenterButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+            CenterCrosshairOverlay();
+        }
+
+        /* --- --- --- Mouse --- --- --- */
+        private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+        }
+
+        /* --- --- ---  --- --- --- */
         private void PositionControlPanelRelativeToCrosshair()
         {
             if (MainDisplay != null)
@@ -597,18 +616,6 @@ private void ControlPanel_Shown(object sender, EventArgs e)
                     this.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - this.Height, newTop)); // Ensure within vertical bounds
                 }
             }
-        }
-
-        private void CenterButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-            CenterCrosshairOverlay();
-        }
-
-        /* --- --- --- Mouse --- --- --- */
-        private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
         }
 
         /* --- --- ---  --- --- --- */

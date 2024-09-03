@@ -234,12 +234,11 @@ namespace RED.mbnq
                 MaterialMessageBox.Show("Settings loaded.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
 
-            controlPanel.mSettingsLoaded = 1;
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
             controlPanel.mbProgressBar0.Value = 100;
             controlPanel.mbProgressBar0.Visible = false;
             controlPanel.updateMainCrosshair();
-
+            controlPanel.mSettingsLoaded = 1;
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */
@@ -287,8 +286,6 @@ namespace RED.mbnq
             {
                 controlPanel.updateMainCrosshair();
             }
-
-            controlPanel.mSettingsLoaded = 1;
         }
     }
 }
