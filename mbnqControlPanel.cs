@@ -23,7 +23,7 @@ namespace RED.mbnq
         private Button saveButton, loadButton, centerButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panel;
-        public mbnqCrosshair mainDisplay;
+        public mbnqCrosshair mbnqCrosshairDisplay;
         private CheckBox autoSaveOnExit, mbDebugonCheckbox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
@@ -79,10 +79,10 @@ namespace RED.mbnq
         // main display init
         public mbnqCrosshair MainDisplay
         {
-            get { return mainDisplay; }
+            get { return mbnqCrosshairDisplay; }
             set
             {
-                mainDisplay = value;
+                mbnqCrosshairDisplay = value;
                 InitializeMainDisplayPosition();
             }
         }
@@ -344,7 +344,7 @@ namespace RED.mbnq
                         if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
                         {
                             UpdateLabels();
-                            mainDisplay.SetCustomPNG();
+                            mbnqCrosshairDisplay.SetCustomPNG();
                         }
                         else
                         {
