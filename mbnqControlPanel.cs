@@ -246,25 +246,25 @@ namespace RED.mbnq
             panelForTab1 = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
+                FlowDirection = FlowDirection.TopDown
                 // Location = new Point(0, 0),
                 // Margin = new Padding(1),
                 // Enabled = false,
                 // MinimumSize = new Size(200, 100),
-                // MaximumSize = new Size(400, 300),
+                // MaximumSize = new Size(400, 300)
                 // BorderStyle = BorderStyle.FixedSingle,
                 // AutoScroll = true,
                 // AutoScrollMinSize = new Size(0, 1),
                 // BackgroundImage = Properties.Resources.mbnqBackground0,
                 // BackgroundImageLayout = ImageLayout.Center,
-                WrapContents = false
+                // WrapContents = false
             };
             panelForTab1.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
 
             panelForTab2 = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown,
+                FlowDirection = FlowDirection.TopDown
                 // Location = new Point(0, 0),
                 // Margin = new Padding(10),
                 // Enabled = false,
@@ -275,7 +275,7 @@ namespace RED.mbnq
                 // AutoScrollMinSize = new Size(0, 1),
                 // BackgroundImage = Properties.Resources.mbnqBackground0,
                 // BackgroundImageLayout = ImageLayout.Center,
-                WrapContents = false
+                // WrapContents = false
             };
             panelForTab2.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
 
