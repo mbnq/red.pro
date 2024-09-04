@@ -251,14 +251,14 @@ namespace RED.mbnq
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown
             };
-            panelForTab1.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
+            panelForTab1.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
 
             panelForTab2 = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown
             };
-            panelForTab2.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
+            panelForTab2.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
 
             /* --- --- ---  Sliders --- --- --- */
             // label, min, max, def
