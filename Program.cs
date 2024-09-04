@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -10,7 +9,7 @@ namespace RED.mbnq
     {
         public static mbnqCrosshair mainCrosshair;
         public static int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps
-        public static float mbVersion = 0.050f;
+        public static float mbVersion = 0.051f;
 
         [DllImport("user32.dll")]
         static extern bool SetProcessDPIAware();
