@@ -209,8 +209,8 @@ namespace RED.mbnq
             };
 
             // Create two tab pages
-            mbnqTab1 = new TabPage("1");
-            mbnqTab2 = new TabPage("2");
+            mbnqTab1 = new TabPage("Crosshair");
+            mbnqTab2 = new TabPage("Options");
 
             // Add TabPages to TabControl
             materialTabControl.TabPages.Add(mbnqTab1);

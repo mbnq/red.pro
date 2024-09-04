@@ -78,10 +78,10 @@
         private List<Rectangle> _tabRects;
 
         private const int ICON_SIZE = 24;
-        private const int FIRST_TAB_PADDING = 50;
+        private const int FIRST_TAB_PADDING = 10;
         private const int TAB_HEADER_PADDING = 24;
-        private const int TAB_WIDTH_MIN = 160;
-        private const int TAB_WIDTH_MAX = 264;
+        private const int TAB_WIDTH_MIN = 100;
+        private const int TAB_WIDTH_MAX = 150;
 
         private int _tab_over_index = -1;
 
