@@ -304,7 +304,7 @@ namespace RED.mbnq
 
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
-            mbAutoSaveCheckbox = new MaterialCheckbox
+            mbAutoSaveCheckbox = new MaterialSwitch
             {
                 Text = "Save on Exit",
                 AutoSize = true,
@@ -321,7 +321,7 @@ namespace RED.mbnq
             };
 
             // Debug mode
-            mbDebugonCheckbox = new MaterialCheckbox
+            mbDebugonCheckbox = new MaterialSwitch
             {
                 Text = "Debug   ",
                 AutoSize = true,
@@ -338,7 +338,7 @@ namespace RED.mbnq
             };
 
             // Always on the top
-            mbAOnTopCheckBox = new MaterialCheckbox
+            mbAOnTopCheckBox = new MaterialSwitch
             {
                 Text = "Always on top   ",
                 AutoSize = true,
