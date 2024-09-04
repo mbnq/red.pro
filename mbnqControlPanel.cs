@@ -42,10 +42,10 @@ namespace RED.mbnq
         private TabPage mbnqTab1;
         private TabPage mbnqTab2;
 
-        private Size mbInitSize = new Size(0, 0);
-        private static readonly int mCPWidth = 262;
-        private static readonly int mCPHeight = 750;
-        private static readonly int mControlDefSpacer = 36;
+        public Size mbInitSize = new Size(0, 0);
+        public static readonly int mCPWidth = 262;
+        public static readonly int mCPHeight = 750;
+        public static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
         public const int mPNGMaxHeight = 1080;
@@ -204,8 +204,8 @@ namespace RED.mbnq
             // Initialize TabControl
             materialTabControl = new MaterialTabControl
             {
-                Dock = DockStyle.Fill,
-                Enabled = true
+                Dock = DockStyle.Fill,                  // we need this
+                Enabled = true                          // we don't really need this
             };
 
             // Create two tab pages
@@ -229,7 +229,6 @@ namespace RED.mbnq
                 MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
                 MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
             };
-            materialTabControl.SizeMode = TabSizeMode.Normal;
 
             // Add TabSelector to Form
             Controls.Add(mbnqTabSelector);
