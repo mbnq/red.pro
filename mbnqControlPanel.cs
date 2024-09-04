@@ -225,13 +225,9 @@ namespace RED.mbnq
                 BaseTabControl = materialTabControl,
                 Dock = DockStyle.Bottom,
                 TabIndicatorHeight = 5,
-                Height = 0,
-                Width = 0,
                 Enabled = true,
                 MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
-                MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
-                // Size = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
-                TabLabel = TabLabelStyle.Text
+                MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
             };
             materialTabControl.SizeMode = TabSizeMode.Normal;
 
