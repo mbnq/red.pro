@@ -17,6 +17,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Controls.Primitives;
 
 namespace RED.mbnq
 {
@@ -34,8 +35,13 @@ namespace RED.mbnq
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
-        private Size mbInitSize = new Size(0, 0);
 
+        private MaterialTabControl materialTabControl;
+        private MaterialTabSelector materialTabSelector;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+
+        private Size mbInitSize = new Size(0, 0);
         private static readonly int mCPWidth = 262;
         private static readonly int mCPHeight = 810;
         private static readonly int mControlDefSpacer = 36;
@@ -44,6 +50,7 @@ namespace RED.mbnq
         public const int mPNGMaxHeight = 1080;
         public ControlPanel()
         {
+            InitializeTabs();
             InitializeComponent();
             InitializeMaterialSkin();
 
@@ -188,6 +195,35 @@ namespace RED.mbnq
                 // Debug.WriteLineIf($"mbnq: Initialized size: {mbInitSize}");
             }));
         }
+        private void InitializeTabs()
+        {
+            // Initialize TabControl
+            materialTabControl = new MaterialTabControl
+            {
+                Dock = DockStyle.Fill
+            };
+
+            // Create two tab pages
+            tabPage1 = new TabPage("Tab 1");
+            tabPage2 = new TabPage("Tab 2");
+
+            // Add TabPages to TabControl
+            materialTabControl.TabPages.Add(tabPage1);
+            materialTabControl.TabPages.Add(tabPage2);
+
+            // Add TabControl to Form
+            Controls.Add(materialTabControl);
+
+            // Initialize MaterialTabSelector
+            materialTabSelector = new MaterialTabSelector
+            {
+                BaseTabControl = materialTabControl,
+                Dock = DockStyle.Top
+            };
+
+            // Add TabSelector to Form
+            Controls.Add(materialTabSelector);
+        }
         private void InitializeComponent()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
@@ -330,7 +366,8 @@ namespace RED.mbnq
             panel.Controls.Add(mbDebugonCheckbox);
             panel.Controls.Add(mbAOnTopCheckBox);
 
-            this.Controls.Add(panel);
+            // this.Controls.Add(panel);            
+            tabPage1.Controls.Add(panel);
         }
 
         /* for save and load these controls */
