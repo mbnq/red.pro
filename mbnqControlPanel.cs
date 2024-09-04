@@ -81,12 +81,15 @@ namespace RED.mbnq
         }
         protected override void OnResize(EventArgs e)
         {
-            base.OnResize(e);
-
-            // Check if mbInitSize has been initialized to a non-zero value
-            if (mbInitSize.Width != 0 && mbInitSize.Height != 0 && mbInitSize != Size)
+            if (!mIsDebugOn)
             {
-                this.Size = mbInitSize;  // Reset the size to the initial value
+                base.OnResize(e);
+
+                // Check if mbInitSize has been initialized to a non-zero value
+                if (mbInitSize.Width != 0 && mbInitSize.Height != 0 && mbInitSize != Size)
+                {
+                    this.Size = mbInitSize;  // Reset the size to the initial value
+                } 
             }
         }
 
