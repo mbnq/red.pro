@@ -3,6 +3,7 @@
     /// <summary>
     /// Defines the <see cref="IMaterialControl" />
     /// </summary>
+    /// 
     public interface IMaterialControl
     {
         /// <summary>
