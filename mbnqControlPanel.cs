@@ -87,19 +87,6 @@ namespace RED.mbnq
             mbAOnTopCheckBox.Checked = this.TopMost;
             mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
         }
-        protected override void OnResize(EventArgs e)
-        {
-            if (!mIsDebugOn)
-            {
-                base.OnResize(e);
-
-                // Check if mbInitSize has been initialized to a non-zero value
-                if (mbInitSize.Width != 0 && mbInitSize.Height != 0 && mbInitSize != Size)
-                {
-                    this.Size = mbInitSize;  // Reset the size to the initial value
-                } 
-            }
-        }
 
         // main display init
         public mbnqCrosshair mbnqCrosshairOverlay

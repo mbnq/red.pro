@@ -424,7 +424,7 @@ namespace MaterialSkin.Controls
             DrawerBackgroundWithAccent = false;
 
             FormBorderStyle = FormBorderStyle.None;
-            Sizable = true;
+            Sizable = false;
             DoubleBuffered = true;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             FormStyle = FormStyles.ActionBar_40;
