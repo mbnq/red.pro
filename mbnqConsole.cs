@@ -65,11 +65,11 @@ namespace RED.mbnq
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(10, 10); // Slight offset from top-left corner
-            this.Size = new Size(300, 260); // Adjust size as needed
+            this.Location = new Point(10, 10);                  // Slight offset from top-left corner
+            this.Size = new Size(300, 260);                     // Adjust size as needed
             this.TopMost = true;
-            this.BackColor = Color.Black; // Set background color
-            this.Opacity = 0.8; // Set transparency
+            this.BackColor = Color.Black;                       // Set background color
+            this.Opacity = 0.8;                                 // Set transparency
             this.ShowInTaskbar = false;
             this.ShowIcon = false;
             this.DoubleBuffered = true;
@@ -110,30 +110,30 @@ namespace RED.mbnq
                 BackColor = Color.Black,
                 BorderStyle = BorderStyle.FixedSingle,
                 Font = new Font("Consolas", 10, FontStyle.Regular),
-                Location = new Point(10, this.Height + 20), // Adjust position as needed
+                Location = new Point(10, this.Height + 20),             // Adjust position as needed
                 Width = this.Width - 20,
                 Height = 20
             };
 
-            commandTextBox.KeyDown += CommandTextBox_KeyDown; // Event handler for Enter key
-            commandTextBox.TextChanged += CommandTextBox_TextChanged; // Event handler for text changes
+            commandTextBox.KeyDown += CommandTextBox_KeyDown;           // Event handler for Enter key
+            commandTextBox.TextChanged += CommandTextBox_TextChanged;   // Event handler for text changes
 
             this.Controls.Add(commandTextBox);
 
             ToggleShowCommandBox(isGlobalDebugOn);
 
-            // Initialize Display Texts with placeholders
+            // Initialize Display Texts by using placeholders
             displayTexts.Add($"RED.PRO ver.{Program.mbVersion}.2024 - mbnq.pl"); // this is [0] now
             displayTextVisibility.Add(true);
             displayTexts.Add("Ping: -- ms");                                      // [1]
             displayTextVisibility.Add(true);
             displayTexts.Add("IP: Fetching...");                                  // [2]
             displayTextVisibility.Add(true);
-            displayTexts.Add("Console Draw Count: 0"); // Initialize the third line for the draw count
+            displayTexts.Add("Console Draw Count: 0");
             displayTextVisibility.Add(true);
-            displayTexts.Add("CPU: -- %"); // Placeholder for CPU usage
+            displayTexts.Add("CPU: -- %");
             displayTextVisibility.Add(true);
-            displayTexts.Add("Debug: --"); // Placeholder for CPU usage
+            displayTexts.Add("Debug: --");
             displayTextVisibility.Add(true);
 
             AdjustSize();
