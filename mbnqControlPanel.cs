@@ -229,10 +229,11 @@ namespace RED.mbnq
                 Height = (mCPHeight / 20),
                 Enabled = true,
                 MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
-                MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
+                MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
                 // Size = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
+                TabLabel = TabLabelStyle.Text
             };
-
+            materialTabControl.SizeMode = TabSizeMode.Normal;
 
             // Add TabSelector to Form
             Controls.Add(mbnqTabSelector);
