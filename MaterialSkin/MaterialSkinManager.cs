@@ -62,7 +62,7 @@
             logicalFonts.Add("H3", createLogicalFont("Roboto", 48, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("H4", createLogicalFont("Roboto", 34, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("H5", createLogicalFont("Roboto", 24, NativeTextRenderer.logFontWeight.FW_REGULAR));
-            logicalFonts.Add("H6", createLogicalFont("Roboto Medium", 20, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+            logicalFonts.Add("H6", createLogicalFont("Roboto Bold", 24, NativeTextRenderer.logFontWeight.FW_MEDIUM));
             logicalFonts.Add("Subtitle1", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("Subtitle2", createLogicalFont("Roboto Medium", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
             logicalFonts.Add("SubtleEmphasis", createLogicalFont("Roboto", 12, NativeTextRenderer.logFontWeight.FW_NORMAL, 1));
