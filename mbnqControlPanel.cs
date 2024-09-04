@@ -34,7 +34,7 @@ namespace RED.mbnq
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
-        private Size mbInitSize;
+        private Size mbInitSize = new Size(0, 0);
 
         private static readonly int mCPWidth = 262;
         private static readonly int mCPHeight = 810;
@@ -79,13 +79,16 @@ namespace RED.mbnq
             mbAOnTopCheckBox.Checked = this.TopMost;
             mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
         }
-
-        // don't remove this one
-        /*protected override void OnResize(EventArgs e)
+        protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            this.Size = new Size(mCPWidth, mCPHeight);
-        }*/
+
+            // Check if mbInitSize has been initialized to a non-zero value
+            if (mbInitSize.Width != 0 && mbInitSize.Height != 0 && mbInitSize != Size)
+            {
+                this.Size = mbInitSize;  // Reset the size to the initial value
+            }
+        }
 
         // main display init
         public mbnqCrosshair mbnqCrosshairOverlay
@@ -179,10 +182,9 @@ namespace RED.mbnq
             this.BeginInvoke((Action)(() =>
             {
                 mbInitSize = this.Size;
-                Debug.WriteLineIf($"mbnq: Initialized size: {mbInitSize}");
+                // Debug.WriteLineIf($"mbnq: Initialized size: {mbInitSize}");
             }));
         }
-
         private void InitializeComponent()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
