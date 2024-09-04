@@ -224,6 +224,15 @@ namespace RED.mbnq
             };
             // Add TabSelector to Form
             Controls.Add(materialTabSelector);
+
+            // Add sound to tabselector
+            materialTabControl.SelectedIndexChanged += MaterialTabControl_SelectedIndexChanged;
+
+            void MaterialTabControl_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                // Play sound when the tab changes
+                Sounds.PlayClickSound();
+            }
         }
         private void InitializeComponent()
         {
