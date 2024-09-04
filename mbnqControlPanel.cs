@@ -29,7 +29,7 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         private Button centerButton;
         public MaterialProgressBar mbProgressBar0;
-        private FlowLayoutPanel panel;
+        private FlowLayoutPanel panel, panel2;
         public mbnqCrosshair mbnqCrosshairDisplay;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox;
         private rmbMenu rightClickMenu;
@@ -74,8 +74,8 @@ namespace RED.mbnq
             rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for the sound
 
             this.Size = new Size(mCPWidth, mCPHeight);          // global controlpanel window size
-            this.AutoSize = true;
-            this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            // this.AutoSize = true;
+            // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             updateMainCrosshair();
             mbAutoSaveCheckbox.CheckedChanged += AutoSaveOnExit_CheckedChanged;
@@ -246,6 +246,24 @@ namespace RED.mbnq
             };
             panel.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
 
+            panel2 = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown,
+                Location = new Point(0, 0),
+                Margin = new Padding(1),
+                // Enabled = false,
+                // MinimumSize = new Size(200, 100),
+                // MaximumSize = new Size(400, 300),
+                // BorderStyle = BorderStyle.FixedSingle,
+                // AutoScroll = true,
+                // AutoScrollMinSize = new Size(0, 1),
+                // BackgroundImage = Properties.Resources.mbnqBackground0,
+                // BackgroundImageLayout = ImageLayout.Center,
+                WrapContents = false
+            };
+            panel2.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
+
             /* --- --- ---  Sliders --- --- --- */
             // label, min, max, def
             // Color
@@ -348,7 +366,7 @@ namespace RED.mbnq
                 }
             };
 
-            /* --- --- --- Progress Bar --- --- --- */
+            /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
                 Location = new Point(mbFnc.mGetPrimaryScreenCenter().X, mbFnc.mGetPrimaryScreenCenter().Y),  // new System.Drawing.Point(1, 1),
@@ -359,15 +377,18 @@ namespace RED.mbnq
             panel.Controls.Add(mbProgressBar0);
             mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
-            /* --- --- ---  Add Controls --- --- --- */
             panel.Controls.Add(centerButton);
-
-            panel.Controls.Add(mbAutoSaveCheckbox);
-            panel.Controls.Add(mbDebugonCheckbox);
-            panel.Controls.Add(mbAOnTopCheckBox);
 
             // this.Controls.Add(panel);            
             tabPage1.Controls.Add(panel);
+
+            /* --- --- ---  Tab 2 goes here --- --- --- */
+
+            panel2.Controls.Add(mbAutoSaveCheckbox);
+            panel2.Controls.Add(mbDebugonCheckbox);
+            panel2.Controls.Add(mbAOnTopCheckBox);
+
+            tabPage2.Controls.Add(panel2);
         }
 
         /* for save and load these controls */
