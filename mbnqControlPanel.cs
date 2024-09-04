@@ -205,6 +205,19 @@ namespace RED.mbnq
             materialTabControl = new MaterialTabControl
             {
                 Dock = DockStyle.Fill
+
+                // FlowDirection = FlowDirection.TopDown
+                // Location = new Point(0, 0),
+                // Margin = new Padding(1),
+                // Enabled = false,
+                // MinimumSize = new Size(200, 100),
+                // MaximumSize = new Size(400, 300)
+                // BorderStyle = BorderStyle.FixedSingle,
+                // AutoScroll = true,
+                // AutoScrollMinSize = new Size(0, 1),
+                // BackgroundImage = Properties.Resources.mbnqBackground0,
+                // BackgroundImageLayout = ImageLayout.Center,
+                // WrapContents = false
             };
 
             // Create two tab pages
@@ -224,7 +237,16 @@ namespace RED.mbnq
                 BaseTabControl = materialTabControl,
                 Dock = DockStyle.Bottom,
                 TabIndicatorHeight = 5,
-                Height = 40
+                // Height = 40,
+                Enabled = true,
+                MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
+                MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
+                // BorderStyle = BorderStyle.FixedSingle,
+                // AutoScroll = true,
+                // AutoScrollMinSize = new Size(0, 1),
+                // BackgroundImage = Properties.Resources.mbnqBackground0,
+                // BackgroundImageLayout = ImageLayout.Center,
+                // WrapContents = false
             };
 
             // Add TabSelector to Form
