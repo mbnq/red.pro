@@ -204,13 +204,12 @@ namespace RED.mbnq
             // Initialize TabControl
             materialTabControl = new MaterialTabControl
             {
-                Dock = DockStyle.Fill,
-                Width = 10
+                Dock = DockStyle.Fill
             };
 
             // Create two tab pages
-            mbnqTab1 = new TabPage("Crosshair");
-            mbnqTab2 = new TabPage("Options");
+            mbnqTab1 = new TabPage("1");
+            mbnqTab2 = new TabPage("2");
 
             // Add TabPages to TabControl
             materialTabControl.TabPages.Add(mbnqTab1);
@@ -248,8 +247,8 @@ namespace RED.mbnq
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
-                Location = new Point(0, 0),
-                Margin = new Padding(1),
+                // Location = new Point(0, 0),
+                // Margin = new Padding(1),
                 // Enabled = false,
                 // MinimumSize = new Size(200, 100),
                 // MaximumSize = new Size(400, 300),
@@ -266,7 +265,7 @@ namespace RED.mbnq
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
-                Location = new Point(0, 0),
+                // Location = new Point(0, 0),
                 // Margin = new Padding(10),
                 // Enabled = false,
                 // MinimumSize = new Size(200, 100),
