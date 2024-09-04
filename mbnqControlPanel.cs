@@ -38,8 +38,8 @@ namespace RED.mbnq
 
         private MaterialTabControl materialTabControl;
         private MaterialTabSelector materialTabSelector;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
+        private TabPage mbnqTab1;
+        private TabPage mbnqTab2;
 
         private Size mbInitSize = new Size(0, 0);
         private static readonly int mCPWidth = 262;
@@ -204,12 +204,12 @@ namespace RED.mbnq
             };
 
             // Create two tab pages
-            tabPage1 = new TabPage("Tab 1");
-            tabPage2 = new TabPage("Tab 2");
+            mbnqTab1 = new TabPage("Crosshair");
+            mbnqTab2 = new TabPage("Options");
 
             // Add TabPages to TabControl
-            materialTabControl.TabPages.Add(tabPage1);
-            materialTabControl.TabPages.Add(tabPage2);
+            materialTabControl.TabPages.Add(mbnqTab1);
+            materialTabControl.TabPages.Add(mbnqTab2);
 
             // Add TabControl to Form
             Controls.Add(materialTabControl);
@@ -218,9 +218,10 @@ namespace RED.mbnq
             materialTabSelector = new MaterialTabSelector
             {
                 BaseTabControl = materialTabControl,
-                Dock = DockStyle.Top
+                Dock = DockStyle.Top,
+                Height = 40,
+                Width = mCPWidth
             };
-
             // Add TabSelector to Form
             Controls.Add(materialTabSelector);
         }
@@ -380,7 +381,7 @@ namespace RED.mbnq
             panelForTab1.Controls.Add(centerButton);
 
             // this.Controls.Add(panel);            
-            tabPage1.Controls.Add(panelForTab1);
+            mbnqTab1.Controls.Add(panelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
@@ -388,7 +389,7 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbDebugonCheckbox);
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
 
-            tabPage2.Controls.Add(panelForTab2);
+            mbnqTab2.Controls.Add(panelForTab2);
         }
 
         /* for save and load these controls */
