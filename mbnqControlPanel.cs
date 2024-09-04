@@ -44,7 +44,7 @@ namespace RED.mbnq
 
         private Size mbInitSize = new Size(0, 0);
         private static readonly int mCPWidth = 262;
-        private static readonly int mCPHeight = 764;
+        private static readonly int mCPHeight = 750;
         private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
@@ -205,7 +205,7 @@ namespace RED.mbnq
             materialTabControl = new MaterialTabControl
             {
                 Dock = DockStyle.Fill,
-                Enabled = false
+                Enabled = true
             };
 
             // Create two tab pages
@@ -225,7 +225,7 @@ namespace RED.mbnq
                 BaseTabControl = materialTabControl,
                 Dock = DockStyle.Bottom,
                 TabIndicatorHeight = 5,
-                // Height = 40,
+                Height = (mCPHeight / 20),
                 Enabled = true,
                 MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
                 MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
