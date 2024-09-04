@@ -204,7 +204,8 @@ namespace RED.mbnq
             // Initialize TabControl
             materialTabControl = new MaterialTabControl
             {
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                Width = 10
             };
 
             // Create two tab pages
