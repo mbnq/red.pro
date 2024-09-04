@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using MaterialSkin;
+using static MaterialSkin.Controls.MaterialTabSelector;
 
 namespace RED.mbnq
 {
@@ -38,7 +39,7 @@ namespace RED.mbnq
         public int mSettingsLoaded = 0;
 
         private MaterialTabControl materialTabControl;
-        private MaterialTabSelector materialTabSelector;
+        private MaterialTabSelector mbnqTabSelector;
         private TabPage mbnqTab1;
         private TabPage mbnqTab2;
 
@@ -220,7 +221,7 @@ namespace RED.mbnq
             Controls.Add(materialTabControl);
 
             // Initialize MaterialTabSelector
-            materialTabSelector = new MaterialTabSelector
+            mbnqTabSelector = new MaterialTabSelector
             {
                 BaseTabControl = materialTabControl,
                 Dock = DockStyle.Bottom,
@@ -229,10 +230,12 @@ namespace RED.mbnq
                 Enabled = true,
                 MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
                 MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
+                // Size = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
             };
 
+
             // Add TabSelector to Form
-            Controls.Add(materialTabSelector);
+            Controls.Add(mbnqTabSelector);
 
             // Add sound to tabselector
             materialTabControl.SelectedIndexChanged += MaterialTabControl_SelectedIndexChanged;
