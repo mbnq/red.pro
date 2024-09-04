@@ -188,7 +188,7 @@ namespace RED.mbnq
 
         private void InitializeTabs()
         {
-            // Initialize TabControl
+            // Initialize TabControl --------------------------------------------------------------
             materialTabControl = new MaterialTabControl
             {
                 Dock = DockStyle.Fill,                  // we need this
@@ -203,10 +203,15 @@ namespace RED.mbnq
             materialTabControl.TabPages.Add(mbnqTab1);
             materialTabControl.TabPages.Add(mbnqTab2);
 
+            foreach (TabPage tab in materialTabControl.TabPages)
+            {
+                tab.Text = tab.Text.ToUpper();          // Force uppercase
+            }
+
             // Add TabControl to Form
             Controls.Add(materialTabControl);
 
-            // Initialize MaterialTabSelector
+            // Initialize MaterialTabSelector -----------------------------------------------------
             mbnqTabSelector = new MaterialTabSelector
             {
                 BaseTabControl = materialTabControl,
