@@ -7,7 +7,6 @@
 
 
     - naprawic w debugu przywracanie ostatniej komenty klawiszem up kursor wraca jedna litere od konca
-    - pracowac nad wylaczeniem resize
 
 */
 
