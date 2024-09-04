@@ -18,6 +18,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
+using MaterialSkin;
 
 namespace RED.mbnq
 {
@@ -74,8 +75,8 @@ namespace RED.mbnq
             rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for the sound
 
             this.Size = new Size(mCPWidth, mCPHeight);          // global controlpanel window size
-            this.AutoSize = true;
-            this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            // this.AutoSize = true;
+            // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             updateMainCrosshair();
             mbAutoSaveCheckbox.CheckedChanged += AutoSaveOnExit_CheckedChanged;
@@ -195,6 +196,9 @@ namespace RED.mbnq
                 // Debug.WriteLineIf($"mbnq: Initialized size: {mbInitSize}");
             }));
         }
+
+        /* --- --- Tabs --- --- */
+
         private void InitializeTabs()
         {
             // Initialize TabControl
@@ -218,10 +222,11 @@ namespace RED.mbnq
             materialTabSelector = new MaterialTabSelector
             {
                 BaseTabControl = materialTabControl,
-                Dock = DockStyle.Top,
-                Height = 40,
-                Width = mCPWidth
+                Dock = DockStyle.Bottom,
+                TabIndicatorHeight = 5,
+                Height = 40
             };
+
             // Add TabSelector to Form
             Controls.Add(materialTabSelector);
 
@@ -261,7 +266,7 @@ namespace RED.mbnq
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
                 Location = new Point(0, 0),
-                Margin = new Padding(1),
+                // Margin = new Padding(10),
                 // Enabled = false,
                 // MinimumSize = new Size(200, 100),
                 // MaximumSize = new Size(400, 300),
