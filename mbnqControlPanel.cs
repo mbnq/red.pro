@@ -175,6 +175,12 @@ namespace RED.mbnq
                 // Position the ControlPanel relative to the mbnqCrosshair, if necessary
                 PositionControlPanelRelativeToCrosshair();
             }
+
+            this.BeginInvoke((Action)(() =>
+            {
+                mbInitSize = this.Size;
+                Debug.WriteLineIf($"mbnq: Initialized size: {mbInitSize}");
+            }));
         }
 
         private void InitializeComponent()
