@@ -29,7 +29,7 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         private Button centerButton;
         public MaterialProgressBar mbProgressBar0;
-        private FlowLayoutPanel panel, panel2;
+        private FlowLayoutPanel panelForTab1, panelForTab2;
         public mbnqCrosshair mbnqCrosshairDisplay;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox;
         private rmbMenu rightClickMenu;
@@ -43,7 +43,7 @@ namespace RED.mbnq
 
         private Size mbInitSize = new Size(0, 0);
         private static readonly int mCPWidth = 262;
-        private static readonly int mCPHeight = 810;
+        private static readonly int mCPHeight = 764;
         private static readonly int mControlDefSpacer = 36;
 
         public const int mPNGMaxWidth = 1920;
@@ -74,8 +74,8 @@ namespace RED.mbnq
             rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for the sound
 
             this.Size = new Size(mCPWidth, mCPHeight);          // global controlpanel window size
-            // this.AutoSize = true;
-            // this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             updateMainCrosshair();
             mbAutoSaveCheckbox.CheckedChanged += AutoSaveOnExit_CheckedChanged;
@@ -228,7 +228,7 @@ namespace RED.mbnq
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
 
-            panel = new FlowLayoutPanel
+            panelForTab1 = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
@@ -244,9 +244,9 @@ namespace RED.mbnq
                 // BackgroundImageLayout = ImageLayout.Center,
                 WrapContents = false
             };
-            panel.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
+            panelForTab1.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
 
-            panel2 = new FlowLayoutPanel
+            panelForTab2 = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
@@ -262,46 +262,46 @@ namespace RED.mbnq
                 // BackgroundImageLayout = ImageLayout.Center,
                 WrapContents = false
             };
-            panel2.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
+            panelForTab2.Padding = new Padding(0, 10, 0, 0); // Left=0, Top=10, Right=0, Bottom=0
 
             /* --- --- ---  Sliders --- --- --- */
             // label, min, max, def
             // Color
             var redSlider = CreateLabeledSlider("Red", 0, 255, 255);
             colorR = redSlider.Slider;
-            panel.Controls.Add(redSlider.Panel);
+            panelForTab1.Controls.Add(redSlider.Panel);
 
             var greenSlider = CreateLabeledSlider("Green", 0, 255, 0);
             colorG = greenSlider.Slider;
-            panel.Controls.Add(greenSlider.Panel);
+            panelForTab1.Controls.Add(greenSlider.Panel);
 
             var blueSlider = CreateLabeledSlider("Blue", 0, 255, 0);
             colorB = blueSlider.Slider;
-            panel.Controls.Add(blueSlider.Panel);
+            panelForTab1.Controls.Add(blueSlider.Panel);
 
             // Size
             var sizeSlider = CreateLabeledSlider("Size", 1, 200, 50);
             size = sizeSlider.Slider;
-            panel.Controls.Add(sizeSlider.Panel);
+            panelForTab1.Controls.Add(sizeSlider.Panel);
 
             // Transparency
             var transparencySlider = CreateLabeledSlider("Transparency", 0, 100, 64);
             transparency = transparencySlider.Slider;
-            panel.Controls.Add(transparencySlider.Panel);
+            panelForTab1.Controls.Add(transparencySlider.Panel);
 
             // Zoom Level
             var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10, 3); // Adjust the range as needed
             zoomLevel = zoomLevelSlider.Slider;
-            panel.Controls.Add(zoomLevelSlider.Panel);
+            panelForTab1.Controls.Add(zoomLevelSlider.Panel);
 
             // Offsets
             var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000, 1000);
             offsetX = offsetXSlider.Slider;
-            panel.Controls.Add(offsetXSlider.Panel);
+            panelForTab1.Controls.Add(offsetXSlider.Panel);
 
             var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000, 1000);
             offsetY = offsetYSlider.Slider;
-            panel.Controls.Add(offsetYSlider.Panel);
+            panelForTab1.Controls.Add(offsetYSlider.Panel);
 
             /* --- --- ---  Buttons --- --- --- */
 
@@ -374,21 +374,21 @@ namespace RED.mbnq
                 Visible = false // Initially hidden
             }; 
 
-            panel.Controls.Add(mbProgressBar0);
+            panelForTab1.Controls.Add(mbProgressBar0);
             mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
-            panel.Controls.Add(centerButton);
+            panelForTab1.Controls.Add(centerButton);
 
             // this.Controls.Add(panel);            
-            tabPage1.Controls.Add(panel);
+            tabPage1.Controls.Add(panelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
-            panel2.Controls.Add(mbAutoSaveCheckbox);
-            panel2.Controls.Add(mbDebugonCheckbox);
-            panel2.Controls.Add(mbAOnTopCheckBox);
+            panelForTab2.Controls.Add(mbAutoSaveCheckbox);
+            panelForTab2.Controls.Add(mbDebugonCheckbox);
+            panelForTab2.Controls.Add(mbAOnTopCheckBox);
 
-            tabPage2.Controls.Add(panel2);
+            tabPage2.Controls.Add(panelForTab2);
         }
 
         /* for save and load these controls */
