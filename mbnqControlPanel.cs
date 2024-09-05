@@ -37,6 +37,7 @@ namespace RED.mbnq
         private int mControlWidth;
         public int mSettingsLoaded = 0;
         public bool mHideCrosshair = false;
+        public bool EnableZoomMode = false;
 
         private MaterialTabControl materialTabControl;
         private MaterialTabSelector mbnqTabSelector;
@@ -202,11 +203,11 @@ namespace RED.mbnq
         {
             if (mbDisableSoundCheckBox.Checked)
             {
-                // Sounds.IsSoundEnabled = false;
+                EnableZoomMode = true;
             }
             else
             {
-                // Sounds.IsSoundEnabled = true;
+                EnableZoomMode = false;
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
