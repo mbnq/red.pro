@@ -36,6 +36,7 @@ namespace RED.mbnq
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
+        public bool mHideCrosshair = false;
 
         private MaterialTabControl materialTabControl;
         private MaterialTabSelector mbnqTabSelector;
@@ -171,11 +172,13 @@ namespace RED.mbnq
         {
             if (mbHideCrosshairCheckBox.Checked)
             {
-                // payload
-            }
+                mHideCrosshair = true;
+                updateMainCrosshair();
+    }
             else
             {
-                // negative payload
+                mHideCrosshair = false;
+                updateMainCrosshair();
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -600,7 +603,16 @@ namespace RED.mbnq
                 ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
 
                 // Update opacity
-                mbnqCrosshairOverlay.Opacity = transparency.Value / 100.0;
+                if (mHideCrosshair) 
+                { 
+                    mbnqCrosshairOverlay.Opacity = 0;
+                    transparency.Enabled = false;
+                } 
+                else 
+                { 
+                    mbnqCrosshairOverlay.Opacity = transparency.Value / 100.0;
+                    transparency.Enabled = true;
+                };
 
                 // Ensure it is within the screen bounds
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
