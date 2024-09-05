@@ -161,7 +161,7 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
         }
 
-        /* --- --- --- loading --- --- --- */
+        /* --- --- --- loading --- --- --- */ 
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
