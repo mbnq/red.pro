@@ -32,7 +32,7 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
@@ -90,6 +90,9 @@ namespace RED.mbnq
 
             mbHideCrosshairCheckBox.Checked = this.TopMost;
             mbHideCrosshairCheckBox.CheckedChanged += mbHideCrosshairCheckBox_CheckedChanged;
+
+            mbDisableSoundCheckBox.Checked = this.TopMost;
+            mbDisableSoundCheckBox.CheckedChanged += mbDisableSoundCheckBox_CheckedChanged;
         }
 
         // main display init
@@ -168,7 +171,7 @@ namespace RED.mbnq
                 this.TopMost = false;
             }
         }
-         private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (mbHideCrosshairCheckBox.Checked)
             {
@@ -179,6 +182,17 @@ namespace RED.mbnq
             {
                 mHideCrosshair = false;
                 updateMainCrosshair();
+            }
+        }
+        private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDisableSoundCheckBox.Checked)
+            {
+                Sounds.IsSoundEnabled = false;
+            }
+            else
+            {
+                Sounds.IsSoundEnabled = true;
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -388,6 +402,23 @@ namespace RED.mbnq
                 }
             };
 
+            // Disable Sound
+            mbDisableSoundCheckBox = new MaterialSwitch
+            {
+                Text = "Disable Sound   ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Left,
+                Enabled = true
+            };
+
+            mbDisableSoundCheckBox.CheckedChanged += (s, e) =>
+            {
+                if (mSettingsLoaded > 0)
+                {
+                    Sounds.PlayClickSound();
+                }
+            };
+
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
@@ -410,6 +441,7 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbDebugonCheckbox);
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
             panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
+            panelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
             mbnqTab2.Controls.Add(panelForTab2);
         }
@@ -435,6 +467,11 @@ namespace RED.mbnq
         {
             get => mbHideCrosshairCheckBox.Checked;
             set => mbHideCrosshairCheckBox.Checked = value;
+        }
+        public bool mbDisableSoundChecked
+        {
+            get => mbDisableSoundCheckBox.Checked;
+            set => mbDisableSoundCheckBox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
