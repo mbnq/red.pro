@@ -32,7 +32,7 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
@@ -86,6 +86,9 @@ namespace RED.mbnq
 
             mbAOnTopCheckBox.Checked = this.TopMost;
             mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
+
+            mbHideCrosshairCheckBox.Checked = this.TopMost;
+            mbHideCrosshairCheckBox.CheckedChanged += mbHideCrosshairCheckBox_CheckedChanged;
         }
 
         // main display init
@@ -162,6 +165,17 @@ namespace RED.mbnq
             else
             {
                 this.TopMost = false;
+            }
+        }
+         private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbHideCrosshairCheckBox.Checked)
+            {
+                // payload
+            }
+            else
+            {
+                // negative payload
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -340,13 +354,30 @@ namespace RED.mbnq
             // Always on the top
             mbAOnTopCheckBox = new MaterialSwitch
             {
-                Text = "Always on top   ",
+                Text = "Always on Top   ",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left,
                 Enabled = true
             };
 
             mbAOnTopCheckBox.CheckedChanged += (s, e) =>
+            {
+                if (mSettingsLoaded > 0)
+                {
+                    Sounds.PlayClickSound();
+                }
+            };
+
+            // Hide Crosshair
+            mbHideCrosshairCheckBox = new MaterialSwitch
+            {
+                Text = "Hide Crosshair   ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Left,
+                Enabled = true
+            };
+
+            mbHideCrosshairCheckBox.CheckedChanged += (s, e) =>
             {
                 if (mSettingsLoaded > 0)
                 {
@@ -375,6 +406,7 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbAutoSaveCheckbox);
             panelForTab2.Controls.Add(mbDebugonCheckbox);
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
+            panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
 
             mbnqTab2.Controls.Add(panelForTab2);
         }
@@ -395,6 +427,11 @@ namespace RED.mbnq
         {
             get => mbAOnTopCheckBox.Checked;
             set => mbAOnTopCheckBox.Checked = value;
+        }
+        public bool mbHideCrosshairChecked
+        {
+            get => mbHideCrosshairCheckBox.Checked;
+            set => mbHideCrosshairCheckBox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
