@@ -32,7 +32,7 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomMode0CheckBox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
@@ -93,6 +93,9 @@ namespace RED.mbnq
 
             mbDisableSoundCheckBox.Checked = this.TopMost;
             mbDisableSoundCheckBox.CheckedChanged += mbDisableSoundCheckBox_CheckedChanged;
+
+            mbEnableZoomMode0CheckBox.Checked = this.TopMost;
+            mbEnableZoomMode0CheckBox.CheckedChanged += mbEnableZoomMode0CheckBox_CheckedChanged;
         }
 
         // main display init
@@ -193,6 +196,17 @@ namespace RED.mbnq
             else
             {
                 Sounds.IsSoundEnabled = true;
+            }
+        }
+        private void mbEnableZoomMode0CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDisableSoundCheckBox.Checked)
+            {
+                // Sounds.IsSoundEnabled = false;
+            }
+            else
+            {
+                // Sounds.IsSoundEnabled = true;
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -419,6 +433,24 @@ namespace RED.mbnq
                 }
             };
 
+            // Enable ZoomMode
+            mbEnableZoomMode0CheckBox = new MaterialSwitch
+            {
+                Text = "Enable ZoomMode   ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Left,
+                Enabled = true
+            };
+
+            mbEnableZoomMode0CheckBox.CheckedChanged += (s, e) =>
+            {
+                if (mSettingsLoaded > 0)
+                {
+                    Sounds.PlayClickSound();
+                }
+            };
+
+
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
@@ -442,6 +474,7 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
             panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             panelForTab2.Controls.Add(mbDisableSoundCheckBox);
+            panelForTab2.Controls.Add(mbEnableZoomMode0CheckBox);
 
             mbnqTab2.Controls.Add(panelForTab2);
         }
@@ -472,6 +505,11 @@ namespace RED.mbnq
         {
             get => mbDisableSoundCheckBox.Checked;
             set => mbDisableSoundCheckBox.Checked = value;
+        }
+        public bool mbEnableZoomMode0Checked
+        {
+            get => mbEnableZoomMode0CheckBox.Checked;
+            set => mbEnableZoomMode0CheckBox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
