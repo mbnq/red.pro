@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace RED.mbnq
 {
-    public static class ZoomMode
+    public class ZoomMode
     {
         private static Timer holdTimer;
         private static Timer zoomUpdateTimer;
@@ -14,12 +14,9 @@ namespace RED.mbnq
         private static Bitmap zoomBitmap;
         private static int zoomSizeSet = 128;   // Define the zoom area to capture, smaller size for more zoom 
         public static int zoomMultiplier = 1;
-        public static bool IsZoomModeEnabled { get; private set; } = false;
-        public static void ToggleZoomMode()
-        {
-            IsZoomModeEnabled = !IsZoomModeEnabled;
-        }
+        public bool IsZoomModeEnabled = false;
 
+        // IsZoomModeEnabled = ControlPanel.EnableZoomMode;
         public static void UpdateZoomMultiplier(int newZoomMultiplier)
         {
             zoomMultiplier = newZoomMultiplier;

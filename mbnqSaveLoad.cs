@@ -134,8 +134,6 @@ namespace RED.mbnq
             sb.AppendLine($"mbDisableSound={controlPanel.mbDisableSoundChecked}");
             sb.AppendLine($"mbEnableZoomMode0={controlPanel.mbEnableZoomMode0Checked}");
 
-            sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomModeEnabled}");
-
             controlPanel.mbProgressBar0.Value = 30;
             controlPanel.updateMainCrosshair();
 
@@ -221,14 +219,6 @@ namespace RED.mbnq
                     controlPanel.mbnqCrosshairOverlay.Left = int.Parse(line.Substring("PositionX=".Length));
                 else if (line.StartsWith("PositionY=") && controlPanel.mbnqCrosshairOverlay != null)
                     controlPanel.mbnqCrosshairOverlay.Top = int.Parse(line.Substring("PositionY=".Length));
-                else if (line.StartsWith("ZoomEnabled="))
-                {
-                    bool.TryParse(line.Substring("ZoomEnabled=".Length), out bool zoomEnabled);
-                    if (zoomEnabled != ZoomMode.IsZoomModeEnabled)
-                    {
-                        ZoomMode.ToggleZoomMode(); // This will correctly set the value
-                    }
-                }
             }
 
             controlPanel.mbProgressBar0.Value = 60;
@@ -276,8 +266,6 @@ namespace RED.mbnq
                 sb.AppendLine("mbHideCrosshair=False");                
                 sb.AppendLine("mbDisableSound=False");
                 sb.AppendLine("mbEnableZoomMode0=False");
-
-                sb.AppendLine("ZoomEnabled=False");
 
                 byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
                 File.WriteAllBytes(settingsFilePath, encryptedData);
