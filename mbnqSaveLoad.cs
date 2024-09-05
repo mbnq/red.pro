@@ -131,6 +131,7 @@ namespace RED.mbnq
             sb.AppendLine($"mbDebugon={controlPanel.mbDebugonChecked}");
             sb.AppendLine($"mbAOnTop={controlPanel.mbAOnTopChecked}");
             sb.AppendLine($"mbHideCrosshair={controlPanel.mbHideCrosshairChecked}");
+            sb.AppendLine($"mbDisableSound={controlPanel.mbDisableSoundChecked}");
             sb.AppendLine($"SoundEnabled={Sounds.IsSoundEnabled}");
             sb.AppendLine($"ZoomEnabled={ZoomMode.IsZoomModeEnabled}");
 
@@ -209,6 +210,8 @@ namespace RED.mbnq
                     controlPanel.mbAOnTopChecked = bool.Parse(line.Substring("mbAOnTop=".Length));
                 else if (line.StartsWith("mbHideCrosshair="))
                     controlPanel.mbHideCrosshairChecked = bool.Parse(line.Substring("mbHideCrosshair=".Length));
+                else if (line.StartsWith("mbDisableSound="))
+                    controlPanel.mbDisableSoundChecked = bool.Parse(line.Substring("mbDisableSound=".Length));
 
 
                 else if (line.StartsWith("PositionX=") && controlPanel.mbnqCrosshairOverlay != null)
@@ -269,7 +272,8 @@ namespace RED.mbnq
                 sb.AppendLine("AutoSaveOnExit=True");
                 sb.AppendLine("mbDebugonChecked=False");
                 sb.AppendLine("mbAOnTop=False");
-                sb.AppendLine("mbHideCrosshair=False");
+                sb.AppendLine("mbHideCrosshair=False");                
+                sb.AppendLine("mbDisableSound=False");
                 sb.AppendLine("SoundEnabled=True");
                 sb.AppendLine("ZoomEnabled=False");
 
