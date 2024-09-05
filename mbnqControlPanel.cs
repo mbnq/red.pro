@@ -324,11 +324,6 @@ namespace RED.mbnq
             transparency = transparencySlider.Slider;
             panelForTab1.Controls.Add(transparencySlider.Panel);
 
-            // Zoom Level
-            var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10, 3); // Adjust the range as needed
-            zoomLevel = zoomLevelSlider.Slider;
-            panelForTab1.Controls.Add(zoomLevelSlider.Panel);
-
             // Offsets
             var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000, 1000);
             offsetX = offsetXSlider.Slider;
@@ -337,6 +332,11 @@ namespace RED.mbnq
             var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000, 1000);
             offsetY = offsetYSlider.Slider;
             panelForTab1.Controls.Add(offsetYSlider.Panel);
+
+            // Zoom Level
+            var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10, 3); // Adjust the range as needed
+            zoomLevel = zoomLevelSlider.Slider;
+            panelForTab1.Controls.Add(zoomLevelSlider.Panel);
 
             /* --- --- ---  Buttons --- --- --- */
 
@@ -472,12 +472,13 @@ namespace RED.mbnq
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
             panelForTab2.Controls.Add(mbAutoSaveCheckbox);
-            panelForTab2.Controls.Add(mbDebugonCheckbox);
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
             panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             panelForTab2.Controls.Add(mbDisableSoundCheckBox);
             panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
 
+
+            panelForTab2.Controls.Add(mbDebugonCheckbox);
             mbnqTab2.Controls.Add(panelForTab2);
         }
 
