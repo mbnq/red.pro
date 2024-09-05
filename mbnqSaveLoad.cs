@@ -132,7 +132,7 @@ namespace RED.mbnq
             sb.AppendLine($"mbAOnTop={controlPanel.mbAOnTopChecked}");
             sb.AppendLine($"mbHideCrosshair={controlPanel.mbHideCrosshairChecked}");
             sb.AppendLine($"mbDisableSound={controlPanel.mbDisableSoundChecked}");
-            sb.AppendLine($"mbEnableZoomMode0={controlPanel.mbEnableZoomMode0Checked}");
+            sb.AppendLine($"mbEnableZoomMode={controlPanel.mbEnableZoomModeChecked}");
 
             controlPanel.mbProgressBar0.Value = 30;
             controlPanel.updateMainCrosshair();
@@ -211,8 +211,8 @@ namespace RED.mbnq
                     controlPanel.mbHideCrosshairChecked = bool.Parse(line.Substring("mbHideCrosshair=".Length));
                 else if (line.StartsWith("mbDisableSound="))
                     controlPanel.mbDisableSoundChecked = bool.Parse(line.Substring("mbDisableSound=".Length));
-                else if (line.StartsWith("mbEnableZoomMode0="))
-                    controlPanel.mbEnableZoomMode0Checked = bool.Parse(line.Substring("mbEnableZoomMode0=".Length));
+                else if (line.StartsWith("mbEnableZoomMode="))
+                    controlPanel.mbEnableZoomModeChecked = bool.Parse(line.Substring("mbEnableZoomMode=".Length));
 
 
                 else if (line.StartsWith("PositionX=") && controlPanel.mbnqCrosshairOverlay != null)
@@ -265,7 +265,7 @@ namespace RED.mbnq
                 sb.AppendLine("mbAOnTop=False");
                 sb.AppendLine("mbHideCrosshair=False");                
                 sb.AppendLine("mbDisableSound=False");
-                sb.AppendLine("mbEnableZoomMode0=False");
+                sb.AppendLine("mbEnableZoomMode=False");
 
                 byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
                 File.WriteAllBytes(settingsFilePath, encryptedData);

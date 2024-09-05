@@ -32,12 +32,11 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomMode0CheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
         public bool mHideCrosshair = false;
-        public bool EnableZoomMode = false;
 
         private MaterialTabControl materialTabControl;
         private MaterialTabSelector mbnqTabSelector;
@@ -95,8 +94,8 @@ namespace RED.mbnq
             mbDisableSoundCheckBox.Checked = this.TopMost;
             mbDisableSoundCheckBox.CheckedChanged += mbDisableSoundCheckBox_CheckedChanged;
 
-            mbEnableZoomMode0CheckBox.Checked = this.TopMost;
-            mbEnableZoomMode0CheckBox.CheckedChanged += mbEnableZoomMode0CheckBox_CheckedChanged;
+            mbEnableZoomModeCheckBox.Checked = this.TopMost;
+            mbEnableZoomModeCheckBox.CheckedChanged += mbEnableZoomModeCheckBox_CheckedChanged;
         }
 
         // main display init
@@ -199,15 +198,15 @@ namespace RED.mbnq
                 Sounds.IsSoundEnabled = true;
             }
         }
-        private void mbEnableZoomMode0CheckBox_CheckedChanged(object sender, EventArgs e)
+        private void mbEnableZoomModeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (mbDisableSoundCheckBox.Checked)
+            if (mbEnableZoomModeCheckBox.Checked)
             {
-                EnableZoomMode = true;
+                ZoomMode.IsZoomModeEnabled = true;
             }
             else
             {
-                EnableZoomMode = false;
+                ZoomMode.IsZoomModeEnabled = false;
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -435,7 +434,7 @@ namespace RED.mbnq
             };
 
             // Enable ZoomMode
-            mbEnableZoomMode0CheckBox = new MaterialSwitch
+            mbEnableZoomModeCheckBox = new MaterialSwitch
             {
                 Text = "Enable ZoomMode   ",
                 AutoSize = true,
@@ -443,7 +442,7 @@ namespace RED.mbnq
                 Enabled = true
             };
 
-            mbEnableZoomMode0CheckBox.CheckedChanged += (s, e) =>
+            mbEnableZoomModeCheckBox.CheckedChanged += (s, e) =>
             {
                 if (mSettingsLoaded > 0)
                 {
@@ -475,7 +474,7 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
             panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             panelForTab2.Controls.Add(mbDisableSoundCheckBox);
-            panelForTab2.Controls.Add(mbEnableZoomMode0CheckBox);
+            panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
 
             mbnqTab2.Controls.Add(panelForTab2);
         }
@@ -507,10 +506,10 @@ namespace RED.mbnq
             get => mbDisableSoundCheckBox.Checked;
             set => mbDisableSoundCheckBox.Checked = value;
         }
-        public bool mbEnableZoomMode0Checked
+        public bool mbEnableZoomModeChecked
         {
-            get => mbEnableZoomMode0CheckBox.Checked;
-            set => mbEnableZoomMode0CheckBox.Checked = value;
+            get => mbEnableZoomModeCheckBox.Checked;
+            set => mbEnableZoomModeCheckBox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
