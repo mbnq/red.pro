@@ -18,7 +18,7 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem toggleZoomMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textConsoleMenuItem;    // openSettingsDirMenuItem
+        private ToolStripMenuItem centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textConsoleMenuItem;    // openSettingsDirMenuItem
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -31,11 +31,6 @@ namespace RED.mbnq
             separator4 = new ToolStripSeparator();
             separator5 = new ToolStripSeparator();
             separator6 = new ToolStripSeparator();
-
-            // ZoomMode
-            toggleZoomMenuItem = new ToolStripMenuItem("Enable ZoomMode");
-            toggleZoomMenuItem.Click += ToggleZoomMenuItem_Click;
-            toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
 
             // New Capture Region Menu Item
             newCaptureRegionMenuItem = new ToolStripMenuItem("New Glass Element");
@@ -88,7 +83,6 @@ namespace RED.mbnq
             this.Items.Add(loadCustomMenuItem);
             this.Items.Add(removeCustomMenuItem);
             this.Items.Add(separator4);
-            this.Items.Add(toggleZoomMenuItem);
             this.Items.Add(textConsoleMenuItem);
             this.Items.Add(separator3);
             // this.Items.Add(centerMenuItem);
@@ -151,14 +145,6 @@ namespace RED.mbnq
             Rectangle captureArea = selector.SelectCaptureArea();
             GlassHudOverlay.displayOverlay = new GlassHudOverlay(captureArea, captureArea); // Pass the same region for both for now
             GlassHudOverlay.displayOverlay.Show(); // Show the overlay
-        }
-
-        // zoomMode toggle
-        private void ToggleZoomMenuItem_Click(object sender, EventArgs e)
-        {
-            ZoomMode.ToggleZoomMode();
-            toggleZoomMenuItem.Text = ZoomMode.IsZoomModeEnabled ? "Disable ZoomMode" : "Enable ZoomMode";
-            Sounds.PlayClickSoundOnce();
         }
 
         // center overlay
