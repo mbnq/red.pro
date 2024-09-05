@@ -203,10 +203,12 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
+                zoomLevel.Enabled = true;
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
+                zoomLevel.Enabled = false;
             }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
@@ -676,6 +678,7 @@ namespace RED.mbnq
 
                 // Update zoom
                 ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
+                if (ZoomMode.IsZoomModeEnabled) { zoomLevel.Enabled = true; } else { zoomLevel.Enabled = false; }
 
                 // Update opacity
                 if (mHideCrosshair) 
