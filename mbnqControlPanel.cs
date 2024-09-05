@@ -438,7 +438,7 @@ namespace RED.mbnq
             // Enable ZoomMode
             mbEnableZoomModeCheckBox = new MaterialSwitch
             {
-                Text = "Enable ZoomMode   ",
+                Text = "Enable SniperMode   ",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left,
                 Enabled = true
@@ -471,13 +471,12 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
-            panelForTab2.Controls.Add(mbAutoSaveCheckbox);
-            panelForTab2.Controls.Add(mbAOnTopCheckBox);
+            panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
             panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             panelForTab2.Controls.Add(mbDisableSoundCheckBox);
-            panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
 
-
+            panelForTab2.Controls.Add(mbAOnTopCheckBox);
+            panelForTab2.Controls.Add(mbAutoSaveCheckbox);
             panelForTab2.Controls.Add(mbDebugonCheckbox);
             mbnqTab2.Controls.Add(panelForTab2);
         }
