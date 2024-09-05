@@ -18,7 +18,7 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem toggleZoomMenuItem, toggleSoundMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textConsoleMenuItem;    // openSettingsDirMenuItem
+        private ToolStripMenuItem toggleZoomMenuItem, centerMenuItem, saveMenuItem, loadMenuItem, aboutMenuItem, closeMenuItem, loadCustomMenuItem, removeCustomMenuItem, newCaptureRegionMenuItem, textConsoleMenuItem;    // openSettingsDirMenuItem
         private ToolStripSeparator separator1, separator2, separator3, separator4, separator5, separator6;
         public rmbMenu(ControlPanel controlPanel)
         {
@@ -44,11 +44,6 @@ namespace RED.mbnq
             // Initialize menu item Browse UserData
             ToolStripMenuItem openSettingsDirMenuItem = new ToolStripMenuItem("Browse User Data");
             openSettingsDirMenuItem.Click += OpenSettingsDirMenuItem_Click;
-
-            // Initialize menu item Toggle Sound
-            toggleSoundMenuItem = new ToolStripMenuItem("Toggle Sound");
-            toggleSoundMenuItem.Click += ToggleSoundMenuItem_Click;
-            toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
 
             // Initialize menu item Center Overlay
             centerMenuItem = new ToolStripMenuItem("Center Overlay");
@@ -94,7 +89,6 @@ namespace RED.mbnq
             this.Items.Add(removeCustomMenuItem);
             this.Items.Add(separator4);
             this.Items.Add(toggleZoomMenuItem);
-            this.Items.Add(toggleSoundMenuItem);
             this.Items.Add(textConsoleMenuItem);
             this.Items.Add(separator3);
             // this.Items.Add(centerMenuItem);
@@ -157,14 +151,6 @@ namespace RED.mbnq
             Rectangle captureArea = selector.SelectCaptureArea();
             GlassHudOverlay.displayOverlay = new GlassHudOverlay(captureArea, captureArea); // Pass the same region for both for now
             GlassHudOverlay.displayOverlay.Show(); // Show the overlay
-        }
-
-        // sounds mute toggle
-        private void ToggleSoundMenuItem_Click(object sender, EventArgs e)
-        {
-            Sounds.IsSoundEnabled = !Sounds.IsSoundEnabled;
-            toggleSoundMenuItem.Text = Sounds.IsSoundEnabled ? "Disable Sound" : "Enable Sound";
-            Sounds.PlayClickSoundOnce();
         }
 
         // zoomMode toggle
