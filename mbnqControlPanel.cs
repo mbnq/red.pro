@@ -226,12 +226,10 @@ namespace RED.mbnq
             if (mbEnableFlirCheckBox.Checked)
             {
                 mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
-                Debug.WriteLine("FLIR Enabled via Checkbox");
             }
             else
             {
                 mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
-                Debug.WriteLine("FLIR Disabled via Checkbox");
             }
         }
 
@@ -251,7 +249,7 @@ namespace RED.mbnq
             this.BeginInvoke((Action)(() =>
             {
                 mbInitSize = this.Size;
-                // Debug.WriteLineIf($"mbnq: Initialized size: {mbInitSize}");
+                // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
             }));
         }
 
@@ -879,7 +877,7 @@ namespace RED.mbnq
                         {
                             overlayForm.Show();
                         }
-                        Debug.WriteLine("FLIR Overlay Shown");
+                        Debug.WriteLineIf(mIsDebugOn, "mbnq: FLIR Overlay Shown");
                     }
                 }
                 else
@@ -896,7 +894,7 @@ namespace RED.mbnq
                         {
                             overlayForm.Hide();
                         }
-                        Debug.WriteLine("FLIR Overlay Hidden");
+                        Debug.WriteLineIf(mIsDebugOn, "mbnq: FLIR Overlay Hidden");
                     }
                 }
 
