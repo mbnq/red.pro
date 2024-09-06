@@ -8,8 +8,10 @@ namespace RED.mbnq
 {
     public class mbnqFLIR : Form
     {
+        private bool isOverlayVisible = false; // Whether the overlay is visible
+
         public static bool mbEnableFlir = false; // Global variable to control overlay, should be false by default
-                                                // Initialize and show fullscreen overlay (mbnqFLIR)
+
         public mbnqFLIR()
         {
             // Set the form style to remove borders and make it topmost
@@ -17,53 +19,60 @@ namespace RED.mbnq
             this.WindowState = FormWindowState.Maximized;
             this.TopMost = true;
 
-            // Set transparency settings
-            // this.BackColor = Color.LightGray; // Temporary background to be replaced
-            // this.TransparencyKey = Color.Black; // Make the temporary background color transparent
-
-            // Set opacity if desired (e.g., 70% opacity)
-            this.Opacity = 0.5;
+            // Set opacity if desired (e.g., 90% opacity)
+            this.Opacity = 0.25;  // Adjust this value if needed
 
             // Disable interaction with the form (makes it click-through)
             this.ShowInTaskbar = false;
+
+            // Start the async task for updating the grayscale overlay
+            _ = ManageGrayscaleOverlayAsync();  // Main grayscale overlay, updates every 100ms
         }
 
-        // Override the OnPaint method to apply the filter
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            // Apply a color filter using a semi-transparent brush
-            using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, Color.LightGray))) // Adjust color here
-            {
-                e.Graphics.FillRectangle(brush, this.ClientRectangle); // Fill the entire form
-            }
-        }
-
-        // Async function to handle enabling and disabling the overlay
-        public async Task ManageOverlayAsync()
+        // Async method to manage grayscale overlay (updates every 100ms)
+        private async Task ManageGrayscaleOverlayAsync()
         {
             while (true)
             {
                 if (mbEnableFlir)
                 {
                     // If the overlay is not visible, show it
-                    if (!this.Visible)
+                    if (!isOverlayVisible)
                     {
                         this.Invoke((Action)(() => this.Show()));
+                        isOverlayVisible = true;
                     }
+
+                    // Redraw the main grayscale overlay
+                    this.Invoke((Action)(() => this.Invalidate()));
                 }
                 else
                 {
-                    // If mbEnableFlir is false, hide the overlay
-                    if (this.Visible)
+                    // Hide the overlay if FLIR is disabled
+                    if (isOverlayVisible)
                     {
                         this.Invoke((Action)(() => this.Hide()));
+                        isOverlayVisible = false;
                     }
                 }
 
-                // Sleep for a short time before checking again
-                await Task.Delay(500); // Poll every 500ms
+                // Sleep for 100ms before updating again
+                await Task.Delay(100);
+            }
+        }
+
+        // Override the OnPaint method to apply the solid gray FLIR overlay
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Get the dimensions of the screen
+            Rectangle screenRect = this.ClientRectangle;
+
+            // Fill the rectangle with a medium gray color to simulate FLIR display
+            using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(128, 128, 128))) // Medium gray
+            {
+                e.Graphics.FillRectangle(solidGrayBrush, screenRect);
             }
         }
 
