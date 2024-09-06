@@ -57,7 +57,7 @@ namespace RED.mbnq
                 }
 
                 // Sleep for 100ms before updating again
-                await Task.Delay(100);
+                await Task.Delay(32);
             }
         }
 
