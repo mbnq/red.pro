@@ -254,6 +254,9 @@
     <Compile Include="Glass\glassSelector.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="mbnqFLIR.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="mbnqGlobalMouseHook.cs" />
     <Compile Include="mbnqCrosshair.cs">
       <SubType>Form</SubType>
