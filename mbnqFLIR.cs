@@ -10,9 +10,9 @@ namespace RED.mbnq
     {
         private bool isOverlayVisible = false; // Whether the overlay is visible
         private Random random = new Random(); // Random number generator
-        private int red = 56;
-        private int green = 255;
-        private int blue = 56;
+        private int red = 192;
+        private int green = 192;
+        private int blue = 192;
         private Timer repaintTimer;
 
         public static bool mbEnableFlir = false; // Global variable to control overlay, should be false by default
@@ -25,7 +25,7 @@ namespace RED.mbnq
             this.TopMost = true;
 
             // Set initial opacity
-            this.Opacity = 0.05;  // Adjust this value if needed
+            this.Opacity = 0.24;  // Adjust this value if needed
 
             // Disable interaction with the form (makes it click-through)
             this.ShowInTaskbar = false;
@@ -41,18 +41,18 @@ namespace RED.mbnq
         private void InitializeRepaintTimer()
         {
             repaintTimer = new Timer();
-            repaintTimer.Interval = 32; // Trigger every 32ms (~30 FPS)
+            repaintTimer.Interval = (2 + random.Next(6)); // Trigger every 32ms (~30 FPS)
             repaintTimer.Tick += (sender, args) =>
             {
                 if (mbEnableFlir)
                 {
                     // Randomize the color values (RGB) inside the timer loop
-                    red = Clamp(56 + random.Next(-10, 10), 0, 255);   // Vary red by ±10
-                    green = Clamp(255 + random.Next(-15, 15), 0, 255); // Vary green by ±15
-                    blue = Clamp(56 + random.Next(-10, 10), 0, 255);  // Vary blue by ±10
+                    red = Clamp(192 + random.Next(-16, 16), 0, 255);   // Vary red by ±10
+                    green = Clamp(192 + random.Next(-16, 16), 0, 255); // Vary green by ±15
+                    blue = Clamp(192 + random.Next(-16, 16), 0, 255);  // Vary blue by ±10
 
                     // Randomize opacity between 0.03 and 0.07 for slight variation
-                    this.Opacity = 0.03 + (0.04 * random.NextDouble());
+                    this.Opacity = 0.2 + (0.01 * random.NextDouble());
 
                     // Force the form to repaint
                     this.Invalidate(true);
@@ -85,8 +85,8 @@ namespace RED.mbnq
                     }
                 }
 
-                // Sleep for 32ms before checking again
-                await Task.Delay(32);
+                // Sleep for (X)ms before checking again
+                await Task.Delay(128);
             }
         }
 
