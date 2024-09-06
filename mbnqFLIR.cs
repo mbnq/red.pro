@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     public class mbnqFLIR : Form
     {
-        public static bool mbEnableFlir = false; // Global variable to control overlay
+        public static bool mbEnableFlir = false; // Global variable to control overlay, should be false by default
                                                 // Initialize and show fullscreen overlay (mbnqFLIR)
         public mbnqFLIR()
         {
@@ -18,8 +18,8 @@ namespace RED.mbnq
             this.TopMost = true;
 
             // Set transparency settings
-            this.BackColor = Color.Lime; // Temporary background to be replaced
-            this.TransparencyKey = Color.Lime; // Make the temporary background color transparent
+            this.BackColor = Color.LightGray; // Temporary background to be replaced
+            // this.TransparencyKey = Color.Gray; // Make the temporary background color transparent
 
             // Set opacity if desired (e.g., 70% opacity)
             this.Opacity = 0.7;

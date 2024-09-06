@@ -45,7 +45,7 @@ namespace RED.mbnq
         private MaterialTabSelector mbnqTabSelector;
         private TabPage mbnqTab1;
         private TabPage mbnqTab2;
-        private mbnqFLIR overlayForm;
+        private mbnqFLIR FlirOverlayForm;
 
         public Size mbInitSize = new Size(0, 0);
         public static readonly int mCPWidth = 262;
@@ -60,7 +60,7 @@ namespace RED.mbnq
             InitializeComponent();
             InitializeMaterialSkin();
 
-            overlayForm = new mbnqFLIR();
+            FlirOverlayForm = new mbnqFLIR();
             _ = ManageOverlayAsync();                           // for flir
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
@@ -858,6 +858,9 @@ namespace RED.mbnq
             }
         }
 
+
+        /* --- --- ---  --- --- --- */
+
         // Async method to manage overlay visibility based on mbEnableFlir
         private async Task ManageOverlayAsync()
         {
@@ -866,16 +869,16 @@ namespace RED.mbnq
                 if (mbnqFLIR.mbEnableFlir)
                 {
                     // Show the overlay if enabled and not already visible
-                    if (overlayForm != null && !overlayForm.Visible)
+                    if (FlirOverlayForm != null && !FlirOverlayForm.Visible)
                     {
                         // Ensure this is done on the UI thread
-                        if (overlayForm.InvokeRequired)
+                        if (FlirOverlayForm.InvokeRequired)
                         {
-                            overlayForm.Invoke((Action)(() => overlayForm.Show()));
+                            FlirOverlayForm.Invoke((Action)(() => FlirOverlayForm.Show()));
                         }
                         else
                         {
-                            overlayForm.Show();
+                            FlirOverlayForm.Show();
                         }
                         Debug.WriteLineIf(mIsDebugOn, "mbnq: FLIR Overlay Shown");
                     }
@@ -883,16 +886,16 @@ namespace RED.mbnq
                 else
                 {
                     // Hide the overlay if disabled and currently visible
-                    if (overlayForm != null && overlayForm.Visible)
+                    if (FlirOverlayForm != null && FlirOverlayForm.Visible)
                     {
                         // Ensure this is done on the UI thread
-                        if (overlayForm.InvokeRequired)
+                        if (FlirOverlayForm.InvokeRequired)
                         {
-                            overlayForm.Invoke((Action)(() => overlayForm.Hide()));
+                            FlirOverlayForm.Invoke((Action)(() => FlirOverlayForm.Hide()));
                         }
                         else
                         {
-                            overlayForm.Hide();
+                            FlirOverlayForm.Hide();
                         }
                         Debug.WriteLineIf(mIsDebugOn, "mbnq: FLIR Overlay Hidden");
                     }
@@ -902,9 +905,6 @@ namespace RED.mbnq
                 await Task.Delay(500); // Poll every 500 ms
             }
         }
-
-
-
         private void ToggleFlir(bool enable)
         {
             mbnqFLIR.mbEnableFlir = enable;  // Set the global variable to enable/disable the overlay
