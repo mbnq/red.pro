@@ -9,6 +9,10 @@ namespace RED.mbnq
     public class mbnqFLIR : Form
     {
         private bool isOverlayVisible = false; // Whether the overlay is visible
+        private Random random = new Random(); // Random number generator
+        private int red = 56;
+        private int green = 255;
+        private int blue = 56;
 
         public static bool mbEnableFlir = false; // Global variable to control overlay, should be false by default
 
@@ -19,7 +23,7 @@ namespace RED.mbnq
             this.WindowState = FormWindowState.Maximized;
             this.TopMost = true;
 
-            // Set opacity if desired (e.g., 90% opacity)
+            // Set initial opacity
             this.Opacity = 0.05;  // Adjust this value if needed
 
             // Disable interaction with the form (makes it click-through)
@@ -43,8 +47,21 @@ namespace RED.mbnq
                         isOverlayVisible = true;
                     }
 
-                    // Redraw the main grayscale overlay
-                    this.Invoke((Action)(() => this.Invalidate()));
+                    // Randomize opacity between 0.03 and 0.07 for slight variation
+                    double randomOpacity = 0.03 + (0.04 * random.NextDouble());
+                    this.Invoke((Action)(() => this.Opacity = randomOpacity));
+
+                    // Randomize the color values (RGB)
+                    red = Clamp(56 + random.Next(-10, 10), 0, 255);   // Vary red by ±10
+                    green = Clamp(255 + random.Next(-15, 15), 0, 255); // Vary green by ±15
+                    blue = Clamp(56 + random.Next(-10, 10), 0, 255);  // Vary blue by ±10
+
+                    // Force a repaint of the form with the new values
+                    this.Invoke((Action)(() =>
+                    {
+                        this.Invalidate(true);  // Invalidate the entire form and its children
+                        this.Update();          // Force synchronous repaint
+                    }));
                 }
                 else
                 {
@@ -56,10 +73,11 @@ namespace RED.mbnq
                     }
                 }
 
-                // Sleep for 100ms before updating again
+                // Sleep for 32ms before updating again
                 await Task.Delay(32);
             }
         }
+
 
         // Override the OnPaint method to apply the solid gray FLIR overlay
         protected override void OnPaint(PaintEventArgs e)
@@ -69,11 +87,19 @@ namespace RED.mbnq
             // Get the dimensions of the screen
             Rectangle screenRect = this.ClientRectangle;
 
-            // Fill the rectangle with a medium gray color to simulate FLIR display
-            using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(56, 255, 56))) // Medium gray
+            // Fill the rectangle with the dynamically adjusted color
+            using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(red, green, blue)))
             {
                 e.Graphics.FillRectangle(solidGrayBrush, screenRect);
             }
+        }
+
+        // Helper method to clamp values between a min and max
+        public static int Clamp(int value, int min, int max)
+        {
+            if (value < min) return min;
+            if (value > max) return max;
+            return value;
         }
 
         // Ensure form is click-through
