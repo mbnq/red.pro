@@ -13,6 +13,7 @@ namespace RED.mbnq
         private int red = 56;
         private int green = 255;
         private int blue = 56;
+        private Timer repaintTimer;
 
         public static bool mbEnableFlir = false; // Global variable to control overlay, should be false by default
 
@@ -29,11 +30,38 @@ namespace RED.mbnq
             // Disable interaction with the form (makes it click-through)
             this.ShowInTaskbar = false;
 
+            // Start the timer for continuous repaints
+            InitializeRepaintTimer();
+
             // Start the async task for updating the grayscale overlay
             _ = ManageGrayscaleOverlayAsync();  // Main grayscale overlay, updates every 100ms
         }
 
-        // Async method to manage grayscale overlay (updates every 100ms)
+        // Initialize and start the timer for forcing repaints
+        private void InitializeRepaintTimer()
+        {
+            repaintTimer = new Timer();
+            repaintTimer.Interval = 32; // Trigger every 32ms (~30 FPS)
+            repaintTimer.Tick += (sender, args) =>
+            {
+                if (mbEnableFlir)
+                {
+                    // Randomize the color values (RGB) inside the timer loop
+                    red = Clamp(56 + random.Next(-10, 10), 0, 255);   // Vary red by ±10
+                    green = Clamp(255 + random.Next(-15, 15), 0, 255); // Vary green by ±15
+                    blue = Clamp(56 + random.Next(-10, 10), 0, 255);  // Vary blue by ±10
+
+                    // Randomize opacity between 0.03 and 0.07 for slight variation
+                    this.Opacity = 0.03 + (0.04 * random.NextDouble());
+
+                    // Force the form to repaint
+                    this.Invalidate(true);
+                }
+            };
+            repaintTimer.Start();
+        }
+
+        // Async method to manage grayscale overlay (updates overlay visibility)
         private async Task ManageGrayscaleOverlayAsync()
         {
             while (true)
@@ -46,22 +74,6 @@ namespace RED.mbnq
                         this.Invoke((Action)(() => this.Show()));
                         isOverlayVisible = true;
                     }
-
-                    // Randomize opacity between 0.03 and 0.07 for slight variation
-                    double randomOpacity = 0.03 + (0.04 * random.NextDouble());
-                    this.Invoke((Action)(() => this.Opacity = randomOpacity));
-
-                    // Randomize the color values (RGB)
-                    red = Clamp(56 + random.Next(-10, 10), 0, 255);   // Vary red by ±10
-                    green = Clamp(255 + random.Next(-15, 15), 0, 255); // Vary green by ±15
-                    blue = Clamp(56 + random.Next(-10, 10), 0, 255);  // Vary blue by ±10
-
-                    // Force a repaint of the form with the new values
-                    this.Invoke((Action)(() =>
-                    {
-                        this.Invalidate(true);  // Invalidate the entire form and its children
-                        this.Update();          // Force synchronous repaint
-                    }));
                 }
                 else
                 {
@@ -73,11 +85,10 @@ namespace RED.mbnq
                     }
                 }
 
-                // Sleep for 32ms before updating again
+                // Sleep for 32ms before checking again
                 await Task.Delay(32);
             }
         }
-
 
         // Override the OnPaint method to apply the solid gray FLIR overlay
         protected override void OnPaint(PaintEventArgs e)
@@ -86,6 +97,9 @@ namespace RED.mbnq
 
             // Get the dimensions of the screen
             Rectangle screenRect = this.ClientRectangle;
+
+            // Debugging - ensure OnPaint is called
+            Console.WriteLine("OnPaint called");
 
             // Fill the rectangle with the dynamically adjusted color
             using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(red, green, blue)))
