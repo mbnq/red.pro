@@ -20,7 +20,7 @@ namespace RED.mbnq
             this.TopMost = true;
 
             // Set opacity if desired (e.g., 90% opacity)
-            this.Opacity = 0.25;  // Adjust this value if needed
+            this.Opacity = 0.05;  // Adjust this value if needed
 
             // Disable interaction with the form (makes it click-through)
             this.ShowInTaskbar = false;
@@ -70,7 +70,7 @@ namespace RED.mbnq
             Rectangle screenRect = this.ClientRectangle;
 
             // Fill the rectangle with a medium gray color to simulate FLIR display
-            using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(128, 128, 128))) // Medium gray
+            using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(56, 255, 56))) // Medium gray
             {
                 e.Graphics.FillRectangle(solidGrayBrush, screenRect);
             }
