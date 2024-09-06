@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using MaterialSkin;
 using static MaterialSkin.Controls.MaterialTabSelector;
+using System.Threading.Tasks;
 
 namespace RED.mbnq
 {
@@ -33,7 +34,7 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2;
         public mbnqCrosshair mbnqCrosshairDisplay;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
         private rmbMenu rightClickMenu;
         private int mControlWidth;
         public int mSettingsLoaded = 0;
@@ -43,6 +44,7 @@ namespace RED.mbnq
         private MaterialTabSelector mbnqTabSelector;
         private TabPage mbnqTab1;
         private TabPage mbnqTab2;
+        private mbnqFLIR overlayForm;
 
         public Size mbInitSize = new Size(0, 0);
         public static readonly int mCPWidth = 262;
@@ -453,6 +455,22 @@ namespace RED.mbnq
                 }
             };
 
+            // Enable ZoomMode
+            mbEnableFlirCheckBox = new MaterialSwitch
+            {
+                Text = "Enable FLIRt   ",
+                AutoSize = true,
+                Anchor = AnchorStyles.Left,
+                Enabled = true
+            };
+
+            mbEnableFlirCheckBox.CheckedChanged += (s, e) =>
+            {
+                if (mSettingsLoaded > 0)
+                {
+                    Sounds.PlayClickSound();
+                }
+            };
 
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
@@ -813,6 +831,37 @@ namespace RED.mbnq
                     this.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - this.Height, newTop)); // Ensure within vertical bounds
                 }
             }
+        }
+
+        // Async method to manage overlay visibility based on mbEnableFlir
+        private async Task ManageOverlayAsync()
+        {
+            while (true)
+            {
+                if (mbnqFLIR.mbEnableFlir)
+                {
+                    // Show the overlay if it's not visible
+                    if (!overlayForm.Visible)
+                    {
+                        overlayForm.Invoke((Action)(() => overlayForm.Show()));
+                    }
+                }
+                else
+                {
+                    // Hide the overlay if it's visible
+                    if (overlayForm.Visible)
+                    {
+                        overlayForm.Invoke((Action)(() => overlayForm.Hide()));
+                    }
+                }
+
+                // Wait before re-checking the condition
+                await Task.Delay(500);  // Poll every 500ms
+            }
+        }
+        private void ToggleFlir(bool enable)
+        {
+            mbnqFLIR.mbEnableFlir = enable;  // Set the global variable to enable/disable the overlay
         }
 
         /* --- --- ---  --- --- --- */
