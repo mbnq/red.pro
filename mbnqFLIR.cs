@@ -18,11 +18,11 @@ namespace RED.mbnq
             this.TopMost = true;
 
             // Set transparency settings
-            this.BackColor = Color.LightGray; // Temporary background to be replaced
-            // this.TransparencyKey = Color.Gray; // Make the temporary background color transparent
+            // this.BackColor = Color.LightGray; // Temporary background to be replaced
+            // this.TransparencyKey = Color.Black; // Make the temporary background color transparent
 
             // Set opacity if desired (e.g., 70% opacity)
-            this.Opacity = 0.7;
+            this.Opacity = 0.5;
 
             // Disable interaction with the form (makes it click-through)
             this.ShowInTaskbar = false;
@@ -34,7 +34,7 @@ namespace RED.mbnq
             base.OnPaint(e);
 
             // Apply a color filter using a semi-transparent brush
-            using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, Color.Blue))) // Adjust color here
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, Color.LightGray))) // Adjust color here
             {
                 e.Graphics.FillRectangle(brush, this.ClientRectangle); // Fill the entire form
             }
