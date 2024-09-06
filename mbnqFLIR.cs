@@ -41,7 +41,7 @@ namespace RED.mbnq
         private void InitializeRepaintTimer()
         {
             repaintTimer = new Timer();
-            repaintTimer.Interval = (2 + random.Next(6)); // Trigger every 32ms (~30 FPS)
+            repaintTimer.Interval = (128 + random.Next(128)); // Trigger every 32ms (~30 FPS)
             repaintTimer.Tick += (sender, args) =>
             {
                 if (mbEnableFlir)
@@ -86,7 +86,7 @@ namespace RED.mbnq
                 }
 
                 // Sleep for (X)ms before checking again
-                await Task.Delay(128);
+                await Task.Delay(256);
             }
         }
 
@@ -99,7 +99,7 @@ namespace RED.mbnq
             Rectangle screenRect = this.ClientRectangle;
 
             // Debugging - ensure OnPaint is called
-            Console.WriteLine("OnPaint called");
+            // Console.WriteLine("OnPaint called");
 
             // Fill the rectangle with the dynamically adjusted color
             using (SolidBrush solidGrayBrush = new SolidBrush(Color.FromArgb(red, green, blue)))
