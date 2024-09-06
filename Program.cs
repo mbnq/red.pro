@@ -55,9 +55,6 @@ namespace RED.mbnq
                 }
             };
 
-            // Initialize and show fullscreen overlay (mbnqFLIR)
-            mbnqFLIR overlayForm = new mbnqFLIR();
-
             Application.Run(controlPanel); // This will run the main display and overlay together
         }
     }

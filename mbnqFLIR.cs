@@ -8,7 +8,7 @@ namespace RED.mbnq
 {
     public class mbnqFLIR : Form
     {
-        public static bool mbEnableFlir = true; // Global variable to control overlay
+        public static bool mbEnableFlir = false; // Global variable to control overlay
                                                 // Initialize and show fullscreen overlay (mbnqFLIR)
         public mbnqFLIR()
         {

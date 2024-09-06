@@ -21,6 +21,7 @@ using System.Windows.Controls.Primitives;
 using MaterialSkin;
 using static MaterialSkin.Controls.MaterialTabSelector;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace RED.mbnq
 {
@@ -58,6 +59,9 @@ namespace RED.mbnq
             InitializeTabs();
             InitializeComponent();
             InitializeMaterialSkin();
+
+            overlayForm = new mbnqFLIR();
+            _ = ManageOverlayAsync();                           // for flir
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
 
@@ -99,6 +103,9 @@ namespace RED.mbnq
 
             mbEnableZoomModeCheckBox.Checked = this.TopMost;
             mbEnableZoomModeCheckBox.CheckedChanged += mbEnableZoomModeCheckBox_CheckedChanged;
+
+            mbEnableFlirCheckBox.Checked = this.TopMost;
+            mbEnableFlirCheckBox.CheckedChanged += mbEnableFlirCheckBox_CheckedChanged;
         }
 
         // main display init
@@ -214,6 +221,20 @@ namespace RED.mbnq
                 zoomLevel.Enabled = false;
             }
         }
+        private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbEnableFlirCheckBox.Checked)
+            {
+                mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
+                Debug.WriteLine("FLIR Enabled via Checkbox");
+            }
+            else
+            {
+                mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
+                Debug.WriteLine("FLIR Disabled via Checkbox");
+            }
+        }
+
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             updateMainCrosshair();
@@ -455,7 +476,7 @@ namespace RED.mbnq
                 }
             };
 
-            // Enable ZoomMode
+            // Enable FLIR mode
             mbEnableFlirCheckBox = new MaterialSwitch
             {
                 Text = "Enable FLIRt   ",
@@ -491,6 +512,7 @@ namespace RED.mbnq
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
             panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
+            panelForTab2.Controls.Add(mbEnableFlirCheckBox);
             panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             panelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
@@ -531,6 +553,11 @@ namespace RED.mbnq
         {
             get => mbEnableZoomModeCheckBox.Checked;
             set => mbEnableZoomModeCheckBox.Checked = value;
+        }
+        public bool mbEnableFlirChecked
+        {
+            get => mbEnableFlirCheckBox.Checked;
+            set => mbEnableFlirCheckBox.Checked = value;
         }
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
@@ -840,25 +867,46 @@ namespace RED.mbnq
             {
                 if (mbnqFLIR.mbEnableFlir)
                 {
-                    // Show the overlay if it's not visible
-                    if (!overlayForm.Visible)
+                    // Show the overlay if enabled and not already visible
+                    if (overlayForm != null && !overlayForm.Visible)
                     {
-                        overlayForm.Invoke((Action)(() => overlayForm.Show()));
+                        // Ensure this is done on the UI thread
+                        if (overlayForm.InvokeRequired)
+                        {
+                            overlayForm.Invoke((Action)(() => overlayForm.Show()));
+                        }
+                        else
+                        {
+                            overlayForm.Show();
+                        }
+                        Debug.WriteLine("FLIR Overlay Shown");
                     }
                 }
                 else
                 {
-                    // Hide the overlay if it's visible
-                    if (overlayForm.Visible)
+                    // Hide the overlay if disabled and currently visible
+                    if (overlayForm != null && overlayForm.Visible)
                     {
-                        overlayForm.Invoke((Action)(() => overlayForm.Hide()));
+                        // Ensure this is done on the UI thread
+                        if (overlayForm.InvokeRequired)
+                        {
+                            overlayForm.Invoke((Action)(() => overlayForm.Hide()));
+                        }
+                        else
+                        {
+                            overlayForm.Hide();
+                        }
+                        Debug.WriteLine("FLIR Overlay Hidden");
                     }
                 }
 
                 // Wait before re-checking the condition
-                await Task.Delay(500);  // Poll every 500ms
+                await Task.Delay(500); // Poll every 500 ms
             }
         }
+
+
+
         private void ToggleFlir(bool enable)
         {
             mbnqFLIR.mbEnableFlir = enable;  // Set the global variable to enable/disable the overlay
