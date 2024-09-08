@@ -84,8 +84,8 @@
         private const int ICON_SIZE = 24;
         private const int FIRST_TAB_PADDING = 0;
         private const int TAB_HEADER_PADDING = 0;
-        private const int TAB_WIDTH_MIN = (mCPWidth / 2);
-        private const int TAB_WIDTH_MAX = (mCPWidth / 2);
+        private const int TAB_WIDTH_MIN = (mCPWidth / 3);
+        private const int TAB_WIDTH_MAX = (mCPWidth / 3);
 
         private int _tab_over_index = -1;
 

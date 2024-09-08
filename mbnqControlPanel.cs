@@ -33,7 +33,8 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         private Button centerButton;
         public MaterialProgressBar mbProgressBar0;
-        private FlowLayoutPanel panelForTab1, panelForTab2;
+        private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
+        private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
         public mbnqCrosshair mbnqCrosshairDisplay;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
         private rmbMenu rightClickMenu;
@@ -43,8 +44,6 @@ namespace RED.mbnq
 
         private MaterialTabControl materialTabControl;
         private MaterialTabSelector mbnqTabSelector;
-        private TabPage mbnqTab1;
-        private TabPage mbnqTab2;
         private mbnqFLIR FlirOverlayForm;
 
         public Size mbInitSize = new Size(0, 0);
@@ -270,10 +269,10 @@ namespace RED.mbnq
             // Create two tab pages
             mbnqTab1 = new TabPage("Crosshair");
             mbnqTab2 = new TabPage("Options");
+            mbnqTab3 = new TabPage("SysTools");
 
             // Add TabPages to TabControl
-            materialTabControl.TabPages.Add(mbnqTab1);
-            materialTabControl.TabPages.Add(mbnqTab2);
+            materialTabControl.TabPages.AddRange(new TabPage[] { mbnqTab1, mbnqTab2, mbnqTab3 });
 
             foreach (TabPage tab in materialTabControl.TabPages)
             {
@@ -323,6 +322,13 @@ namespace RED.mbnq
                 FlowDirection = FlowDirection.TopDown
             };
             panelForTab2.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
+
+            panelForTab3 = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown
+            };
+            panelForTab3.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
 
             /* --- --- ---  Sliders --- --- --- */
             // label, min, max, def
