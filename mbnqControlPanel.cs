@@ -31,7 +31,7 @@ namespace RED.mbnq
         public static readonly bool mPBIsOn = false;            // progress bar 
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        private Button centerButton;
+        private Button centerButton, sysVerifyButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
         private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
@@ -380,6 +380,15 @@ namespace RED.mbnq
             };
             centerButton.Click += CenterButton_Click;
 
+            // System integrity verify
+            sysVerifyButton = new MaterialButton
+            {
+                Text = "Verify System Integrity",
+                AutoSize = false,
+                Width = mControlWidth
+            };
+            // sysVerifyButton.Click += sysVerifyButton_Click;
+
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
             mbAutoSaveCheckbox = new MaterialSwitch
@@ -527,6 +536,14 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbAutoSaveCheckbox);
             panelForTab2.Controls.Add(mbDebugonCheckbox);
             mbnqTab2.Controls.Add(panelForTab2);
+
+            /* --- --- ---  Tab 3 goes here --- --- --- */
+            panelForTab3.Controls.Add(sysVerifyButton);
+
+
+
+            mbnqTab3.Controls.Add(panelForTab3);
+
         }
 
         /* for save and load these controls */
