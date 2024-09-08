@@ -22,6 +22,7 @@ using MaterialSkin;
 using static MaterialSkin.Controls.MaterialTabSelector;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Net.Http;
 
 namespace RED.mbnq
 {
@@ -980,6 +981,8 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
+
+        /*
         private void sysMyIPButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
@@ -998,6 +1001,35 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
+        */
+
+        private async void sysMyIPButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Download the content of the webpage
+                using (HttpClient client = new HttpClient())
+                {
+                    string url = "https://mbnq.pl/myip/";
+                    string pageContent = await client.GetStringAsync(url);
+
+                    // Display the page content in a Material Message Box
+                    MaterialMessageBox.Show(pageContent, "Your IP", MessageBoxButtons.OK, MessageBoxIcon.None);
+
+                    Sounds.PlayClickSoundOnce();
+                }
+            }
+            catch (Exception ex)
+            {
+                MaterialMessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+                Sounds.PlayClickSoundOnce();
+            }
+        }
+
+
 
         /* --- --- --- Mouse --- --- --- */
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1097,6 +1129,51 @@ namespace RED.mbnq
         private void ToggleFlir(bool enable)
         {
             mbnqFLIR.mbEnableFlir = enable;  // Set the global variable to enable/disable the overlay
+        }
+
+        /* --- --- ---  --- --- --- */
+
+        public partial class CustomMessageBox : MaterialSkin.Controls.MaterialForm
+        {
+            public CustomMessageBox(string message)
+            {
+                // InitializeComponent();
+
+                // Set up the message box UI
+                this.Text = "Page Content";
+                this.Size = new Size(400, 300);
+
+                // Create a TextBox to show the message
+                MaterialTextBox2 txtMessage = new MaterialTextBox2
+                {
+                    Text = message,
+                    ReadOnly = true,
+                    Dock = DockStyle.Fill
+                };
+                this.Controls.Add(txtMessage);
+
+                // Create an OK button to close the message box
+                MaterialButton btnOK = new MaterialButton
+                {
+                    Text = "OK",
+                    Dock = DockStyle.Bottom
+                };
+                btnOK.Click += (s, e) => this.Close();
+                this.Controls.Add(btnOK);
+
+                // Create a Copy button to copy the message content to the clipboard
+                MaterialButton btnCopy = new MaterialButton
+                {
+                    Text = "Copy",
+                    Dock = DockStyle.Bottom
+                };
+                btnCopy.Click += (s, e) =>
+                {
+                    Clipboard.SetText(message); // Copy the content to the clipboard
+                    MessageBox.Show("Content copied to clipboard.", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                };
+                this.Controls.Add(btnCopy);
+            }
         }
 
         /* --- --- ---  --- --- --- */
