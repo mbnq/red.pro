@@ -31,7 +31,7 @@ namespace RED.mbnq
         public static readonly bool mPBIsOn = false;            // progress bar 
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton;
+        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
         private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
@@ -416,6 +416,15 @@ namespace RED.mbnq
             };
             sysNetworkDevicesButton.Click += sysNetworkDevicesButton_Click;
 
+            // My IP
+            sysMyIPButton = new MaterialButton
+            {
+                Text = "My IP",
+                AutoSize = false,
+                Width = mControlWidth
+            };
+            sysMyIPButton.Click += sysMyIPButton_Click;
+
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
             mbAutoSaveCheckbox = new MaterialSwitch
@@ -569,6 +578,7 @@ namespace RED.mbnq
             panelForTab3.Controls.Add(sysTaskManagerButton);
             panelForTab3.Controls.Add(sysNetworkDevicesButton);
             panelForTab3.Controls.Add(sysTestPingButton);
+            panelForTab3.Controls.Add(sysMyIPButton);
 
 
             panelForTab3.Controls.Add(sysVerifyButton);
@@ -963,6 +973,24 @@ namespace RED.mbnq
                     // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
                 };
 
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysMyIPButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "https://mbnq.pl/myip/",
+                    UseShellExecute = true
+                };
                 Process.Start(processInfo);
             }
             catch (Exception ex)
