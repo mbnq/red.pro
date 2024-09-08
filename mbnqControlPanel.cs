@@ -31,7 +31,7 @@ namespace RED.mbnq
         public static readonly bool mPBIsOn = false;            // progress bar 
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        private Button centerButton, sysVerifyButton;
+        private Button centerButton, sysVerifyButton, sysTestPingButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
         private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
@@ -389,6 +389,15 @@ namespace RED.mbnq
             };
             sysVerifyButton.Click += sysVerifyButton_Click;
 
+            // Create system restore point
+            sysTestPingButton = new MaterialButton
+            {
+                Text = "Test Ping",
+                AutoSize = false,
+                Width = mControlWidth
+            };
+            sysTestPingButton.Click += sysTestPingButton_Click;
+
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
             mbAutoSaveCheckbox = new MaterialSwitch
@@ -538,10 +547,11 @@ namespace RED.mbnq
             mbnqTab2.Controls.Add(panelForTab2);
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
+
+            panelForTab3.Controls.Add(sysTestPingButton);
+
+
             panelForTab3.Controls.Add(sysVerifyButton);
-
-
-
             mbnqTab3.Controls.Add(panelForTab3);
 
         }
@@ -861,8 +871,8 @@ namespace RED.mbnq
                 ProcessStartInfo processInfo = new ProcessStartInfo
                 {
                     FileName = tempBatchFile,
-                    Verb = "runas", // This is what elevates the process to run as administrator
-                    UseShellExecute = true, // Required to launch as admin
+                    Verb = "runas",                         // to run as administrator
+                    UseShellExecute = true,                 // Required to launch as admin
                     WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
                 };
 
@@ -871,10 +881,33 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to run system file check: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
         }
+        private void sysTestPingButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
 
+            try
+            {
+                // Create a new process to run the ping command
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = "/c ping 8.8.8.8 -t",
+                    // Verb = "runas",                          // Run as administrator
+                    // UseShellExecute = true,                  // Required for elevated privileges
+                    WindowStyle = ProcessWindowStyle.Normal     // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
+        }
 
         /* --- --- --- Mouse --- --- --- */
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
