@@ -244,14 +244,14 @@
     <Compile Include="mbnqControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Glass\glassControls.cs" />
-    <Compile Include="Glass\glassRmbMenu.cs">
+    <Compile Include="glass\glassControls.cs" />
+    <Compile Include="glass\glassRmbMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Glass\glassOverlay.cs">
+    <Compile Include="glass\glassOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Glass\glassSelector.cs">
+    <Compile Include="glass\glassSelector.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mbnqFLIR.cs">
@@ -293,14 +293,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="scripts\create_restore_point.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="mbnqBackground0.png" />
-    <None Include="mbnqClick.wav" />
+    <None Include="gfx\mbnqBackground0.png" />
+    <None Include="sounds\mbnqClick.wav" />
     <Content Include="mbnqIcon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -321,7 +320,9 @@
       <Name>MaterialSkin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="core\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
