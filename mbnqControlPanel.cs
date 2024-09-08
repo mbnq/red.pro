@@ -28,6 +28,8 @@ namespace RED.mbnq
 {
     public class ControlPanel : MaterialSkin.Controls.MaterialForm
     {
+        #region ControlPanel Vars and Settings
+
         public static bool mIsDebugOn = false;                  // debug mode, there is checkbox for it so shouldn't be changed manually here
         public static readonly bool mPBIsOn = false;            // progress bar 
 
@@ -54,6 +56,9 @@ namespace RED.mbnq
 
         public const int mPNGMaxWidth = 1920;
         public const int mPNGMaxHeight = 1080;
+
+        #endregion
+        #region ControlPanel Init
         public ControlPanel()
         {
             InitializeTabs();
@@ -118,10 +123,10 @@ namespace RED.mbnq
             set
             {
                 mbnqCrosshairDisplay = value;
-                InitializeMainDisplayPosition();
+                InitializeCrosshairPos();
             }
         }
-        private void InitializeMainDisplayPosition()
+        private void InitializeCrosshairPos()
         {
             if (mbnqCrosshairOverlay != null)
             {
@@ -146,18 +151,7 @@ namespace RED.mbnq
             // this.DrawerBackgroundWithAccent = false;
         }
 
-        // this is for center crosshair button
-        public Point GetCenteredPosition()
-        {
-            // Get the bounds of the primary screen 
-            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-
-            // Calculate the center of the primary screen
-            int centeredX = (screenBounds.Width - mbnqCrosshairOverlay.Width) / 2;
-            int centeredY = (screenBounds.Height - mbnqCrosshairOverlay.Height) / 2;
-
-            return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
-        }
+        #endregion
         private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (!mbAutoSaveCheckbox.Checked)
@@ -841,6 +835,19 @@ namespace RED.mbnq
                 // Range 1000-2000 -> 0 to 1000
                 return value - 1000;
             }
+        }
+
+        // this is for center crosshair button
+        public Point GetCenteredPosition()
+        {
+            // Get the bounds of the primary screen 
+            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+            // Calculate the center of the primary screen
+            int centeredX = (screenBounds.Width - mbnqCrosshairOverlay.Width) / 2;
+            int centeredY = (screenBounds.Height - mbnqCrosshairOverlay.Height) / 2;
+
+            return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
         public void CenterCrosshairOverlay()
         {
