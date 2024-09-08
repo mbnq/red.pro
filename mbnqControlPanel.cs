@@ -1136,26 +1136,21 @@ namespace RED.mbnq
         {
             public mbnqMessageBox(string message, string mBoxTitle)
             {
-                // InitializeComponent();
 
-                // Set up the message box UI
-                this.Text = mBoxTitle;
-                // this.Size = new Size(200, 200);
-
-                // Create a TextBox to show the message
+                // ------------------------------------------
                 MaterialTextBox2 txtMessage = new MaterialTextBox2
                 {
                     Text = message,
-                    // BackColor = Color.Gray,
-                    // ForeColor = Color.Gray,
                     ReadOnly = true,
-                    Dock = DockStyle.Fill,
+                    // AutoSize = true,
+                    Dock = DockStyle.Bottom
                 };
 
-
+                // ------------------------------------------
                 MaterialButton btnOK = new MaterialButton
                 {
                     Text = "Close",
+                    AutoSize = true,
                     Dock = DockStyle.Bottom
                 };
                 btnOK.Click += (s, e) =>
@@ -1164,11 +1159,14 @@ namespace RED.mbnq
                     this.Close();
                 };
 
+                // ------------------------------------------
                 MaterialButton btnCopy = new MaterialButton
                 {
                     Text = "Copy to Clipboard",
+                    AutoSize = true,
                     Dock = DockStyle.Bottom
                 };
+
                 btnCopy.Click += (s, e) =>
                 {
                     Clipboard.SetText(message); // Copy the content to the clipboard
@@ -1177,19 +1175,25 @@ namespace RED.mbnq
                     Debug.WriteLineIf(mIsDebugOn, $"mbnq: Content copied to clipboard.");
                 };
 
-                this.AutoSize = true;
-                this.AutoSizeMode = AutoSizeMode.GrowOnly;
+                // ------------------------------------------
+                this.Text = mBoxTitle;
+                this.Size = new Size(200, 200);
+                // this.AutoSize = true;
+                // this.AutoSizeMode = AutoSizeMode.GrowOnly;
                 this.TopMost = true;
+                this.Padding = new Padding(4, 4, 4, 4);
+                this.Margin = new Padding(10, 10, 10, 10);
                 this.BackColor = Color.Black;
                 this.ForeColor = Color.Black;
                 this.MaximizeBox = false;
                 this.MinimizeBox = false;
                 this.StartPosition = FormStartPosition.CenterParent;
-                // this.Location = ControlPanel.PointToScreen(Point.Empty);
+                // this.Location = ;
 
                 this.Controls.Add(txtMessage);
                 this.Controls.Add(btnCopy);
                 this.Controls.Add(btnOK);
+                this.Activate();    // doesn't really needed
             }
         }
 
