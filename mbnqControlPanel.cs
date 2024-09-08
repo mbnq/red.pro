@@ -60,8 +60,11 @@ namespace RED.mbnq
             InitializeComponent();
             InitializeMaterialSkin();
 
-            FlirOverlayForm = new mbnqFLIR();
-            _ = ManageOverlayAsync();                           // for flir
+            if (mbnqFLIR.mbEnableFlirLogic)
+            {
+                FlirOverlayForm = new mbnqFLIR();
+                _ = ManageOverlayAsync();
+            }
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
 
@@ -477,10 +480,10 @@ namespace RED.mbnq
             // Enable FLIR mode
             mbEnableFlirCheckBox = new MaterialSwitch
             {
-                Text = "Enable FLIRt   ",
+                Text = "Enable FLIR   ",
                 AutoSize = true,
                 Anchor = AnchorStyles.Left,
-                Enabled = true
+                Enabled = mbnqFLIR.mbEnableFlirLogic
             };
 
             mbEnableFlirCheckBox.CheckedChanged += (s, e) =>
@@ -864,7 +867,7 @@ namespace RED.mbnq
         // Async method to manage overlay visibility based on mbEnableFlir
         private async Task ManageOverlayAsync()
         {
-            while (true)
+            while (mbnqFLIR.mbEnableFlirLogic)
             {
                 if (mbnqFLIR.mbEnableFlir)
                 {

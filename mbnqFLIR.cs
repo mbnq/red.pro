@@ -8,14 +8,14 @@ namespace RED.mbnq
 {
     public class mbnqFLIR : Form
     {
-        private bool isOverlayVisible = false; // Whether the overlay is visible
-        private Random random = new Random(); // Random number generator
+        private bool isOverlayVisible = false;
+        private Random random = new Random();           // rng
         private int red = 192;
         private int green = 192;
         private int blue = 192;
         private Timer repaintTimer;
-
-        public static bool mbEnableFlir = false; // Global variable to control overlay, should be false by default
+        public static bool mbEnableFlirLogic = false;   // for general enabling and disabling the flir logic
+        public static bool mbEnableFlir = false;        // for dynamic enabling with checkbox
 
         public mbnqFLIR()
         {
@@ -64,7 +64,7 @@ namespace RED.mbnq
         // Async method to manage grayscale overlay (updates overlay visibility)
         private async Task ManageGrayscaleOverlayAsync()
         {
-            while (true)
+            while (mbEnableFlirLogic)
             {
                 if (mbEnableFlir)
                 {
