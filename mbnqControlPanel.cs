@@ -1183,8 +1183,8 @@ namespace RED.mbnq
                 this.TopMost = true;
                 this.Padding = new Padding(4, 4, 4, 4);
                 this.Margin = new Padding(10, 10, 10, 10);
-                this.BackColor = Color.Black;
-                this.ForeColor = Color.Black;
+                this.BackColor = Color.FromArgb(50, 50, 50);
+                this.ForeColor = Color.FromArgb(50, 50, 50);
                 this.MaximizeBox = false;
                 this.MinimizeBox = false;
                 this.StartPosition = FormStartPosition.CenterParent;
