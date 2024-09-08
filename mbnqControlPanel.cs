@@ -1140,7 +1140,7 @@ namespace RED.mbnq
 
                 // Set up the message box UI
                 this.Text = mBoxTitle;
-                this.Size = new Size(200, 200);
+                // this.Size = new Size(200, 200);
 
                 // Create a TextBox to show the message
                 MaterialTextBox2 txtMessage = new MaterialTextBox2
@@ -1177,8 +1177,15 @@ namespace RED.mbnq
                     Debug.WriteLineIf(mIsDebugOn, $"mbnq: Content copied to clipboard.");
                 };
 
+                this.AutoSize = true;
+                this.AutoSizeMode = AutoSizeMode.GrowOnly;
+                this.TopMost = true;
+                this.BackColor = Color.Black;
+                this.ForeColor = Color.Black;
                 this.MaximizeBox = false;
                 this.MinimizeBox = false;
+                this.StartPosition = FormStartPosition.CenterParent;
+                // this.Location = ControlPanel.PointToScreen(Point.Empty);
 
                 this.Controls.Add(txtMessage);
                 this.Controls.Add(btnCopy);
