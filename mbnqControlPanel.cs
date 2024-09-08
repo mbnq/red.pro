@@ -187,9 +187,9 @@ namespace RED.mbnq
                 BaseTabControl = materialTabControl,
                 Dock = DockStyle.Bottom,
                 TabIndicatorHeight = 5,
-                Enabled = true,
-                MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
-                MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
+                Enabled = true
+                // MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
+                // MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
             };
 
             // Add TabSelector to Form
