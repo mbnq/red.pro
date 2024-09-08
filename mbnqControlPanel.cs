@@ -387,7 +387,7 @@ namespace RED.mbnq
                 AutoSize = false,
                 Width = mControlWidth
             };
-            // sysVerifyButton.Click += sysVerifyButton_Click;
+            sysVerifyButton.Click += sysVerifyButton_Click;
 
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
@@ -835,6 +835,46 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
             CenterCrosshairOverlay();
         }
+        private void sysVerifyButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Path to a temporary batch file
+                string tempBatchFile = Path.Combine(Path.GetTempPath(), "system_verify.bat");
+
+                // Create batch file content
+                string batchContent = @"
+                    @echo off
+                    title RED. PRO
+                    cls
+                    echo Running system integrity verification...
+                    sfc /scannow
+                    pause
+                ";
+
+                // Write the batch file content to the file
+                File.WriteAllText(tempBatchFile, batchContent);
+
+                // Create a new process to run the batch file as administrator
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = tempBatchFile,
+                    Verb = "runas", // This is what elevates the process to run as administrator
+                    UseShellExecute = true, // Required to launch as admin
+                    WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to run system file check: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         /* --- --- --- Mouse --- --- --- */
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
