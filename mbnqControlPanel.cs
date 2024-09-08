@@ -152,103 +152,7 @@ namespace RED.mbnq
         }
 
         #endregion
-        private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!mbAutoSaveCheckbox.Checked)
-            {
-                SaveLoad.SaveSettings(this, false);
-            }
-        }
-        private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbDebugonCheckbox.Checked) 
-            {
-                mIsDebugOn = true;
-            }
-            else
-            {
-                mIsDebugOn = false;
-            }
-        }
-        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbAOnTopCheckBox.Checked)
-            {
-                this.TopMost = true;
-            }
-            else
-            {
-                this.TopMost = false;
-            }
-        }
-        private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbHideCrosshairCheckBox.Checked)
-            {
-                mHideCrosshair = true;
-                updateMainCrosshair();
-    }
-            else
-            {
-                mHideCrosshair = false;
-                updateMainCrosshair();
-            }
-        }
-        private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbDisableSoundCheckBox.Checked)
-            {
-                Sounds.IsSoundEnabled = false;
-            }
-            else
-            {
-                Sounds.IsSoundEnabled = true;
-            }
-        }
-        private void mbEnableZoomModeCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbEnableZoomModeCheckBox.Checked)
-            {
-                ZoomMode.IsZoomModeEnabled = true;
-                zoomLevel.Enabled = true;
-            }
-            else
-            {
-                ZoomMode.IsZoomModeEnabled = false;
-                zoomLevel.Enabled = false;
-            }
-        }
-        private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbEnableFlirCheckBox.Checked)
-            {
-                mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
-            }
-            else
-            {
-                mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
-            }
-        }
-
-        private void ControlPanel_Shown(object sender, EventArgs e)
-        {
-            updateMainCrosshair();
-
-            if (mbnqCrosshairOverlay != null)
-            {
-                mbnqCrosshairOverlay.Show();
-                mbnqCrosshairOverlay.BringToFront();
-
-                // Position the ControlPanel relative to the mbnqCrosshair, if necessary
-                PositionControlPanelRelativeToCrosshair();
-            }
-
-            this.BeginInvoke((Action)(() =>
-            {
-                mbInitSize = this.Size;
-                // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
-            }));
-        }
+        #region Tabs
 
         /* --- --- Tabs --- --- */
 
@@ -300,6 +204,9 @@ namespace RED.mbnq
                 Sounds.PlayClickSound();
             }
         }
+
+        #endregion
+        #region GUI
         private void InitializeComponent()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
@@ -581,6 +488,8 @@ namespace RED.mbnq
 
         }
 
+        #endregion
+        #region SaveLoad Checkboxes
         /* for save and load these controls */
 
         public bool AutoSaveOnExitChecked
@@ -618,6 +527,89 @@ namespace RED.mbnq
             get => mbEnableFlirCheckBox.Checked;
             set => mbEnableFlirCheckBox.Checked = value;
         }
+        #endregion
+        #region Checkboxs functions
+        /* --- --- --- Checkboxs functions --- --- --- */
+
+        private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mbAutoSaveCheckbox.Checked)
+            {
+                SaveLoad.SaveSettings(this, false);
+            }
+        }
+        private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDebugonCheckbox.Checked)
+            {
+                mIsDebugOn = true;
+            }
+            else
+            {
+                mIsDebugOn = false;
+            }
+        }
+        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbAOnTopCheckBox.Checked)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
+        private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbHideCrosshairCheckBox.Checked)
+            {
+                mHideCrosshair = true;
+                updateMainCrosshair();
+            }
+            else
+            {
+                mHideCrosshair = false;
+                updateMainCrosshair();
+            }
+        }
+        private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDisableSoundCheckBox.Checked)
+            {
+                Sounds.IsSoundEnabled = false;
+            }
+            else
+            {
+                Sounds.IsSoundEnabled = true;
+            }
+        }
+        private void mbEnableZoomModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbEnableZoomModeCheckBox.Checked)
+            {
+                ZoomMode.IsZoomModeEnabled = true;
+                zoomLevel.Enabled = true;
+            }
+            else
+            {
+                ZoomMode.IsZoomModeEnabled = false;
+                zoomLevel.Enabled = false;
+            }
+        }
+        private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbEnableFlirCheckBox.Checked)
+            {
+                mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
+            }
+            else
+            {
+                mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
+            }
+        }
+        #endregion
+        #region Custom Overlay Crosshair
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
 
@@ -688,7 +680,8 @@ namespace RED.mbnq
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
-
+        #endregion
+        #region Mix sliders with labels here
         /* --- --- --- Mix sliders with labels here --- --- --- */
         private LabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
         {
@@ -739,6 +732,8 @@ namespace RED.mbnq
 
             return new LabeledSlider(panel, materialSlider);
         }
+        #endregion
+        #region Updating Stuff
         public void updateMainCrosshair() // overlay
         {
             if (mbnqCrosshairOverlay != null)
@@ -819,7 +814,8 @@ namespace RED.mbnq
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
         }
-
+        #endregion
+        #region Buttons Code
         /* --- --- --- Buttons Code --- --- --- */
 
         //This one is needed to handle negative values because of materialSkin limitations
@@ -1035,8 +1031,8 @@ namespace RED.mbnq
             }
         }
 
-
-
+        #endregion
+        #region Mouse
         /* --- --- --- Mouse --- --- --- */
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -1044,6 +1040,8 @@ namespace RED.mbnq
         }
 
         /* --- --- ---  --- --- --- */
+        #endregion
+        #region Positioning Control Panel
         private void PositionControlPanelRelativeToCrosshair()
         {
             if (mbnqCrosshairOverlay != null)
@@ -1084,8 +1082,27 @@ namespace RED.mbnq
                 }
             }
         }
+        private void ControlPanel_Shown(object sender, EventArgs e)
+        {
+            updateMainCrosshair();
 
+            if (mbnqCrosshairOverlay != null)
+            {
+                mbnqCrosshairOverlay.Show();
+                mbnqCrosshairOverlay.BringToFront();
 
+                // Position the ControlPanel relative to the mbnqCrosshair, if necessary
+                PositionControlPanelRelativeToCrosshair();
+            }
+
+            this.BeginInvoke((Action)(() =>
+            {
+                mbInitSize = this.Size;
+                // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
+            }));
+        }
+        #endregion
+        #region FlirFnc
         /* --- --- ---  --- --- --- */
 
         // Async method to manage overlay visibility based on mbEnableFlir
@@ -1136,6 +1153,11 @@ namespace RED.mbnq
         {
             mbnqFLIR.mbEnableFlir = enable;  // Set the global variable to enable/disable the overlay
         }
+
+        /* --- --- ---  --- --- --- */
+
+        #endregion
+        #region mbnq message box
 
         /* --- --- ---  --- --- --- */
 
@@ -1203,7 +1225,8 @@ namespace RED.mbnq
                 this.Activate();    // doesn't really needed
             }
         }
-
+        #endregion
+        #region sliders fnc
         /* --- --- ---  --- --- --- */
 
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
@@ -1213,7 +1236,7 @@ namespace RED.mbnq
         public int TransparencyValue { get => transparency.Value; set => transparency.Value = value; }
         public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
         public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
-
+        #endregion
     }
 
     /* --- --- ---  --- --- --- */
