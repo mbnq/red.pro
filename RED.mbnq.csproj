@@ -240,8 +240,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mbnqCommentsNotesOnly.cs" />
-    <Compile Include="mbnqControlPanel.cs">
+    <Compile Include="core\mbnqCommentsNotesOnly.cs" />
+    <Compile Include="core\mbnqControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="glass\glassControls.cs" />
@@ -254,15 +254,15 @@
     <Compile Include="glass\glassSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mbnqFLIR.cs">
+    <Compile Include="core\mbnqFLIR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mbnqGlobalMouseHook.cs" />
-    <Compile Include="mbnqCrosshair.cs">
+    <Compile Include="core\mbnqGlobalMouseHook.cs" />
+    <Compile Include="core\mbnqCrosshair.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mbnqFunctions.cs" />
-    <Compile Include="mbnqConsole.cs">
+    <Compile Include="core\mbnqFunctions.cs" />
+    <Compile Include="core\mbnqConsole.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -272,12 +272,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="mbnqRmbMenu.cs">
+    <Compile Include="core\mbnqRmbMenu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="mbnqSaveLoad.cs" />
-    <Compile Include="mbnqSounds.cs" />
-    <Compile Include="mbnqZoomMode.cs" />
+    <Compile Include="core\mbnqSaveLoad.cs" />
+    <Compile Include="core\mbnqSounds.cs" />
+    <Compile Include="core\mbnqZoomMode.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -320,9 +320,7 @@
       <Name>MaterialSkin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="core\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
