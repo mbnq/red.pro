@@ -31,7 +31,7 @@ namespace RED.mbnq
         public static readonly bool mPBIsOn = false;            // progress bar 
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        private Button centerButton, sysVerifyButton, sysTestPingButton;
+        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManager;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
         private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
@@ -389,7 +389,7 @@ namespace RED.mbnq
             };
             sysVerifyButton.Click += sysVerifyButton_Click;
 
-            // Create system restore point
+            // Test ping
             sysTestPingButton = new MaterialButton
             {
                 Text = "Test Ping",
@@ -397,6 +397,15 @@ namespace RED.mbnq
                 Width = mControlWidth
             };
             sysTestPingButton.Click += sysTestPingButton_Click;
+
+            // Task Manager
+            sysTaskManager = new MaterialButton
+            {
+                Text = "Run Task Manager",
+                AutoSize = false,
+                Width = mControlWidth
+            };
+            sysTaskManager.Click += sysTaskManager_Click;
 
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
@@ -548,6 +557,7 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
+            panelForTab3.Controls.Add(sysTaskManager);
             panelForTab3.Controls.Add(sysTestPingButton);
 
 
@@ -905,7 +915,28 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysTaskManager_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Create a new process to run Task Manager
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "taskmgr.exe", // Task Manager executable
+                    // UseShellExecute = true, // Required for running system-level applications
+                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
 
