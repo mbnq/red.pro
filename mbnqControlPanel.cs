@@ -1014,18 +1014,17 @@ namespace RED.mbnq
                 {
                     string url = "https://mbnq.pl/myip/";
                     string pageContent = await client.GetStringAsync(url);
+                    string mBoxTitle = "Your IP:";
 
-                    // Display the page content in a Material Message Box
-                    MaterialMessageBox.Show(pageContent, "Your IP", MessageBoxButtons.OK, MessageBoxIcon.None);
-
-                    Sounds.PlayClickSoundOnce();
+                    // Show the custom message box with the content
+                    mbnqMessageBox messageBox = new mbnqMessageBox(pageContent, mBoxTitle);
+                    messageBox.ShowDialog();
                 }
             }
             catch (Exception ex)
             {
-                MaterialMessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-                Sounds.PlayClickSoundOnce();
             }
         }
 
@@ -1133,46 +1132,57 @@ namespace RED.mbnq
 
         /* --- --- ---  --- --- --- */
 
-        public partial class CustomMessageBox : MaterialSkin.Controls.MaterialForm
+        public partial class mbnqMessageBox : MaterialSkin.Controls.MaterialForm
         {
-            public CustomMessageBox(string message)
+            public mbnqMessageBox(string message, string mBoxTitle)
             {
                 // InitializeComponent();
 
                 // Set up the message box UI
-                this.Text = "Page Content";
-                this.Size = new Size(400, 300);
+                this.Text = mBoxTitle;
+                this.Size = new Size(200, 200);
 
                 // Create a TextBox to show the message
                 MaterialTextBox2 txtMessage = new MaterialTextBox2
                 {
                     Text = message,
+                    // BackColor = Color.Gray,
+                    // ForeColor = Color.Gray,
                     ReadOnly = true,
-                    Dock = DockStyle.Fill
+                    Dock = DockStyle.Fill,
                 };
-                this.Controls.Add(txtMessage);
 
-                // Create an OK button to close the message box
+
                 MaterialButton btnOK = new MaterialButton
                 {
-                    Text = "OK",
+                    Text = "Close",
                     Dock = DockStyle.Bottom
                 };
-                btnOK.Click += (s, e) => this.Close();
-                this.Controls.Add(btnOK);
+                btnOK.Click += (s, e) =>
+                {
+                    Sounds.PlayClickSoundOnce(); 
+                    this.Close();
+                };
 
-                // Create a Copy button to copy the message content to the clipboard
                 MaterialButton btnCopy = new MaterialButton
                 {
-                    Text = "Copy",
+                    Text = "Copy to Clipboard",
                     Dock = DockStyle.Bottom
                 };
                 btnCopy.Click += (s, e) =>
                 {
                     Clipboard.SetText(message); // Copy the content to the clipboard
-                    MessageBox.Show("Content copied to clipboard.", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Sounds.PlayClickSoundOnce();
+                    // MessageBox.Show("Content copied to clipboard.", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Debug.WriteLineIf(mIsDebugOn, $"mbnq: Content copied to clipboard.");
                 };
+
+                this.MaximizeBox = false;
+                this.MinimizeBox = false;
+
+                this.Controls.Add(txtMessage);
                 this.Controls.Add(btnCopy);
+                this.Controls.Add(btnOK);
             }
         }
 
