@@ -732,6 +732,16 @@ namespace RED.mbnq
 
             return new LabeledSlider(panel, materialSlider);
         }
+        public class LabeledSlider
+        {
+            public Panel Panel { get; set; }
+            public MaterialSlider Slider { get; set; }
+            public LabeledSlider(Panel panel, MaterialSlider slider)
+            {
+                Panel = panel;
+                Slider = slider;
+            }
+        }
         #endregion
         #region Updating Stuff
         public void updateMainCrosshair() // overlay
@@ -1237,17 +1247,5 @@ namespace RED.mbnq
         public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
         public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
         #endregion
-    }
-
-    /* --- --- ---  --- --- --- */
-    public class LabeledSlider
-    {
-        public Panel Panel { get; set; }
-        public MaterialSlider Slider { get; set; }
-        public LabeledSlider(Panel panel, MaterialSlider slider)
-        {
-            Panel = panel;
-            Slider = slider;
-        }
     }
 }
