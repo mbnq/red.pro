@@ -31,7 +31,7 @@ namespace RED.mbnq
         public static readonly bool mPBIsOn = false;            // progress bar 
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManager;
+        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton;
         public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
         private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
@@ -399,13 +399,13 @@ namespace RED.mbnq
             sysTestPingButton.Click += sysTestPingButton_Click;
 
             // Task Manager
-            sysTaskManager = new MaterialButton
+            sysTaskManagerButton = new MaterialButton
             {
                 Text = "Run Task Manager",
                 AutoSize = false,
                 Width = mControlWidth
             };
-            sysTaskManager.Click += sysTaskManager_Click;
+            sysTaskManagerButton.Click += sysTaskManagerButton_Click;
 
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
@@ -557,7 +557,7 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
-            panelForTab3.Controls.Add(sysTaskManager);
+            panelForTab3.Controls.Add(sysTaskManagerButton);
             panelForTab3.Controls.Add(sysTestPingButton);
 
 
@@ -805,7 +805,7 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
         }
 
-        /* --- --- --- Center Button --- --- --- */
+        /* --- --- --- Buttons Code --- --- --- */
 
         //This one is needed to handle negative values because of materialSkin limitations
         private int TranslateOffset(int value)
@@ -918,7 +918,7 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
-        private void sysTaskManager_Click(object sender, EventArgs e)
+        private void sysTaskManagerButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
 
