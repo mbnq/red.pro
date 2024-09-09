@@ -46,6 +46,9 @@ namespace RED.mbnq
         public MaterialProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
 
+        public string mbUserFilessPath = Path.Combine(SaveLoad.SettingsDirectory);
+
+
         private int mControlWidth;
         public Size mbInitSize                          = new Size(0, 0);
         public static readonly int mCPWidth             = 262;
@@ -92,6 +95,7 @@ namespace RED.mbnq
 
             updateMainCrosshair();
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
+            Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilessPath}");
         }
 
         // Material Skin Init
