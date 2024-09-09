@@ -17,10 +17,19 @@ namespace RED.mbnq
 {
     public class mbCrosshair : Form
     {
+        #region Variables and settings
+        /* --- --- ---  --- --- --- */
+
         private Timer crosshairRefreshTimer;
         private Image crosshairOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
         private int paintCallCount = 0;
+
+        /* --- --- ---  --- --- --- */
+        #endregion
+
+        #region mbCrosshair
+        /* --- --- ---  --- --- --- */
 
         public mbCrosshair()
         {
@@ -48,6 +57,13 @@ namespace RED.mbnq
             crosshairRefreshTimer.Start();
 
         }
+
+        /* --- --- ---  --- --- --- */
+        #endregion
+
+        #region Custom .png
+        /* --- --- ---  --- --- --- */
+
         string crosshairFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomPNG()
         {
@@ -142,6 +158,27 @@ namespace RED.mbnq
             this.Invalidate();
         }
 
+        // ensure the custom overlay image is properly disposed
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                crosshairOverlay?.Dispose();
+                Cursor.Show();
+            }
+            base.Dispose(disposing);
+        }
+        public bool HasCustomOverlay
+        {
+            get { return crosshairOverlay != null; }
+        }
+
+        /* --- --- ---  --- --- --- */
+        #endregion
+
+        #region drawn painted overlay crosshair
+        /* --- --- ---  --- --- --- */
+
         // draw overlay
         private void crosshair_Paint(object sender, PaintEventArgs e)
         {
@@ -185,21 +222,10 @@ namespace RED.mbnq
             }
         }
 
-        // ensure the custom overlay image is properly disposed
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                crosshairOverlay?.Dispose();
-                Cursor.Show();
-            }
-            base.Dispose(disposing);
-        }
-        public bool HasCustomOverlay
-        {
-            get { return crosshairOverlay != null; }
-        }
+        /* --- --- ---  --- --- --- */
+        #endregion
 
+        #region nonclickable
         /* --- --- --- Let's sure overlay is non-clickable --- --- --- */
         protected override void WndProc(ref Message m)
         {
@@ -226,5 +252,6 @@ namespace RED.mbnq
         }
 
         /* --- --- ---  --- --- --- */
+        #endregion
     }
 }
