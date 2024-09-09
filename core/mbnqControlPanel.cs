@@ -95,25 +95,6 @@ namespace RED.mbnq
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             updateMainCrosshair();
-            mbAutoSaveCheckbox.CheckedChanged += mbAutoSaveOnExit_CheckedChanged;
-
-            mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
-            mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
-
-            mbAOnTopCheckBox.Checked = this.TopMost;
-            mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
-
-            mbHideCrosshairCheckBox.Checked = this.TopMost;
-            mbHideCrosshairCheckBox.CheckedChanged += mbHideCrosshairCheckBox_CheckedChanged;
-
-            mbDisableSoundCheckBox.Checked = this.TopMost;
-            mbDisableSoundCheckBox.CheckedChanged += mbDisableSoundCheckBox_CheckedChanged;
-
-            mbEnableZoomModeCheckBox.Checked = this.TopMost;
-            mbEnableZoomModeCheckBox.CheckedChanged += mbEnableZoomModeCheckBox_CheckedChanged;
-
-            mbEnableFlirCheckBox.Checked = this.TopMost;
-            mbEnableFlirCheckBox.CheckedChanged += mbEnableFlirCheckBox_CheckedChanged;
         }
 
         // main display init
@@ -428,6 +409,19 @@ namespace RED.mbnq
                     Sounds.PlayClickSound();
                 }
             };
+
+            mbAutoSaveCheckbox.CheckedChanged += mbAutoSaveOnExit_CheckedChanged;
+
+            mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
+            mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
+
+            mbAOnTopCheckBox.Checked = this.TopMost;
+            mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
+
+            mbHideCrosshairCheckBox.CheckedChanged += mbHideCrosshairCheckBox_CheckedChanged;
+            mbDisableSoundCheckBox.CheckedChanged += mbDisableSoundCheckBox_CheckedChanged;
+            mbEnableZoomModeCheckBox.CheckedChanged += mbEnableZoomModeCheckBox_CheckedChanged;
+            mbEnableFlirCheckBox.CheckedChanged += mbEnableFlirCheckBox_CheckedChanged;
 
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
