@@ -20,7 +20,7 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
 
         private Timer crosshairRefreshTimer;
-        private Image crosshairOverlay;
+        private Image crosshairPngOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
         public int mbXhairPaintCount = 0;
 
@@ -83,8 +83,8 @@ namespace RED.mbnq
                             if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
                             {
                                 // Dispose of the existing overlay if it exists
-                                crosshairOverlay?.Dispose();
-                                crosshairOverlay = new Bitmap(img);
+                                crosshairPngOverlay?.Dispose();
+                                crosshairPngOverlay = new Bitmap(img);
                                 this.Invalidate();
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
                             }
@@ -93,7 +93,7 @@ namespace RED.mbnq
                                 MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                                 Sounds.PlayClickSoundOnce();
                                 File.Delete(crosshairFilePath);
-                                crosshairOverlay = null;
+                                crosshairPngOverlay = null;
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
                             }
                         }
@@ -103,17 +103,17 @@ namespace RED.mbnq
                 {
                     // MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
-                    crosshairOverlay = null;
+                    crosshairPngOverlay = null;
                     Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay file does not exist.");
                 }
             }
             catch (Exception ex)
             {
                 MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
-                Sounds.PlayClickSoundOnce();
-                crosshairOverlay = null;
                 if (ControlPanel.mIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Exception occurred while loading custom overlay: {ex.Message}");
+                crosshairPngOverlay = null;
+                Sounds.PlayClickSoundOnce();
             }
 
             // Refresh the display
@@ -155,8 +155,8 @@ namespace RED.mbnq
             }
 
             // Dispose of the overlay
-            crosshairOverlay?.Dispose();
-            crosshairOverlay = null;
+            crosshairPngOverlay?.Dispose();
+            crosshairPngOverlay = null;
 
             // Refresh the crosshair
             this.Invalidate();
@@ -167,14 +167,14 @@ namespace RED.mbnq
         {
             if (disposing)
             {
-                crosshairOverlay?.Dispose();
+                crosshairPngOverlay?.Dispose();
                 Cursor.Show();
             }
             base.Dispose(disposing);
         }
         public bool HasCustomOverlay
         {
-            get { return crosshairOverlay != null; }
+            get { return crosshairPngOverlay != null; }
         }
 
         /* --- --- ---  --- --- --- */
@@ -212,10 +212,10 @@ namespace RED.mbnq
             g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;         // HighQuality or HighSpeed or AssumeLinear or Default
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;           // AntiAlias or ClearTypeGridFit or SingleBitPerPixelGridFit or SingleBitPerPixel or SystemDefault
 
-            if (crosshairOverlay != null)
+            if (crosshairPngOverlay != null)
             {
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Drawing custom overlay.");
-                g.DrawImage(crosshairOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                g.DrawImage(crosshairPngOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
                 mbXhairPaintCount++;
             }
             else
