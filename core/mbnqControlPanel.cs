@@ -132,6 +132,68 @@ namespace RED.mbnq
 
         #endregion
 
+        #region Positioning Control Panel
+        private void PositionControlPanelRelativeToCrosshair()
+        {
+            if (mbnqCrosshairOverlay != null)
+            {
+                // Get the bounds of the primary screen 
+                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+                // Get the rectangle representing the ControlPanel's current bounds
+                Rectangle controlPanelBounds = new Rectangle(this.Left, this.Top, this.Width, this.Height);
+
+                // Get the rectangle representing the mbnqCrosshair's bounds
+                Rectangle crosshairBounds = new Rectangle(mbnqCrosshairOverlay.Left, mbnqCrosshairOverlay.Top, mbnqCrosshairOverlay.Width, mbnqCrosshairOverlay.Height);
+
+                // Check if the crosshair is within the control panel's region
+                if (controlPanelBounds.IntersectsWith(crosshairBounds))
+                {
+                    // Decide whether to place the control panel to the left or right of the crosshair
+                    int panelWidth = this.Width;
+                    int newLeft = (mbnqCrosshairOverlay.Left + (mbnqCrosshairOverlay.Width + 20)); // Default to the right
+                    int newTop = (mbnqCrosshairOverlay.Top / 2); // Align vertically with the crosshair
+
+                    // Check if the control panel would go off the screen on the right
+                    if (newLeft + panelWidth > screenBounds.Right)
+                    {
+                        // If it would go off-screen, place it to the left of the crosshair
+                        newLeft = mbnqCrosshairOverlay.Left - panelWidth - 20;
+                    }
+
+                    // Ensure the control panel doesn't go off the screen on the left
+                    if (newLeft < screenBounds.Left)
+                    {
+                        newLeft = screenBounds.Left;
+                    }
+
+                    // Set the new position for the control panel
+                    this.Left = newLeft;
+                    this.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - this.Height, newTop)); // Ensure within vertical bounds
+                }
+            }
+        }
+        private void ControlPanel_Shown(object sender, EventArgs e)
+        {
+            updateMainCrosshair();
+
+            if (mbnqCrosshairOverlay != null)
+            {
+                mbnqCrosshairOverlay.Show();
+                mbnqCrosshairOverlay.BringToFront();
+
+                // Position the ControlPanel relative to the mbnqCrosshair, if necessary
+                PositionControlPanelRelativeToCrosshair();
+            }
+
+            this.BeginInvoke((Action)(() =>
+            {
+                mbInitSize = this.Size;
+                // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
+            }));
+        }
+        #endregion
+
         #region Tabs
 
         /* --- --- Tabs --- --- */
@@ -339,87 +401,6 @@ namespace RED.mbnq
         /* --- --- --- --- --- --- --- --- --- --- --- */
         #endregion
 
-        #region Checkboxs functions
-        /* --- --- --- Checkboxs functions --- --- --- */
-        private void mbAutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!mbAutoSaveCheckbox.Checked)
-            {
-                SaveLoad.SaveSettings(this, false);
-            }
-        }
-        private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbDebugonCheckbox.Checked)
-            {
-                mIsDebugOn = true;
-            }
-            else
-            {
-                mIsDebugOn = false;
-            }
-        }
-        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbAOnTopCheckBox.Checked)
-            {
-                this.TopMost = true;
-            }
-            else
-            {
-                this.TopMost = false;
-            }
-        }
-        private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbHideCrosshairCheckBox.Checked)
-            {
-                mHideCrosshair = true;
-                updateMainCrosshair();
-            }
-            else
-            {
-                mHideCrosshair = false;
-                updateMainCrosshair();
-            }
-        }
-        private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbDisableSoundCheckBox.Checked)
-            {
-                Sounds.IsSoundEnabled = false;
-            }
-            else
-            {
-                Sounds.IsSoundEnabled = true;
-            }
-        }
-        private void mbEnableZoomModeCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbEnableZoomModeCheckBox.Checked)
-            {
-                ZoomMode.IsZoomModeEnabled = true;
-                zoomLevel.Enabled = true;
-            }
-            else
-            {
-                ZoomMode.IsZoomModeEnabled = false;
-                zoomLevel.Enabled = false;
-            }
-        }
-        private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mbEnableFlirCheckBox.Checked)
-            {
-                mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
-            }
-            else
-            {
-                mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
-            }
-        }
-        #endregion
-
         #region Custom Overlay Crosshair
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
@@ -491,69 +472,6 @@ namespace RED.mbnq
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
-        #endregion
-
-        #region Mix sliders with labels code
-        /* --- --- --- Mix sliders with labels here --- --- --- */
-        private LabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
-        {
-            var label = new MaterialLabel()
-            {
-                AutoSize = true,
-                Padding = new Padding(0, 5, 0, 0)
-            };
-
-            var materialSlider = new MaterialSlider()
-            {
-                RangeMin = min,
-                RangeMax = max,
-                ShowText = false,
-                ShowValue = false,
-                Value = defaultValue // Set the initial value to the default
-            };
-
-            label.Text = $"{labelText}: {materialSlider.Value}";
-
-            materialSlider.onValueChanged += (s, e) =>
-            {
-                Sounds.PlayClickSound();
-                label.Text = $"{labelText}: {materialSlider.Value}";
-                updateMainCrosshair();
-            };
-
-            // Handle double-click to reset to default value
-            materialSlider.DoubleClick += (s, e) =>
-            {
-                materialSlider.Value = defaultValue;
-                label.Text = $"{labelText}: {materialSlider.Value}";
-                updateMainCrosshair();
-                Sounds.PlayClickSound();
-            };
-
-            var panel = new Panel()
-            {
-                Width = mControlWidth,
-                Height = ((mControlDefSpacer * 2) - 6),
-            };
-
-            label.Location = new Point(3, 3);
-            materialSlider.Location = new Point(-3, label.Height + 1);
-
-            panel.Controls.Add(label);
-            panel.Controls.Add(materialSlider);
-
-            return new LabeledSlider(panel, materialSlider);
-        }
-        public class LabeledSlider
-        {
-            public Panel Panel { get; set; }
-            public MaterialSlider Slider { get; set; }
-            public LabeledSlider(Panel panel, MaterialSlider slider)
-            {
-                Panel = panel;
-                Slider = slider;
-            }
-        }
         #endregion
 
         #region Updating Stuff
@@ -857,6 +775,87 @@ namespace RED.mbnq
 
         #endregion
 
+        #region Checkboxes Code
+        /* --- --- --- Checkboxs functions --- --- --- */
+        private void mbAutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!mbAutoSaveCheckbox.Checked)
+            {
+                SaveLoad.SaveSettings(this, false);
+            }
+        }
+        private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDebugonCheckbox.Checked)
+            {
+                mIsDebugOn = true;
+            }
+            else
+            {
+                mIsDebugOn = false;
+            }
+        }
+        private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbAOnTopCheckBox.Checked)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
+        private void mbHideCrosshairCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbHideCrosshairCheckBox.Checked)
+            {
+                mHideCrosshair = true;
+                updateMainCrosshair();
+            }
+            else
+            {
+                mHideCrosshair = false;
+                updateMainCrosshair();
+            }
+        }
+        private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDisableSoundCheckBox.Checked)
+            {
+                Sounds.IsSoundEnabled = false;
+            }
+            else
+            {
+                Sounds.IsSoundEnabled = true;
+            }
+        }
+        private void mbEnableZoomModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbEnableZoomModeCheckBox.Checked)
+            {
+                ZoomMode.IsZoomModeEnabled = true;
+                zoomLevel.Enabled = true;
+            }
+            else
+            {
+                ZoomMode.IsZoomModeEnabled = false;
+                zoomLevel.Enabled = false;
+            }
+        }
+        private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbEnableFlirCheckBox.Checked)
+            {
+                mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
+            }
+            else
+            {
+                mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
+            }
+        }
+        #endregion
+
         #region Mouse
         /* --- --- --- Mouse --- --- --- */
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -865,68 +864,6 @@ namespace RED.mbnq
         }
 
         /* --- --- ---  --- --- --- */
-        #endregion
-
-        #region Positioning Control Panel
-        private void PositionControlPanelRelativeToCrosshair()
-        {
-            if (mbnqCrosshairOverlay != null)
-            {
-                // Get the bounds of the primary screen 
-                Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-
-                // Get the rectangle representing the ControlPanel's current bounds
-                Rectangle controlPanelBounds = new Rectangle(this.Left, this.Top, this.Width, this.Height);
-
-                // Get the rectangle representing the mbnqCrosshair's bounds
-                Rectangle crosshairBounds = new Rectangle(mbnqCrosshairOverlay.Left, mbnqCrosshairOverlay.Top, mbnqCrosshairOverlay.Width, mbnqCrosshairOverlay.Height);
-
-                // Check if the crosshair is within the control panel's region
-                if (controlPanelBounds.IntersectsWith(crosshairBounds))
-                {
-                    // Decide whether to place the control panel to the left or right of the crosshair
-                    int panelWidth = this.Width;
-                    int newLeft = (mbnqCrosshairOverlay.Left + (mbnqCrosshairOverlay.Width + 20)); // Default to the right
-                    int newTop = (mbnqCrosshairOverlay.Top / 2); // Align vertically with the crosshair
-
-                    // Check if the control panel would go off the screen on the right
-                    if (newLeft + panelWidth > screenBounds.Right)
-                    {
-                        // If it would go off-screen, place it to the left of the crosshair
-                        newLeft = mbnqCrosshairOverlay.Left - panelWidth - 20;
-                    }
-
-                    // Ensure the control panel doesn't go off the screen on the left
-                    if (newLeft < screenBounds.Left)
-                    {
-                        newLeft = screenBounds.Left;
-                    }
-
-                    // Set the new position for the control panel
-                    this.Left = newLeft;
-                    this.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - this.Height, newTop)); // Ensure within vertical bounds
-                }
-            }
-        }
-        private void ControlPanel_Shown(object sender, EventArgs e)
-        {
-            updateMainCrosshair();
-
-            if (mbnqCrosshairOverlay != null)
-            {
-                mbnqCrosshairOverlay.Show();
-                mbnqCrosshairOverlay.BringToFront();
-
-                // Position the ControlPanel relative to the mbnqCrosshair, if necessary
-                PositionControlPanelRelativeToCrosshair();
-            }
-
-            this.BeginInvoke((Action)(() =>
-            {
-                mbInitSize = this.Size;
-                // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
-            }));
-        }
         #endregion
 
         #region FlirFnc
@@ -1055,7 +992,70 @@ namespace RED.mbnq
         }
         #endregion
 
-        #region Sliders Code
+        #region Mixed SliderLabel form
+        /* --- --- --- Mix sliders with labels here --- --- --- */
+        private LabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
+        {
+            var label = new MaterialLabel()
+            {
+                AutoSize = true,
+                Padding = new Padding(0, 5, 0, 0)
+            };
+
+            var materialSlider = new MaterialSlider()
+            {
+                RangeMin = min,
+                RangeMax = max,
+                ShowText = false,
+                ShowValue = false,
+                Value = defaultValue // Set the initial value to the default
+            };
+
+            label.Text = $"{labelText}: {materialSlider.Value}";
+
+            materialSlider.onValueChanged += (s, e) =>
+            {
+                Sounds.PlayClickSound();
+                label.Text = $"{labelText}: {materialSlider.Value}";
+                updateMainCrosshair();
+            };
+
+            // Handle double-click to reset to default value
+            materialSlider.DoubleClick += (s, e) =>
+            {
+                materialSlider.Value = defaultValue;
+                label.Text = $"{labelText}: {materialSlider.Value}";
+                updateMainCrosshair();
+                Sounds.PlayClickSound();
+            };
+
+            var panel = new Panel()
+            {
+                Width = mControlWidth,
+                Height = ((mControlDefSpacer * 2) - 6),
+            };
+
+            label.Location = new Point(3, 3);
+            materialSlider.Location = new Point(-3, label.Height + 1);
+
+            panel.Controls.Add(label);
+            panel.Controls.Add(materialSlider);
+
+            return new LabeledSlider(panel, materialSlider);
+        }
+        public class LabeledSlider
+        {
+            public Panel Panel { get; set; }
+            public MaterialSlider Slider { get; set; }
+            public LabeledSlider(Panel panel, MaterialSlider slider)
+            {
+                Panel = panel;
+                Slider = slider;
+            }
+        }
+        #endregion
+
+        #region Register Changes
         /* --- --- ---  --- --- --- */
 
         public bool AutoSaveOnExitChecked
