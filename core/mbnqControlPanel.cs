@@ -762,7 +762,7 @@ namespace RED.mbnq
                     string mBoxTitle = "Your IP:";
 
                     // Show the custom message box with the content
-                    mbnqMessageBox messageBox = new mbnqMessageBox(pageContent, mBoxTitle);
+                    mbMessageBox messageBox = new mbMessageBox(pageContent, mBoxTitle);
                     messageBox.ShowDialog();
                 }
             }
@@ -922,13 +922,13 @@ namespace RED.mbnq
 
         #endregion
 
-        #region mbnqMessageBox form
+        #region mbMessageBox form
 
         /* --- --- ---  --- --- --- */
 
-        public partial class mbnqMessageBox : MaterialSkin.Controls.MaterialForm
+        public partial class mbMessageBox : MaterialSkin.Controls.MaterialForm
         {
-            public mbnqMessageBox(string message, string mBoxTitle)
+            public mbMessageBox(string message, string mBoxTitle)
             {
 
                 // ------------------------------------------
@@ -992,9 +992,9 @@ namespace RED.mbnq
         }
         #endregion
 
-        #region Mixed SliderLabel form
+        #region mbLabeledSlider form
         /* --- --- --- Mix sliders with labels here --- --- --- */
-        private LabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
+        private mbLabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
         {
             var label = new MaterialLabel()
             {
@@ -1041,13 +1041,13 @@ namespace RED.mbnq
             panel.Controls.Add(label);
             panel.Controls.Add(materialSlider);
 
-            return new LabeledSlider(panel, materialSlider);
+            return new mbLabeledSlider(panel, materialSlider);
         }
-        public class LabeledSlider
+        public class mbLabeledSlider
         {
             public Panel Panel { get; set; }
             public MaterialSlider Slider { get; set; }
-            public LabeledSlider(Panel panel, MaterialSlider slider)
+            public mbLabeledSlider(Panel panel, MaterialSlider slider)
             {
                 Panel = panel;
                 Slider = slider;
