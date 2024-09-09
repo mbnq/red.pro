@@ -39,6 +39,7 @@ namespace RED.mbnq
         private rmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
+        private MaterialComboBox mbActionComboBox;
         private mbnqFLIR FlirOverlayForm;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
@@ -310,8 +311,6 @@ namespace RED.mbnq
             // Add the buttons to the respective panels
             mbPanelForTab1.Controls.Add(centerButton);
 
-
-
             mbPanelForTab3.Controls.Add(sysTaskManagerButton);
             mbPanelForTab3.Controls.Add(sysNetworkDevicesButton);
             mbPanelForTab3.Controls.Add(sysMyIPButton);
@@ -320,6 +319,68 @@ namespace RED.mbnq
 
             mbPanelForTab3.Controls.Add(sysTestPingButton);
             mbPanelForTab3.Controls.Add(sysVerifyButton);
+
+            /* --- --- ---  --- --- --- --- --- --- --- */
+            #endregion
+
+            #region DropDowns aka comboBoxes
+            /* --- --- ---  --- --- --- --- --- --- --- */
+
+            mbActionComboBox = new MaterialComboBox
+            {
+                Width = 250,
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+
+
+            mbActionComboBox.Items.Add("Test Ping");
+            mbActionComboBox.Items.Add("Task Manager");
+            mbActionComboBox.Items.Add("Network Devices");
+            mbActionComboBox.Items.Add("My IP");
+            mbActionComboBox.Items.Add("System Properties");
+            mbActionComboBox.Items.Add("Display Settings");
+
+            // def
+            mbActionComboBox.SelectedIndex = 0;
+
+            // run the selected option
+            mbActionComboBox.SelectedIndexChanged += MbActionComboBox_SelectedIndexChanged;
+
+            // play click on dropdown
+            mbActionComboBox.DropDown += (sender, e) => Sounds.PlayClickSoundOnce();
+
+            void MbActionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                Sounds.PlayClickSoundOnce();
+
+                var selectedItem = mbActionComboBox.SelectedItem;
+                if (selectedItem != null)
+                {
+                    switch (mbActionComboBox.SelectedItem.ToString())
+                    {
+                        case "Test Ping":
+                            sysTestPingButton_Click(sender, e);
+                            break;
+                        case "Task Manager":
+                            sysTaskManagerButton_Click(sender, e);
+                            break;
+                        case "Network Devices":
+                            sysNetworkDevicesButton_Click(sender, e);
+                            break;
+                        case "My IP":
+                            sysMyIPButton_Click(sender, e);
+                            break;
+                        case "System Properties":
+                            sysSysPropertiesButton_Click(sender, e);
+                            break;
+                        case "Display Settings":
+                            sysDisplaySettingsButton_Click(sender, e);
+                            break;
+                    }
+                }
+            }
+
+            mbPanelForTab3.Controls.Add(mbActionComboBox);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
