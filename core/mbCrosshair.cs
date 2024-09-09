@@ -21,7 +21,6 @@ namespace RED.mbnq
 
         private Timer crosshairRefreshTimer;
         private Image crosshairPngOverlay;
-        private DateTime lastLoggedTime = DateTime.Now;
         public int mbXhairPaintCount = 0;
 
         /* --- --- ---  --- --- --- */
