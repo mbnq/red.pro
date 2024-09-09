@@ -446,7 +446,6 @@ namespace RED.mbnq
                     {
                         if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
                         {
-                            UpdateLabels();
                             mbCrosshairDisplay.SetCustomPNG();
                         }
                         else
@@ -463,6 +462,7 @@ namespace RED.mbnq
                     Sounds.PlayClickSoundOnce();
                 }
             }
+            UpdateLabels();
             updateMainCrosshair();
         }
 
