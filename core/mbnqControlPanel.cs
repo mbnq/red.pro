@@ -205,44 +205,22 @@ namespace RED.mbnq
             #endregion
 
             #region Labeled Sliders
-            /* --- --- ---  Sliders --- --- --- */
-            // label, min, max, def
-            // Color
-            var redSlider = CreateLabeledSlider("Red", 0, 255, 255);
-            colorR = redSlider.Slider;
-            mbPanelForTab1.Controls.Add(redSlider.Panel);
 
-            var greenSlider = CreateLabeledSlider("Green", 0, 255, 0);
-            colorG = greenSlider.Slider;
-            mbPanelForTab1.Controls.Add(greenSlider.Panel);
+            void AddLabeledSlider(FlowLayoutPanel panel, string labelText, int min, int max, int defaultValue, ref MaterialSlider sliderRef)
+            {
+                var labeledSlider = CreateLabeledSlider(labelText, min, max, defaultValue);
+                sliderRef = labeledSlider.Slider;
+                panel.Controls.Add(labeledSlider.Panel);
+            }
 
-            var blueSlider = CreateLabeledSlider("Blue", 0, 255, 0);
-            colorB = blueSlider.Slider;
-            mbPanelForTab1.Controls.Add(blueSlider.Panel);
-
-            // Size
-            var sizeSlider = CreateLabeledSlider("Size", 1, 200, 50);
-            size = sizeSlider.Slider;
-            mbPanelForTab1.Controls.Add(sizeSlider.Panel);
-
-            // Transparency
-            var transparencySlider = CreateLabeledSlider("Transparency", 0, 100, 64);
-            transparency = transparencySlider.Slider;
-            mbPanelForTab1.Controls.Add(transparencySlider.Panel);
-
-            // Offsets
-            var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000, 1000);
-            offsetX = offsetXSlider.Slider;
-            mbPanelForTab1.Controls.Add(offsetXSlider.Panel);
-
-            var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000, 1000);
-            offsetY = offsetYSlider.Slider;
-            mbPanelForTab1.Controls.Add(offsetYSlider.Panel);
-
-            // Zoom Level
-            var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10, 3); // Adjust the range as needed
-            zoomLevel = zoomLevelSlider.Slider;
-            mbPanelForTab1.Controls.Add(zoomLevelSlider.Panel);
+            AddLabeledSlider(mbPanelForTab1, "Red", 0, 255, 255, ref colorR);
+            AddLabeledSlider(mbPanelForTab1, "Green", 0, 255, 0, ref colorG);
+            AddLabeledSlider(mbPanelForTab1, "Blue", 0, 255, 0, ref colorB);
+            AddLabeledSlider(mbPanelForTab1, "Size", 1, 200, 50, ref size);
+            AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
+            AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
+            AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
+            AddLabeledSlider(mbPanelForTab1, "Zoom Level", 1, 10, 3, ref zoomLevel);
 
             #endregion
 
