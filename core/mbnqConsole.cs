@@ -486,7 +486,7 @@ namespace RED.mbnq
             else
             {
                 this.Show();
-                AdjustSize(); // Adjust size when overlay is shown
+                AdjustSize(); // Adjust size when overlay is shown 
                 StartTimers();
             }
         }
