@@ -324,7 +324,7 @@ namespace RED.mbnq
             mbSysDropDown.Items.Add("Display Settings");
             mbSysDropDown.Items.Add("Audio Settings");
             mbSysDropDown.Items.Add("Power Settings");
-            mbSysDropDown.Items.Add("Controllers Settings");
+            mbSysDropDown.Items.Add("Controller Settings");
             mbSysDropDown.Items.Add("Computer Management");
             mbSysDropDown.Items.Add("System Configuration");
             mbSysDropDown.Items.Add("Computer Info");
@@ -368,7 +368,7 @@ namespace RED.mbnq
                         case "Power Settings":
                             mbRunSystemFile("powercfg.cpl");
                             break;
-                        case "Controllers Settings":
+                        case "Controller Settings":
                             mbRunSystemFile("joy.cpl");
                             break;
                         case "Computer Management":
