@@ -23,7 +23,7 @@ namespace RED.mbnq
         private int paintCallCount = 0;
         public mbCrosshair()
         {
-            this.DoubleBuffered = true; // Enforce double buffering
+            this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.UpdateStyles();
 
@@ -38,7 +38,7 @@ namespace RED.mbnq
             this.DoubleBuffered = true;
             this.Paint += MainDisplay_Paint;
             this.ShowInTaskbar = false;
-            // this.Enabled = false;            // Comment this out if the overlay should still display correctly without disabling the form entirely 
+            // this.Enabled = false; 
 
             // The update timer
             crosshairRefreshTimer = new Timer();
@@ -47,15 +47,15 @@ namespace RED.mbnq
             crosshairRefreshTimer.Start();
 
         }
-        string filePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+        string crosshairFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomPNG()
         {
 
             try
             {
-                if (File.Exists(filePath))
+                if (File.Exists(crosshairFilePath))
                 {
-                    using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(filePath)))
+                    using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(crosshairFilePath)))
                     {
                         using (var img = Image.FromStream(ms))
                         {
@@ -71,7 +71,7 @@ namespace RED.mbnq
                             {
                                 MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                                 Sounds.PlayClickSoundOnce();
-                                File.Delete(filePath);
+                                File.Delete(crosshairFilePath);
                                 crosshairOverlay = null;
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
                             }
