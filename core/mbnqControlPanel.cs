@@ -388,10 +388,10 @@ namespace RED.mbnq
                     switch (mbMbToolsDropDown.SelectedItem.ToString())
                     {
                         case "Test Ping":
-                            sysTestPing_Click(sender, e);
+                            mbTestPing_Click(sender, e);
                             break;
                         case "My IP":
-                            sysMyIP_Click(sender, e);
+                            mbMyIP_Click(sender, e);
                             break;
                     }
                 }
@@ -675,30 +675,6 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
         }
-        private void sysTestPing_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Create a new process to run the ping command
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c ping 8.8.8.8 -t",
-                    // Verb = "runas",                          // Run as administrator
-                    // UseShellExecute = true,                  // Required for elevated privileges
-                    WindowStyle = ProcessWindowStyle.Normal     // Shows the command prompt window
-                };
-
-                // Start the process
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
         private void sysTaskManager_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
@@ -777,7 +753,9 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
-        private async void sysMyIP_Click(object sender, EventArgs e)
+
+        // ---
+        private async void mbMyIP_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
 
@@ -798,6 +776,30 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void mbTestPing_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Create a new process to run the ping command
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = "/c ping 8.8.8.8 -t",
+                    // Verb = "runas",                          // Run as administrator
+                    // UseShellExecute = true,                  // Required for elevated privileges
+                    WindowStyle = ProcessWindowStyle.Normal     // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
