@@ -202,6 +202,7 @@ namespace RED.mbnq
                 controlPanel.colorB.Value = 10;
             }
 
+            controlPanel.CenterCrosshairOverlay();
             controlPanel.updateMainCrosshair();
         }
 
