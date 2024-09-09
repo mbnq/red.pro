@@ -319,6 +319,7 @@ namespace RED.mbnq
 
             mbDebugonCheckbox.CheckedChanged += (s, e) =>
             {
+                mbDebugonCheckbox_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
@@ -336,6 +337,7 @@ namespace RED.mbnq
 
             mbAOnTopCheckBox.CheckedChanged += (s, e) =>
             {
+                mbAOnTopCheckBox_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
@@ -353,6 +355,7 @@ namespace RED.mbnq
 
             mbHideCrosshairCheckBox.CheckedChanged += (s, e) =>
             {
+                mbHideCrosshairCheckBox_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
@@ -370,6 +373,7 @@ namespace RED.mbnq
 
             mbDisableSoundCheckBox.CheckedChanged += (s, e) =>
             {
+                mbDisableSoundCheckBox_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
@@ -387,6 +391,7 @@ namespace RED.mbnq
 
             mbEnableZoomModeCheckBox.CheckedChanged += (s, e) =>
             {
+                mbEnableZoomModeCheckBox_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
@@ -404,24 +409,16 @@ namespace RED.mbnq
 
             mbEnableFlirCheckBox.CheckedChanged += (s, e) =>
             {
+                mbEnableFlirCheckBox_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
                 }
             };
 
-            mbAutoSaveCheckbox.CheckedChanged += mbAutoSaveOnExit_CheckedChanged;
-
-            mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
-            mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
-
+            mbDebugonCheckbox.Checked = mIsDebugOn;
             mbAOnTopCheckBox.Checked = this.TopMost;
-            mbAOnTopCheckBox.CheckedChanged += mbAOnTopCheckBox_CheckedChanged;
 
-            mbHideCrosshairCheckBox.CheckedChanged += mbHideCrosshairCheckBox_CheckedChanged;
-            mbDisableSoundCheckBox.CheckedChanged += mbDisableSoundCheckBox_CheckedChanged;
-            mbEnableZoomModeCheckBox.CheckedChanged += mbEnableZoomModeCheckBox_CheckedChanged;
-            mbEnableFlirCheckBox.CheckedChanged += mbEnableFlirCheckBox_CheckedChanged;
 
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
