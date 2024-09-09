@@ -658,7 +658,17 @@ namespace RED.mbnq
 
                 // Update zoom
                 ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
-                if (ZoomMode.IsZoomModeEnabled) { zoomLevel.Enabled = true; } else { zoomLevel.Enabled = false; }
+
+                // moved to checkbox
+                /*
+                if (ZoomMode.IsZoomModeEnabled) { 
+                    zoomLevel.Enabled = true; 
+                    zoomLevel.Visible = true;
+                } else { 
+                    zoomLevel.Enabled = false; 
+                    zoomLevel.Visible = false;
+                }
+                */
             }
             UpdateLabels();
         }
@@ -918,11 +928,17 @@ namespace RED.mbnq
             {
                 ZoomMode.IsZoomModeEnabled = true;
                 zoomLevel.Enabled = true;
+                zoomLevel.Visible = true;
+                zoomLevel.Parent.Controls[0].Visible = true;
+                updateMainCrosshair();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
                 zoomLevel.Enabled = false;
+                zoomLevel.Visible = false;
+                zoomLevel.Parent.Controls[0].Visible = false;
+                updateMainCrosshair();
             }
         }
         private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
