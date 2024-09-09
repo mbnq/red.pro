@@ -139,10 +139,10 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
 
             // Save overlay absolute position
-            if (controlPanel.mbnqCrosshairOverlay != null)
+            if (controlPanel.mbCrosshairOverlay != null)
             {
-                sb.AppendLine($"PositionX={controlPanel.mbnqCrosshairOverlay.Left}");
-                sb.AppendLine($"PositionY={controlPanel.mbnqCrosshairOverlay.Top}");
+                sb.AppendLine($"PositionX={controlPanel.mbCrosshairOverlay.Left}");
+                sb.AppendLine($"PositionY={controlPanel.mbCrosshairOverlay.Top}");
             }
 
             controlPanel.mbProgressBar0.Value = 50;
@@ -218,10 +218,10 @@ namespace RED.mbnq
                     controlPanel.mbEnableFlirChecked = bool.Parse(line.Substring("mbEnableFlirMode=".Length));
 
 
-                else if (line.StartsWith("PositionX=") && controlPanel.mbnqCrosshairOverlay != null)
-                    controlPanel.mbnqCrosshairOverlay.Left = int.Parse(line.Substring("PositionX=".Length));
-                else if (line.StartsWith("PositionY=") && controlPanel.mbnqCrosshairOverlay != null)
-                    controlPanel.mbnqCrosshairOverlay.Top = int.Parse(line.Substring("PositionY=".Length));
+                else if (line.StartsWith("PositionX=") && controlPanel.mbCrosshairOverlay != null)
+                    controlPanel.mbCrosshairOverlay.Left = int.Parse(line.Substring("PositionX=".Length));
+                else if (line.StartsWith("PositionY=") && controlPanel.mbCrosshairOverlay != null)
+                    controlPanel.mbCrosshairOverlay.Top = int.Parse(line.Substring("PositionY=".Length));
             }
 
             controlPanel.mbProgressBar0.Value = 60;

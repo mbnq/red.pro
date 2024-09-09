@@ -7,7 +7,7 @@ namespace RED.mbnq
 {
     static class Program
     {
-        public static mbnqCrosshair mainCrosshair;
+        public static mbCrosshair mainCrosshair;
         public static int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps 
         public static float mbVersion = 0.068f;
 
@@ -23,12 +23,12 @@ namespace RED.mbnq
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Initialize MainDisplay
-            mainCrosshair = new mbnqCrosshair();
+            mainCrosshair = new mbCrosshair();
 
             // Initialize ControlPanel
             ControlPanel controlPanel = new ControlPanel
             {
-                mbnqCrosshairOverlay = mainCrosshair,
+                mbCrosshairOverlay = mainCrosshair,
             };
 
             ZoomMode.InitializeZoomMode(controlPanel);

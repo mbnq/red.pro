@@ -258,7 +258,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="core\mbnqGlobalMouseHook.cs" />
-    <Compile Include="core\mbnqCrosshair.cs">
+    <Compile Include="core\mbCrosshair.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="core\mbnqFunctions.cs" />

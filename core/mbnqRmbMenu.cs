@@ -187,8 +187,8 @@ namespace RED.mbnq
         private void LoadCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.LoadCustomOverlay();
-            controlPanel.mbnqCrosshairOverlay.SetCustomPNG();
+            controlPanel.LoadCustomCrosshair();
+            controlPanel.mbCrosshairOverlay.SetCustomPNG();
             UpdateMenuItems();
 
             // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
@@ -207,8 +207,8 @@ namespace RED.mbnq
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.mbnqCrosshairOverlay.RemoveCustomOverlay();
-            controlPanel.RemoveCustomOverlay();
+            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();
+            controlPanel.RemoveCustomCrosshair();
             UpdateMenuItems();
             SaveLoad.LoadSettings(controlPanel, false);
 

@@ -43,7 +43,7 @@ namespace RED.mbnq
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         public MaterialProgressBar mbProgressBar0;
-        public mbnqCrosshair mbnqCrosshairDisplay;
+        public mbCrosshair mbCrosshairDisplay;
 
         private int mControlWidth;
         public Size mbInitSize                          = new Size(0, 0);
@@ -63,15 +63,6 @@ namespace RED.mbnq
             InitializeComponent();
             InitializeMaterialSkin();
 
-            if (mbnqFLIR.mbEnableFlirLogic)
-            {
-                FlirOverlayForm = new mbnqFLIR();
-                _ = ManageOverlayAsync();
-                Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
-            }
-
-            Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
-
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
             this.Shown += ControlPanel_Shown;
@@ -89,27 +80,18 @@ namespace RED.mbnq
             this.ContextMenuStrip = rightClickMenu;
             rightClickMenu.Opening += (s, e) => { Sounds.PlayClickSoundOnce(); };
 
+            if (mbnqFLIR.mbEnableFlirLogic)
+            {
+                FlirOverlayForm = new mbnqFLIR();
+                _ = ManageOverlayAsync();
+                Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
+            }
+
             updateMainCrosshair();
+            Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
         }
 
-        // main display init
-        public mbnqCrosshair mbnqCrosshairOverlay
-        {
-            get { return mbnqCrosshairDisplay; }
-            set
-            {
-                mbnqCrosshairDisplay = value;
-                InitializeCrosshairPos();
-            }
-        }
-        private void InitializeCrosshairPos()
-        {
-            if (mbnqCrosshairOverlay != null)
-            {
-                Point centeredPosition = GetCenteredPosition();
-                mbnqCrosshairOverlay.Location = centeredPosition;
-            }
-        }
+        // Material Skin Init
         public void InitializeMaterialSkin()
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
@@ -123,8 +105,25 @@ namespace RED.mbnq
                 MaterialSkin.Accent.Red100,         // Accent color
                 MaterialSkin.TextShade.WHITE        // Text color
             );
-            // this.BackColor = Color.FromArgb(255, 255, 58);               // not needed
-            // this.DrawerBackgroundWithAccent = false;
+        }
+
+        // Crosshair Init
+        public mbCrosshair mbCrosshairOverlay
+        {
+            get { return mbCrosshairDisplay; }
+            set
+            {
+                mbCrosshairDisplay = value;
+                InitializeCrosshairPos();
+            }
+        }
+        private void InitializeCrosshairPos()
+        {
+            if (mbCrosshairOverlay != null)
+            {
+                Point centeredPosition = GetCenteredPosition();
+                mbCrosshairOverlay.Location = centeredPosition;
+            }
         }
 
         #endregion
@@ -132,30 +131,29 @@ namespace RED.mbnq
         #region Positioning Control Panel
         private void PositionControlPanelRelativeToCrosshair()
         {
-            if (mbnqCrosshairOverlay != null)
+            if (mbCrosshairOverlay != null)
             {
-                // Get the bounds of the primary screen 
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
 
                 // Get the rectangle representing the ControlPanel's current bounds
                 Rectangle controlPanelBounds = new Rectangle(this.Left, this.Top, this.Width, this.Height);
 
-                // Get the rectangle representing the mbnqCrosshair's bounds
-                Rectangle crosshairBounds = new Rectangle(mbnqCrosshairOverlay.Left, mbnqCrosshairOverlay.Top, mbnqCrosshairOverlay.Width, mbnqCrosshairOverlay.Height);
+                // Get the rectangle representing the mbCrosshair's bounds
+                Rectangle crosshairBounds = new Rectangle(mbCrosshairOverlay.Left, mbCrosshairOverlay.Top, mbCrosshairOverlay.Width, mbCrosshairOverlay.Height);
 
                 // Check if the crosshair is within the control panel's region
                 if (controlPanelBounds.IntersectsWith(crosshairBounds))
                 {
                     // Decide whether to place the control panel to the left or right of the crosshair
                     int panelWidth = this.Width;
-                    int newLeft = (mbnqCrosshairOverlay.Left + (mbnqCrosshairOverlay.Width + 20)); // Default to the right
-                    int newTop = (mbnqCrosshairOverlay.Top / 2); // Align vertically with the crosshair
+                    int newLeft = (mbCrosshairOverlay.Left + (mbCrosshairOverlay.Width + 20));  // Default to the right
+                    int newTop = (mbCrosshairOverlay.Top / 2);                                  // Align vertically with the crosshair
 
                     // Check if the control panel would go off the screen on the right
                     if (newLeft + panelWidth > screenBounds.Right)
                     {
                         // If it would go off-screen, place it to the left of the crosshair
-                        newLeft = mbnqCrosshairOverlay.Left - panelWidth - 20;
+                        newLeft = mbCrosshairOverlay.Left - panelWidth - 20;
                     }
 
                     // Ensure the control panel doesn't go off the screen on the left
@@ -174,10 +172,10 @@ namespace RED.mbnq
         {
             updateMainCrosshair();
 
-            if (mbnqCrosshairOverlay != null)
+            if (mbCrosshairOverlay != null)
             {
-                mbnqCrosshairOverlay.Show();
-                mbnqCrosshairOverlay.BringToFront();
+                mbCrosshairOverlay.Show();
+                mbCrosshairOverlay.BringToFront();
 
                 // Position the ControlPanel relative to the mbnqCrosshair, if necessary
                 PositionControlPanelRelativeToCrosshair();
@@ -403,7 +401,7 @@ namespace RED.mbnq
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
 
         // Load and set the new Custom .png Crosshair Ovelray and refresh display
-        public void LoadCustomOverlay()
+        public void LoadCustomCrosshair()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -422,7 +420,7 @@ namespace RED.mbnq
 
                     File.Copy(filePath, destinationPath);
 
-                    mbnqCrosshairOverlay.SetCustomPNG();
+                    mbCrosshairOverlay.SetCustomPNG();
                     updateMainCrosshair();
 
                 }
@@ -430,14 +428,14 @@ namespace RED.mbnq
         }
 
         // Remove the overlay and refresh display
-        public void RemoveCustomOverlay()
+        public void RemoveCustomCrosshair()
         {
-            mbnqCrosshairOverlay.RemoveCustomOverlay();
+            mbCrosshairOverlay.RemoveCustomCrosshair();
             updateMainCrosshair();
         }
 
         // Apply custon overlay
-        public void ApplyCustomOverlay()
+        public void ApplyCustomCrosshair()
         {
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
@@ -449,7 +447,7 @@ namespace RED.mbnq
                         if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
                         {
                             UpdateLabels();
-                            mbnqCrosshairDisplay.SetCustomPNG();
+                            mbCrosshairDisplay.SetCustomPNG();
                         }
                         else
                         {
@@ -461,7 +459,7 @@ namespace RED.mbnq
                 }
                 catch (Exception ex)
                 {
-                    MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    MaterialMessageBox.Show($"Failed to load the custom crosshair: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                 }
             }
@@ -474,7 +472,7 @@ namespace RED.mbnq
         #region Updating Stuff
         public void updateMainCrosshair() // overlay
         {
-            if (mbnqCrosshairOverlay != null)
+            if (mbCrosshairOverlay != null)
             {
                 // Get the centered position
                 Point centeredPosition = GetCenteredPosition();
@@ -487,16 +485,16 @@ namespace RED.mbnq
                 int newLeft = centeredPosition.X + translatedOffsetX;
                 int newTop = centeredPosition.Y + translatedOffsetY;
 
-                mbnqCrosshairOverlay.Left = newLeft;
-                mbnqCrosshairOverlay.Top = newTop;
+                mbCrosshairOverlay.Left = newLeft;
+                mbCrosshairOverlay.Top = newTop;
 
                 // Update size
-                mbnqCrosshairOverlay.Size = new Size(size.Value, size.Value);
+                mbCrosshairOverlay.Size = new Size(size.Value, size.Value);
 
-                if (mbnqCrosshairOverlay.HasCustomOverlay)  // Check if custom overlay exists
+                if (mbCrosshairOverlay.HasCustomOverlay)  // Check if custom overlay exists
                 {
-                    mbnqCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-                    mbnqCrosshairOverlay.TransparencyKey = mbnqCrosshairOverlay.BackColor;
+                    mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                    mbCrosshairOverlay.TransparencyKey = mbCrosshairOverlay.BackColor;
 
                     // Disable color sliders
                     // colorR.Enabled = false;
@@ -506,7 +504,7 @@ namespace RED.mbnq
                 else
                 {
                     // If no custom overlay, use the selected color from sliders
-                    mbnqCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                    mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
 
                     // Enable color sliders
                     colorR.Enabled = true;
@@ -521,23 +519,23 @@ namespace RED.mbnq
                 // Update opacity
                 if (mHideCrosshair) 
                 { 
-                    mbnqCrosshairOverlay.Opacity = 0;
+                    mbCrosshairOverlay.Opacity = 0;
                     transparency.Enabled = false;
                 } 
                 else 
                 { 
-                    mbnqCrosshairOverlay.Opacity = transparency.Value / 100.0;
+                    mbCrosshairOverlay.Opacity = transparency.Value / 100.0;
                     transparency.Enabled = true;
                 };
 
                 // Ensure it is within the screen bounds
                 Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-                mbnqCrosshairOverlay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - mbnqCrosshairOverlay.Width, mbnqCrosshairOverlay.Left));
-                mbnqCrosshairOverlay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - mbnqCrosshairOverlay.Height, mbnqCrosshairOverlay.Top));
+                mbCrosshairOverlay.Left = Math.Max(screenBounds.Left, Math.Min(screenBounds.Right - mbCrosshairOverlay.Width, mbCrosshairOverlay.Left));
+                mbCrosshairOverlay.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - mbCrosshairOverlay.Height, mbCrosshairOverlay.Top));
 
-                mbnqCrosshairOverlay.Show();
-                mbnqCrosshairOverlay.BringToFront();
-                mbnqCrosshairOverlay.Invalidate();
+                mbCrosshairOverlay.Show();
+                mbCrosshairOverlay.BringToFront();
+                mbCrosshairOverlay.Invalidate();
             }
             UpdateLabels();
         }
@@ -579,14 +577,14 @@ namespace RED.mbnq
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
 
             // Calculate the center of the primary screen
-            int centeredX = (screenBounds.Width - mbnqCrosshairOverlay.Width) / 2;
-            int centeredY = (screenBounds.Height - mbnqCrosshairOverlay.Height) / 2;
+            int centeredX = (screenBounds.Width - mbCrosshairOverlay.Width) / 2;
+            int centeredY = (screenBounds.Height - mbCrosshairOverlay.Height) / 2;
 
             return new Point(screenBounds.Left + centeredX, screenBounds.Top + centeredY);
         }
         public void CenterCrosshairOverlay()
         {
-            if (mbnqCrosshairOverlay != null)
+            if (mbCrosshairOverlay != null)
             {
                 // Reset the offset values to the midpoint, which corresponds to 0 in the new translation
                 offsetX.Value = 1000;
@@ -599,13 +597,13 @@ namespace RED.mbnq
                 Point centeredPosition = GetCenteredPosition();
 
                 // Apply the centered position directly without offsets as offsets are now at their midpoint (0 translated)
-                mbnqCrosshairOverlay.Left = centeredPosition.X;
-                mbnqCrosshairOverlay.Top = centeredPosition.Y;
+                mbCrosshairOverlay.Left = centeredPosition.X;
+                mbCrosshairOverlay.Top = centeredPosition.Y;
 
                 // ensure overlay is visible 
-                mbnqCrosshairOverlay.Show();
-                mbnqCrosshairOverlay.BringToFront();
-                mbnqCrosshairOverlay.Invalidate();
+                mbCrosshairOverlay.Show();
+                mbCrosshairOverlay.BringToFront();
+                mbCrosshairOverlay.Invalidate();
                 updateMainCrosshair();
             }
             else

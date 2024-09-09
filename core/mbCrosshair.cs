@@ -15,14 +15,14 @@ using System.Diagnostics;
 
 namespace RED.mbnq
 {
-    public class mbnqCrosshair : Form
+    public class mbCrosshair : Form
     {
         private Timer crosshairRefreshTimer;
         private Image crosshairOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
         private int paintCallCount = 0;
 
-        public mbnqCrosshair()
+        public mbCrosshair()
         {
             this.DoubleBuffered = true; // Enforce double buffering
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -99,7 +99,7 @@ namespace RED.mbnq
             // Refresh the display
             this.Invalidate();
         }
-        public void RemoveCustomOverlay()
+        public void RemoveCustomCrosshair()
         {
             string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
