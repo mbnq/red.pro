@@ -190,10 +190,7 @@ namespace RED.mbnq
             controlPanel.LoadCustomCrosshair();
             controlPanel.mbCrosshairOverlay.SetCustomPNG();
 
-            if (controlPanel.SizeValue < 100)
-            {
-                controlPanel.SizeValue = 100;
-            }
+            if (controlPanel.SizeValue < 100) { controlPanel.SizeValue = 100; }
 
             UpdateMenuItems();
 
@@ -205,7 +202,6 @@ namespace RED.mbnq
                 controlPanel.colorB.Value = 10;
             }
 
-            // refresh
             controlPanel.updateMainCrosshair();
         }
 
@@ -216,7 +212,8 @@ namespace RED.mbnq
             controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();
             controlPanel.RemoveCustomCrosshair();
 
-            // refresh
+            controlPanel.ColorRValue++; // nasty hack to force redraw of xhair, still... it works
+
             UpdateMenuItems();
             controlPanel.updateMainCrosshair();
             // SaveLoad.LoadSettings(controlPanel, false);
