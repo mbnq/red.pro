@@ -290,6 +290,7 @@ namespace RED.mbnq
             InitializeButtons();
             #endregion
 
+            #region checkboxes
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
             mbAutoSaveCheckbox = new MaterialSwitch
@@ -419,6 +420,10 @@ namespace RED.mbnq
             mbDebugonCheckbox.Checked = mIsDebugOn;
             mbAOnTopCheckBox.Checked = this.TopMost;
 
+            /* --- --- ---  --- --- --- */
+
+            #endregion
+            #region Progressbars
 
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
@@ -432,6 +437,8 @@ namespace RED.mbnq
             mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
             /* --- --- ---  --- --- --- */
+
+            #endregion
 
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
