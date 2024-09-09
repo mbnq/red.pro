@@ -417,7 +417,6 @@ namespace RED.mbnq
                 }
             };
 
-            mbDebugonCheckbox.Checked = mIsDebugOn;
             mbAOnTopCheckBox.Checked = this.TopMost;
 
             /* --- --- ---  --- --- --- */
