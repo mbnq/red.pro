@@ -313,14 +313,21 @@ namespace RED.mbnq
             mbSysDropDown = new MaterialComboBox
             {
                 Width = (mCPWidth - (mControlDefSpacer / 2) + 3),
-                DropDownStyle = ComboBoxStyle.DropDownList
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                MaxDropDownItems = 12
             };
 
-
             mbSysDropDown.Items.Add("Task Manager");
+            mbSysDropDown.Items.Add("Hardware Manager");
             mbSysDropDown.Items.Add("Network Devices");
             mbSysDropDown.Items.Add("System Properties");
             mbSysDropDown.Items.Add("Display Settings");
+            mbSysDropDown.Items.Add("Audio Settings");
+            mbSysDropDown.Items.Add("Power Settings");
+            mbSysDropDown.Items.Add("Controllers Settings");
+            mbSysDropDown.Items.Add("Computer Management");
+            mbSysDropDown.Items.Add("System Configuration");
+            mbSysDropDown.Items.Add("Computer Info");
 
             // def
             mbSysDropDown.SelectedIndex = 0;
@@ -352,6 +359,27 @@ namespace RED.mbnq
                         case "Display Settings":
                             mbRunSystemFile("desk.cpl");
                             break;
+                        case "Hardware Manager":
+                            mbRunSystemFile("hdwwiz.cpl");
+                            break;
+                        case "Audio Settings":
+                            mbRunSystemFile("mmsys.cpl");
+                            break;                        
+                        case "Power Settings":
+                            mbRunSystemFile("powercfg.cpl");
+                            break;
+                        case "Controllers Settings":
+                            mbRunSystemFile("joy.cpl");
+                            break;
+                        case "Computer Management":
+                            mbRunSystemFile("compmgmt.msc");
+                            break;
+                        case "Computer Info":
+                            mbRunSystemFile("msinfo32.exe");
+                            break;
+                         case "System Configuration":
+                            mbRunSystemFile("msconfig.exe");
+                            break;
                         default:
                             Debug.WriteLineIf(mIsDebugOn, $"mbnq: Unknown system tool selected - {selectedItem}");
                             break;
@@ -366,7 +394,8 @@ namespace RED.mbnq
             mbMbToolsDropDown = new MaterialComboBox
             {
                 Width = (mCPWidth - (mControlDefSpacer / 2) + 3),
-                DropDownStyle = ComboBoxStyle.DropDownList
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                MaxDropDownItems = 10
             };
 
 
