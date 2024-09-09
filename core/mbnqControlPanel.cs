@@ -32,14 +32,14 @@ namespace RED.mbnq
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
-        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton, sysSysPropertiesButton, sysDisplaySettingsButton;
+        private Button centerButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
         private rmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
-        private MaterialComboBox mbActionComboBox;
+        private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
@@ -300,25 +300,9 @@ namespace RED.mbnq
 
             // Usage of the helper method in your InitializeComponent or constructor
             centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
-            sysVerifyButton = CreateButton("Verify System Integrity", mControlWidth, sysVerifyButton_Click);
-            sysTestPingButton = CreateButton("Test Ping", mControlWidth, sysTestPingButton_Click);
-            sysTaskManagerButton = CreateButton("Task Manager", mControlWidth, sysTaskManagerButton_Click);
-            sysNetworkDevicesButton = CreateButton("Network Devices", mControlWidth, sysNetworkDevicesButton_Click);
-            sysMyIPButton = CreateButton("My IP", mControlWidth, sysMyIPButton_Click);
-            sysSysPropertiesButton = CreateButton("System Properties", mControlWidth, sysSysPropertiesButton_Click);
-            sysDisplaySettingsButton = CreateButton("Display Settings", mControlWidth, sysDisplaySettingsButton_Click);
 
             // Add the buttons to the respective panels
             mbPanelForTab1.Controls.Add(centerButton);
-
-            mbPanelForTab3.Controls.Add(sysTaskManagerButton);
-            mbPanelForTab3.Controls.Add(sysNetworkDevicesButton);
-            mbPanelForTab3.Controls.Add(sysMyIPButton);
-            mbPanelForTab3.Controls.Add(sysSysPropertiesButton);
-            mbPanelForTab3.Controls.Add(sysDisplaySettingsButton);
-
-            mbPanelForTab3.Controls.Add(sysTestPingButton);
-            mbPanelForTab3.Controls.Add(sysVerifyButton);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -326,61 +310,101 @@ namespace RED.mbnq
             #region DropDowns aka comboBoxes
             /* --- --- ---  --- --- --- --- --- --- --- */
 
-            mbActionComboBox = new MaterialComboBox
+            mbSysDropDown = new MaterialComboBox
             {
                 Width = 250,
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
 
 
-            mbActionComboBox.Items.Add("Test Ping");
-            mbActionComboBox.Items.Add("Task Manager");
-            mbActionComboBox.Items.Add("Network Devices");
-            mbActionComboBox.Items.Add("My IP");
-            mbActionComboBox.Items.Add("System Properties");
-            mbActionComboBox.Items.Add("Display Settings");
+            mbSysDropDown.Items.Add("Task Manager");
+            mbSysDropDown.Items.Add("Network Devices");
+            mbSysDropDown.Items.Add("System Properties");
+            mbSysDropDown.Items.Add("Display Settings");
 
             // def
-            mbActionComboBox.SelectedIndex = 0;
+            mbSysDropDown.SelectedIndex = 0;
 
             // run the selected option
-            mbActionComboBox.SelectedIndexChanged += MbActionComboBox_SelectedIndexChanged;
+            mbSysDropDown.SelectedIndexChanged += mbSysDropDown_SelectedIndexChanged;
 
             // play click on dropdown
-            mbActionComboBox.DropDown += (sender, e) => Sounds.PlayClickSoundOnce();
+            mbSysDropDown.DropDown += (sender, e) => Sounds.PlayClickSoundOnce();
 
-            void MbActionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+            void mbSysDropDown_SelectedIndexChanged(object sender, EventArgs e)
             {
                 Sounds.PlayClickSoundOnce();
 
-                var selectedItem = mbActionComboBox.SelectedItem;
+                var selectedItem = mbSysDropDown.SelectedItem;
                 if (selectedItem != null)
                 {
-                    switch (mbActionComboBox.SelectedItem.ToString())
+                    switch (mbSysDropDown.SelectedItem.ToString())
                     {
-                        case "Test Ping":
-                            sysTestPingButton_Click(sender, e);
-                            break;
                         case "Task Manager":
-                            sysTaskManagerButton_Click(sender, e);
+                            sysTaskManager_Click(sender, e);
                             break;
                         case "Network Devices":
-                            sysNetworkDevicesButton_Click(sender, e);
-                            break;
-                        case "My IP":
-                            sysMyIPButton_Click(sender, e);
+                            sysNetworkDevices_Click(sender, e);
                             break;
                         case "System Properties":
-                            sysSysPropertiesButton_Click(sender, e);
+                            sysSysProperties_Click(sender, e);
                             break;
                         case "Display Settings":
-                            sysDisplaySettingsButton_Click(sender, e);
+                            sysDisplaySettings_Click(sender, e);
                             break;
                     }
                 }
             }
 
-            mbPanelForTab3.Controls.Add(mbActionComboBox);
+            // ---
+
+
+            mbMbToolsDropDown = new MaterialComboBox
+            {
+                Width = 250,
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+
+
+            mbMbToolsDropDown.Items.Add("Test Ping");
+            mbMbToolsDropDown.Items.Add("My IP");
+
+            // def
+            mbMbToolsDropDown.SelectedIndex = 0;
+
+            // run the selected option
+            mbMbToolsDropDown.SelectedIndexChanged += mbMbToolsDropDown_SelectedIndexChanged;
+
+            // play click on dropdown
+            mbMbToolsDropDown.DropDown += (sender, e) => Sounds.PlayClickSoundOnce();
+
+            void mbMbToolsDropDown_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                Sounds.PlayClickSoundOnce();
+
+                var selectedItem = mbMbToolsDropDown.SelectedItem;
+                if (selectedItem != null)
+                {
+                    switch (mbMbToolsDropDown.SelectedItem.ToString())
+                    {
+                        case "Test Ping":
+                            sysTestPing_Click(sender, e);
+                            break;
+                        case "My IP":
+                            sysMyIP_Click(sender, e);
+                            break;
+                    }
+                }
+            }
+
+
+            // ---
+
+            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbSysDropDown);
+
+            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -609,6 +633,178 @@ namespace RED.mbnq
         }
         #endregion
 
+        #region DropDowns Code
+        /* --- --- --- DropDowns Code --- --- --- */
+
+        private void sysVerifyButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Path to a temporary batch file
+                string tempBatchFile = Path.Combine(Path.GetTempPath(), "system_verify.bat");
+
+                // Create batch file content
+                string batchContent = @"
+                    @echo off
+                    title RED. PRO
+                    cls
+                    echo Running system integrity verification...
+                    sfc /scannow
+                    pause
+                ";
+
+                // Write the batch file content to the file
+                File.WriteAllText(tempBatchFile, batchContent);
+
+                // Create a new process to run the batch file as administrator
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = tempBatchFile,
+                    Verb = "runas",                         // to run as administrator
+                    UseShellExecute = true,                 // Required to launch as admin
+                    WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
+        }
+        private void sysTestPing_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Create a new process to run the ping command
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = "/c ping 8.8.8.8 -t",
+                    // Verb = "runas",                          // Run as administrator
+                    // UseShellExecute = true,                  // Required for elevated privileges
+                    WindowStyle = ProcessWindowStyle.Normal     // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysTaskManager_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Create a new process to run Task Manager
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "taskmgr.exe", // Task Manager executable
+                    // UseShellExecute = true, // Required for running system-level applications
+                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysNetworkDevices_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Create a new process to run Task Manager
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "ncpa.cpl", // Task Manager executable
+                    // UseShellExecute = true, // Required for running system-level applications
+                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysSysProperties_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "sysdm.cpl",
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysDisplaySettings_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "desk.cpl",
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private async void sysMyIP_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                // Download the content of the webpage
+                using (HttpClient client = new HttpClient())
+                {
+                    string url = "https://mbnq.pl/myip/";
+                    string pageContent = await client.GetStringAsync(url);
+                    string mBoxTitle = "Your IP:";
+
+                    // Show the custom message box with the content
+                    mbMessageBox messageBox = new mbMessageBox(pageContent, mBoxTitle);
+                    messageBox.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+
+        /* --- --- --- --- --- --- --- --- ---  */
+        #endregion
+
         #region Buttons Code
         /* --- --- --- Buttons Code --- --- --- */
 
@@ -672,193 +868,6 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             CenterCrosshairOverlay();
-        }
-        private void sysVerifyButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Path to a temporary batch file
-                string tempBatchFile = Path.Combine(Path.GetTempPath(), "system_verify.bat");
-
-                // Create batch file content
-                string batchContent = @"
-                    @echo off
-                    title RED. PRO
-                    cls
-                    echo Running system integrity verification...
-                    sfc /scannow
-                    pause
-                ";
-
-                // Write the batch file content to the file
-                File.WriteAllText(tempBatchFile, batchContent);
-
-                // Create a new process to run the batch file as administrator
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = tempBatchFile,
-                    Verb = "runas",                         // to run as administrator
-                    UseShellExecute = true,                 // Required to launch as admin
-                    WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
-                };
-
-                // Start the process
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
-            }
-        }
-        private void sysTestPingButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Create a new process to run the ping command
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = "/c ping 8.8.8.8 -t",
-                    // Verb = "runas",                          // Run as administrator
-                    // UseShellExecute = true,                  // Required for elevated privileges
-                    WindowStyle = ProcessWindowStyle.Normal     // Shows the command prompt window
-                };
-
-                // Start the process
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysTaskManagerButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Create a new process to run Task Manager
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "taskmgr.exe", // Task Manager executable
-                    // UseShellExecute = true, // Required for running system-level applications
-                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
-                };
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysNetworkDevicesButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Create a new process to run Task Manager
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "ncpa.cpl", // Task Manager executable
-                    // UseShellExecute = true, // Required for running system-level applications
-                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
-                };
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysSysPropertiesButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "sysdm.cpl",
-                };
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysDisplaySettingsButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "desk.cpl",
-                };
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-
-        /*
-        private void sysMyIPButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "https://mbnq.pl/myip/",
-                    UseShellExecute = true
-                };
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        */
-
-        private async void sysMyIPButton_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Download the content of the webpage
-                using (HttpClient client = new HttpClient())
-                {
-                    string url = "https://mbnq.pl/myip/";
-                    string pageContent = await client.GetStringAsync(url);
-                    string mBoxTitle = "Your IP:";
-
-                    // Show the custom message box with the content
-                    mbMessageBox messageBox = new mbMessageBox(pageContent, mBoxTitle);
-                    messageBox.ShowDialog();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
         }
 
         #endregion
