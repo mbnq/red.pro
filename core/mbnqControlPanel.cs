@@ -312,7 +312,7 @@ namespace RED.mbnq
 
             mbSysDropDown = new MaterialComboBox
             {
-                Width = 250,
+                Width = (mCPWidth - (mControlDefSpacer / 2) + 3),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
 
@@ -329,11 +329,11 @@ namespace RED.mbnq
             mbSysDropDown.SelectedIndexChanged += mbSysDropDown_SelectedIndexChanged;
 
             // play click on dropdown
-            mbSysDropDown.DropDown += (sender, e) => Sounds.PlayClickSoundOnce();
+            mbSysDropDown.DropDown += (sender, e) => Sounds.PlayClickSound();
 
             void mbSysDropDown_SelectedIndexChanged(object sender, EventArgs e)
             {
-                Sounds.PlayClickSoundOnce();
+                Sounds.PlayClickSound();
 
                 var selectedItem = mbSysDropDown.SelectedItem?.ToString();
                 if (selectedItem != null)
@@ -365,13 +365,14 @@ namespace RED.mbnq
 
             mbMbToolsDropDown = new MaterialComboBox
             {
-                Width = 250,
+                Width = (mCPWidth - (mControlDefSpacer / 2) + 3),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
 
 
             mbMbToolsDropDown.Items.Add("Test Ping");
             mbMbToolsDropDown.Items.Add("My IP");
+            mbMbToolsDropDown.Items.Add("Verify System Files");
 
             // def
             mbMbToolsDropDown.SelectedIndex = 0;
@@ -396,6 +397,9 @@ namespace RED.mbnq
                             break;
                         case "My IP":
                             mbMyIP_Click(sender, e);
+                            break;
+                        case "Verify System Files":
+                            mbVerifySys_Click(sender, e);
                             break;
                     }
                 }
@@ -640,9 +644,8 @@ namespace RED.mbnq
         #region DropDowns Code
         /* --- --- --- DropDowns Code --- --- --- */
 
-        private void sysVerifyButton_Click(object sender, EventArgs e)
+        private void mbVerifySys_Click(object sender, EventArgs e)
         {
-            Sounds.PlayClickSoundOnce();
 
             try
             {
@@ -680,12 +683,10 @@ namespace RED.mbnq
             }
         }
 
-        // --
+        // ---
 
-        public void mbRunSystemFile(string fileName)
+        void mbRunSystemFile(string fileName)
         {
-            Sounds.PlayClickSoundOnce();
-
             try
             {
                 ProcessStartInfo processInfo = new ProcessStartInfo
