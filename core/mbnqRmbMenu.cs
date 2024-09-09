@@ -1,6 +1,7 @@
 ﻿using MaterialSkin.Controls;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Windows.Forms;
 
@@ -76,8 +77,14 @@ namespace RED.mbnq
         private void TextHUDConsoleMenuItem_Click(object sender, EventArgs e)
         {
             if (textHUD == null || textHUD.IsDisposed)
+            {
                 textHUD = new mbnqConsole();
-            textHUD.ToggleOverlay();
+                textHUD.ToggleOverlay();
+            }
+            else
+            {
+                textHUD.Dispose(); // Correctly dispose the instance of mbnqConsole
+            }
         }
 
         private void NewCaptureRegionMenuItem_Click(object sender, EventArgs e)

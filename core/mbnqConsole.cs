@@ -514,7 +514,7 @@ namespace RED.mbnq
             pingTimer.Dispose();
             ipTimer.Dispose();
             base.OnFormClosing(e);
-            this.Dispose();
+            // this.Dispose();
         }
 
         #endregion
@@ -566,7 +566,6 @@ namespace RED.mbnq
                 }
             }
         }
-
         private void ExecuteCommand(string command)
         {
             try
