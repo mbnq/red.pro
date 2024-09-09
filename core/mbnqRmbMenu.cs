@@ -207,7 +207,7 @@ namespace RED.mbnq
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();
+            controlPanel.mbCrosshairOverlay.RemoveCrosshair();
             controlPanel.RemoveCustomCrosshair();
             UpdateMenuItems();
             SaveLoad.LoadSettings(controlPanel, false);

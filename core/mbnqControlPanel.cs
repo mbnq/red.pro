@@ -430,7 +430,7 @@ namespace RED.mbnq
         // Remove the overlay and refresh display
         public void RemoveCustomCrosshair()
         {
-            mbCrosshairOverlay.RemoveCustomCrosshair();
+            mbCrosshairOverlay.RemoveCrosshair();
             updateMainCrosshair();
         }
 
@@ -771,6 +771,7 @@ namespace RED.mbnq
         #endregion
 
         #region Checkboxes Code
+
         /* --- --- --- Checkboxs functions --- --- --- */
         private void mbAutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {

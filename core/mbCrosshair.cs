@@ -99,7 +99,7 @@ namespace RED.mbnq
             // Refresh the display
             this.Invalidate();
         }
-        public void RemoveCustomCrosshair()
+        public void RemoveCrosshair()
         {
             string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
