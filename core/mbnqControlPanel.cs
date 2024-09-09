@@ -271,61 +271,43 @@ namespace RED.mbnq
             zoomLevel = zoomLevelSlider.Slider;
             panelForTab1.Controls.Add(zoomLevelSlider.Panel);
 
+            #region Buttons
             /* --- --- ---  Buttons --- --- --- */
 
-            // Center aka Force Center
-            centerButton = new MaterialButton
+            Button CreateButton(string buttonText, int width, EventHandler clickHandler)
             {
-                Text = "Center",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            centerButton.Click += CenterButton_Click;
+                var button = new MaterialButton
+                {
+                    Text = buttonText,
+                    AutoSize = false,
+                    Width = width
+                };
 
-            // System integrity verify
-            sysVerifyButton = new MaterialButton
-            {
-                Text = "Verify System Integrity",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            sysVerifyButton.Click += sysVerifyButton_Click;
+                button.Click += clickHandler;
+                return button;
+            }
 
-            // Test ping
-            sysTestPingButton = new MaterialButton
+            // Usage of the helper method in your InitializeComponent or constructor
+            void InitializeButtons()
             {
-                Text = "Test Ping",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            sysTestPingButton.Click += sysTestPingButton_Click;
+                centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
+                sysVerifyButton = CreateButton("Verify System Integrity", mControlWidth, sysVerifyButton_Click);
+                sysTestPingButton = CreateButton("Test Ping", mControlWidth, sysTestPingButton_Click);
+                sysTaskManagerButton = CreateButton("Task Manager", mControlWidth, sysTaskManagerButton_Click);
+                sysNetworkDevicesButton = CreateButton("Network Devices", mControlWidth, sysNetworkDevicesButton_Click);
+                sysMyIPButton = CreateButton("My IP", mControlWidth, sysMyIPButton_Click);
 
-            // Task Manager
-            sysTaskManagerButton = new MaterialButton
-            {
-                Text = "Task Manager",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            sysTaskManagerButton.Click += sysTaskManagerButton_Click;
+                // Add the buttons to the respective panels
+                panelForTab1.Controls.Add(centerButton);
+                panelForTab3.Controls.Add(sysVerifyButton);
+                panelForTab3.Controls.Add(sysTestPingButton);
+                panelForTab3.Controls.Add(sysTaskManagerButton);
+                panelForTab3.Controls.Add(sysNetworkDevicesButton);
+                panelForTab3.Controls.Add(sysMyIPButton);
+            }
 
-            // Network Devices
-            sysNetworkDevicesButton = new MaterialButton
-            {
-                Text = "Network Devices",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            sysNetworkDevicesButton.Click += sysNetworkDevicesButton_Click;
-
-            // My IP
-            sysMyIPButton = new MaterialButton
-            {
-                Text = "My IP",
-                AutoSize = false,
-                Width = mControlWidth
-            };
-            sysMyIPButton.Click += sysMyIPButton_Click;
+            InitializeButtons();
+            #endregion
 
             /* --- --- ---  Checkboxes --- --- --- */
             // Save on Exit
@@ -458,10 +440,12 @@ namespace RED.mbnq
             panelForTab1.Controls.Add(mbProgressBar0);
             mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
-            panelForTab1.Controls.Add(centerButton);
+            /* --- --- ---  --- --- --- */
 
-            // this.Controls.Add(panel);            
+            /* --- --- ---  Tab 1 goes here --- --- --- */
+
             mbnqTab1.Controls.Add(panelForTab1);
+
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
@@ -477,13 +461,6 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
-            panelForTab3.Controls.Add(sysTaskManagerButton);
-            panelForTab3.Controls.Add(sysNetworkDevicesButton);
-            panelForTab3.Controls.Add(sysTestPingButton);
-            panelForTab3.Controls.Add(sysMyIPButton);
-
-
-            panelForTab3.Controls.Add(sysVerifyButton);
             mbnqTab3.Controls.Add(panelForTab3);
 
         }
