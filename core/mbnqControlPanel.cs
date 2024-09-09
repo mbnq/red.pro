@@ -48,7 +48,6 @@ namespace RED.mbnq
 
         public string mbUserFilessPath = Path.Combine(SaveLoad.SettingsDirectory);
 
-
         private int mControlWidth;
         public Size mbInitSize                          = new Size(0, 0);
         public static readonly int mCPWidth             = 262;
