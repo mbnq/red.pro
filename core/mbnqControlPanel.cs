@@ -67,6 +67,7 @@ namespace RED.mbnq
             {
                 FlirOverlayForm = new mbnqFLIR();
                 _ = ManageOverlayAsync();
+                Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
             }
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
@@ -75,22 +76,18 @@ namespace RED.mbnq
             this.Icon = Properties.Resources.mbnqIcon;
             this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
-
-            // this.TopMost = true;                             // not ready yet
-
-            SaveLoad.EnsureSettingsFileExists(this);
-            SaveLoad.LoadSettings(this, false);                 // false means, do not show dialogbox
-
-            // rmbMenu
-            rightClickMenu = new rmbMenu(this);
-            this.ContextMenuStrip = rightClickMenu;
-            rightClickMenu.Opening += RightClickMenu_Opening;   // this is just for the sound
-
-            this.Size = new Size(mCPWidth, mCPHeight);          // global controlpanel window size
+            this.Size = new Size(mCPWidth, mCPHeight);
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
+
+            SaveLoad.EnsureSettingsFileExists(this);
+            SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
+
+            rightClickMenu = new rmbMenu(this);
+            this.ContextMenuStrip = rightClickMenu;
+            rightClickMenu.Opening += (s, e) => { Sounds.PlayClickSoundOnce(); };
 
             updateMainCrosshair();
         }
@@ -854,16 +851,6 @@ namespace RED.mbnq
                 mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
             }
         }
-        #endregion
-
-        #region Mouse
-        /* --- --- --- Mouse --- --- --- */
-        private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-        }
-
-        /* --- --- ---  --- --- --- */
         #endregion
 
         #region FlirFnc
