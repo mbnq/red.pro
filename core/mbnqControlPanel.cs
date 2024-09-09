@@ -95,7 +95,7 @@ namespace RED.mbnq
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             updateMainCrosshair();
-            mbAutoSaveCheckbox.CheckedChanged += AutoSaveOnExit_CheckedChanged;
+            mbAutoSaveCheckbox.CheckedChanged += mbAutoSaveOnExit_CheckedChanged;
 
             mbDebugonCheckbox.Checked = mIsDebugOn; // initiall
             mbDebugonCheckbox.CheckedChanged += mbDebugonCheckbox_CheckedChanged;
@@ -320,7 +320,7 @@ namespace RED.mbnq
 
             mbAutoSaveCheckbox.CheckedChanged += (s, e) =>
             {
-                AutoSaveOnExit_CheckedChanged(s, e);
+                mbAutoSaveOnExit_CheckedChanged(s, e);
                 if (mSettingsLoaded > 0)
                 {
                     Sounds.PlayClickSound();
@@ -469,7 +469,7 @@ namespace RED.mbnq
         #region Checkboxs functions
         /* --- --- --- Checkboxs functions --- --- --- */
 
-        private void AutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
+        private void mbAutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (!mbAutoSaveCheckbox.Checked)
             {
