@@ -36,7 +36,7 @@ namespace RED.mbnq
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
-        private rmbMenu rightClickMenu;
+        private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
@@ -81,7 +81,7 @@ namespace RED.mbnq
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
 
-            rightClickMenu = new rmbMenu(this);
+            rightClickMenu = new mbRmbMenu(this);
             this.ContextMenuStrip = rightClickMenu;
             rightClickMenu.Opening += (s, e) => { Sounds.PlayClickSoundOnce(); };
 

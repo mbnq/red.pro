@@ -6,13 +6,13 @@ using System.Windows.Forms;
 
 namespace RED.mbnq
 {
-    public class rmbMenu : MaterialContextMenuStrip
+    public class mbRmbMenu : MaterialContextMenuStrip
     {
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
         private ToolStripMenuItem removeCustomMenuItem, loadCustomMenuItem;
 
-        public rmbMenu(ControlPanel controlPanel)
+        public mbRmbMenu(ControlPanel controlPanel)
         {
             this.controlPanel = controlPanel;
             InitializeMenuItems();
