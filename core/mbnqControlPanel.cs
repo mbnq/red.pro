@@ -1,10 +1,11 @@
 ﻿/* 
+
     www.mbnq.pl 2024 
     mbnq00 on gmail
 
     That's the main code
 
-
+    --------------------------------------------------------------------------------------------------
 
     - naprawic w debugu przywracanie ostatniej komenty klawiszem up kursor wraca jedna litere od konca
     - jesli nie widac debug output to upewnij sie, ze w VS jest ustawione na Debug nie Release
