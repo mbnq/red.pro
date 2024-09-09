@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace RED.mbnq
 {
@@ -49,7 +48,6 @@ namespace RED.mbnq
 
         private ToolStripMenuItem CreateMenuItem(string text, EventHandler onClick)
         {
-
             var menuItem = new ToolStripMenuItem(text);
             menuItem.Click += (sender, e) =>
             {
@@ -104,7 +102,6 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
             UpdateMenuItems();
         }
-
         private void AdjustColorsForCustomPNG()
         {
             if (controlPanel.colorR.Value > 200 || controlPanel.colorG.Value > 200 || controlPanel.colorB.Value > 200)
@@ -114,12 +111,19 @@ namespace RED.mbnq
                 controlPanel.colorB.Value = 10;
             }
         }
-
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
-            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();
-            controlPanel.RemoveCustomCrosshair();
-            controlPanel.ColorRValue++; // Force redraw of crosshair
+            if (!(controlPanel.colorR.Value > 50 || controlPanel.colorG.Value > 50 || controlPanel.colorB.Value > 50))
+            {
+                controlPanel.colorR.Value = 50;
+                controlPanel.colorG.Value = 50;
+                controlPanel.colorB.Value = 50;
+            }
+
+            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();        // ensures that the crosshair overlay on the screen is removed
+            controlPanel.RemoveCustomCrosshair();                           // removes the custom crosshair data from the control panel itself
+            controlPanel.ColorRValue++;                                     // Force redraw of crosshair
+
             controlPanel.updateMainCrosshair();
             UpdateMenuItems();
         }
