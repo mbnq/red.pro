@@ -203,9 +203,9 @@ namespace RED.mbnq
                 Enabled = true                          // we don't really need this
             };
 
-            mbTab1 = new TabPage("Crosshair");
+            mbTab1 = new TabPage("Xhair");
             mbTab2 = new TabPage("Options");
-            mbTab3 = new TabPage("SysTools");
+            mbTab3 = new TabPage("Tools");
 
             mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
 
