@@ -52,9 +52,14 @@ namespace RED.mbnq
             // The update timer
             crosshairRefreshTimer = new Timer();
             crosshairRefreshTimer.Interval = 5000;
-            crosshairRefreshTimer.Tick += (s, e) => this.Invalidate();
-            crosshairRefreshTimer.Start();
 
+            crosshairRefreshTimer.Tick += (s, e) =>
+            {
+                this.Invalidate();
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Crosshair redrawn...");
+            };
+
+            crosshairRefreshTimer.Start();
         }
 
         /* --- --- ---  --- --- --- */
