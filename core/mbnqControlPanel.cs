@@ -117,7 +117,7 @@ namespace RED.mbnq
                 InitializeCrosshairPos();
             }
         }
-        private void InitializeCrosshairPos()
+        public void InitializeCrosshairPos()
         {
             if (mbCrosshairOverlay != null)
             {
@@ -430,7 +430,7 @@ namespace RED.mbnq
         // Remove the overlay and refresh display
         public void RemoveCustomCrosshair()
         {
-            mbCrosshairOverlay.RemoveCrosshair();
+            mbCrosshairOverlay.RemoveCustomCrosshair();
             updateMainCrosshair();
         }
 
@@ -1041,7 +1041,7 @@ namespace RED.mbnq
         }
         #endregion
 
-        #region Register Changes
+        #region For SaveLoad logic
         /* --- --- ---  --- --- --- */
 
         public bool AutoSaveOnExitChecked

@@ -21,7 +21,6 @@ namespace RED.mbnq
         private Image crosshairOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
         private int paintCallCount = 0;
-
         public mbCrosshair()
         {
             this.DoubleBuffered = true; // Enforce double buffering
@@ -99,7 +98,7 @@ namespace RED.mbnq
             // Refresh the display
             this.Invalidate();
         }
-        public void RemoveCrosshair()
+        public void RemoveCustomCrosshair()
         {
             string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
             if (File.Exists(customFilePath))
@@ -182,14 +181,10 @@ namespace RED.mbnq
             else
             {
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay is null, drawing fallback rectangle.");
-                DrawFallbackRectangle(g);
+                g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
             }
 
             this.Show();
-        }
-        private void DrawFallbackRectangle(Graphics g)
-        {
-            g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
         }
 
         // ensure the custom overlay image is properly disposed

@@ -207,19 +207,12 @@ namespace RED.mbnq
         private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            controlPanel.mbCrosshairOverlay.RemoveCrosshair();
+            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();
             controlPanel.RemoveCustomCrosshair();
-            UpdateMenuItems();
-            SaveLoad.LoadSettings(controlPanel, false);
-
-            // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
-            if (controlPanel.colorR.Value < 5 && controlPanel.colorG.Value < 5 && controlPanel.colorB.Value < 5)
-            {
-                controlPanel.colorR.Value = 255;
-            }
 
             // refresh
-            controlPanel.updateMainCrosshair();
+            UpdateMenuItems();
+            SaveLoad.LoadSettings(controlPanel, false);
         }
 
         /* --- --- ---  --- --- --- */
