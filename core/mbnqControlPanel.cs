@@ -466,45 +466,6 @@ namespace RED.mbnq
         }
 
         #endregion
-        #region SaveLoad Checkboxes
-        /* for save and load these controls */
-
-        public bool AutoSaveOnExitChecked
-        {
-            get => mbAutoSaveCheckbox.Checked;
-            set => mbAutoSaveCheckbox.Checked = value;
-        }
-        public bool mbDebugonChecked
-        {
-            get => mbDebugonCheckbox.Checked;
-            set => mbDebugonCheckbox.Checked = value;
-        }
-        public bool mbAOnTopChecked
-        {
-            get => mbAOnTopCheckBox.Checked;
-            set => mbAOnTopCheckBox.Checked = value;
-        }
-        public bool mbHideCrosshairChecked
-        {
-            get => mbHideCrosshairCheckBox.Checked;
-            set => mbHideCrosshairCheckBox.Checked = value;
-        }
-        public bool mbDisableSoundChecked
-        {
-            get => mbDisableSoundCheckBox.Checked;
-            set => mbDisableSoundCheckBox.Checked = value;
-        }
-        public bool mbEnableZoomModeChecked
-        {
-            get => mbEnableZoomModeCheckBox.Checked;
-            set => mbEnableZoomModeCheckBox.Checked = value;
-        }
-        public bool mbEnableFlirChecked
-        {
-            get => mbEnableFlirCheckBox.Checked;
-            set => mbEnableFlirCheckBox.Checked = value;
-        }
-        #endregion
         #region Checkboxs functions
         /* --- --- --- Checkboxs functions --- --- --- */
 
@@ -1216,6 +1177,41 @@ namespace RED.mbnq
         #region sliders fnc
         /* --- --- ---  --- --- --- */
 
+        public bool AutoSaveOnExitChecked
+        {
+            get => mbAutoSaveCheckbox.Checked;
+            set => mbAutoSaveCheckbox.Checked = value;
+        }
+        public bool mbDebugonChecked
+        {
+            get => mbDebugonCheckbox.Checked;
+            set => mbDebugonCheckbox.Checked = value;
+        }
+        public bool mbAOnTopChecked
+        {
+            get => mbAOnTopCheckBox.Checked;
+            set => mbAOnTopCheckBox.Checked = value;
+        }
+        public bool mbHideCrosshairChecked
+        {
+            get => mbHideCrosshairCheckBox.Checked;
+            set => mbHideCrosshairCheckBox.Checked = value;
+        }
+        public bool mbDisableSoundChecked
+        {
+            get => mbDisableSoundCheckBox.Checked;
+            set => mbDisableSoundCheckBox.Checked = value;
+        }
+        public bool mbEnableZoomModeChecked
+        {
+            get => mbEnableZoomModeCheckBox.Checked;
+            set => mbEnableZoomModeCheckBox.Checked = value;
+        }
+        public bool mbEnableFlirChecked
+        {
+            get => mbEnableFlirCheckBox.Checked;
+            set => mbEnableFlirCheckBox.Checked = value;
+        }
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
         public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
