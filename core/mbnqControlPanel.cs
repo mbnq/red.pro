@@ -662,12 +662,14 @@ namespace RED.mbnq
                 // it's needed here
                 if (ZoomMode.IsZoomModeEnabled) { 
                     zoomLevel.Enabled = true; 
-                    zoomLevel.Visible = true;
-                    zoomLevel.Parent.Controls[0].Visible = true;
+                    // zoomLevel.Visible = true;
+                    zoomLevel.Parent.Controls[0].Enabled = true;
+                    // zoomLevel.Parent.Controls[0].Visible = true;
                 } else { 
                     zoomLevel.Enabled = false; 
-                    zoomLevel.Visible = false;
-                    zoomLevel.Parent.Controls[0].Visible = false;
+                    // zoomLevel.Visible = false;
+                    zoomLevel.Parent.Controls[0].Enabled = false;
+                    // zoomLevel.Parent.Controls[0].Visible = false;
                 }
             }
             UpdateLabels();
