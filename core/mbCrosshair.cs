@@ -186,22 +186,6 @@ namespace RED.mbnq
         // draw overlay
         private void crosshair_Paint(object sender, PaintEventArgs e)
         {
-            DateTime currentTime = DateTime.Now;
-            TimeSpan elapsedTime = currentTime - lastLoggedTime;
-
-            // Check if one second has passed
-            if (elapsedTime.TotalSeconds >= 1)
-            {
-                // Calculate calls per second
-                double callsPerSecond = mbXhairPaintCount / elapsedTime.TotalSeconds;
-
-                // Log the rate
-                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Drawing custom overlay at {DateTime.Now}. Rate: {callsPerSecond:F2} times per second.");
-                // Reset the counter and timer
-
-                lastLoggedTime = currentTime;
-            }
-
             Graphics g = e.Graphics;
 
             // Set graphics options for better quality rendering
