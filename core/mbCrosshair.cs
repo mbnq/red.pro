@@ -220,7 +220,14 @@ namespace RED.mbnq
             }
             else
             {
-                g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle); // FillEllipse
+                g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
+
+                /*
+                int diameter = Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height);
+                Rectangle circleBounds = new Rectangle(0, 0, diameter, diameter);
+                g.FillEllipse(new SolidBrush(this.BackColor), circleBounds);
+                */
+
                 mbXhairPaintCount++;
             }
         }
