@@ -33,7 +33,7 @@ namespace RED.mbnq
         public int mSettingsLoaded          = 0;
 
         private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton;
-        private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
+        private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
         private rmbMenu rightClickMenu;
@@ -187,26 +187,20 @@ namespace RED.mbnq
             // -------------------------------------------------------
 
             #region FlowLayoutPanels
-            panelForTab1 = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown
-            };
-            panelForTab1.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
 
-            panelForTab2 = new FlowLayoutPanel
+            FlowLayoutPanel CreateFlowLayoutPanel()
             {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown
-            };
-            panelForTab2.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
+                return new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    FlowDirection = FlowDirection.TopDown,
+                    Padding = new Padding(1, 10, 0, 0) // LTRB
+                };
+            }
 
-            panelForTab3 = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.TopDown
-            };
-            panelForTab3.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
+            mbPanelForTab1 = CreateFlowLayoutPanel();
+            mbPanelForTab2 = CreateFlowLayoutPanel();
+            mbPanelForTab3 = CreateFlowLayoutPanel();
 
             #endregion
 
@@ -216,39 +210,39 @@ namespace RED.mbnq
             // Color
             var redSlider = CreateLabeledSlider("Red", 0, 255, 255);
             colorR = redSlider.Slider;
-            panelForTab1.Controls.Add(redSlider.Panel);
+            mbPanelForTab1.Controls.Add(redSlider.Panel);
 
             var greenSlider = CreateLabeledSlider("Green", 0, 255, 0);
             colorG = greenSlider.Slider;
-            panelForTab1.Controls.Add(greenSlider.Panel);
+            mbPanelForTab1.Controls.Add(greenSlider.Panel);
 
             var blueSlider = CreateLabeledSlider("Blue", 0, 255, 0);
             colorB = blueSlider.Slider;
-            panelForTab1.Controls.Add(blueSlider.Panel);
+            mbPanelForTab1.Controls.Add(blueSlider.Panel);
 
             // Size
             var sizeSlider = CreateLabeledSlider("Size", 1, 200, 50);
             size = sizeSlider.Slider;
-            panelForTab1.Controls.Add(sizeSlider.Panel);
+            mbPanelForTab1.Controls.Add(sizeSlider.Panel);
 
             // Transparency
             var transparencySlider = CreateLabeledSlider("Transparency", 0, 100, 64);
             transparency = transparencySlider.Slider;
-            panelForTab1.Controls.Add(transparencySlider.Panel);
+            mbPanelForTab1.Controls.Add(transparencySlider.Panel);
 
             // Offsets
             var offsetXSlider = CreateLabeledSlider("Offset X", 0, 2000, 1000);
             offsetX = offsetXSlider.Slider;
-            panelForTab1.Controls.Add(offsetXSlider.Panel);
+            mbPanelForTab1.Controls.Add(offsetXSlider.Panel);
 
             var offsetYSlider = CreateLabeledSlider("Offset Y", 0, 2000, 1000);
             offsetY = offsetYSlider.Slider;
-            panelForTab1.Controls.Add(offsetYSlider.Panel);
+            mbPanelForTab1.Controls.Add(offsetYSlider.Panel);
 
             // Zoom Level
             var zoomLevelSlider = CreateLabeledSlider("Zoom Level", 1, 10, 3); // Adjust the range as needed
             zoomLevel = zoomLevelSlider.Slider;
-            panelForTab1.Controls.Add(zoomLevelSlider.Panel);
+            mbPanelForTab1.Controls.Add(zoomLevelSlider.Panel);
 
             #endregion
 
@@ -277,12 +271,12 @@ namespace RED.mbnq
             sysMyIPButton = CreateButton("My IP", mControlWidth, sysMyIPButton_Click);
 
             // Add the buttons to the respective panels
-            panelForTab1.Controls.Add(centerButton);
-            panelForTab3.Controls.Add(sysVerifyButton);
-            panelForTab3.Controls.Add(sysTestPingButton);
-            panelForTab3.Controls.Add(sysTaskManagerButton);
-            panelForTab3.Controls.Add(sysNetworkDevicesButton);
-            panelForTab3.Controls.Add(sysMyIPButton);
+            mbPanelForTab1.Controls.Add(centerButton);
+            mbPanelForTab3.Controls.Add(sysVerifyButton);
+            mbPanelForTab3.Controls.Add(sysTestPingButton);
+            mbPanelForTab3.Controls.Add(sysTaskManagerButton);
+            mbPanelForTab3.Controls.Add(sysNetworkDevicesButton);
+            mbPanelForTab3.Controls.Add(sysMyIPButton);
 
 
             /* --- --- ---  --- --- --- --- --- --- --- */
@@ -337,7 +331,7 @@ namespace RED.mbnq
                 Visible = false // Initially hidden
             }; 
 
-            panelForTab1.Controls.Add(mbProgressBar0);
+            mbPanelForTab1.Controls.Add(mbProgressBar0);
             mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
             /* --- --- ---  --- --- --- */
@@ -347,23 +341,23 @@ namespace RED.mbnq
             #region tabs buildup
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
-            mbTab1.Controls.Add(panelForTab1);
+            mbTab1.Controls.Add(mbPanelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
-            panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
-            panelForTab2.Controls.Add(mbEnableFlirCheckBox);
-            panelForTab2.Controls.Add(mbHideCrosshairCheckBox);
-            panelForTab2.Controls.Add(mbDisableSoundCheckBox);
+            mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
+            mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
+            mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
+            mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
-            panelForTab2.Controls.Add(mbAOnTopCheckBox);
-            panelForTab2.Controls.Add(mbAutoSaveCheckbox);
-            panelForTab2.Controls.Add(mbDebugonCheckbox);
-            mbTab2.Controls.Add(panelForTab2);
+            mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
+            mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
+            mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
+            mbTab2.Controls.Add(mbPanelForTab2);
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
-            mbTab3.Controls.Add(panelForTab3);
+            mbTab3.Controls.Add(mbPanelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
