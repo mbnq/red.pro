@@ -55,6 +55,8 @@ namespace RED.mbnq
         public const int mPNGMaxWidth                   = 1920;
         public const int mPNGMaxHeight                  = 1080;
 
+        public const int mbCrosshairRedrawnTime         = 5000; // interval in ms
+
         #endregion
 
         #region ControlPanel Init

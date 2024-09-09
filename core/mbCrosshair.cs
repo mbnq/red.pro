@@ -51,7 +51,7 @@ namespace RED.mbnq
 
             // The update timer
             crosshairRefreshTimer = new Timer();
-            crosshairRefreshTimer.Interval = 5000;
+            crosshairRefreshTimer.Interval = ControlPanel.mbCrosshairRedrawnTime;
 
             crosshairRefreshTimer.Tick += (s, e) =>
             {
