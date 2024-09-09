@@ -417,8 +417,6 @@ namespace RED.mbnq
                 }
             };
 
-            mbAOnTopCheckBox.Checked = this.TopMost;
-
             /* --- --- ---  --- --- --- */
 
             #endregion
@@ -544,6 +542,7 @@ namespace RED.mbnq
             }
         }
         #endregion
+
         #region Custom Overlay Crosshair
 
         /* --- --- --- Custom .png Crosshair Ovelray --- --- --- */
