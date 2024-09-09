@@ -659,16 +659,16 @@ namespace RED.mbnq
                 // Update zoom
                 ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
 
-                // moved to checkbox
-                /*
+                // it's needed here
                 if (ZoomMode.IsZoomModeEnabled) { 
                     zoomLevel.Enabled = true; 
                     zoomLevel.Visible = true;
+                    zoomLevel.Parent.Controls[0].Visible = true;
                 } else { 
                     zoomLevel.Enabled = false; 
                     zoomLevel.Visible = false;
+                    zoomLevel.Parent.Controls[0].Visible = false;
                 }
-                */
             }
             UpdateLabels();
         }
@@ -927,17 +927,11 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
-                zoomLevel.Enabled = true;
-                zoomLevel.Visible = true;
-                zoomLevel.Parent.Controls[0].Visible = true;
                 updateMainCrosshair();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
-                zoomLevel.Enabled = false;
-                zoomLevel.Visible = false;
-                zoomLevel.Parent.Controls[0].Visible = false;
                 updateMainCrosshair();
             }
         }
