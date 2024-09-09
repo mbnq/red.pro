@@ -34,11 +34,11 @@ namespace RED.mbnq
 
         private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
-        private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
+        private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
         private rmbMenu rightClickMenu;
-        private MaterialTabControl materialTabControl;
-        private MaterialTabSelector mbnqTabSelector;
+        private MaterialTabControl mbTabControl;
+        private MaterialTabSelector mbTabSelector;
         private mbnqFLIR FlirOverlayForm;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
@@ -138,51 +138,44 @@ namespace RED.mbnq
 
         private void InitializeTabs()
         {
-            // Initialize TabControl --------------------------------------------------------------
-            materialTabControl = new MaterialTabControl
+
+            mbTabControl = new MaterialTabControl
             {
                 Dock = DockStyle.Fill,                  // we need this
                 Enabled = true                          // we don't really need this
             };
 
-            // Create two tab pages
-            mbnqTab1 = new TabPage("Crosshair");
-            mbnqTab2 = new TabPage("Options");
-            mbnqTab3 = new TabPage("SysTools");
+            mbTab1 = new TabPage("Crosshair");
+            mbTab2 = new TabPage("Options");
+            mbTab3 = new TabPage("SysTools");
 
-            // Add TabPages to TabControl
-            materialTabControl.TabPages.AddRange(new TabPage[] { mbnqTab1, mbnqTab2, mbnqTab3 });
+            mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
 
-            foreach (TabPage tab in materialTabControl.TabPages)
+            // ---
+
+            mbTabSelector = new MaterialTabSelector
             {
-                tab.Text = tab.Text.ToUpper();          // Force uppercase
-            }
-
-            // Add TabControl to Form
-            Controls.Add(materialTabControl);
-
-            // Initialize MaterialTabSelector -----------------------------------------------------
-            mbnqTabSelector = new MaterialTabSelector
-            {
-                BaseTabControl = materialTabControl,
+                BaseTabControl = mbTabControl,
                 Dock = DockStyle.Bottom,
                 TabIndicatorHeight = 5,
                 Enabled = true
-                // MinimumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20),
-                // MaximumSize = new Size(mCPWidth - (mControlDefSpacer / 6), mCPHeight / 20)
             };
 
-            // Add TabSelector to Form
-            Controls.Add(mbnqTabSelector);
-
-            // Add sound to tabselector
-            materialTabControl.SelectedIndexChanged += MaterialTabControl_SelectedIndexChanged;
-
-            void MaterialTabControl_SelectedIndexChanged(object sender, EventArgs e)
+            mbTabControl.SelectedIndexChanged += (s, e) =>
             {
-                // Play sound when the tab changes
                 Sounds.PlayClickSound();
+            };
+
+            Controls.Add(mbTabControl);
+            Controls.Add(mbTabSelector);
+
+            // ---
+
+            foreach (TabPage tab in mbTabControl.TabPages)
+            {
+                tab.Text = tab.Text.ToUpper();
             }
+
         }
 
         #endregion
@@ -354,7 +347,7 @@ namespace RED.mbnq
             #region tabs buildup
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
-            mbnqTab1.Controls.Add(panelForTab1);
+            mbTab1.Controls.Add(panelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
@@ -366,11 +359,11 @@ namespace RED.mbnq
             panelForTab2.Controls.Add(mbAOnTopCheckBox);
             panelForTab2.Controls.Add(mbAutoSaveCheckbox);
             panelForTab2.Controls.Add(mbDebugonCheckbox);
-            mbnqTab2.Controls.Add(panelForTab2);
+            mbTab2.Controls.Add(panelForTab2);
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
-            mbnqTab3.Controls.Add(panelForTab3);
+            mbTab3.Controls.Add(panelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
