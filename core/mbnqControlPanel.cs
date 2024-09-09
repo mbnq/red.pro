@@ -262,9 +262,6 @@ namespace RED.mbnq
 
             #region checkboxes
             /* --- --- ---  --- --- --- --- --- --- --- */
-
-
-            // Helper method to create a MaterialSwitch with common properties
             MaterialSwitch CreateCheckBox(string text, bool isEnabled, EventHandler checkedChangedHandler)
             {
                 var checkBox = new MaterialSwitch
@@ -300,7 +297,6 @@ namespace RED.mbnq
             #endregion
 
             #region Progressbars
-
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
@@ -313,7 +309,6 @@ namespace RED.mbnq
             mbProgressBar0.Visible = ControlPanel.mPBIsOn;
 
             /* --- --- ---  --- --- --- */
-
             #endregion
 
             #region tabs buildup
