@@ -283,7 +283,7 @@ namespace RED.mbnq
             AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
             AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
             AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
-            AddLabeledSlider(mbPanelForTab1, "Zoom Level", 1, 10, 3, ref zoomLevel);
+            AddLabeledSlider(mbPanelForTab1, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
 
             #endregion
 
@@ -669,7 +669,7 @@ namespace RED.mbnq
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
             size.Parent.Controls[0].Text = $"Size: {size.Value}";
             transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
-            zoomLevel.Parent.Controls[0].Text = $"Zoom Level: {zoomLevel.Value}";
+            zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
         }
