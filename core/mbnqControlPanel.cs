@@ -491,25 +491,12 @@ namespace RED.mbnq
                 // Update size
                 mbCrosshairOverlay.Size = new Size(size.Value, size.Value);
 
-                if (mbCrosshairOverlay.HasCustomOverlay)  // Check if custom overlay exists
-                {
-                    mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-                    mbCrosshairOverlay.TransparencyKey = mbCrosshairOverlay.BackColor;
+                // Update colors
+                mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
 
-                    // Disable color sliders
-                    // colorR.Enabled = false;
-                    // colorG.Enabled = false;
-                    // colorB.Enabled = false;
-                }
-                else
+                if (mbCrosshairOverlay.HasCustomOverlay)                                    // Check if custom overlay exists
                 {
-                    // If no custom overlay, use the selected color from sliders
-                    mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-
-                    // Enable color sliders
-                    colorR.Enabled = true;
-                    colorG.Enabled = true;
-                    colorB.Enabled = true;
+                    mbCrosshairOverlay.TransparencyKey = mbCrosshairOverlay.BackColor;      // maybe could try something different here
                 }
 
                 // Update zoom

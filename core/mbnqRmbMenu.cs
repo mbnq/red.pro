@@ -212,7 +212,8 @@ namespace RED.mbnq
 
             // refresh
             UpdateMenuItems();
-            SaveLoad.LoadSettings(controlPanel, false);
+            controlPanel.updateMainCrosshair();
+            // SaveLoad.LoadSettings(controlPanel, false);
         }
 
         /* --- --- ---  --- --- --- */

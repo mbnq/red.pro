@@ -157,8 +157,8 @@ namespace RED.mbnq
 
                 // Log the rate
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Drawing custom overlay at {DateTime.Now}. Rate: {callsPerSecond:F2} times per second.");
-
                 // Reset the counter and timer
+
                 paintCallCount = 0;
                 lastLoggedTime = currentTime;
             }
@@ -180,11 +180,10 @@ namespace RED.mbnq
             }
             else
             {
-                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay is null, drawing fallback rectangle.");
                 g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
             }
 
-            this.Show();
+            // this.Show();
         }
 
         // ensure the custom overlay image is properly disposed
