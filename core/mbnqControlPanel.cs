@@ -335,26 +335,30 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSoundOnce();
 
-                var selectedItem = mbSysDropDown.SelectedItem;
+                var selectedItem = mbSysDropDown.SelectedItem?.ToString();
                 if (selectedItem != null)
                 {
-                    switch (mbSysDropDown.SelectedItem.ToString())
+                    switch (selectedItem)
                     {
                         case "Task Manager":
-                            sysTaskManager_Click(sender, e);
+                            mbRunSystemFile("taskmgr.exe");
                             break;
                         case "Network Devices":
-                            sysNetworkDevices_Click(sender, e);
+                            mbRunSystemFile("ncpa.cpl");
                             break;
                         case "System Properties":
-                            sysSysProperties_Click(sender, e);
+                            mbRunSystemFile("sysdm.cpl");
                             break;
                         case "Display Settings":
-                            sysDisplaySettings_Click(sender, e);
+                            mbRunSystemFile("desk.cpl");
+                            break;
+                        default:
+                            Debug.WriteLineIf(mIsDebugOn, $"mbnq: Unknown system tool selected - {selectedItem}");
                             break;
                     }
                 }
             }
+
 
             // ---
 
@@ -675,49 +679,10 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
         }
-        private void sysTaskManager_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
 
-            try
-            {
-                // Create a new process to run Task Manager
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "taskmgr.exe", // Task Manager executable
-                    // UseShellExecute = true, // Required for running system-level applications
-                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
-                };
+        // --
 
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysNetworkDevices_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                // Create a new process to run Task Manager
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "ncpa.cpl", // Task Manager executable
-                    // UseShellExecute = true, // Required for running system-level applications
-                    // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
-                };
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysSysProperties_Click(object sender, EventArgs e)
+        public void mbRunSystemFile(string fileName)
         {
             Sounds.PlayClickSoundOnce();
 
@@ -725,32 +690,14 @@ namespace RED.mbnq
             {
                 ProcessStartInfo processInfo = new ProcessStartInfo
                 {
-                    FileName = "sysdm.cpl",
+                    FileName = fileName
                 };
 
                 Process.Start(processInfo);
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
-            }
-        }
-        private void sysDisplaySettings_Click(object sender, EventArgs e)
-        {
-            Sounds.PlayClickSoundOnce();
-
-            try
-            {
-                ProcessStartInfo processInfo = new ProcessStartInfo
-                {
-                    FileName = "desk.cpl",
-                };
-
-                Process.Start(processInfo);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {fileName}: {ex.Message}");
             }
         }
 
