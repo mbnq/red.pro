@@ -27,32 +27,32 @@ namespace RED.mbnq
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mIsDebugOn = false;                  // debug mode, there is checkbox for it so shouldn't be changed manually here
-        public static readonly bool mPBIsOn = false;            // progress bar 
+        public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
+        public static readonly bool mPBIsOn = false;                    // progress bar 
+        public bool mHideCrosshair          = false;
+        public int mSettingsLoaded          = 0;
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton;
-        public MaterialProgressBar mbProgressBar0;
         private FlowLayoutPanel panelForTab1, panelForTab2, panelForTab3;
         private TabPage mbnqTab1, mbnqTab2, mbnqTab3;
-        public mbnqCrosshair mbnqCrosshairDisplay;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
         private rmbMenu rightClickMenu;
-        private int mControlWidth;
-        public int mSettingsLoaded = 0;
-        public bool mHideCrosshair = false;
-
         private MaterialTabControl materialTabControl;
         private MaterialTabSelector mbnqTabSelector;
         private mbnqFLIR FlirOverlayForm;
 
-        public Size mbInitSize = new Size(0, 0);
-        public static readonly int mCPWidth = 262;
-        public static readonly int mCPHeight = 750;
-        public static readonly int mControlDefSpacer = 36;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
+        public MaterialProgressBar mbProgressBar0;
+        public mbnqCrosshair mbnqCrosshairDisplay;
 
-        public const int mPNGMaxWidth = 1920;
-        public const int mPNGMaxHeight = 1080;
+        private int mControlWidth;
+        public Size mbInitSize                          = new Size(0, 0);
+        public static readonly int mCPWidth             = 262;
+        public static readonly int mCPHeight            = 750;
+        public static readonly int mControlDefSpacer    = 36;
+
+        public const int mPNGMaxWidth                   = 1920;
+        public const int mPNGMaxHeight                  = 1080;
 
         #endregion
 
