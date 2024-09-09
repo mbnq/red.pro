@@ -22,7 +22,7 @@ namespace RED.mbnq
         private Timer crosshairRefreshTimer;
         private Image crosshairOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
-        private int paintCallCount = 0;
+        public int mbXhairPaintCount = 0;
 
         /* --- --- ---  --- --- --- */
         #endregion
@@ -56,7 +56,7 @@ namespace RED.mbnq
             crosshairRefreshTimer.Tick += (s, e) =>
             {
                 this.Invalidate();
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Crosshair redrawn...");
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Crosshair redrawn for {mbXhairPaintCount} time(s)");
             };
 
             crosshairRefreshTimer.Start();
@@ -186,8 +186,6 @@ namespace RED.mbnq
         // draw overlay
         private void crosshair_Paint(object sender, PaintEventArgs e)
         {
-            paintCallCount++;
-
             DateTime currentTime = DateTime.Now;
             TimeSpan elapsedTime = currentTime - lastLoggedTime;
 
@@ -195,13 +193,12 @@ namespace RED.mbnq
             if (elapsedTime.TotalSeconds >= 1)
             {
                 // Calculate calls per second
-                double callsPerSecond = paintCallCount / elapsedTime.TotalSeconds;
+                double callsPerSecond = mbXhairPaintCount / elapsedTime.TotalSeconds;
 
                 // Log the rate
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Drawing custom overlay at {DateTime.Now}. Rate: {callsPerSecond:F2} times per second.");
                 // Reset the counter and timer
 
-                paintCallCount = 0;
                 lastLoggedTime = currentTime;
             }
 
@@ -219,10 +216,12 @@ namespace RED.mbnq
             {
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Drawing custom overlay.");
                 g.DrawImage(crosshairOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                mbXhairPaintCount++;
             }
             else
             {
                 g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle); // FillEllipse
+                mbXhairPaintCount++;
             }
         }
 
