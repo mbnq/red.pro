@@ -66,7 +66,7 @@ namespace RED.mbnq
 
             // Initialize menu item Load Custom
             loadCustomMenuItem = new ToolStripMenuItem("Load Custom PNG");
-            loadCustomMenuItem.Click += LoadCustomMenuItem_Click;
+            loadCustomMenuItem.Click += LoadCustomPNG_Click;
 
             // Initialize menu item Remove Custom
             removeCustomMenuItem = new ToolStripMenuItem("Remove Custom PNG");
@@ -184,11 +184,17 @@ namespace RED.mbnq
         }
 
         // load custom .png
-        private void LoadCustomMenuItem_Click(object sender, EventArgs e)
+        private void LoadCustomPNG_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
             controlPanel.LoadCustomCrosshair();
             controlPanel.mbCrosshairOverlay.SetCustomPNG();
+
+            if (controlPanel.SizeValue < 100)
+            {
+                controlPanel.SizeValue = 100;
+            }
+
             UpdateMenuItems();
 
             // if player set those to 0 to avoid artifacts on custom .png edges make it now visible
