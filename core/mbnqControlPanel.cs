@@ -288,138 +288,48 @@ namespace RED.mbnq
             }
 
             InitializeButtons();
-            #endregion
 
+            #endregion
+            /* --- --- ---  --- --- --- --- --- --- --- */
+
+            /* --- --- ---  --- --- --- --- --- --- --- */
             #region checkboxes
-            /* --- --- ---  Checkboxes --- --- --- */
-            // Save on Exit
-            mbAutoSaveCheckbox = new MaterialSwitch
-            {
-                Text = "Save on Exit",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left
-            };
 
-            mbAutoSaveCheckbox.CheckedChanged += (s, e) =>
+            // Helper method to create a MaterialSwitch with common properties
+            MaterialSwitch CreateCheckBox(string text, bool isEnabled, EventHandler checkedChangedHandler)
             {
-                mbAutoSaveOnExit_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
+                var checkBox = new MaterialSwitch
                 {
-                    Sounds.PlayClickSound();
-                }
-            };
+                    Text = text,
+                    AutoSize = true,
+                    Anchor = AnchorStyles.Left,
+                    Enabled = isEnabled
+                };
 
-            // Debug mode
-            mbDebugonCheckbox = new MaterialSwitch
-            {
-                Text = "Debug   ",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Enabled = true
-            };
-
-            mbDebugonCheckbox.CheckedChanged += (s, e) =>
-            {
-                mbDebugonCheckbox_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
+                checkBox.CheckedChanged += (s, e) =>
                 {
-                    Sounds.PlayClickSound();
-                }
-            };
+                    checkedChangedHandler(s, e);
+                    if (mSettingsLoaded > 0)
+                    {
+                        Sounds.PlayClickSound();
+                    }
+                };
 
-            // Always on the top
-            mbAOnTopCheckBox = new MaterialSwitch
-            {
-                Text = "Always on Top   ",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Enabled = true
-            };
+                return checkBox;
+            }
 
-            mbAOnTopCheckBox.CheckedChanged += (s, e) =>
-            {
-                mbAOnTopCheckBox_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
-                {
-                    Sounds.PlayClickSound();
-                }
-            };
+            // Usage of the helper method
+            mbAutoSaveCheckbox = CreateCheckBox("Save on Exit", true, mbAutoSaveOnExit_CheckedChanged);
+            mbDebugonCheckbox = CreateCheckBox("Debug", true, mbDebugonCheckbox_CheckedChanged);
+            mbAOnTopCheckBox = CreateCheckBox("Always on Top", true, mbAOnTopCheckBox_CheckedChanged);
+            mbHideCrosshairCheckBox = CreateCheckBox("Hide Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
+            mbDisableSoundCheckBox = CreateCheckBox("Disable Sound", true, mbDisableSoundCheckBox_CheckedChanged);
+            mbEnableZoomModeCheckBox = CreateCheckBox("Enable SniperMode", true, mbEnableZoomModeCheckBox_CheckedChanged);
+            mbEnableFlirCheckBox = CreateCheckBox("Enable FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
 
-            // Hide Crosshair
-            mbHideCrosshairCheckBox = new MaterialSwitch
-            {
-                Text = "Hide Crosshair   ",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Enabled = true
-            };
-
-            mbHideCrosshairCheckBox.CheckedChanged += (s, e) =>
-            {
-                mbHideCrosshairCheckBox_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
-                {
-                    Sounds.PlayClickSound();
-                }
-            };
-
-            // Disable Sound
-            mbDisableSoundCheckBox = new MaterialSwitch
-            {
-                Text = "Disable Sound   ",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Enabled = true
-            };
-
-            mbDisableSoundCheckBox.CheckedChanged += (s, e) =>
-            {
-                mbDisableSoundCheckBox_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
-                {
-                    Sounds.PlayClickSound();
-                }
-            };
-
-            // Enable ZoomMode
-            mbEnableZoomModeCheckBox = new MaterialSwitch
-            {
-                Text = "Enable SniperMode   ",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Enabled = true
-            };
-
-            mbEnableZoomModeCheckBox.CheckedChanged += (s, e) =>
-            {
-                mbEnableZoomModeCheckBox_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
-                {
-                    Sounds.PlayClickSound();
-                }
-            };
-
-            // Enable FLIR mode
-            mbEnableFlirCheckBox = new MaterialSwitch
-            {
-                Text = "Enable FLIR   ",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Enabled = mbnqFLIR.mbEnableFlirLogic
-            };
-
-            mbEnableFlirCheckBox.CheckedChanged += (s, e) =>
-            {
-                mbEnableFlirCheckBox_CheckedChanged(s, e);
-                if (mSettingsLoaded > 0)
-                {
-                    Sounds.PlayClickSound();
-                }
-            };
-
-            /* --- --- ---  --- --- --- */
-
+            /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
+
             #region Progressbars
 
             /* --- --- ---  --- --- --- */
@@ -441,7 +351,6 @@ namespace RED.mbnq
 
             mbnqTab1.Controls.Add(panelForTab1);
 
-
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
             panelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
@@ -457,6 +366,8 @@ namespace RED.mbnq
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
             mbnqTab3.Controls.Add(panelForTab3);
+
+            /* --- --- ---  --- --- --- --- --- --- --- */
 
         }
 
