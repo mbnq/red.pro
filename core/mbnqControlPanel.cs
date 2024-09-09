@@ -422,6 +422,7 @@ namespace RED.mbnq
 
                     mbCrosshairOverlay.SetCustomPNG();
                     updateMainCrosshair();
+                    UpdateLabels();
 
                 }
             }
@@ -432,9 +433,10 @@ namespace RED.mbnq
         {
             mbCrosshairOverlay.RemoveCustomCrosshair();
             updateMainCrosshair();
+            UpdateLabels();
         }
 
-        // Apply custon overlay
+        // Apply custom overlay
         public void ApplyCustomCrosshair()
         {
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
