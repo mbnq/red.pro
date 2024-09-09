@@ -17,11 +17,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
-// using System.Windows.Controls.Primitives;
-// using MaterialSkin;
-// using static MaterialSkin.Controls.MaterialTabSelector;
 using System.Threading.Tasks;
-// using System.Windows.Documents; 
 using System.Net.Http;
 
 namespace RED.mbnq
@@ -58,6 +54,7 @@ namespace RED.mbnq
         public const int mPNGMaxHeight = 1080;
 
         #endregion
+
         #region ControlPanel Init
         public ControlPanel()
         {
@@ -133,6 +130,7 @@ namespace RED.mbnq
         }
 
         #endregion
+
         #region Tabs
 
         /* --- --- Tabs --- --- */
@@ -187,11 +185,14 @@ namespace RED.mbnq
         }
 
         #endregion
+
         #region GUI
         private void InitializeComponent()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
+            // -------------------------------------------------------
 
+            #region FlowLayoutPanels
             panelForTab1 = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -213,6 +214,9 @@ namespace RED.mbnq
             };
             panelForTab3.Padding = new Padding(1, 10, 0, 0); // Left=1, Top=10, Right=0, Bottom=0
 
+            #endregion
+
+            #region Labeled Sliders
             /* --- --- ---  Sliders --- --- --- */
             // label, min, max, def
             // Color
@@ -252,6 +256,8 @@ namespace RED.mbnq
             zoomLevel = zoomLevelSlider.Slider;
             panelForTab1.Controls.Add(zoomLevelSlider.Panel);
 
+            #endregion
+
             #region Buttons
             /* --- --- ---  Buttons --- --- --- */
 
@@ -269,31 +275,28 @@ namespace RED.mbnq
             }
 
             // Usage of the helper method in your InitializeComponent or constructor
-            void InitializeButtons()
-            {
-                centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
-                sysVerifyButton = CreateButton("Verify System Integrity", mControlWidth, sysVerifyButton_Click);
-                sysTestPingButton = CreateButton("Test Ping", mControlWidth, sysTestPingButton_Click);
-                sysTaskManagerButton = CreateButton("Task Manager", mControlWidth, sysTaskManagerButton_Click);
-                sysNetworkDevicesButton = CreateButton("Network Devices", mControlWidth, sysNetworkDevicesButton_Click);
-                sysMyIPButton = CreateButton("My IP", mControlWidth, sysMyIPButton_Click);
+            centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
+            sysVerifyButton = CreateButton("Verify System Integrity", mControlWidth, sysVerifyButton_Click);
+            sysTestPingButton = CreateButton("Test Ping", mControlWidth, sysTestPingButton_Click);
+            sysTaskManagerButton = CreateButton("Task Manager", mControlWidth, sysTaskManagerButton_Click);
+            sysNetworkDevicesButton = CreateButton("Network Devices", mControlWidth, sysNetworkDevicesButton_Click);
+            sysMyIPButton = CreateButton("My IP", mControlWidth, sysMyIPButton_Click);
 
-                // Add the buttons to the respective panels
-                panelForTab1.Controls.Add(centerButton);
-                panelForTab3.Controls.Add(sysVerifyButton);
-                panelForTab3.Controls.Add(sysTestPingButton);
-                panelForTab3.Controls.Add(sysTaskManagerButton);
-                panelForTab3.Controls.Add(sysNetworkDevicesButton);
-                panelForTab3.Controls.Add(sysMyIPButton);
-            }
+            // Add the buttons to the respective panels
+            panelForTab1.Controls.Add(centerButton);
+            panelForTab3.Controls.Add(sysVerifyButton);
+            panelForTab3.Controls.Add(sysTestPingButton);
+            panelForTab3.Controls.Add(sysTaskManagerButton);
+            panelForTab3.Controls.Add(sysNetworkDevicesButton);
+            panelForTab3.Controls.Add(sysMyIPButton);
 
-            InitializeButtons();
 
+            /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
+
+            #region checkboxes
             /* --- --- ---  --- --- --- --- --- --- --- */
 
-            /* --- --- ---  --- --- --- --- --- --- --- */
-            #region checkboxes
 
             // Helper method to create a MaterialSwitch with common properties
             MaterialSwitch CreateCheckBox(string text, bool isEnabled, EventHandler checkedChangedHandler)
@@ -347,6 +350,7 @@ namespace RED.mbnq
 
             #endregion
 
+            #region tabs buildup
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
             mbnqTab1.Controls.Add(panelForTab1);
@@ -368,13 +372,14 @@ namespace RED.mbnq
             mbnqTab3.Controls.Add(panelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
+            #endregion
 
         }
-
+        /* --- --- --- --- --- --- --- --- --- --- --- */
         #endregion
+
         #region Checkboxs functions
         /* --- --- --- Checkboxs functions --- --- --- */
-
         private void mbAutoSaveOnExit_CheckedChanged(object sender, EventArgs e)
         {
             if (!mbAutoSaveCheckbox.Checked)
@@ -526,7 +531,8 @@ namespace RED.mbnq
 
         /* --- --- --- End of custom overlay --- --- --- */
         #endregion
-        #region Mix sliders with labels here
+
+        #region Mix sliders with labels code
         /* --- --- --- Mix sliders with labels here --- --- --- */
         private LabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
         {
@@ -588,6 +594,7 @@ namespace RED.mbnq
             }
         }
         #endregion
+
         #region Updating Stuff
         public void updateMainCrosshair() // overlay
         {
@@ -670,6 +677,7 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
         }
         #endregion
+
         #region Buttons Code
         /* --- --- --- Buttons Code --- --- --- */
 
@@ -887,6 +895,7 @@ namespace RED.mbnq
         }
 
         #endregion
+
         #region Mouse
         /* --- --- --- Mouse --- --- --- */
         private void RightClickMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -896,6 +905,7 @@ namespace RED.mbnq
 
         /* --- --- ---  --- --- --- */
         #endregion
+
         #region Positioning Control Panel
         private void PositionControlPanelRelativeToCrosshair()
         {
@@ -957,6 +967,7 @@ namespace RED.mbnq
             }));
         }
         #endregion
+
         #region FlirFnc
         /* --- --- ---  --- --- --- */
 
@@ -1012,7 +1023,8 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
 
         #endregion
-        #region mbnq message box
+
+        #region mbnqMessageBox form
 
         /* --- --- ---  --- --- --- */
 
@@ -1081,7 +1093,8 @@ namespace RED.mbnq
             }
         }
         #endregion
-        #region sliders fnc
+
+        #region Sliders Code
         /* --- --- ---  --- --- --- */
 
         public bool AutoSaveOnExitChecked
