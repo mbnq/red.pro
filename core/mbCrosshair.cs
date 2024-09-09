@@ -181,9 +181,8 @@ namespace RED.mbnq
             }
             else
             {
-                g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
+                g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle); // FillEllipse
             }
-
         }
 
         // ensure the custom overlay image is properly disposed

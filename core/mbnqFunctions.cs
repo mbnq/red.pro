@@ -13,7 +13,10 @@ using System;
 using System.IO;
 public static class mbFnc
 {
-
+    public static void mbFillCircle(this Graphics g, Brush brush, float x, float y, float radius)
+    {
+        g.FillEllipse(brush, x - radius, y - radius, radius * 2, radius * 2);
+    }
     public struct PointCoordinates
     {
         public int X { get; }
