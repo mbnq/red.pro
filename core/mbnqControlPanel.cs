@@ -32,7 +32,7 @@ namespace RED.mbnq
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
-        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton;
+        private Button centerButton, sysVerifyButton, sysTestPingButton, sysTaskManagerButton, sysNetworkDevicesButton, sysMyIPButton, sysSysPropertiesButton, sysDisplaySettingsButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
@@ -304,15 +304,22 @@ namespace RED.mbnq
             sysTaskManagerButton = CreateButton("Task Manager", mControlWidth, sysTaskManagerButton_Click);
             sysNetworkDevicesButton = CreateButton("Network Devices", mControlWidth, sysNetworkDevicesButton_Click);
             sysMyIPButton = CreateButton("My IP", mControlWidth, sysMyIPButton_Click);
+            sysSysPropertiesButton = CreateButton("System Properties", mControlWidth, sysSysPropertiesButton_Click);
+            sysDisplaySettingsButton = CreateButton("Display Settings", mControlWidth, sysDisplaySettingsButton_Click);
 
             // Add the buttons to the respective panels
             mbPanelForTab1.Controls.Add(centerButton);
-            mbPanelForTab3.Controls.Add(sysVerifyButton);
-            mbPanelForTab3.Controls.Add(sysTestPingButton);
+
+
+
             mbPanelForTab3.Controls.Add(sysTaskManagerButton);
             mbPanelForTab3.Controls.Add(sysNetworkDevicesButton);
             mbPanelForTab3.Controls.Add(sysMyIPButton);
+            mbPanelForTab3.Controls.Add(sysSysPropertiesButton);
+            mbPanelForTab3.Controls.Add(sysDisplaySettingsButton);
 
+            mbPanelForTab3.Controls.Add(sysTestPingButton);
+            mbPanelForTab3.Controls.Add(sysVerifyButton);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -701,6 +708,42 @@ namespace RED.mbnq
                     FileName = "ncpa.cpl", // Task Manager executable
                     // UseShellExecute = true, // Required for running system-level applications
                     // WindowStyle = ProcessWindowStyle.Normal // Shows the Task Manager window
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysSysPropertiesButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "sysdm.cpl",
+                };
+
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+            }
+        }
+        private void sysDisplaySettingsButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+
+            try
+            {
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "desk.cpl",
                 };
 
                 Process.Start(processInfo);
