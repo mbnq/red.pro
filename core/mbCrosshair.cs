@@ -21,6 +21,7 @@ namespace RED.mbnq
         private Image crosshairOverlay;
         private DateTime lastLoggedTime = DateTime.Now;
         private int paintCallCount = 0;
+
         public mbCrosshair()
         {
             this.DoubleBuffered = true;
@@ -36,7 +37,7 @@ namespace RED.mbnq
             this.Opacity = 0.5;
             this.TopMost = true;
             this.DoubleBuffered = true;
-            this.Paint += MainDisplay_Paint;
+            this.Paint += crosshair_Paint;
             this.ShowInTaskbar = false;
             // this.Enabled = false; 
 
@@ -131,18 +132,18 @@ namespace RED.mbnq
                 {
                     File.Delete(customFilePath);
                 }
-
-                // Dispose of the overlay
-                crosshairOverlay?.Dispose();
-                crosshairOverlay = null;
-
-                // Refresh the display
-                this.Invalidate();
             }
+
+            // Dispose of the overlay
+            crosshairOverlay?.Dispose();
+            crosshairOverlay = null;
+
+            // Refresh the crosshair
+            this.Invalidate();
         }
 
         // draw overlay
-        private void MainDisplay_Paint(object sender, PaintEventArgs e)
+        private void crosshair_Paint(object sender, PaintEventArgs e)
         {
             paintCallCount++;
 
@@ -183,7 +184,6 @@ namespace RED.mbnq
                 g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
             }
 
-            // this.Show();
         }
 
         // ensure the custom overlay image is properly disposed

@@ -499,10 +499,6 @@ namespace RED.mbnq
                     mbCrosshairOverlay.TransparencyKey = mbCrosshairOverlay.BackColor;      // maybe could try something different here
                 }
 
-                // Update zoom
-                ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
-                if (ZoomMode.IsZoomModeEnabled) { zoomLevel.Enabled = true; } else { zoomLevel.Enabled = false; }
-
                 // Update opacity
                 if (mHideCrosshair) 
                 { 
@@ -523,6 +519,10 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Show();
                 mbCrosshairOverlay.BringToFront();
                 mbCrosshairOverlay.Invalidate();
+
+                // Update zoom
+                ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
+                if (ZoomMode.IsZoomModeEnabled) { zoomLevel.Enabled = true; } else { zoomLevel.Enabled = false; }
             }
             UpdateLabels();
         }
