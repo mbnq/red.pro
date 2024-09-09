@@ -55,7 +55,7 @@ namespace RED.mbnq
             crosshairRefreshTimer.Tick += (s, e) =>
             {
                 this.Invalidate();
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Crosshair redrawn for {mbXhairPaintCount} time(s)");
+                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Crosshair redrawn for {mbXhairPaintCount} time(s)");
             };
 
             crosshairRefreshTimer.Start();
