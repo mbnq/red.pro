@@ -44,9 +44,6 @@ namespace RED.mbnq
 
         // Draw limit, refresh overlay if this amount of seconds passed
         private double throttlePaintTime = 1.00f;
-
-
-
         public mbnqConsole()
         {
             InitializeComponent();
@@ -517,6 +514,7 @@ namespace RED.mbnq
             pingTimer.Dispose();
             ipTimer.Dispose();
             base.OnFormClosing(e);
+            this.Dispose();
         }
 
         #endregion
