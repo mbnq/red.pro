@@ -30,7 +30,7 @@ namespace RED.mbnq
             removeCustomMenuItem = CreateMenuItem("Remove Custom PNG", RemoveCustomMenuItem_Click);
             UpdateMenuItems(); // Initial enable/disable logic is handled in UpdateMenuItems
 
-            var textConsoleMenuItem = CreateMenuItem("Show Debug Console", TextHUDMenuItem_Click);
+            var textConsoleMenuItem = CreateMenuItem("Toggle Debug Console", TextHUDConsoleMenuItem_Click);
             var newCaptureRegionMenuItem = CreateMenuItem("New Glass Element", NewCaptureRegionMenuItem_Click);
             var aboutMenuItem = CreateMenuItem("About", AboutMenuItem_Click);
             var closeMenuItem = CreateMenuItem("Close", CloseMenuItem_Click);
@@ -75,7 +75,7 @@ namespace RED.mbnq
             }
         }
 
-        private void TextHUDMenuItem_Click(object sender, EventArgs e)
+        private void TextHUDConsoleMenuItem_Click(object sender, EventArgs e)
         {
             if (textHUD == null || textHUD.IsDisposed)
                 textHUD = new mbnqConsole();
