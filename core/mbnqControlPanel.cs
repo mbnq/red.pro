@@ -514,12 +514,11 @@ namespace RED.mbnq
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
-                Location = new Point(0,1),  // new System.Drawing.Point(1, 1),
+                Location = new Point(0,1),
                 Width = mCPWidth,
-                Visible = true, // Initially hidden
-                Value = 100
+                Visible = false,
+                Value = 0
             };
-            mbProgressBar0.Value = 100;
 
             /* --- --- ---  --- --- --- */
             #endregion

@@ -58,38 +58,32 @@ namespace RED.mbnq
         {
             controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
             controlPanel.mbProgressBar0.Value = 10;
-            controlPanel.updateMainCrosshair();
 
             InitializeComponent();
 
             controlPanel.mbProgressBar0.Value = 25;
-            controlPanel.updateMainCrosshair();
 
             InitializeTimers();
 
             controlPanel.mbProgressBar0.Value = 40;
-            controlPanel.updateMainCrosshair();
 
             InitializeMouseEvents();
 
             controlPanel.mbProgressBar0.Value = 55;
-            controlPanel.updateMainCrosshair();
 
             AdjustSize();
 
             controlPanel.mbProgressBar0.Value = 70;
-            controlPanel.updateMainCrosshair();
 
             CaptureDebugMessages();
 
             controlPanel.mbProgressBar0.Value = 90;
-            controlPanel.updateMainCrosshair();
 
             isGlobalDebugOn = true;                             // ControlPanel.mIsDebugOn if you want to disable input textbox when global debug is off
             ToggleShowCommandBox(isGlobalDebugOn);
 
             controlPanel.mbProgressBar0.Value = 100;
-            controlPanel.updateMainCrosshair();
+            controlPanel.mbProgressBar0.Visible = false;
         }
 
         #region Initialization Methods
