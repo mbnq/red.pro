@@ -40,7 +40,7 @@ namespace RED.mbnq
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         // public MaterialProgressBar mbProgressBar0;
-        public CustomProgressBar mbProgressBar0;
+        public mbProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
         public string mbMaterialThemeType;
 
@@ -514,7 +514,7 @@ namespace RED.mbnq
             #region Progressbars
             /* --- --- ---  --- --- --- --- --- --- --- */
 
-            mbProgressBar0 = new CustomProgressBar
+            mbProgressBar0 = new mbProgressBar
             {
                 Location = new Point(0,1),
                 Width = mCPWidth,
@@ -523,7 +523,6 @@ namespace RED.mbnq
             };
 
             // eventhandlers
-            mbProgressBar0.VisibleChanged += (s, e) => updateMainCrosshair();
             mbProgressBar0.ValueChanged += (s, e) => updateMainCrosshair();
 
             /* --- --- ---  --- --- --- --- --- --- --- */
@@ -1220,7 +1219,7 @@ namespace RED.mbnq
         #endregion
 
         #region Custom ProgressBar
-        public class CustomProgressBar : MaterialSkin.Controls.MaterialProgressBar
+        public class mbProgressBar : MaterialSkin.Controls.MaterialProgressBar
         {
             private int _value;
             public new int Value
@@ -1238,7 +1237,6 @@ namespace RED.mbnq
             }
 
             public event EventHandler ValueChanged;
-
             protected virtual void OnValueChanged(EventArgs e)
             {
                 ValueChanged?.Invoke(this, e);
