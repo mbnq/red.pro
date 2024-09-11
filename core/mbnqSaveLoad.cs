@@ -1,22 +1,23 @@
-﻿/* 
+﻿
+/* 
+
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
 
-    File io goes here, encryption is just for learning purposes
 */
 
 using MaterialSkin.Controls;
 using System;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+// using System.Threading.Tasks;
+// using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Security.Cryptography;
-using System.Linq;
-using MaterialSkin;
-// using System.Windows.Media;
+// using System.Linq;
+// using MaterialSkin;
 
 namespace RED.mbnq
 {

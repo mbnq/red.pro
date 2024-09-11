@@ -1,4 +1,13 @@
-﻿using MaterialSkin.Controls;
+﻿/* 
+
+    www.mbnq.pl 2024 
+    mbnq00 on gmail
+
+    --------------------------------------------------------------------------------------------------
+
+*/
+
+using MaterialSkin.Controls;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
