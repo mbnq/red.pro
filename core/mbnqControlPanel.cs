@@ -522,8 +522,15 @@ namespace RED.mbnq
                 Value = 0
             };
 
-            // eventhandlers
-            mbProgressBar0.ValueChanged += (s, e) => updateMainCrosshair();
+            // eventhandler
+            mbProgressBar0.ValueChanged += (s, e) =>
+            {
+                if (mIsDebugOn)
+                {
+                    System.Threading.Thread.Sleep(50);   // for debug purposes 
+                }
+                // updateMainCrosshair();               // is it really needed?
+            };
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
