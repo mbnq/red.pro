@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RED.mbnq
 {
@@ -66,7 +67,7 @@ namespace RED.mbnq
         {
             InitializeTabs();
             InitializeComponent();
-            InitializeMaterialSkin("DARK");
+            InitializeMaterialSkin("");
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
@@ -98,21 +99,23 @@ namespace RED.mbnq
         }
 
         // Material Skin Init
+        public string mbMaterialTheme = "";
         public void InitializeMaterialSkin(string mbTheme)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
 
-
             if (Enum.TryParse(mbTheme, true, out MaterialSkin.MaterialSkinManager.Themes parsedTheme))
             {
                 materialSkinManager.Theme = parsedTheme;
+                mbMaterialTheme = mbTheme;
             }
             else
             {
                 // Handle the case where the theme string is invalid
                 materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;  // or your default theme
+                mbMaterialTheme = "DARK";
             }
 
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
