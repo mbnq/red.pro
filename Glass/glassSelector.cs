@@ -20,21 +20,21 @@ namespace RED.mbnq
 
         private Point startPoint;
         private Point endPoint;
-        private bool selecting;
+        private bool selectingInProgress;
         private Pen selectionPen;
         private Image backgroundScreenshot;
 
         public selector()
         {
             // Capture the entire screen
-            backgroundScreenshot = mbMakeScreenShot();
+            backgroundScreenshot = MakeScreenshotGrey((Bitmap)mbMakeScreenShot());
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.Opacity = 1.0;
             this.DoubleBuffered = true;
             this.Cursor = Cursors.Cross;
             this.TopMost = true;
-            this.AllowTransparency = true;
+            // this.AllowTransparency = true;
 
             // Span the selector form across all screens
             this.Bounds = Screen.PrimaryScreen.Bounds;
@@ -69,18 +69,45 @@ namespace RED.mbnq
 
             return screenshot;
         }
+        private Bitmap MakeScreenshotGrey(Bitmap original)
+        {
+            Bitmap greyImage = new Bitmap(original.Width, original.Height);
+
+            using (Graphics g = Graphics.FromImage(greyImage))
+            {
+                // Create a color matrix to transform the image to grayscale
+                System.Drawing.Imaging.ColorMatrix colorMatrix = new System.Drawing.Imaging.ColorMatrix(
+                    new float[][]
+                    {
+                new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+                new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                new float[] { 0, 0, 0, 1, 0 },
+                new float[] { 0, 0, 0, 0, 1 }
+                    });
+
+                // Create image attributes and set the color matrix
+                var attributes = new System.Drawing.Imaging.ImageAttributes();
+                attributes.SetColorMatrix(colorMatrix);
+
+                // Draw the original image with the grayscale color matrix applied
+                g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+            }
+
+            return greyImage;
+        }
         private void ScreenAreaSelector_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                selecting = true;
+                selectingInProgress = true;
                 startPoint = e.Location;
                 endPoint = e.Location;
             }
         }
         private void ScreenAreaSelector_MouseMove(object sender, MouseEventArgs e)
         {
-            if (selecting)
+            if (selectingInProgress)
             {
                 endPoint = e.Location;
                 this.Invalidate(); // Redraw the selection rectangle
@@ -88,9 +115,9 @@ namespace RED.mbnq
         }
         private void ScreenAreaSelector_MouseUp(object sender, MouseEventArgs e)
         {
-            if (selecting)
+            if (selectingInProgress)
             {
-                selecting = false;
+                selectingInProgress = false;
 
                 // Normalize the rectangle
                 Rectangle selectionRect = GetRectangle(startPoint, endPoint);
@@ -107,7 +134,7 @@ namespace RED.mbnq
                 else
                 {
                     // Optionally, re-enter selection mode if the selection is too small
-                    selecting = true;
+                    selectingInProgress = true;
                     startPoint = endPoint;
                 }
             }
@@ -135,7 +162,7 @@ namespace RED.mbnq
             // Draw the captured screen as the background
             e.Graphics.DrawImage(backgroundScreenshot, Point.Empty);
 
-            if (selecting)
+            if (selectingInProgress)
             {
                 Rectangle selectionRect = GetRectangle(startPoint, endPoint);
 
