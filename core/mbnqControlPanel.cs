@@ -407,6 +407,7 @@ namespace RED.mbnq
             mbMbToolsDropDown.Items.Add("Test Ping");
             mbMbToolsDropDown.Items.Add("My IP");
             mbMbToolsDropDown.Items.Add("Verify System Files");
+            mbMbToolsDropDown.Items.Add("Show Windows Key");
 
             // def
             mbMbToolsDropDown.SelectedIndex = 0;
@@ -434,6 +435,9 @@ namespace RED.mbnq
                             break;
                         case "Verify System Files":
                             mbVerifySys_Click(sender, e);
+                            break;
+                        case "Show Windows Key":
+                            mbKeySys_Click(sender, e);
                             break;
                     }
                 }
@@ -705,6 +709,45 @@ namespace RED.mbnq
                     cls
                     echo Running system integrity verification...
                     sfc /scannow
+                    pause
+                ";
+
+                // Write the batch file content to the file
+                File.WriteAllText(tempBatchFile, batchContent);
+
+                // Create a new process to run the batch file as administrator
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = tempBatchFile,
+                    Verb = "runas",                         // to run as administrator
+                    UseShellExecute = true,                 // Required to launch as admin
+                    WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
+        }
+
+        private void mbKeySys_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                // Path to a temporary batch file
+                string tempBatchFile = Path.Combine(Path.GetTempPath(), "system_key.bat");
+
+                // Create batch file content
+                string batchContent = @"
+                    @echo off
+                    title RED. PRO
+                    cls
+                    echo Trying to display Windows System Key...
+                    REG QUERY ""HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform"" /v BackupProductKeyDefault | find /i ""BackupProductKeyDefault""
                     pause
                 ";
 
