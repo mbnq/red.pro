@@ -35,10 +35,6 @@ namespace RED.mbnq
             }
         }
 
-        /* --- --- --- progress bar --- --- --- */
-
-
-
     /* --- --- --- encrypt / decrypt --- --- --- */
     private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");  // chill, it's here just for testing and learning purposes
         private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
@@ -114,9 +110,9 @@ namespace RED.mbnq
         {
             var sb = new StringBuilder();
 
-            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
-            controlPanel.mbProgressBar0.Value = 0;
-            controlPanel.updateMainCrosshair();
+            // controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            // controlPanel.mbProgressBar0.Value = 0;
+            // controlPanel.updateMainCrosshair();
 
             sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
             sb.AppendLine("[MainDisplay]");
@@ -137,8 +133,8 @@ namespace RED.mbnq
             sb.AppendLine($"mbEnableFlirMode={controlPanel.mbEnableFlirChecked}");
             sb.AppendLine($"mbEnableDarkMode={controlPanel.mbDarkModeCheckBoxChecked}");
 
-            controlPanel.mbProgressBar0.Value = 30;
-            controlPanel.updateMainCrosshair();
+            // controlPanel.mbProgressBar0.Value = 30;
+            // controlPanel.updateMainCrosshair();
 
             // Save overlay absolute position
             if (controlPanel.mbCrosshairOverlay != null)
@@ -147,8 +143,8 @@ namespace RED.mbnq
                 sb.AppendLine($"PositionY={controlPanel.mbCrosshairOverlay.Top}");
             }
 
-            controlPanel.mbProgressBar0.Value = 50;
-            controlPanel.updateMainCrosshair();
+            // controlPanel.mbProgressBar0.Value = 50;
+            // controlPanel.updateMainCrosshair();
 
             byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
             File.WriteAllBytes(settingsFilePath, encryptedData);
@@ -160,16 +156,16 @@ namespace RED.mbnq
             }
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
 
-            controlPanel.mbProgressBar0.Value = 100;
-            controlPanel.mbProgressBar0.Visible = false;
-            controlPanel.updateMainCrosshair();
+            // controlPanel.mbProgressBar0.Value = 100;
+            // controlPanel.mbProgressBar0.Visible = false;
+            // controlPanel.updateMainCrosshair();
         }
 
         /* --- --- --- loading --- --- --- */ 
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
-            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
-            controlPanel.mbProgressBar0.Value = 0;
+            // controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            // controlPanel.mbProgressBar0.Value = 0;
 
             if (!File.Exists(settingsFilePath))
             {
@@ -182,7 +178,7 @@ namespace RED.mbnq
             byte[] encryptedData = File.ReadAllBytes(settingsFilePath);
             string decryptedData = DecryptString(encryptedData, key, iv);
 
-            controlPanel.mbProgressBar0.Value = 30;
+            // controlPanel.mbProgressBar0.Value = 30;
 
             var lines = decryptedData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var line in lines)
@@ -228,7 +224,7 @@ namespace RED.mbnq
                     controlPanel.mbCrosshairOverlay.Top = int.Parse(line.Substring("PositionY=".Length));
             }
 
-            controlPanel.mbProgressBar0.Value = 60;
+            // controlPanel.mbProgressBar0.Value = 60;
 
             controlPanel.updateMainCrosshair();
 
@@ -239,8 +235,8 @@ namespace RED.mbnq
             }
 
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
-            controlPanel.mbProgressBar0.Value = 100;
-            controlPanel.mbProgressBar0.Visible = false;
+            // controlPanel.mbProgressBar0.Value = 100;
+            // controlPanel.mbProgressBar0.Visible = false;
             controlPanel.updateMainCrosshair();
             controlPanel.mSettingsLoaded = 1;
         }

@@ -514,13 +514,12 @@ namespace RED.mbnq
             /* --- --- ---  --- --- --- */
             mbProgressBar0 = new MaterialProgressBar
             {
-                Location = new Point(mbFnc.mGetPrimaryScreenCenter().X, mbFnc.mGetPrimaryScreenCenter().Y),  // new System.Drawing.Point(1, 1),
-                Size = new System.Drawing.Size(mCPWidth, 10),
-                Visible = false // Initially hidden
-            }; 
-
-            mbPanelForTab1.Controls.Add(mbProgressBar0);
-            mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+                Location = new Point(0,1),  // new System.Drawing.Point(1, 1),
+                Width = mCPWidth,
+                Visible = true, // Initially hidden
+                Value = 100
+            };
+            mbProgressBar0.Value = 100;
 
             /* --- --- ---  --- --- --- */
             #endregion
@@ -528,6 +527,7 @@ namespace RED.mbnq
             #region tabs buildup
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
+            mbTab1.Controls.Add(mbProgressBar0);
             mbTab1.Controls.Add(mbPanelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
