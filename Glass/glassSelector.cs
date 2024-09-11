@@ -9,6 +9,7 @@
 
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -29,7 +30,7 @@ namespace RED.mbnq
             backgroundScreenshot = CaptureScreen();
 
             this.FormBorderStyle = FormBorderStyle.None;
-            this.Opacity = 0.8;
+            this.Opacity = 1.0;
             this.DoubleBuffered = true;
             this.Cursor = Cursors.Cross;
             this.TopMost = true;
@@ -40,7 +41,8 @@ namespace RED.mbnq
             // Semi-transparent pen for selection rectangle
             selectionPen = new Pen(Color.Blue, 2)
             {
-                DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+                DashStyle = System.Drawing.Drawing2D.DashStyle.Dash,
+                Color = Color.Gray
             };
 
             this.MouseDown += ScreenAreaSelector_MouseDown;

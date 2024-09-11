@@ -527,7 +527,7 @@ namespace RED.mbnq
             {
                 if (mIsDebugOn)
                 {
-                    System.Threading.Thread.Sleep(50);   // for debug purposes 
+                    System.Threading.Thread.Sleep(25);   // for debug purposes 
                 }
                 // updateMainCrosshair();               // is it really needed?
             };
