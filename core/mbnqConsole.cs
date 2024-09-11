@@ -53,15 +53,18 @@ namespace RED.mbnq
 
         // Draw limit, refresh overlay if this amount of seconds passed
         private double throttlePaintTime = 1.00f;
-        public mbnqConsole()
+        public mbnqConsole(ControlPanel controlPanel)
         {
+            // controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            // controlPanel.mbProgressBar0.Value = 0;
+
             InitializeComponent();
             InitializeTimers();
             InitializeMouseEvents();
             AdjustSize();
             CaptureDebugMessages();
 
-            isGlobalDebugOn = true; // ControlPanel.mIsDebugOn if you want to disable input textbox when global debug is off
+            isGlobalDebugOn = true;                             // ControlPanel.mIsDebugOn if you want to disable input textbox when global debug is off
             ToggleShowCommandBox(isGlobalDebugOn);
         }
 
@@ -435,22 +438,30 @@ namespace RED.mbnq
         #region UI Methods
         private void AdjustSize()
         {
-            using (Graphics g = this.CreateGraphics())
+            try
             {
-                using (Font font = new Font("Consolas", 10, FontStyle.Regular))
+                using (Graphics g = this.CreateGraphics())
                 {
-                    // Calculate the required height based on the number of lines and their height
-                    int lineHeight = (int)g.MeasureString("Test", font).Height;
-                    int requiredHeight = lineHeight * displayTexts.Count; // Adding padding
+                    using (Font font = new Font("Consolas", 10, FontStyle.Regular))
+                    {
+                        // Calculate the required height based on the number of lines and their height
+                        int lineHeight = (int)g.MeasureString("Test", font).Height;
+                        int requiredHeight = lineHeight * displayTexts.Count; // Adding padding
 
-                    // Ensure the width does not shrink below the initial width
-                    int requiredWidth = Math.Max(initialWidth, displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max() + 20);
+                        // Ensure the width does not shrink below the initial width
+                        int requiredWidth = Math.Max(initialWidth, displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max() + 20);
 
-                    // Adjust the form size: increase the height if the required height is greater than the current height
-                    this.Size = new Size(requiredWidth, Math.Max(initialHeight, requiredHeight));
+                        // Adjust the form size: increase the height if the required height is greater than the current height
+                        this.Size = new Size(requiredWidth, Math.Max(initialHeight, requiredHeight));
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
         }
+
 
 
         private void TXTHUD_Paint(object sender, PaintEventArgs e)

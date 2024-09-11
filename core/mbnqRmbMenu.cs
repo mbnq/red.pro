@@ -87,7 +87,7 @@ namespace RED.mbnq
         {
             if (textHUD == null || textHUD.IsDisposed)
             {
-                textHUD = new mbnqConsole();
+                textHUD = new mbnqConsole(controlPanel);
                 textHUD.ToggleOverlay();
             }
             else

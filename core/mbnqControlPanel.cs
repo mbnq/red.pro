@@ -24,7 +24,7 @@ namespace RED.mbnq
         #region ControlPanel Vars and Settings
 
         public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
-        public static readonly bool mPBIsOn = false;                    // progress bar 
+        public static readonly bool mPBIsOn = true;                    // progress bar 
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
