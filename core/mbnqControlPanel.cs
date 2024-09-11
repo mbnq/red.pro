@@ -7,7 +7,7 @@
 
     --------------------------------------------------------------------------------------------------
 
-    - naprawic w debugu przywracanie ostatniej komenty klawiszem up kursor wraca jedna litere od konca
+    - naprawic w debugu przywracanie ostatniej komendy klawiszem up kursor wraca jedna litere od konca
     - jesli nie widac debug output to upewnij sie, ze w VS jest ustawione na Debug nie Release
 
 */
