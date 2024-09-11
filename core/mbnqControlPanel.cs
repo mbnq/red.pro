@@ -66,7 +66,7 @@ namespace RED.mbnq
         {
             InitializeTabs();
             InitializeComponent();
-            InitializeMaterialSkin();
+            InitializeMaterialSkin("DARK");
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
@@ -98,12 +98,23 @@ namespace RED.mbnq
         }
 
         // Material Skin Init
-        public void InitializeMaterialSkin()
+        public void InitializeMaterialSkin(string mbTheme)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+
+
+            if (Enum.TryParse(mbTheme, true, out MaterialSkin.MaterialSkinManager.Themes parsedTheme))
+            {
+                materialSkinManager.Theme = parsedTheme;
+            }
+            else
+            {
+                // Handle the case where the theme string is invalid
+                materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;  // or your default theme
+            }
+
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
                 MaterialSkin.Primary.Red500,        // Primary color
                 MaterialSkin.Primary.Red700,        // Dark primary color
