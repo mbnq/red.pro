@@ -134,6 +134,7 @@ namespace RED.mbnq
             sb.AppendLine($"mbDisableSound={controlPanel.mbDisableSoundChecked}");
             sb.AppendLine($"mbEnableZoomMode={controlPanel.mbEnableZoomModeChecked}");
             sb.AppendLine($"mbEnableFlirMode={controlPanel.mbEnableFlirChecked}");
+            sb.AppendLine($"mbEnableDarkMode={controlPanel.mbDarkModeCheckBoxChecked}");
 
             controlPanel.mbProgressBar0.Value = 30;
             controlPanel.updateMainCrosshair();
@@ -216,6 +217,8 @@ namespace RED.mbnq
                     controlPanel.mbEnableZoomModeChecked = bool.Parse(line.Substring("mbEnableZoomMode=".Length));
                 else if (line.StartsWith("mbEnableFlirMode="))
                     controlPanel.mbEnableFlirChecked = bool.Parse(line.Substring("mbEnableFlirMode=".Length));
+                else if (line.StartsWith("mbEnableDarkMode="))
+                    controlPanel.mbDarkModeCheckBoxChecked = bool.Parse(line.Substring("mbEnableDarkMode=".Length));
 
 
                 else if (line.StartsWith("PositionX=") && controlPanel.mbCrosshairOverlay != null)
@@ -270,6 +273,7 @@ namespace RED.mbnq
                 sb.AppendLine("mbDisableSound=False");
                 sb.AppendLine("mbEnableZoomMode=False");
                 sb.AppendLine("mbEnableFlirMode=False");
+                sb.AppendLine("mbEnableDarkMode=True");
 
                 byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
                 File.WriteAllBytes(settingsFilePath, encryptedData);
