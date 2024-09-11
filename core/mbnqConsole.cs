@@ -31,6 +31,7 @@ namespace RED.mbnq
         private int initialWidth;
         private int initialHeight;
         private bool isGlobalDebugOn;
+        private bool isResizing = false;
         private TextBox commandTextBox;
         private List<string> commandHistory = new List<string>();
         private int historyIndex = -1;
@@ -55,8 +56,9 @@ namespace RED.mbnq
         private double throttlePaintTime = 1.00f;
         public mbnqConsole(ControlPanel controlPanel)
         {
-            // controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
-            // controlPanel.mbProgressBar0.Value = 0;
+            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            controlPanel.mbProgressBar0.Value = 10;
+            controlPanel.updateMainCrosshair();
 
             InitializeComponent();
             InitializeTimers();
@@ -438,8 +440,14 @@ namespace RED.mbnq
         #region UI Methods
         private void AdjustSize()
         {
+            // Prevent recursive calls
+            if (isResizing)
+                return;
+
             try
             {
+                isResizing = true; // Set the flag to prevent recursion
+
                 using (Graphics g = this.CreateGraphics())
                 {
                     using (Font font = new Font("Consolas", 10, FontStyle.Regular))
@@ -460,9 +468,11 @@ namespace RED.mbnq
             {
                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
+            finally
+            {
+                isResizing = false; // Reset the flag once resizing is done
+            }
         }
-
-
 
         private void TXTHUD_Paint(object sender, PaintEventArgs e)
         {
