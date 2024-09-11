@@ -46,10 +46,12 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         public MaterialProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
+        public string mbMaterialThemeType;
 
         public string mbUserFilessPath = Path.Combine(SaveLoad.SettingsDirectory);
 
-        private int mControlWidth;
+        public int mControlWidth;
+
         public Size mbInitSize                          = new Size(0, 0);
         public static readonly int mCPWidth             = 262;
         public static readonly int mCPHeight            = 750;
@@ -67,7 +69,18 @@ namespace RED.mbnq
         {
             InitializeTabs();
             InitializeComponent();
-            InitializeMaterialSkin("");
+
+            SaveLoad.EnsureSettingsFileExists(this);
+            SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
+
+            if (mbDarkModeCheckBoxChecked)
+            {
+                InitializeMaterialSkin("");
+            }
+            else
+            {
+                InitializeMaterialSkin("LIGHT");
+            }
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
@@ -78,9 +91,6 @@ namespace RED.mbnq
             this.Size = new Size(mCPWidth, mCPHeight);
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
-
-            SaveLoad.EnsureSettingsFileExists(this);
-            SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
 
             rightClickMenu = new mbRmbMenu(this);
             this.ContextMenuStrip = rightClickMenu;
@@ -99,7 +109,6 @@ namespace RED.mbnq
         }
 
         // Material Skin Init
-        public string mbMaterialTheme = "";
         public void InitializeMaterialSkin(string mbTheme)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
@@ -109,13 +118,13 @@ namespace RED.mbnq
             if (Enum.TryParse(mbTheme, true, out MaterialSkin.MaterialSkinManager.Themes parsedTheme))
             {
                 materialSkinManager.Theme = parsedTheme;
-                mbMaterialTheme = mbTheme;
+                mbMaterialThemeType = mbTheme;
             }
             else
             {
                 // Handle the case where the theme string is invalid
                 materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;  // or your default theme
-                mbMaterialTheme = "DARK";
+                mbMaterialThemeType = "DARK";
             }
 
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
