@@ -27,13 +27,14 @@ namespace RED.mbnq
         public selector()
         {
             // Capture the entire screen
-            backgroundScreenshot = CaptureScreen();
+            backgroundScreenshot = mbMakeScreenShot();
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.Opacity = 1.0;
             this.DoubleBuffered = true;
             this.Cursor = Cursors.Cross;
             this.TopMost = true;
+            this.AllowTransparency = true;
 
             // Span the selector form across all screens
             this.Bounds = Screen.PrimaryScreen.Bounds;
@@ -55,15 +56,12 @@ namespace RED.mbnq
             backgroundScreenshot?.Dispose();
             base.OnFormClosed(e);
         }
-        private Image CaptureScreen()
+        private Image mbMakeScreenShot()
         {
-            // Get the bounds of the primary screen 
             Rectangle primaryScreenBounds = Screen.PrimaryScreen.Bounds;
 
-            // Create a bitmap with the size of the primary screen
             Bitmap screenshot = new Bitmap(primaryScreenBounds.Width, primaryScreenBounds.Height);
 
-            // Use Graphics to copy the screen content into the bitmap
             using (Graphics g = Graphics.FromImage(screenshot))
             {
                 g.CopyFromScreen(primaryScreenBounds.Location, Point.Empty, primaryScreenBounds.Size);
