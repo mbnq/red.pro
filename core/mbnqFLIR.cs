@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+/* 
+
+    www.mbnq.pl 2024 
+    https://mbnq.pl/
+    mbnq00 on gmail
+
+*/
+
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +23,7 @@ namespace RED.mbnq
         private int green = 192;
         private int blue = 192;
         private Timer repaintTimer;
-        public static bool mbEnableFlirLogic = false;   // for general enabling and disabling the flir logic
+        public static bool mbEnableFlirLogic = false;    // for general enabling and disabling the flir logic
         public static bool mbEnableFlir = false;        // for dynamic enabling with checkbox 
 
         public mbnqFLIR()
@@ -41,7 +50,7 @@ namespace RED.mbnq
         private void InitializeRepaintTimer()
         {
             repaintTimer = new Timer();
-            repaintTimer.Interval = (128 + random.Next(128)); // Trigger every 32ms (~30 FPS)
+            repaintTimer.Interval = (1 + random.Next(6)); // Trigger every 32ms (~30 FPS)
             repaintTimer.Tick += (sender, args) =>
             {
                 if (mbEnableFlir)
@@ -91,6 +100,8 @@ namespace RED.mbnq
         }
 
         // Override the OnPaint method to apply the solid gray FLIR overlay
+
+        /*
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -107,6 +118,74 @@ namespace RED.mbnq
                 e.Graphics.FillRectangle(solidGrayBrush, screenRect);
             }
         }
+        */
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Get the dimensions of the screen
+            Rectangle screenRect = this.ClientRectangle;
+
+            // Capture the screen image (or you can use an existing image)
+            Bitmap screenImage = CaptureScreenImage();
+
+            // Apply grayscale effect
+            Bitmap grayImage = ApplyGrayscale(screenImage);
+
+            // Draw the grayscale image as the background
+            e.Graphics.DrawImage(grayImage, screenRect);
+        }
+
+        private Bitmap CaptureScreenImage()
+        {
+            Rectangle primaryScreenBounds = Screen.PrimaryScreen.Bounds;
+            Bitmap screenshot = new Bitmap(primaryScreenBounds.Width, primaryScreenBounds.Height);
+
+            using (Graphics g = Graphics.FromImage(screenshot))
+            {
+                g.CopyFromScreen(primaryScreenBounds.Location, Point.Empty, primaryScreenBounds.Size);
+            }
+
+            return screenshot;
+        }
+
+        // Apply grayscale effect using a ColorMatrix
+        private Bitmap ApplyGrayscale(Bitmap original)
+        {
+            Bitmap grayscaleImage = new Bitmap(original.Width, original.Height);
+
+            using (Graphics g = Graphics.FromImage(grayscaleImage))
+            {
+                // Create a color matrix to convert the image to grayscale
+                System.Drawing.Imaging.ColorMatrix colorMatrix = new System.Drawing.Imaging.ColorMatrix(
+                    new float[][]
+                    {
+                new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+                new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                new float[] { 0, 0, 0, 1, 0 },
+                new float[] { 0, 0, 0, 0, 1 }
+                    });
+
+                // Create image attributes and set the color matrix
+                var imageAttributes = new System.Drawing.Imaging.ImageAttributes();
+                imageAttributes.SetColorMatrix(colorMatrix);
+
+                // Draw the original image with the grayscale color matrix applied
+                g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, imageAttributes);
+            }
+
+            return grayscaleImage;
+        }
+
+
+
+
+
+
+
+
 
         // Helper method to clamp values between a min and max
         public static int Clamp(int value, int min, int max)

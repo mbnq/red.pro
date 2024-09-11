@@ -1,8 +1,10 @@
-﻿/* 
+﻿
+/* 
+
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
 
-    This is the overlay reddot crosshair
 */
 
 using MaterialSkin.Controls;
@@ -50,7 +52,7 @@ namespace RED.mbnq
 
             // The update timer
             crosshairRefreshTimer = new Timer();
-            crosshairRefreshTimer.Interval = ControlPanel.mbCrosshairRedrawnTime;
+            crosshairRefreshTimer.Interval = ControlPanel.mbCrosshairRedrawTime;
 
             crosshairRefreshTimer.Tick += (s, e) =>
             {

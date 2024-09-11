@@ -1,22 +1,23 @@
-﻿/* 
+﻿
+/* 
+
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
 
-    File io goes here, encryption is just for learning purposes
 */
 
 using MaterialSkin.Controls;
 using System;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+// using System.Threading.Tasks;
+// using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Security.Cryptography;
-using System.Linq;
-using MaterialSkin;
-// using System.Windows.Media;
+// using System.Linq;
+// using MaterialSkin;
 
 namespace RED.mbnq
 {
@@ -33,10 +34,6 @@ namespace RED.mbnq
                 Directory.CreateDirectory(settingsDirectory);
             }
         }
-
-        /* --- --- --- progress bar --- --- --- */
-
-
 
     /* --- --- --- encrypt / decrypt --- --- --- */
     private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");  // chill, it's here just for testing and learning purposes
@@ -115,7 +112,6 @@ namespace RED.mbnq
 
             controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
             controlPanel.mbProgressBar0.Value = 0;
-            controlPanel.updateMainCrosshair();
 
             sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
             sb.AppendLine("[MainDisplay]");
@@ -134,9 +130,9 @@ namespace RED.mbnq
             sb.AppendLine($"mbDisableSound={controlPanel.mbDisableSoundChecked}");
             sb.AppendLine($"mbEnableZoomMode={controlPanel.mbEnableZoomModeChecked}");
             sb.AppendLine($"mbEnableFlirMode={controlPanel.mbEnableFlirChecked}");
+            sb.AppendLine($"mbEnableDarkMode={controlPanel.mbDarkModeCheckBoxChecked}");
 
             controlPanel.mbProgressBar0.Value = 30;
-            controlPanel.updateMainCrosshair();
 
             // Save overlay absolute position
             if (controlPanel.mbCrosshairOverlay != null)
@@ -146,7 +142,6 @@ namespace RED.mbnq
             }
 
             controlPanel.mbProgressBar0.Value = 50;
-            controlPanel.updateMainCrosshair();
 
             byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
             File.WriteAllBytes(settingsFilePath, encryptedData);
@@ -216,6 +211,8 @@ namespace RED.mbnq
                     controlPanel.mbEnableZoomModeChecked = bool.Parse(line.Substring("mbEnableZoomMode=".Length));
                 else if (line.StartsWith("mbEnableFlirMode="))
                     controlPanel.mbEnableFlirChecked = bool.Parse(line.Substring("mbEnableFlirMode=".Length));
+                else if (line.StartsWith("mbEnableDarkMode="))
+                    controlPanel.mbDarkModeCheckBoxChecked = bool.Parse(line.Substring("mbEnableDarkMode=".Length));
 
 
                 else if (line.StartsWith("PositionX=") && controlPanel.mbCrosshairOverlay != null)
@@ -226,8 +223,6 @@ namespace RED.mbnq
 
             controlPanel.mbProgressBar0.Value = 60;
 
-            controlPanel.updateMainCrosshair();
-
             if (showMessage)
             {
                 Sounds.PlayClickSoundOnce();
@@ -236,9 +231,9 @@ namespace RED.mbnq
 
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
             controlPanel.mbProgressBar0.Value = 100;
-            controlPanel.mbProgressBar0.Visible = false;
             controlPanel.updateMainCrosshair();
             controlPanel.mSettingsLoaded = 1;
+            controlPanel.mbProgressBar0.Visible = false;
         }
 
         /* --- --- --- Check if savefile exists --- --- --- */
@@ -270,6 +265,7 @@ namespace RED.mbnq
                 sb.AppendLine("mbDisableSound=False");
                 sb.AppendLine("mbEnableZoomMode=False");
                 sb.AppendLine("mbEnableFlirMode=False");
+                sb.AppendLine("mbEnableDarkMode=True");
 
                 byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
                 File.WriteAllBytes(settingsFilePath, encryptedData);

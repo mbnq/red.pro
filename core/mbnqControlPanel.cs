@@ -1,14 +1,9 @@
-﻿/* 
+﻿
+/* 
 
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
-
-    That's the main code
-
-    --------------------------------------------------------------------------------------------------
-
-    - naprawic w debugu przywracanie ostatniej komenty klawiszem up kursor wraca jedna litere od konca
-    - jesli nie widac debug output to upewnij sie, ze w VS jest ustawione na Debug nie Release
 
 */
 
@@ -20,6 +15,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RED.mbnq
 {
@@ -28,14 +24,14 @@ namespace RED.mbnq
         #region ControlPanel Vars and Settings
 
         public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
-        public static readonly bool mPBIsOn = false;                    // progress bar 
+        public static readonly bool mPBIsOn = true;                    // progress bar 
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
         private Button centerButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox;
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
@@ -43,12 +39,15 @@ namespace RED.mbnq
         private mbnqFLIR FlirOverlayForm;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        public MaterialProgressBar mbProgressBar0;
+        // public MaterialProgressBar mbProgressBar0;
+        public mbProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
+        public string mbMaterialThemeType;
 
         public string mbUserFilessPath = Path.Combine(SaveLoad.SettingsDirectory);
 
-        private int mControlWidth;
+        public int mControlWidth;
+
         public Size mbInitSize                          = new Size(0, 0);
         public static readonly int mCPWidth             = 262;
         public static readonly int mCPHeight            = 750;
@@ -57,7 +56,7 @@ namespace RED.mbnq
         public const int mPNGMaxWidth                   = 1920;
         public const int mPNGMaxHeight                  = 1080;
 
-        public const int mbCrosshairRedrawnTime         = 5000; // interval in ms
+        public const int mbCrosshairRedrawTime         = 5000; // interval in ms
 
         #endregion
 
@@ -66,7 +65,18 @@ namespace RED.mbnq
         {
             InitializeTabs();
             InitializeComponent();
-            InitializeMaterialSkin();
+
+            SaveLoad.EnsureSettingsFileExists(this);
+            SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
+
+            if (mbDarkModeCheckBoxChecked)
+            {
+                InitializeMaterialSkin("");
+            }
+            else
+            {
+                InitializeMaterialSkin("LIGHT");
+            }
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
@@ -77,9 +87,6 @@ namespace RED.mbnq
             this.Size = new Size(mCPWidth, mCPHeight);
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
-
-            SaveLoad.EnsureSettingsFileExists(this);
-            SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
 
             rightClickMenu = new mbRmbMenu(this);
             this.ContextMenuStrip = rightClickMenu;
@@ -98,12 +105,24 @@ namespace RED.mbnq
         }
 
         // Material Skin Init
-        public void InitializeMaterialSkin()
+        public void InitializeMaterialSkin(string mbTheme)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;
+
+            if (Enum.TryParse(mbTheme, true, out MaterialSkin.MaterialSkinManager.Themes parsedTheme))
+            {
+                materialSkinManager.Theme = parsedTheme;
+                mbMaterialThemeType = mbTheme;
+            }
+            else
+            {
+                // Handle the case where the theme string is invalid
+                materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;  // or your default theme
+                mbMaterialThemeType = "DARK";
+            }
+
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
                 MaterialSkin.Primary.Red500,        // Primary color
                 MaterialSkin.Primary.Red700,        // Dark primary color
@@ -283,7 +302,7 @@ namespace RED.mbnq
             AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
             AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
             AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
-            AddLabeledSlider(mbPanelForTab1, "Zoom Level", 1, 10, 3, ref zoomLevel);
+            AddLabeledSlider(mbPanelForTab1, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
 
             #endregion
 
@@ -407,6 +426,7 @@ namespace RED.mbnq
             mbMbToolsDropDown.Items.Add("Test Ping");
             mbMbToolsDropDown.Items.Add("My IP");
             mbMbToolsDropDown.Items.Add("Verify System Files");
+            mbMbToolsDropDown.Items.Add("Show Windows Key");
 
             // def
             mbMbToolsDropDown.SelectedIndex = 0;
@@ -434,6 +454,9 @@ namespace RED.mbnq
                             break;
                         case "Verify System Files":
                             mbVerifySys_Click(sender, e);
+                            break;
+                        case "Show Windows Key":
+                            mbKeySys_Click(sender, e);
                             break;
                     }
                 }
@@ -483,28 +506,39 @@ namespace RED.mbnq
             mbDisableSoundCheckBox = CreateCheckBox("Disable Sound", true, mbDisableSoundCheckBox_CheckedChanged);
             mbEnableZoomModeCheckBox = CreateCheckBox("Enable SniperMode", true, mbEnableZoomModeCheckBox_CheckedChanged);
             mbEnableFlirCheckBox = CreateCheckBox("Enable FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
+            mbDarkModeCheckBox = CreateCheckBox("Enable DarkMode", true, mbDarkModeCheckBox_CheckedChanged);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
 
             #region Progressbars
-            /* --- --- ---  --- --- --- */
-            mbProgressBar0 = new MaterialProgressBar
+            /* --- --- ---  --- --- --- --- --- --- --- */
+
+            mbProgressBar0 = new mbProgressBar
             {
-                Location = new Point(mbFnc.mGetPrimaryScreenCenter().X, mbFnc.mGetPrimaryScreenCenter().Y),  // new System.Drawing.Point(1, 1),
-                Size = new System.Drawing.Size(mCPWidth, 10),
-                Visible = false // Initially hidden
-            }; 
+                Location = new Point(0,1),
+                Width = mCPWidth,
+                Visible = false,
+                Value = 0
+            };
 
-            mbPanelForTab1.Controls.Add(mbProgressBar0);
-            mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            // eventhandler
+            mbProgressBar0.ValueChanged += (s, e) =>
+            {
+                if (mIsDebugOn)
+                {
+                    System.Threading.Thread.Sleep(25);   // for debug purposes 
+                }
+                // updateMainCrosshair();               // is it really needed?
+            };
 
-            /* --- --- ---  --- --- --- */
+            /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
 
             #region tabs buildup
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
+            mbTab1.Controls.Add(mbProgressBar0);
             mbTab1.Controls.Add(mbPanelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
@@ -513,6 +547,8 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
+
+            mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
 
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
@@ -658,7 +694,19 @@ namespace RED.mbnq
 
                 // Update zoom
                 ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
-                if (ZoomMode.IsZoomModeEnabled) { zoomLevel.Enabled = true; } else { zoomLevel.Enabled = false; }
+
+                // it's needed here
+                if (ZoomMode.IsZoomModeEnabled) { 
+                    zoomLevel.Enabled = true; 
+                    // zoomLevel.Visible = true;
+                    zoomLevel.Parent.Controls[0].Enabled = true;
+                    // zoomLevel.Parent.Controls[0].Visible = true;
+                } else { 
+                    zoomLevel.Enabled = false; 
+                    // zoomLevel.Visible = false;
+                    zoomLevel.Parent.Controls[0].Enabled = false;
+                    // zoomLevel.Parent.Controls[0].Visible = false;
+                }
             }
             UpdateLabels();
         }
@@ -669,7 +717,7 @@ namespace RED.mbnq
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
             size.Parent.Controls[0].Text = $"Size: {size.Value}";
             transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
-            zoomLevel.Parent.Controls[0].Text = $"Zoom Level: {zoomLevel.Value}";
+            zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
         }
@@ -693,6 +741,45 @@ namespace RED.mbnq
                     cls
                     echo Running system integrity verification...
                     sfc /scannow
+                    pause
+                ";
+
+                // Write the batch file content to the file
+                File.WriteAllText(tempBatchFile, batchContent);
+
+                // Create a new process to run the batch file as administrator
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = tempBatchFile,
+                    Verb = "runas",                         // to run as administrator
+                    UseShellExecute = true,                 // Required to launch as admin
+                    WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
+        }
+
+        private void mbKeySys_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                // Path to a temporary batch file
+                string tempBatchFile = Path.Combine(Path.GetTempPath(), "system_key.bat");
+
+                // Create batch file content
+                string batchContent = @"
+                    @echo off
+                    title RED. PRO
+                    cls
+                    echo Trying to display Windows System Key...
+                    REG QUERY ""HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform"" /v BackupProductKeyDefault | find /i ""BackupProductKeyDefault""
                     pause
                 ";
 
@@ -917,12 +1004,12 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
-                zoomLevel.Enabled = true;
+                updateMainCrosshair();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
-                zoomLevel.Enabled = false;
+                updateMainCrosshair();
             }
         }
         private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -934,6 +1021,17 @@ namespace RED.mbnq
             else
             {
                 mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
+            }
+        }
+        private void mbDarkModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDarkModeCheckBox.Checked)
+            {
+                InitializeMaterialSkin("");
+            }
+            else
+            {
+                InitializeMaterialSkin("LIGHT");
             }
         }
         #endregion
@@ -1127,6 +1225,33 @@ namespace RED.mbnq
         }
         #endregion
 
+        #region Custom ProgressBar
+        public class mbProgressBar : MaterialSkin.Controls.MaterialProgressBar
+        {
+            private int _value;
+            public new int Value
+            {
+                get => _value;
+                set
+                {
+                    if (_value != value)
+                    {
+                        _value = value;
+                        OnValueChanged(EventArgs.Empty);
+                    }
+                    base.Value = _value;
+                }
+            }
+
+            public event EventHandler ValueChanged;
+            protected virtual void OnValueChanged(EventArgs e)
+            {
+                ValueChanged?.Invoke(this, e);
+            }
+        }
+
+        #endregion
+
         #region For SaveLoad logic
         /* --- --- ---  --- --- --- */
 
@@ -1164,6 +1289,11 @@ namespace RED.mbnq
         {
             get => mbEnableFlirCheckBox.Checked;
             set => mbEnableFlirCheckBox.Checked = value;
+        }
+        public bool mbDarkModeCheckBoxChecked
+        {
+            get => mbDarkModeCheckBox.Checked;
+            set => mbDarkModeCheckBox.Checked = value;
         }
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }

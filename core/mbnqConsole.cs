@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+/* 
+
+    www.mbnq.pl 2024 
+    https://mbnq.pl/
+    mbnq00 on gmail
+
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -22,6 +31,7 @@ namespace RED.mbnq
         private int initialWidth;
         private int initialHeight;
         private bool isGlobalDebugOn;
+        private bool isResizing = false;
         private TextBox commandTextBox;
         private List<string> commandHistory = new List<string>();
         private int historyIndex = -1;
@@ -44,19 +54,36 @@ namespace RED.mbnq
 
         // Draw limit, refresh overlay if this amount of seconds passed
         private double throttlePaintTime = 1.00f;
-
-
-
-        public mbnqConsole()
+        public mbnqConsole(ControlPanel controlPanel)
         {
+            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            controlPanel.mbProgressBar0.Value = 10;
+
             InitializeComponent();
+
+            controlPanel.mbProgressBar0.Value = 25;
+
             InitializeTimers();
+
+            controlPanel.mbProgressBar0.Value = 40;
+
             InitializeMouseEvents();
+
+            controlPanel.mbProgressBar0.Value = 55;
+
             AdjustSize();
+
+            controlPanel.mbProgressBar0.Value = 70;
+
             CaptureDebugMessages();
 
-            isGlobalDebugOn = true; // ControlPanel.mIsDebugOn if you want to disable input textbox when global debug is off
+            controlPanel.mbProgressBar0.Value = 90;
+
+            isGlobalDebugOn = true;                             // ControlPanel.mIsDebugOn if you want to disable input textbox when global debug is off
             ToggleShowCommandBox(isGlobalDebugOn);
+
+            controlPanel.mbProgressBar0.Value = 100;
+            controlPanel.mbProgressBar0.Visible = false;
         }
 
         #region Initialization Methods
@@ -429,23 +456,39 @@ namespace RED.mbnq
         #region UI Methods
         private void AdjustSize()
         {
-            using (Graphics g = this.CreateGraphics())
+            // Prevent recursive calls
+            if (isResizing)
+                return;
+
+            try
             {
-                using (Font font = new Font("Consolas", 10, FontStyle.Regular))
+                isResizing = true; // Set the flag to prevent recursion
+
+                using (Graphics g = this.CreateGraphics())
                 {
-                    // Calculate the required height based on the number of lines and their height
-                    int lineHeight = (int)g.MeasureString("Test", font).Height;
-                    int requiredHeight = lineHeight * displayTexts.Count; // Adding padding
+                    using (Font font = new Font("Consolas", 10, FontStyle.Regular))
+                    {
+                        // Calculate the required height based on the number of lines and their height
+                        int lineHeight = (int)g.MeasureString("Test", font).Height;
+                        int requiredHeight = lineHeight * displayTexts.Count; // Adding padding
 
-                    // Ensure the width does not shrink below the initial width
-                    int requiredWidth = Math.Max(initialWidth, displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max() + 20);
+                        // Ensure the width does not shrink below the initial width
+                        int requiredWidth = Math.Max(initialWidth, displayTexts.Select(text => (int)g.MeasureString(text, font).Width).Max() + 20);
 
-                    // Adjust the form size: increase the height if the required height is greater than the current height
-                    this.Size = new Size(requiredWidth, Math.Max(initialHeight, requiredHeight));
+                        // Adjust the form size: increase the height if the required height is greater than the current height
+                        this.Size = new Size(requiredWidth, Math.Max(initialHeight, requiredHeight));
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
+            finally
+            {
+                isResizing = false; // Reset the flag once resizing is done
+            }
         }
-
 
         private void TXTHUD_Paint(object sender, PaintEventArgs e)
         {
@@ -517,6 +560,7 @@ namespace RED.mbnq
             pingTimer.Dispose();
             ipTimer.Dispose();
             base.OnFormClosing(e);
+            // this.Dispose();
         }
 
         #endregion
@@ -568,7 +612,6 @@ namespace RED.mbnq
                 }
             }
         }
-
         private void ExecuteCommand(string command)
         {
             try
