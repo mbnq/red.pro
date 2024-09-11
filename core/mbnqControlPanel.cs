@@ -39,7 +39,8 @@ namespace RED.mbnq
         private mbnqFLIR FlirOverlayForm;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        public MaterialProgressBar mbProgressBar0;
+        // public MaterialProgressBar mbProgressBar0;
+        public CustomProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
         public string mbMaterialThemeType;
 
@@ -511,8 +512,9 @@ namespace RED.mbnq
             #endregion
 
             #region Progressbars
-            /* --- --- ---  --- --- --- */
-            mbProgressBar0 = new MaterialProgressBar
+            /* --- --- ---  --- --- --- --- --- --- --- */
+
+            mbProgressBar0 = new CustomProgressBar
             {
                 Location = new Point(0,1),
                 Width = mCPWidth,
@@ -520,7 +522,11 @@ namespace RED.mbnq
                 Value = 0
             };
 
-            /* --- --- ---  --- --- --- */
+            // eventhandlers
+            mbProgressBar0.VisibleChanged += (s, e) => updateMainCrosshair();
+            mbProgressBar0.ValueChanged += (s, e) => updateMainCrosshair();
+
+            /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
 
             #region tabs buildup
@@ -1211,6 +1217,34 @@ namespace RED.mbnq
                 Slider = slider;
             }
         }
+        #endregion
+
+        #region Custom ProgressBar
+        public class CustomProgressBar : MaterialSkin.Controls.MaterialProgressBar
+        {
+            private int _value;
+            public new int Value
+            {
+                get => _value;
+                set
+                {
+                    if (_value != value)
+                    {
+                        _value = value;
+                        OnValueChanged(EventArgs.Empty);
+                    }
+                    base.Value = _value;
+                }
+            }
+
+            public event EventHandler ValueChanged;
+
+            protected virtual void OnValueChanged(EventArgs e)
+            {
+                ValueChanged?.Invoke(this, e);
+            }
+        }
+
         #endregion
 
         #region For SaveLoad logic
