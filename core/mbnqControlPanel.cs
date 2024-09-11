@@ -1,14 +1,9 @@
-﻿/* 
+﻿
+/* 
 
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
-
-    That's the main code
-
-    --------------------------------------------------------------------------------------------------
-
-    - naprawic w debugu przywracanie ostatniej komendy klawiszem up kursor wraca jedna litere od konca
-    - jesli nie widac debug output to upewnij sie, ze w VS jest ustawione na Debug nie Release
 
 */
 

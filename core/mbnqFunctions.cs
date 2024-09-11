@@ -1,8 +1,10 @@
-﻿/* 
+﻿
+/* 
+
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
 
-    New file for global functions
 */
 
 using System.Drawing;

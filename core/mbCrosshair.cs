@@ -1,8 +1,10 @@
-﻿/* 
+﻿
+/* 
+
     www.mbnq.pl 2024 
+    https://mbnq.pl/
     mbnq00 on gmail
 
-    This is the overlay reddot crosshair
 */
 
 using MaterialSkin.Controls;

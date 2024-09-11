@@ -240,7 +240,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="core\mbnqCommentsNotesOnly.cs" />
     <Compile Include="core\mbnqControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
