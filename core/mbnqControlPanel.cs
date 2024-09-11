@@ -36,7 +36,7 @@ namespace RED.mbnq
         private Button centerButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox;
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
@@ -501,6 +501,7 @@ namespace RED.mbnq
             mbDisableSoundCheckBox = CreateCheckBox("Disable Sound", true, mbDisableSoundCheckBox_CheckedChanged);
             mbEnableZoomModeCheckBox = CreateCheckBox("Enable SniperMode", true, mbEnableZoomModeCheckBox_CheckedChanged);
             mbEnableFlirCheckBox = CreateCheckBox("Enable FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
+            mbDarkModeCheckBox = CreateCheckBox("Enable DarkMode", true, mbDarkModeCheckBox_CheckedChanged);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -531,6 +532,8 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
+
+            mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
 
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
@@ -1005,6 +1008,17 @@ namespace RED.mbnq
                 mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
             }
         }
+        private void mbDarkModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbDarkModeCheckBox.Checked)
+            {
+                InitializeMaterialSkin("");
+            }
+            else
+            {
+                InitializeMaterialSkin("LIGHT");
+            }
+        }
         #endregion
 
         #region FlirFnc
@@ -1233,6 +1247,11 @@ namespace RED.mbnq
         {
             get => mbEnableFlirCheckBox.Checked;
             set => mbEnableFlirCheckBox.Checked = value;
+        }
+        public bool mbDarkModeCheckBoxChecked
+        {
+            get => mbDarkModeCheckBox.Checked;
+            set => mbDarkModeCheckBox.Checked = value;
         }
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
