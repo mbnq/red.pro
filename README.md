@@ -25,7 +25,7 @@ Dependencies:
 4. **Glass Elements**
 5. **Save/Load Settings System**
 
-[Download from GitHub](https://github.com/mbnq/RED.mbnq/releases/download/v.0.0.2/red.dot.pro_0_0_70.zip)
+[Download from GitHub](https://github.com/mbnq/red.pro/releases/download/v0.0.73/RED.PRO_0_0_73.zip)
 
 ![NVIDIA_Overlay_whPU0TjAA1](https://github.com/user-attachments/assets/fe815beb-469a-42f4-9e58-9c63c8b9bcff)
 
