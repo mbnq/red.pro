@@ -692,7 +692,7 @@ namespace RED.mbnq
                     Debug.WriteLine("Opening command list page...");
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = "https://github.com/mbnq/RED.mbnq/wiki/Console-Commands",
+                        FileName = "https://github.com/mbnq/red.pro/blob/master/core/mbConsole.cs",
                         UseShellExecute = true
                     });
                 }
