@@ -324,7 +324,7 @@ namespace RED.mbnq
 
             // Usage of the helper method in your InitializeComponent or constructor
             centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
-            loadChangePngButton = CreateButton("Load/Change PNG", mControlWidth, loadChangePngButton_Click);
+            loadChangePngButton = CreateButton("Load PNG", mControlWidth, loadChangePngButton_Click);
             removePngButton = CreateButton("Remove PNG", mControlWidth, removePngButton_Click);
 
             // Add the buttons to the respective panels
