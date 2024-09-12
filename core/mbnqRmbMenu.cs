@@ -108,7 +108,7 @@ namespace RED.mbnq
         private void AboutMenuItem_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://www.mbnq.pl") { UseShellExecute = true });
         private void CloseMenuItem_Click(object sender, EventArgs e) => Application.Exit();
 
-        private void LoadCustomPNG_Click(object sender, EventArgs e)
+        public void LoadCustomPNG_Click(object sender, EventArgs e)
         {
             controlPanel.LoadCustomCrosshair();
             controlPanel.mbCrosshairOverlay.SetCustomPNG();
@@ -118,7 +118,7 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
             UpdateMenuItems();
         }
-        private void AdjustColorsForCustomPNG()
+        public void AdjustColorsForCustomPNG()
         {
             if (controlPanel.colorR.Value > 200 || controlPanel.colorG.Value > 200 || controlPanel.colorB.Value > 200)
             {
@@ -127,7 +127,7 @@ namespace RED.mbnq
                 controlPanel.colorB.Value = 10;
             }
         }
-        private void RemoveCustomMenuItem_Click(object sender, EventArgs e)
+        public void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
             if (!(controlPanel.colorR.Value > 50 || controlPanel.colorG.Value > 50 || controlPanel.colorB.Value > 50))
             {
@@ -144,7 +144,7 @@ namespace RED.mbnq
             UpdateMenuItems();
         }
 
-        private void UpdateMenuItems()
+        public void UpdateMenuItems()
         {
             bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
 

@@ -28,7 +28,7 @@ namespace RED.mbnq
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
-        private Button centerButton;
+        private Button centerButton, loadChangePngButton, removePngButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox;
@@ -50,7 +50,7 @@ namespace RED.mbnq
 
         public Size mbInitSize                          = new Size(0, 0);
         public static readonly int mCPWidth             = 262;
-        public static readonly int mCPHeight            = 750;
+        public static readonly int mCPHeight            = 850;
         public static readonly int mControlDefSpacer    = 36;
 
         public const int mPNGMaxWidth                   = 1920;
@@ -324,9 +324,13 @@ namespace RED.mbnq
 
             // Usage of the helper method in your InitializeComponent or constructor
             centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
+            loadChangePngButton = CreateButton("Load/Change PNG", mControlWidth, loadChangePngButton_Click);
+            removePngButton = CreateButton("Remove PNG", mControlWidth, removePngButton_Click);
 
             // Add the buttons to the respective panels
             mbPanelForTab1.Controls.Add(centerButton);
+            mbPanelForTab1.Controls.Add(loadChangePngButton);
+            mbPanelForTab1.Controls.Add(removePngButton);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -939,6 +943,17 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             CenterCrosshairOverlay();
+        }
+        private void loadChangePngButton_Click(object sender, EventArgs e)
+        {
+            RemoveCustomCrosshair();
+            Sounds.PlayClickSoundOnce();
+            rightClickMenu.LoadCustomPNG_Click(this, e);
+        }
+        private void removePngButton_Click(object sender, EventArgs e)
+        {
+            rightClickMenu.RemoveCustomMenuItem_Click(this, e);
+            Sounds.PlayClickSoundOnce();
         }
 
         #endregion
