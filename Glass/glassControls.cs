@@ -31,10 +31,9 @@ namespace RED.mbnq
         public glassControls(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
-            this.selectedRegion = overlayForm.CaptureArea; // Fallback to the capture area initially
+            this.selectedRegion = overlayForm.CaptureArea;
         }
 
-        // New constructor accepting the selected region
         public glassControls(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             this.displayOverlayForm = overlayForm;
@@ -43,7 +42,7 @@ namespace RED.mbnq
         public void UpdateSelectedRegion(Rectangle newSelectedRegion)
         {
             this.selectedRegion = newSelectedRegion;
-            displayOverlayForm.Invalidate(); // Redraw the overlay to reflect the new region
+            displayOverlayForm.Invalidate();
         }
         public void DrawDebugInfo(Graphics g)
         {
@@ -53,7 +52,7 @@ namespace RED.mbnq
             Rectangle adjustedRegion = displayOverlayForm.GetAdjustedCaptureArea();
             DateTime mbDateTime = DateTime.Now;
 
-            // Debug information
+            // Debug
             string[] debugLines = {
                 $"Debug Mode - mbnq - v.{Program.mbVersion} - {mbDateTime}",
                 // $"Selected region: Top-Left({selectedRegion.X},{selectedRegion.Y}) Size({selectedRegion.Width}x{selectedRegion.Height})",
@@ -71,10 +70,7 @@ namespace RED.mbnq
                     SizeF textSize = g.MeasureString(debugLines[i], debugFont);
                     RectangleF textBackgroundRect = new RectangleF(10, 10 + i * textSize.Height, displayOverlayForm.Width, textSize.Height);
 
-                    // Draw background rectangle
                     g.FillRectangle(debugBackgroundBrush, textBackgroundRect);
-
-                    // Draw text
                     g.DrawString(debugLines[i], debugFont, debugTextBrush, 10, 10 + i * textSize.Height);
                 }
             }
@@ -105,7 +101,7 @@ namespace RED.mbnq
         private void InitializeTrackBars()
         {
 
-            /* --- --- Here goes the sliders aka TrackBars --- --- */
+            /* --- --- Here goes the sliders  --- --- */
 
             offsetXSlider = new TrackBar
             {
@@ -135,9 +131,9 @@ namespace RED.mbnq
 
             zoomSlider = new TrackBar
             {
-                Minimum = 1,  // No zoom at 100%
-                Maximum = GlassZoomMax - 1,  // Maximum zoom (200%)
-                Value = 100,    // Start with no zoom (100%)
+                Minimum = 1,                    // No zoom at 100%
+                Maximum = GlassZoomMax - 1,     // Maximum zoom (200%)
+                Value = 100,                    // Start with no zoom (100%)
                 TickFrequency = 10,
                 Width = 200,
                 AutoSize = true,
@@ -261,7 +257,6 @@ namespace RED.mbnq
 
             ToggleGlassMenu();
         }
-
         private void UpdateOffsets()
         {
             offsetX = offsetXSlider.Value / 100f;
@@ -293,8 +288,6 @@ namespace RED.mbnq
         {
             glassRefreshTimer.Interval = newInterval;
         }
-
-        // Define the UpdateRefreshRate method
         public void UpdateRefreshRate()
         {
             int refreshRate = refreshRateSlider.Value;

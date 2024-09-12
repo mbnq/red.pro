@@ -9,7 +9,6 @@
 
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -23,7 +22,6 @@ namespace RED.mbnq
         private bool selectingInProgress;
         private Pen selectionPen;
         private Image backgroundScreenshot;
-
         public selector()
         {
             // Capture the entire screen

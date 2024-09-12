@@ -8,7 +8,6 @@
 */
 
 using System;
-using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
 
@@ -66,7 +65,6 @@ namespace RED.mbnq
                 menu.Show(this, e.Location);
             }
         }
-
         private void OverlayForm_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && isMoveEnabled)
@@ -75,7 +73,6 @@ namespace RED.mbnq
                 lastMousePos = e.Location;
             }
         }
-
         private void OverlayForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMoving)
@@ -84,7 +81,6 @@ namespace RED.mbnq
                 this.Top += e.Y - lastMousePos.Y;
             }
         }
-
         private void OverlayForm_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -92,7 +88,6 @@ namespace RED.mbnq
                 isMoving = false;
             }
         }
-
         private void ToggleMoveOption()
         {
             if (isMoveEnabled)
@@ -111,7 +106,6 @@ namespace RED.mbnq
             this.MouseUp += OverlayForm_MouseUp;
             isMoveEnabled = true;
         }
-
         private void DisableFormMovement()
         {
             this.MouseDown -= OverlayForm_MouseDown;
