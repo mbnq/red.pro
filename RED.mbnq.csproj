@@ -297,6 +297,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="png\cometLaser.png" />
+    <Content Include="png\crossBasic.png" />
+    <Content Include="png\redDot.png" />
     <None Include="gfx\mbnqBackground0.png" />
     <None Include="sounds\mbnqClick.wav" />
     <Content Include="gfx\mbnqIcon.ico" />

@@ -397,7 +397,7 @@ App.config
 # Audio files and icons
 *.wav
 *.ico
-*.png
+# *.png
 
 # Other generated files/folders
 bin/
