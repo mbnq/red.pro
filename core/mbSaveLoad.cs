@@ -22,8 +22,8 @@ namespace RED.mbnq
         private static readonly string settingsFilePath = Path.Combine(settingsDirectory, "RED.settings.sav");
         public static string SettingsDirectory => settingsDirectory;
 
-        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");
-        private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
+        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");      // it's public here now, just to prevents user from messing with sav
+        private static readonly byte[] iv = new byte[16];                                               // 16 bytes IV for AES
 
         private static void EnsureDirectoryExists()
         {
