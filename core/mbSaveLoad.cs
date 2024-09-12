@@ -1,5 +1,4 @@
-﻿
-/* 
+﻿/* 
 
     www.mbnq.pl 2024 
     https://mbnq.pl/
@@ -22,6 +21,10 @@ namespace RED.mbnq
         private static readonly string settingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
         private static readonly string settingsFilePath = Path.Combine(settingsDirectory, "RED.settings.sav");
         public static string SettingsDirectory => settingsDirectory;
+
+        private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");
+        private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
+
         private static void EnsureDirectoryExists()
         {
             if (!Directory.Exists(settingsDirectory))
@@ -31,10 +34,7 @@ namespace RED.mbnq
             }
         }
 
-    /* --- --- --- encrypt / decrypt --- --- --- */
-    private static readonly byte[] key = Convert.FromBase64String("69hyLVzQGTHpS28ZR4TDLw==");  // chill, it's here just for testing and learning purposes
-        private static readonly byte[] iv = new byte[16]; // 16 bytes IV for AES
-
+        /* --- --- --- encrypt / decrypt --- --- --- */
         private static byte[] EncryptString(string plainText, byte[] key, byte[] iv)
         {
             using (Aes aes = Aes.Create())
@@ -91,8 +91,6 @@ namespace RED.mbnq
                                 File.Delete(settingsFilePath);
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"Restarting...");
                                 Application.Restart();
-
-                                // Return null or another appropriate value after calling restart
                                 return null;
                             }
                         }
@@ -101,7 +99,40 @@ namespace RED.mbnq
             }
         }
 
-        /* --- --- --- saving --- --- --- */
+        /* --- --- --- helper method for parsing settings --- --- --- */
+        private static void ParseSetting(string line, ControlPanel controlPanel)
+        {
+            var keyValue = line.Split('=');
+            if (keyValue.Length == 2)
+            {
+                string key = keyValue[0];
+                string value = keyValue[1];
+
+                switch (key)
+                {
+                    case "Red": controlPanel.ColorRValue = int.Parse(value); break;
+                    case "Green": controlPanel.ColorGValue = int.Parse(value); break;
+                    case "Blue": controlPanel.ColorBValue = int.Parse(value); break;
+                    case "Size": controlPanel.SizeValue = int.Parse(value); break;
+                    case "Transparency": controlPanel.TransparencyValue = int.Parse(value); break;
+                    case "ZoomLevel": controlPanel.zoomLevel.Value = int.Parse(value); break;
+                    case "OffsetX": controlPanel.OffsetXValue = int.Parse(value); break;
+                    case "OffsetY": controlPanel.OffsetYValue = int.Parse(value); break;
+                    case "AutoSaveOnExit": controlPanel.AutoSaveOnExitChecked = bool.Parse(value); break;
+                    case "mbDebugon": controlPanel.mbDebugonChecked = bool.Parse(value); break;
+                    case "mbAOnTop": controlPanel.mbAOnTopChecked = bool.Parse(value); break;
+                    case "mbHideCrosshair": controlPanel.mbHideCrosshairChecked = bool.Parse(value); break;
+                    case "mbDisableSound": controlPanel.mbDisableSoundChecked = bool.Parse(value); break;
+                    case "mbEnableZoomMode": controlPanel.mbEnableZoomModeChecked = bool.Parse(value); break;
+                    case "mbEnableFlirMode": controlPanel.mbEnableFlirChecked = bool.Parse(value); break;
+                    case "mbEnableDarkMode": controlPanel.mbDarkModeCheckBoxChecked = bool.Parse(value); break;
+                    case "PositionX": if (controlPanel.mbCrosshairOverlay != null) controlPanel.mbCrosshairOverlay.Left = int.Parse(value); break;
+                    case "PositionY": if (controlPanel.mbCrosshairOverlay != null) controlPanel.mbCrosshairOverlay.Top = int.Parse(value); break;
+                }
+            }
+        }
+
+        /* --- --- --- saving settings --- --- --- */
         public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             var sb = new StringBuilder();
@@ -128,9 +159,6 @@ namespace RED.mbnq
             sb.AppendLine($"mbEnableFlirMode={controlPanel.mbEnableFlirChecked}");
             sb.AppendLine($"mbEnableDarkMode={controlPanel.mbDarkModeCheckBoxChecked}");
 
-            controlPanel.mbProgressBar0.Value = 30;
-
-            // Save overlay absolute position
             if (controlPanel.mbCrosshairOverlay != null)
             {
                 sb.AppendLine($"PositionX={controlPanel.mbCrosshairOverlay.Left}");
@@ -154,7 +182,7 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
         }
 
-        /* --- --- --- loading --- --- --- */ 
+        /* --- --- --- loading settings --- --- --- */
         public static void LoadSettings(ControlPanel controlPanel, bool showMessage = true)
         {
             controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
@@ -164,7 +192,6 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings file not found.", "Load Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings file not found.");
                 return;
             }
 
@@ -176,45 +203,7 @@ namespace RED.mbnq
             var lines = decryptedData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var line in lines)
             {
-                if (line.StartsWith("Red="))
-                    controlPanel.ColorRValue = int.Parse(line.Substring("Red=".Length));
-                else if (line.StartsWith("Green="))
-                    controlPanel.ColorGValue = int.Parse(line.Substring("Green=".Length));
-                else if (line.StartsWith("Blue="))
-                    controlPanel.ColorBValue = int.Parse(line.Substring("Blue=".Length));
-                else if (line.StartsWith("Size="))
-                    controlPanel.SizeValue = int.Parse(line.Substring("Size=".Length));
-                else if (line.StartsWith("Transparency="))
-                    controlPanel.TransparencyValue = int.Parse(line.Substring("Transparency=".Length));
-                else if (line.StartsWith("ZoomLevel="))
-                    controlPanel.zoomLevel.Value = int.Parse(line.Substring("ZoomLevel=".Length));
-                else if (line.StartsWith("OffsetX="))
-                    controlPanel.OffsetXValue = int.Parse(line.Substring("OffsetX=".Length));
-                else if (line.StartsWith("OffsetY="))
-                    controlPanel.OffsetYValue = int.Parse(line.Substring("OffsetY=".Length));
-
-                else if (line.StartsWith("AutoSaveOnExit="))
-                    controlPanel.AutoSaveOnExitChecked = bool.Parse(line.Substring("AutoSaveOnExit=".Length));
-                else if (line.StartsWith("mbDebugon="))
-                    controlPanel.mbDebugonChecked = bool.Parse(line.Substring("mbDebugon=".Length));
-                else if (line.StartsWith("mbAOnTop="))
-                    controlPanel.mbAOnTopChecked = bool.Parse(line.Substring("mbAOnTop=".Length));
-                else if (line.StartsWith("mbHideCrosshair="))
-                    controlPanel.mbHideCrosshairChecked = bool.Parse(line.Substring("mbHideCrosshair=".Length));
-                else if (line.StartsWith("mbDisableSound="))
-                    controlPanel.mbDisableSoundChecked = bool.Parse(line.Substring("mbDisableSound=".Length));
-                else if (line.StartsWith("mbEnableZoomMode="))
-                    controlPanel.mbEnableZoomModeChecked = bool.Parse(line.Substring("mbEnableZoomMode=".Length));
-                else if (line.StartsWith("mbEnableFlirMode="))
-                    controlPanel.mbEnableFlirChecked = bool.Parse(line.Substring("mbEnableFlirMode=".Length));
-                else if (line.StartsWith("mbEnableDarkMode="))
-                    controlPanel.mbDarkModeCheckBoxChecked = bool.Parse(line.Substring("mbEnableDarkMode=".Length));
-
-
-                else if (line.StartsWith("PositionX=") && controlPanel.mbCrosshairOverlay != null)
-                    controlPanel.mbCrosshairOverlay.Left = int.Parse(line.Substring("PositionX=".Length));
-                else if (line.StartsWith("PositionY=") && controlPanel.mbCrosshairOverlay != null)
-                    controlPanel.mbCrosshairOverlay.Top = int.Parse(line.Substring("PositionY=".Length));
+                ParseSetting(line, controlPanel);
             }
 
             controlPanel.mbProgressBar0.Value = 60;

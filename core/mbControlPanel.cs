@@ -949,6 +949,7 @@ namespace RED.mbnq
         private void CenterButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
+            PositionControlPanelRelativeToCrosshair();
             CenterCrosshairOverlay();
             UpdateButtons();
         }
