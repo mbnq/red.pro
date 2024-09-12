@@ -141,7 +141,7 @@ namespace RED.mbnq
             controlPanel.mbProgressBar0.Value = 0;
 
             sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
-            sb.AppendLine("[MainDisplay]");
+            sb.AppendLine("[REDDOT]");
             sb.AppendLine($"Red={controlPanel.ColorRValue}");
             sb.AppendLine($"Green={controlPanel.ColorGValue}");
             sb.AppendLine($"Blue={controlPanel.ColorBValue}");
