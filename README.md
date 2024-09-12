@@ -1,21 +1,13 @@
-# RED.pro
+***
 
-Pretty self explanatory i think.
+### Program Overview: RED. PRO
+**RED. PRO (Red Dot Pro)** is a tool designed for customizing on-screen overlays, crosshairs, and other visual elements for gaming or other screen-based activities. The program offers a variety of settings that allow users to create and fine-tune custom visual elements according to their preferences. Below is a breakdown of the key features:
 
 ![NVIDIA_Overlay_UIC0yO5UXm](https://github.com/user-attachments/assets/cba245ea-f3c2-4d42-bcf7-97e4ed2e2658)
 
 Tested in windows11 at:
 - 1080p
 - 1440p
-
-Dependencies:
-  - MaterialSkin (https://licenses.nuget.org/MIT)
-
-***
-
-### Program Overview: RED. PRO (Closed Source Version)
-
-**RED. PRO (Red Dot Pro)** is a tool designed for customizing on-screen overlays, crosshairs, and other visual elements for gaming or other screen-based activities. The program offers a variety of settings that allow users to create and fine-tune custom visual elements according to their preferences. Below is a breakdown of the key features:
 
 #### Key Features:
 
