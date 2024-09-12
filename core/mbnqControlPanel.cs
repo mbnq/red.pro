@@ -65,6 +65,7 @@ namespace RED.mbnq
         {
             InitializeTabs();
             InitializeComponent();
+            UpdateButtons();
 
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
@@ -597,7 +598,7 @@ namespace RED.mbnq
                     mbCrosshairOverlay.SetCustomPNG();
                     updateMainCrosshair();
                     UpdateLabels();
-
+                    UpdateButtons();
                 }
             }
         }
@@ -608,6 +609,7 @@ namespace RED.mbnq
             mbCrosshairOverlay.RemoveCustomCrosshair();
             updateMainCrosshair();
             UpdateLabels();
+            UpdateButtons();
         }
 
         // Apply custom overlay
@@ -640,6 +642,7 @@ namespace RED.mbnq
             }
             UpdateLabels();
             updateMainCrosshair();
+            UpdateButtons();
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
@@ -882,6 +885,10 @@ namespace RED.mbnq
 
         #region Buttons Code
         /* --- --- --- Buttons Code --- --- --- */
+        public void UpdateButtons()
+        {
+            removePngButton.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+        }
 
         //This one is needed to handle negative values because of materialSkin limitations
         private int TranslateOffset(int value)
@@ -943,17 +950,20 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             CenterCrosshairOverlay();
+            UpdateButtons();
         }
         private void loadChangePngButton_Click(object sender, EventArgs e)
         {
             RemoveCustomCrosshair();
             Sounds.PlayClickSoundOnce();
             rightClickMenu.LoadCustomPNG_Click(this, e);
+            UpdateButtons();
         }
         private void removePngButton_Click(object sender, EventArgs e)
         {
             rightClickMenu.RemoveCustomMenuItem_Click(this, e);
             Sounds.PlayClickSoundOnce();
+            UpdateButtons();
         }
 
         #endregion
