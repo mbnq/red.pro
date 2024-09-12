@@ -20,12 +20,10 @@ namespace RED.mbnq
         private static SoundPlayer clickSoundPlayer;
         private static bool isPlayingSound = false;
         public static bool IsSoundEnabled { get; set; } = true;
-
         static Sounds()
         {
             LoadClickSound();
         }
-
         private static void LoadClickSound()
         {
             try

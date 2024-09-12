@@ -33,17 +33,16 @@ public static class mbFnc
     // Public static method to get the center point of the primary screen
     public static PointCoordinates mGetPrimaryScreenCenter()
     {
-        // Get the primary screen
+
         Screen primaryScreen = Screen.PrimaryScreen;
 
-        // Get the working area of the primary screen (excludes taskbar)
+        // excludes taskbar
         Rectangle workingArea = primaryScreen.Bounds;
 
         // Calculate the center point
         int centerX = workingArea.Left + workingArea.Width / 2;
         int centerY = workingArea.Top + workingArea.Height / 2;
 
-        // Return a new PointCoordinates instance
         return new PointCoordinates(centerX, centerY);
     }
 

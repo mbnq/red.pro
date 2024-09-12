@@ -119,7 +119,6 @@ namespace RED.mbnq
             }
         }
         */
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -178,14 +177,6 @@ namespace RED.mbnq
 
             return grayscaleImage;
         }
-
-
-
-
-
-
-
-
 
         // Helper method to clamp values between a min and max
         public static int Clamp(int value, int min, int max)

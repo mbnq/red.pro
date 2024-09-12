@@ -40,17 +40,14 @@ namespace RED.mbnq
         private const int WH_MOUSE_LL = 14;
         private const int WM_RBUTTONDOWN = 0x0204;
         private const int WM_RBUTTONUP = 0x0205;
-
         public static void SetHook()
         {
             hookId = SetHook(proc);
         }
-
         public static void Unhook()
         {
             UnhookWindowsHookEx(hookId);
         }
-
         private static IntPtr SetHook(HookProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -59,7 +56,6 @@ namespace RED.mbnq
                 return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
         }
-
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0)
@@ -79,7 +75,6 @@ namespace RED.mbnq
                     }
                 }
             }
-
             return CallNextHookEx(hookId, nCode, wParam, lParam);
         }
     }

@@ -11,13 +11,9 @@ using MaterialSkin.Controls;
 using System;
 using System.IO;
 using System.Text;
-// using System.Threading.Tasks;
-// using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Security.Cryptography;
-// using System.Linq;
-// using MaterialSkin;
 
 namespace RED.mbnq
 {
