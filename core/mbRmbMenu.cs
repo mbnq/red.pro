@@ -10,7 +10,6 @@
 using MaterialSkin.Controls;
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Windows.Forms;
 
@@ -20,7 +19,7 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem removeCustomMenuItem, loadCustomMenuItem;
+        private ToolStripMenuItem removeCustomMenuItem, loadCustomMenuItem, saveMenuItem, loadMenuItem, openSettingsDirMenuItem, textConsoleMenuItem, newCaptureRegionMenuItem, aboutMenuItem, closeMenuItem;
 
         public mbRmbMenu(ControlPanel controlPanel)
         {
@@ -31,18 +30,17 @@ namespace RED.mbnq
 
         private void InitializeMenuItems()
         {
-            var saveMenuItem = CreateMenuItem("Save settings", saveMenuItem_Click);
-            var loadMenuItem = CreateMenuItem("Load settings", loadMenuItem_Click);
-            var openSettingsDirMenuItem = CreateMenuItem("Browse User Data", OpenSettingsDirMenuItem_Click);
+            saveMenuItem = CreateMenuItem("Save settings", saveMenuItem_Click);
+            loadMenuItem = CreateMenuItem("Load settings", loadMenuItem_Click);
+            openSettingsDirMenuItem = CreateMenuItem("Browse User Data", OpenSettingsDirMenuItem_Click);
 
             loadCustomMenuItem = CreateMenuItem("Load Custom PNG", LoadCustomPNG_Click);
             removeCustomMenuItem = CreateMenuItem("Remove Custom PNG", RemoveCustomMenuItem_Click);
-            UpdateMenuItems(); // Initial enable/disable logic is handled in UpdateMenuItems
 
-            var textConsoleMenuItem = CreateMenuItem("Toggle Debug Console", TextHUDConsoleMenuItem_Click);
-            var newCaptureRegionMenuItem = CreateMenuItem("New Glass Element", NewCaptureRegionMenuItem_Click);
-            var aboutMenuItem = CreateMenuItem("About", AboutMenuItem_Click);
-            var closeMenuItem = CreateMenuItem("Close", CloseMenuItem_Click);
+            textConsoleMenuItem = CreateMenuItem("Toggle Debug Console", TextHUDConsoleMenuItem_Click);
+            newCaptureRegionMenuItem = CreateMenuItem("New Glass Element", NewCaptureRegionMenuItem_Click);
+            aboutMenuItem = CreateMenuItem("About", AboutMenuItem_Click);
+            closeMenuItem = CreateMenuItem("Close", CloseMenuItem_Click);
 
             this.Items.AddRange(new ToolStripItem[]
             {
@@ -54,6 +52,8 @@ namespace RED.mbnq
                 aboutMenuItem, new ToolStripSeparator(),
                 closeMenuItem
             });
+
+            UpdateMenuItems();
         }
 
         private ToolStripMenuItem CreateMenuItem(string text, EventHandler onClick)
@@ -66,7 +66,6 @@ namespace RED.mbnq
             };
             return menuItem;
         }
-
         private void OpenSettingsDirMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -83,6 +82,7 @@ namespace RED.mbnq
             }
         }
 
+        // console
         private void TextHUDConsoleMenuItem_Click(object sender, EventArgs e)
         {
             if (textHUD == null || textHUD.IsDisposed)
@@ -92,22 +92,21 @@ namespace RED.mbnq
             }
             else
             {
-                textHUD.Dispose(); // Correctly dispose the instance of mbnqConsole
+                textHUD.Dispose();
             }
         }
 
+        // glass
         private void NewCaptureRegionMenuItem_Click(object sender, EventArgs e)
         {
             var captureArea = selector.SelectCaptureArea();
             GlassHudOverlay.displayOverlay = new GlassHudOverlay(captureArea, captureArea);
             GlassHudOverlay.displayOverlay.Show();
         }
-
         private void saveMenuItem_Click(object sender, EventArgs e) => SaveLoad.SaveSettings(controlPanel, false);
         private void loadMenuItem_Click(object sender, EventArgs e) => SaveLoad.LoadSettings(controlPanel, false);
         private void AboutMenuItem_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://www.mbnq.pl") { UseShellExecute = true });
         private void CloseMenuItem_Click(object sender, EventArgs e) => Application.Exit();
-
         public void LoadCustomPNG_Click(object sender, EventArgs e)
         {
             controlPanel.LoadCustomCrosshair();
@@ -143,7 +142,6 @@ namespace RED.mbnq
             controlPanel.updateMainCrosshair();
             UpdateMenuItems();
         }
-
         public void UpdateMenuItems()
         {
             bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
@@ -151,7 +149,6 @@ namespace RED.mbnq
             loadCustomMenuItem.Enabled = !hasCustomOverlay;
             removeCustomMenuItem.Enabled = hasCustomOverlay;
         }
-
         private void ShowMessageBox(string message, string caption)
         {
             MaterialMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.None);
