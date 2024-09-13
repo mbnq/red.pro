@@ -289,13 +289,11 @@ namespace RED.mbnq
                 Debug.Listeners.Add(new DebugListener(this)); 
                 Debug.Listeners.Add(new DefaultTraceListener());
         }
-
         private void UpdateDebugMessage(string message)
         {
             lastDebugMessage = message;
             UpdateDebugText($"Debug: {message}");
         }
-
         private void UpdateDebugText(string newText)
         {
             if (displayTexts.Count >= 5)
@@ -310,8 +308,6 @@ namespace RED.mbnq
             AdjustSize(); // Adjust the form size to accommodate the updated debug text
             this.ThrottlePaint(); // Redraw with the updated text
         }
-
-
         private class DebugListener : TraceListener
         {
             private readonly mbnqConsole parentForm;
