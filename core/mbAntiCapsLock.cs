@@ -26,14 +26,12 @@ namespace RED.mbnq
                 if (((ushort)GetKeyState(VK_CAPITAL) & 0xffff) != 0)
                 {
                     // Turn off Caps Lock by sending both key down and key up events
-                    keybd_event((byte)VK_CAPITAL, 0x45, 0, (UIntPtr)0);          // Key down
-                    keybd_event((byte)VK_CAPITAL, 0x45, KEYEVENTF_KEYUP, (UIntPtr)0); // Key up
+                    keybd_event((byte)VK_CAPITAL, 0x45, 0, (UIntPtr)0);                 // Key down
+                    keybd_event((byte)VK_CAPITAL, 0x45, KEYEVENTF_KEYUP, (UIntPtr)0);   // Key up
                 }
-                Thread.Sleep(100); // Check every 100ms
+                Thread.Sleep(100);
             }
         }
-
-        // Start monitoring Caps Lock
         public void StartCapsLockMonitor()
         {
             if (capsLockMonitorThread == null || !capsLockMonitorThread.IsAlive)
@@ -44,8 +42,6 @@ namespace RED.mbnq
                 capsLockMonitorThread.Start();
             }
         }
-
-        // Stop monitoring Caps Lock
         public void StopCapsLockMonitor()
         {
             if (capsLockMonitorThread != null && capsLockMonitorThread.IsAlive)
