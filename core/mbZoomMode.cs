@@ -91,12 +91,11 @@ namespace RED.mbnq
         }
         private static void mTempHideCrosshair(bool hideCrosshair)
         {
-            // this needs to be refined
-
-            bool initialState = 
-
-            controlPanel.mHideCrosshair = hideCrosshair;
-            controlPanel.updateMainCrosshair();
+            if (!controlPanel.mbHideCrosshairChecked)
+            {
+                controlPanel.mHideCrosshair = hideCrosshair;
+                controlPanel.updateMainCrosshair();
+            }
         }
         private static void HoldTimer_Tick(object sender, EventArgs e)
         {
