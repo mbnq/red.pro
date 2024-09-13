@@ -18,6 +18,7 @@ Tested in windows11 at:
 5. **Save/Load Settings System**
 
 [Download from GitHub](https://github.com/mbnq/red.pro/releases/download/v0.0.73/RED.PRO_0_0_73.zip)
+[Example .png crosshairs](https://github.com/mbnq/red.pro/tree/master/png)
 
 ![NVIDIA_Overlay_whPU0TjAA1](https://github.com/user-attachments/assets/fe815beb-469a-42f4-9e58-9c63c8b9bcff)
 
@@ -67,7 +68,7 @@ Tested in windows11 at:
 This program is still in development; bugs and glitches may occur. 
 I'm a C# beginner and hobbyst, so any feedback would be very appreciated.
 
-The performance of the program will depend on the user's device capabilities. 
+The performance of the program will depend on the CPU performance. 
 
 Requirements: Windows 11 with [.NET 4.8 x64](https://dotnet.microsoft.com/en-us/download/dotnet-framework).
 
