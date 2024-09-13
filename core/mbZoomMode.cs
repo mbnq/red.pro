@@ -69,7 +69,7 @@ namespace RED.mbnq
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 16 // Increased interval to reduce CPU usage
+                Interval = 8 // Increased interval to reduce CPU usage
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -88,6 +88,11 @@ namespace RED.mbnq
             int captureSize = zoomDisplaySize / zoomMultiplier;
             centeredX = screenCenter.X - (captureSize / 2);
             centeredY = screenCenter.Y - (captureSize / 2);
+        }
+        private static void mTempHideCrosshair(bool hideCrosshair)
+        {
+            controlPanel.mHideCrosshair = hideCrosshair;
+            controlPanel.updateMainCrosshair();
         }
         private static void HoldTimer_Tick(object sender, EventArgs e)
         {
@@ -182,6 +187,7 @@ namespace RED.mbnq
 
             zoomForm.Show();
             isZooming = true;
+            mTempHideCrosshair(true);
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
         }
 
@@ -192,6 +198,7 @@ namespace RED.mbnq
             {
                 zoomUpdateTimer.Stop(); // Stop the update timer when zooming ends
                 zoomForm.Hide();
+                mTempHideCrosshair(false);
                 isZooming = false;
             }
         }
