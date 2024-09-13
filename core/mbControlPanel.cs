@@ -13,7 +13,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 
@@ -45,6 +47,8 @@ namespace RED.mbnq
         public string mbMaterialThemeType;
 
         public string mbUserFilessPath = Path.Combine(SaveLoad.SettingsDirectory);
+
+        private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
 
         public int mControlWidth;
 
@@ -1064,7 +1068,14 @@ namespace RED.mbnq
         }
         private void mbAntiCapsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // payload
+            if (mbAntiCapsCheckBox.Checked)
+            {
+                antiCapsLockManager.StartCapsLockMonitor();
+            }
+            else
+            {
+                antiCapsLockManager.StopCapsLockMonitor();
+            }
         }
         #endregion
 
