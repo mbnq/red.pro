@@ -23,7 +23,7 @@ namespace RED.mbnq
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
 
-        public static int zoomDisplaySize = 768;
+        public static int zoomDisplaySize = (mbFnc.mGetPrimaryScreenCenter2().Y);
         public static int zoomMultiplier = 1;
         public static bool IsZoomModeEnabled = false;
 
