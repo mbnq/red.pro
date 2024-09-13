@@ -40,6 +40,8 @@ namespace RED.mbnq
                 zoomBitmap.Dispose();
             }
 
+            if (zoomMultiplier <= 1) zoomMultiplier = 1;
+
             int captureSize = zoomDisplaySize / zoomMultiplier;
             if (captureSize <= 0) captureSize = 1; // Prevent division by zero
 
@@ -62,14 +64,14 @@ namespace RED.mbnq
 
             holdTimer = new Timer
             {
-                Interval = 500 // Time before showing zoom in milliseconds
+                Interval = 1000 // Time before showing zoom in milliseconds
             };
             holdTimer.Tick += HoldTimer_Tick;
 
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 8 // Increased interval to reduce CPU usage
+                Interval = 16 // Increased interval to reduce CPU usage
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
