@@ -14,7 +14,7 @@ namespace RED.mbnq
         private static bool isZooming = false;
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
-        private static int zoomSizeSet = 64;   // Reduced zoom area for performance
+        private static int zoomDisplaySize = 768;
         public static int zoomMultiplier = 1;
         public static bool IsZoomModeEnabled = false;
 
@@ -33,18 +33,21 @@ namespace RED.mbnq
                 zoomBitmap.Dispose();
             }
 
-            int bitmapSize = zoomSizeSet * zoomMultiplier;
-            zoomBitmap = new Bitmap(bitmapSize, bitmapSize);
+            int captureSize = zoomDisplaySize / zoomMultiplier;
+            if (captureSize <= 0) captureSize = 1; // Prevent division by zero
+
+            zoomBitmap = new Bitmap(captureSize, captureSize);
 
             if (zoomForm != null)
             {
-                zoomForm.Size = new Size(bitmapSize, bitmapSize);
-                zoomForm.ApplyCircularRegion();
-                zoomForm.Invalidate(); // Force the form to repaint with the new size
+                // Do not change the size of zoomForm
+                // zoomForm.Size = new Size(zoomSizeSet, zoomSizeSet);
+                zoomForm.Invalidate(); // Force the form to repaint
             }
 
             UpdateCenteredCoordinates();
         }
+
 
         /// <summary>
         /// Initializes the zoom mode with the specified control panel.
@@ -66,11 +69,14 @@ namespace RED.mbnq
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
-            int bitmapSize = zoomSizeSet * zoomMultiplier;
-            zoomBitmap = new Bitmap(bitmapSize, bitmapSize);
+            int captureSize = zoomDisplaySize / zoomMultiplier;
+            if (captureSize <= 0) captureSize = 1;
+
+            zoomBitmap = new Bitmap(captureSize, captureSize);
 
             UpdateCenteredCoordinates();
         }
+
 
         /// <summary>
         /// Updates the centered coordinates based on the screen center.
@@ -78,8 +84,9 @@ namespace RED.mbnq
         private static void UpdateCenteredCoordinates()
         {
             Point screenCenter = mbFnc.mGetPrimaryScreenCenter2();
-            centeredX = screenCenter.X - (zoomSizeSet * zoomMultiplier / 2);
-            centeredY = screenCenter.Y - (zoomSizeSet * zoomMultiplier / 2);
+            int captureSize = zoomDisplaySize / zoomMultiplier;
+            centeredX = screenCenter.X - (captureSize / 2);
+            centeredY = screenCenter.Y - (captureSize / 2);
         }
 
         private static void HoldTimer_Tick(object sender, EventArgs e)
@@ -124,7 +131,7 @@ namespace RED.mbnq
             // Capture the screen directly into zoomBitmap
             CaptureScreenToBitmap();
 
-            // Draw the zoomed image
+            // Draw the zoomed image scaled to fill the zoomForm
             zoomForm.ApplyClipping(g);
             g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomForm.Width, zoomForm.Height));
 
@@ -135,18 +142,22 @@ namespace RED.mbnq
             }
         }
 
+
         /// <summary>
         /// Captures the screen area into the bitmap using BitBlt for performance.
         /// </summary>
         private static void CaptureScreenToBitmap()
         {
+            int captureSize = zoomDisplaySize / zoomMultiplier;
+            if (captureSize <= 0) captureSize = 1;
+
             // Use BitBlt for faster screen capture
             using (Graphics gDest = Graphics.FromImage(zoomBitmap))
             {
                 IntPtr hdcDest = gDest.GetHdc();
                 IntPtr hdcSrc = GetDC(IntPtr.Zero);
 
-                BitBlt(hdcDest, 0, 0, zoomBitmap.Width, zoomBitmap.Height, hdcSrc, centeredX, centeredY, SRCCOPY);
+                BitBlt(hdcDest, 0, 0, captureSize, captureSize, hdcSrc, centeredX, centeredY, SRCCOPY);
 
                 gDest.ReleaseHdc(hdcDest);
                 ReleaseDC(IntPtr.Zero, hdcSrc);
@@ -163,7 +174,7 @@ namespace RED.mbnq
                 zoomForm = new CustomZoomForm
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(zoomSizeSet * zoomMultiplier, zoomSizeSet * zoomMultiplier),
+                    Size = new Size(zoomDisplaySize, zoomDisplaySize), // Keep size constant
                     StartPosition = FormStartPosition.Manual,
                     Location = new Point(0, 0),
                     TopMost = true,
