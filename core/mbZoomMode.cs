@@ -91,6 +91,8 @@ namespace RED.mbnq
         }
         private static void mTempHideCrosshair(bool hideCrosshair)
         {
+            // this needs to be refined
+
             controlPanel.mHideCrosshair = hideCrosshair;
             controlPanel.updateMainCrosshair();
         }
