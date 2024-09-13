@@ -31,7 +31,7 @@ namespace RED.mbnq
         private Button centerButton, loadChangePngButton, removePngButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox;
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
@@ -512,6 +512,7 @@ namespace RED.mbnq
             mbEnableZoomModeCheckBox = CreateCheckBox("Enable SniperMode", true, mbEnableZoomModeCheckBox_CheckedChanged);
             mbEnableFlirCheckBox = CreateCheckBox("Enable FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
             mbDarkModeCheckBox = CreateCheckBox("Enable DarkMode", true, mbDarkModeCheckBox_CheckedChanged);
+            mbAntiCapsCheckBox = CreateCheckBox("Enable AntiCapsLock", true, mbAntiCapsCheckBox_CheckedChanged);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -551,6 +552,7 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
             mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
+            mbPanelForTab2.Controls.Add(mbAntiCapsCheckBox);
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
             mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
@@ -1060,6 +1062,10 @@ namespace RED.mbnq
                 InitializeMaterialSkin("LIGHT");
             }
         }
+        private void mbAntiCapsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // payload
+        }
         #endregion
 
         #region FlirFnc
@@ -1321,6 +1327,12 @@ namespace RED.mbnq
             get => mbDarkModeCheckBox.Checked;
             set => mbDarkModeCheckBox.Checked = value;
         }
+        public bool mbAntiCapsCheckBoxChecked
+        {
+            get => mbAntiCapsCheckBox.Checked;
+            set => mbAntiCapsCheckBox.Checked = value;
+        }
+
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
         public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
