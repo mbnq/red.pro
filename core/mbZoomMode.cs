@@ -22,7 +22,7 @@ namespace RED.mbnq
         private static bool isZooming = false;
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
-        private static int zoomDisplaySize = 768;
+        public static int zoomDisplaySize = 768;
         public static int zoomMultiplier = 1;
         public static bool IsZoomModeEnabled = false;
 
