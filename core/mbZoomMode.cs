@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+
+    www.mbnq.pl 2024 
+    https://mbnq.pl/
+    mbnq00 on gmail
+
+*/
+
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -21,9 +29,7 @@ namespace RED.mbnq
         private static int centeredX;
         private static int centeredY;
 
-        /// <summary>
-        /// Updates the zoom multiplier and adjusts related components.
-        /// </summary>
+        // Updates the zoom multiplier and adjusts related components.
         public static void UpdateZoomMultiplier(int newZoomMultiplier)
         {
             zoomMultiplier = newZoomMultiplier;
@@ -48,10 +54,7 @@ namespace RED.mbnq
             UpdateCenteredCoordinates();
         }
 
-
-        /// <summary>
-        /// Initializes the zoom mode with the specified control panel.
-        /// </summary>
+        // Initializes the zoom mode with the specified control panel.
         public static void InitializeZoomMode(ControlPanel panel)
         {
             controlPanel = panel;
@@ -65,7 +68,7 @@ namespace RED.mbnq
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 33 // Increased interval to reduce CPU usage
+                Interval = 16 // Increased interval to reduce CPU usage
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -77,10 +80,7 @@ namespace RED.mbnq
             UpdateCenteredCoordinates();
         }
 
-
-        /// <summary>
-        /// Updates the centered coordinates based on the screen center.
-        /// </summary>
+        // Updates the centered coordinates based on the screen center.
         private static void UpdateCenteredCoordinates()
         {
             Point screenCenter = mbFnc.mGetPrimaryScreenCenter2();
@@ -88,13 +88,11 @@ namespace RED.mbnq
             centeredX = screenCenter.X - (captureSize / 2);
             centeredY = screenCenter.Y - (captureSize / 2);
         }
-
         private static void HoldTimer_Tick(object sender, EventArgs e)
         {
             holdTimer.Stop();
             ShowZoomOverlay();
         }
-
         private static void ZoomUpdateTimer_Tick(object sender, EventArgs e)
         {
             if (zoomForm != null)
@@ -102,7 +100,6 @@ namespace RED.mbnq
                 zoomForm.Invalidate(); // Forces the zoomForm to repaint
             }
         }
-
         public static void StartHoldTimer()
         {
             if (!isZooming)
@@ -110,15 +107,12 @@ namespace RED.mbnq
                 holdTimer.Start();
             }
         }
-
         public static void StopHoldTimer()
         {
             holdTimer.Stop();
         }
 
-        /// <summary>
-        /// Handles the Paint event for the zoom form.
-        /// </summary>
+        // Handles the Paint event for the zoom form.
         private static void ZoomForm_Paint(object sender, PaintEventArgs e)
         {
             if (controlPanel == null || controlPanel.mbCrosshairOverlay == null) return;
@@ -142,10 +136,7 @@ namespace RED.mbnq
             }
         }
 
-
-        /// <summary>
-        /// Captures the screen area into the bitmap using BitBlt for performance.
-        /// </summary>
+        // Captures the screen area into the bitmap using BitBlt for performance.
         private static void CaptureScreenToBitmap()
         {
             int captureSize = zoomDisplaySize / zoomMultiplier;
@@ -164,9 +155,7 @@ namespace RED.mbnq
             }
         }
 
-        /// <summary>
         /// Displays the zoom overlay.
-        /// </summary>
         public static void ShowZoomOverlay()
         {
             if (zoomForm == null)
@@ -186,7 +175,6 @@ namespace RED.mbnq
                 zoomForm.Paint += ZoomForm_Paint;
             }
 
-            // Position the zoomForm in the bottom-right corner
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
             zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
             zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
@@ -196,9 +184,7 @@ namespace RED.mbnq
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
         }
 
-        /// <summary>
-        /// Hides the zoom overlay.
-        /// </summary>
+        // Hides the zoom overlay.
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
@@ -223,13 +209,10 @@ namespace RED.mbnq
         private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
     }
 
-    /// <summary>
-    /// Custom form for displaying the zoom overlay.
-    /// </summary>
+    // Custom form for displaying the zoom overlay.
     public class CustomZoomForm : Form
     {
         private GraphicsPath ellipsePath;
-
         public CustomZoomForm()
         {
             this.DoubleBuffered = true;
@@ -239,9 +222,7 @@ namespace RED.mbnq
             this.ApplyCircularRegion();
         }
 
-        /// <summary>
-        /// Applies a circular region to the form to create a circular window.
-        /// </summary>
+        // Applies a circular region to the form to create a circular window.
         public void ApplyCircularRegion()
         {
             ellipsePath = new GraphicsPath();
@@ -249,9 +230,7 @@ namespace RED.mbnq
             this.Region = new Region(ellipsePath);
         }
 
-        /// <summary>
-        /// Applies clipping to ensure the drawn content fits within the circular region.
-        /// </summary>
+        // Applies clipping to ensure the drawn content fits within the circular region.
         public void ApplyClipping(Graphics g)
         {
             if (ellipsePath != null)
@@ -259,7 +238,6 @@ namespace RED.mbnq
                 g.SetClip(ellipsePath);
             }
         }
-
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
