@@ -68,7 +68,7 @@ Tested in windows11 at:
 This program is still in development; bugs and glitches may occur. 
 I'm a C# beginner and hobbyst, so any feedback would be very appreciated.
 
-The performance of the program will depend on the user's device capabilities. 
+The performance of the program will depend on the CPU performance. 
 
 Requirements: Windows 11 with [.NET 4.8 x64](https://dotnet.microsoft.com/en-us/download/dotnet-framework).
 
