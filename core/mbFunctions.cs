@@ -30,6 +30,8 @@ public static class mbFnc
             Y = y;
         }
     }
+
+    // these two below needs to be uniffied
     // Public static method to get the center point of the primary screen
     public static PointCoordinates mGetPrimaryScreenCenter()
     {
@@ -46,9 +48,7 @@ public static class mbFnc
         return new PointCoordinates(centerX, centerY);
     }
 
-
-
-    // Public static method to get the center point of the primary screen
+    // Public static method to get the center point of the primary screen II
 
     public static Point mGetPrimaryScreenCenter2()
     {
