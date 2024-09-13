@@ -46,6 +46,24 @@ public static class mbFnc
         return new PointCoordinates(centerX, centerY);
     }
 
+
+
+    // Public static method to get the center point of the primary screen
+
+    public static Point mGetPrimaryScreenCenter2()
+    {
+        Screen primaryScreen = Screen.PrimaryScreen;
+
+        // Excludes taskbar
+        Rectangle workingArea = primaryScreen.Bounds;
+
+        // Calculate the center point
+        int centerX = workingArea.Left + workingArea.Width / 2;
+        int centerY = workingArea.Top + workingArea.Height / 2;
+
+        return new Point(centerX, centerY);
+    }
+
     // calculate file hash
     public static string CalculateFileHash(string filePath)
     {
