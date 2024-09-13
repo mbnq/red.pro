@@ -93,6 +93,8 @@ namespace RED.mbnq
         {
             // this needs to be refined
 
+            bool initialState = 
+
             controlPanel.mHideCrosshair = hideCrosshair;
             controlPanel.updateMainCrosshair();
         }
@@ -136,6 +138,19 @@ namespace RED.mbnq
             // Draw the zoomed image scaled to fill the zoomForm
             zoomForm.ApplyClipping(g);
             g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomForm.Width, zoomForm.Height));
+
+            // Draw crosshair lines
+            int centerX = zoomForm.Width / 2;
+            int centerY = zoomForm.Height / 2;
+
+            using (Pen crosshairPen = new Pen(Color.Black, 2))
+            {
+                // Vertical line
+                g.DrawLine(crosshairPen, centerX, 0, centerX, zoomForm.Height);
+
+                // Horizontal line
+                g.DrawLine(crosshairPen, 0, centerY, zoomForm.Width, centerY);
+            }
 
             // Draw border
             using (Pen borderPen = new Pen(Color.Black, 2))
