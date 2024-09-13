@@ -5,7 +5,7 @@
 
 ![NVIDIA_Overlay_UIC0yO5UXm](https://github.com/user-attachments/assets/cba245ea-f3c2-4d42-bcf7-97e4ed2e2658)
 
-Tested in windows11 at:
+Tested in Windows 10/11 at:
 - 1080p
 - 1440p
 
