@@ -240,6 +240,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\mbAntiCapsLock.cs" />
     <Compile Include="core\mbControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>

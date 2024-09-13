@@ -9,7 +9,6 @@
 
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using System;
 using System.IO;
@@ -30,6 +29,8 @@ public static class mbFnc
             Y = y;
         }
     }
+
+    // these two below needs to be uniffied
     // Public static method to get the center point of the primary screen
     public static PointCoordinates mGetPrimaryScreenCenter()
     {
@@ -44,6 +45,22 @@ public static class mbFnc
         int centerY = workingArea.Top + workingArea.Height / 2;
 
         return new PointCoordinates(centerX, centerY);
+    }
+
+    // Public static method to get the center point of the primary screen II
+
+    public static Point mGetPrimaryScreenCenter2()
+    {
+        Screen primaryScreen = Screen.PrimaryScreen;
+
+        // Excludes taskbar
+        Rectangle workingArea = primaryScreen.Bounds;
+
+        // Calculate the center point
+        int centerX = workingArea.Left + workingArea.Width / 2;
+        int centerY = workingArea.Top + workingArea.Height / 2;
+
+        return new Point(centerX, centerY);
     }
 
     // calculate file hash
