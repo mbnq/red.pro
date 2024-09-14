@@ -18,7 +18,7 @@ namespace RED.mbnq
     {
         public static mbCrosshair mainCrosshair;
         public static int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps 
-        public static float mbVersion = 0.077f;
+        public static float mbVersion = 0.078f;
 
         [DllImport("user32.dll")]
         static extern bool SetProcessDPIAware();
@@ -26,7 +26,7 @@ namespace RED.mbnq
         [STAThread]
         static void Main()
         {
-            SetProcessDPIAware();   // this is co crucial to deal with windows DPI desktop scaling...
+            SetProcessDPIAware();               // this is co crucial to deal with windows DPI desktop scaling...
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
