@@ -1,4 +1,5 @@
-﻿/* 
+﻿
+/* 
 
     www.mbnq.pl 2024 
     https://mbnq.pl/
@@ -64,14 +65,14 @@ namespace RED.mbnq
 
             holdTimer = new Timer
             {
-                Interval = 1000 // Time before showing zoom in milliseconds
+                Interval = 1000                                 // Time of holding RMB before showing zoom in milliseconds
             };
             holdTimer.Tick += HoldTimer_Tick;
 
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = 16 // Increased interval to reduce CPU usage
+                Interval = Program.mbFrameDelay                 // refresh rate
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 

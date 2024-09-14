@@ -26,7 +26,7 @@ namespace RED.mbnq
         #region ControlPanel Vars and Settings
 
         public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
-        public static readonly bool mPBIsOn = true;                    // progress bar 
+        public static readonly bool mPBIsOn = true;                     // progress bar 
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
@@ -41,12 +41,11 @@ namespace RED.mbnq
         private mbnqFLIR FlirOverlayForm;
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
-        // public MaterialProgressBar mbProgressBar0;
         public mbProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
         public string mbMaterialThemeType;
 
-        public string mbUserFilessPath = Path.Combine(SaveLoad.SettingsDirectory);
+        public string mbUserFilesPath = Path.Combine(SaveLoad.SettingsDirectory);
 
         private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
 
@@ -106,7 +105,7 @@ namespace RED.mbnq
 
             updateMainCrosshair();
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
-            Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilessPath}");
+            Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
         }
 
         // Material Skin Init
@@ -511,12 +510,12 @@ namespace RED.mbnq
             mbAutoSaveCheckbox = CreateCheckBox("Save on Exit", true, mbAutoSaveOnExit_CheckedChanged);
             mbDebugonCheckbox = CreateCheckBox("Debug", true, mbDebugonCheckbox_CheckedChanged);
             mbAOnTopCheckBox = CreateCheckBox("Always on Top", true, mbAOnTopCheckBox_CheckedChanged);
-            mbHideCrosshairCheckBox = CreateCheckBox("Hide Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
-            mbDisableSoundCheckBox = CreateCheckBox("Disable Sound", true, mbDisableSoundCheckBox_CheckedChanged);
-            mbEnableZoomModeCheckBox = CreateCheckBox("Enable SniperMode", true, mbEnableZoomModeCheckBox_CheckedChanged);
-            mbEnableFlirCheckBox = CreateCheckBox("Enable FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
-            mbDarkModeCheckBox = CreateCheckBox("Enable DarkMode", true, mbDarkModeCheckBox_CheckedChanged);
-            mbAntiCapsCheckBox = CreateCheckBox("Enable AntiCapsLock", true, mbAntiCapsCheckBox_CheckedChanged);
+            mbHideCrosshairCheckBox = CreateCheckBox("Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
+            mbDisableSoundCheckBox = CreateCheckBox("Sounds", true, mbDisableSoundCheckBox_CheckedChanged);
+            mbEnableZoomModeCheckBox = CreateCheckBox("Sniper Mode", true, mbEnableZoomModeCheckBox_CheckedChanged);
+            mbEnableFlirCheckBox = CreateCheckBox("FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
+            mbDarkModeCheckBox = CreateCheckBox("Dark Mode", true, mbDarkModeCheckBox_CheckedChanged);
+            mbAntiCapsCheckBox = CreateCheckBox("AntiCapsLock", true, mbAntiCapsCheckBox_CheckedChanged);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
