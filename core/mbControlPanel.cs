@@ -511,12 +511,12 @@ namespace RED.mbnq
             mbAutoSaveCheckbox = CreateCheckBox("Save on Exit", true, mbAutoSaveOnExit_CheckedChanged);
             mbDebugonCheckbox = CreateCheckBox("Debug", true, mbDebugonCheckbox_CheckedChanged);
             mbAOnTopCheckBox = CreateCheckBox("Always on Top", true, mbAOnTopCheckBox_CheckedChanged);
-            mbHideCrosshairCheckBox = CreateCheckBox("Hide Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
-            mbDisableSoundCheckBox = CreateCheckBox("Disable Sound", true, mbDisableSoundCheckBox_CheckedChanged);
-            mbEnableZoomModeCheckBox = CreateCheckBox("Enable SniperMode", true, mbEnableZoomModeCheckBox_CheckedChanged);
-            mbEnableFlirCheckBox = CreateCheckBox("Enable FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
-            mbDarkModeCheckBox = CreateCheckBox("Enable DarkMode", true, mbDarkModeCheckBox_CheckedChanged);
-            mbAntiCapsCheckBox = CreateCheckBox("Enable AntiCapsLock", true, mbAntiCapsCheckBox_CheckedChanged);
+            mbHideCrosshairCheckBox = CreateCheckBox("Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
+            mbDisableSoundCheckBox = CreateCheckBox("Sounds", true, mbDisableSoundCheckBox_CheckedChanged);
+            mbEnableZoomModeCheckBox = CreateCheckBox("Sniper Mode", true, mbEnableZoomModeCheckBox_CheckedChanged);
+            mbEnableFlirCheckBox = CreateCheckBox("FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
+            mbDarkModeCheckBox = CreateCheckBox("Dark Mode", true, mbDarkModeCheckBox_CheckedChanged);
+            mbAntiCapsCheckBox = CreateCheckBox("AntiCapsLock", true, mbAntiCapsCheckBox_CheckedChanged);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
