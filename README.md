@@ -5,7 +5,7 @@
 
 ![NVIDIA_Overlay_UIC0yO5UXm](https://github.com/user-attachments/assets/cba245ea-f3c2-4d42-bcf7-97e4ed2e2658)
 
-Tested in windows11 at:
+Tested in Windows 10/11 at:
 - 1080p
 - 1440p
 
@@ -17,7 +17,8 @@ Tested in windows11 at:
 4. **Glass Elements**
 5. **Save/Load Settings System**
 
-[Download from GitHub](https://github.com/mbnq/red.pro/releases/download/v0.0.73/RED.PRO_0_0_73.zip)
+[Download from GitHub](https://github.com/mbnq/red.pro/releases) (.zip file)
+
 [Example .png crosshairs](https://github.com/mbnq/red.pro/tree/master/png)
 
 ![NVIDIA_Overlay_whPU0TjAA1](https://github.com/user-attachments/assets/fe815beb-469a-42f4-9e58-9c63c8b9bcff)
