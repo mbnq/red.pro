@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RED.pro")]
+[assembly: AssemblyTitle("RED.PRO")]
 [assembly: AssemblyDescription("Red Dot Pro - overlay app. mbnq00@gmail.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("www.mbnq.pl")]
-[assembly: AssemblyProduct("RED.pro")]
+[assembly: AssemblyProduct("RED.PRO")]
 [assembly: AssemblyCopyright("Copyright © www.mbnq.pl 2024")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("www.mbnq.pl")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
@@ -33,5 +33,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("0.0.7.8")]
+[assembly: AssemblyFileVersion("0.0.7.8")]
