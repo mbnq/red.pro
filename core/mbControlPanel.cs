@@ -1329,7 +1329,6 @@ namespace RED.mbnq
             get => mbAntiCapsCheckBox.Checked;
             set => mbAntiCapsCheckBox.Checked = value;
         }
-
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
         public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }

@@ -18,7 +18,7 @@ namespace RED.mbnq
     {
         public static mbCrosshair mainCrosshair;
         public static int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps 
-        public static float mbVersion = 0.080f;
+        public static float mbVersion = 0.082f;
 
         [DllImport("user32.dll")]
         static extern bool SetProcessDPIAware();
@@ -56,6 +56,7 @@ namespace RED.mbnq
             // Update the main display after settings have loaded
             controlPanel.updateMainCrosshair();
 
+            // trigger autosave
             controlPanel.FormClosing += (sender, e) =>
             {
                 if (controlPanel.AutoSaveOnExitChecked)
@@ -64,7 +65,7 @@ namespace RED.mbnq
                 }
             };
 
-            Application.Run(controlPanel); // This will run the main display and overlay together
+            Application.Run(controlPanel);
         }
     }
 }
