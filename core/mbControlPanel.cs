@@ -968,9 +968,6 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             UpdateButtons();
-
-            mbAboutForm testBoxForm = new mbAboutForm(); // Instantiate the form
-            testBoxForm.Show();
         }
 
         #endregion
