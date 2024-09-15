@@ -8,8 +8,10 @@
 */
 
 using MaterialSkin.Controls;
+using RED.mbnq.core;
 using System;
 using System.Diagnostics;
+using System.Drawing.Text;
 using System.IO;
 using System.Windows.Forms;
 
@@ -105,7 +107,12 @@ namespace RED.mbnq
         }
         private void saveMenuItem_Click(object sender, EventArgs e) => SaveLoad.SaveSettings(controlPanel, false);
         private void loadMenuItem_Click(object sender, EventArgs e) => SaveLoad.LoadSettings(controlPanel, false);
-        private void AboutMenuItem_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://www.mbnq.pl") { UseShellExecute = true });
+        private void AboutMenuItem_Click(object sender, EventArgs e) 
+        {
+            mbAboutForm aboutBox = new mbAboutForm();
+            aboutBox.Show();
+            // Process.Start(new ProcessStartInfo("https://www.mbnq.pl") { UseShellExecute = true });
+        }
         private void CloseMenuItem_Click(object sender, EventArgs e) => Application.Exit();
         public void LoadCustomPNG_Click(object sender, EventArgs e)
         {

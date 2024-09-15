@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using RED.mbnq.core;
 
 namespace RED.mbnq
 {
@@ -30,7 +31,7 @@ namespace RED.mbnq
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
-        private Button centerButton, loadChangePngButton, removePngButton;
+        private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox;
@@ -43,7 +44,7 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         public mbProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
-        public string mbMaterialThemeType;
+        public static string mbMaterialThemeType;
 
         public string mbUserFilesPath = Path.Combine(SaveLoad.SettingsDirectory);
 
@@ -66,7 +67,6 @@ namespace RED.mbnq
         #region ControlPanel Init
         public ControlPanel()
         {
-            InitializeTabs();
             InitializeComponent();
             UpdateButtons();
 
@@ -218,13 +218,14 @@ namespace RED.mbnq
         }
         #endregion
 
-        #region Tabs
-
-        /* --- --- Tabs --- --- */
-
-        private void InitializeTabs()
+        #region GUI
+        private void InitializeComponent()
         {
+            mControlWidth = this.ClientSize.Width - mControlDefSpacer;
+            // -------------------------------------------------------
 
+            #region Tabs
+            /* --- --- Tabs --- --- */
             mbTabControl = new MaterialTabControl
             {
                 Dock = DockStyle.Fill,                  // we need this
@@ -262,15 +263,7 @@ namespace RED.mbnq
                 tab.Text = tab.Text.ToUpper();
             }
 
-        }
-
-        #endregion
-
-        #region GUI
-        private void InitializeComponent()
-        {
-            mControlWidth = this.ClientSize.Width - mControlDefSpacer;
-            // -------------------------------------------------------
+            #endregion
 
             #region FlowLayoutPanels
 
@@ -330,6 +323,7 @@ namespace RED.mbnq
             centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
             loadChangePngButton = CreateButton("Load PNG", mControlWidth, loadChangePngButton_Click);
             removePngButton = CreateButton("Remove PNG", mControlWidth, removePngButton_Click);
+            debugTestButton = CreateButton("Debug Test", mControlWidth, debugTestButton_Click); debugTestButton.Visible = true;
 
             // Add the buttons to the respective panels
             mbPanelForTab1.Controls.Add(centerButton);
@@ -418,10 +412,7 @@ namespace RED.mbnq
                     }
                 }
             }
-
-
             // ---
-
 
             mbMbToolsDropDown = new MaterialComboBox
             {
@@ -429,7 +420,6 @@ namespace RED.mbnq
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 MaxDropDownItems = 10
             };
-
 
             mbMbToolsDropDown.Items.Add("Test Ping");
             mbMbToolsDropDown.Items.Add("My IP");
@@ -470,7 +460,6 @@ namespace RED.mbnq
                 }
             }
 
-
             // ---
 
             mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
@@ -510,7 +499,7 @@ namespace RED.mbnq
             mbAutoSaveCheckbox = CreateCheckBox("Save on Exit", true, mbAutoSaveOnExit_CheckedChanged);
             mbDebugonCheckbox = CreateCheckBox("Debug", true, mbDebugonCheckbox_CheckedChanged);
             mbAOnTopCheckBox = CreateCheckBox("Always on Top", true, mbAOnTopCheckBox_CheckedChanged);
-            mbHideCrosshairCheckBox = CreateCheckBox("Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
+            mbHideCrosshairCheckBox = CreateCheckBox("Hide Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
             mbDisableSoundCheckBox = CreateCheckBox("Sounds", true, mbDisableSoundCheckBox_CheckedChanged);
             mbEnableZoomModeCheckBox = CreateCheckBox("Sniper Mode", true, mbEnableZoomModeCheckBox_CheckedChanged);
             mbEnableFlirCheckBox = CreateCheckBox("FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
@@ -563,6 +552,9 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
+
+            mbPanelForTab2.Controls.Add(debugTestButton);
+
             mbTab2.Controls.Add(mbPanelForTab2);
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
@@ -892,6 +884,7 @@ namespace RED.mbnq
         /* --- --- --- Buttons Code --- --- --- */
         public void UpdateButtons()
         {
+            if (mIsDebugOn) { debugTestButton.Visible = true; } else { debugTestButton.Visible = false; }
             removePngButton.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
         }
 
@@ -971,6 +964,11 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
             UpdateButtons();
         }
+        private void debugTestButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+            UpdateButtons();
+        }
 
         #endregion
 
@@ -989,10 +987,12 @@ namespace RED.mbnq
             if (mbDebugonCheckbox.Checked)
             {
                 mIsDebugOn = true;
+                UpdateButtons();
             }
             else
             {
                 mIsDebugOn = false;
+                UpdateButtons();
             }
         }
         private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1342,7 +1342,6 @@ namespace RED.mbnq
             get => mbAntiCapsCheckBox.Checked;
             set => mbAntiCapsCheckBox.Checked = value;
         }
-
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
         public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
