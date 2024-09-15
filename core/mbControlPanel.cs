@@ -30,7 +30,7 @@ namespace RED.mbnq
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
-        private Button centerButton, loadChangePngButton, removePngButton;
+        private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
         private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox;
@@ -322,6 +322,7 @@ namespace RED.mbnq
             centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
             loadChangePngButton = CreateButton("Load PNG", mControlWidth, loadChangePngButton_Click);
             removePngButton = CreateButton("Remove PNG", mControlWidth, removePngButton_Click);
+            debugTestButton = CreateButton("Debug Test", mControlWidth, debugTestButton_Click); debugTestButton.Visible = true;
 
             // Add the buttons to the respective panels
             mbPanelForTab1.Controls.Add(centerButton);
@@ -550,6 +551,9 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
+
+            mbPanelForTab2.Controls.Add(debugTestButton);
+
             mbTab2.Controls.Add(mbPanelForTab2);
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
@@ -879,6 +883,7 @@ namespace RED.mbnq
         /* --- --- --- Buttons Code --- --- --- */
         public void UpdateButtons()
         {
+            if (mIsDebugOn) { debugTestButton.Visible = true; } else { debugTestButton.Visible = false; }
             removePngButton.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
         }
 
@@ -958,6 +963,11 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
             UpdateButtons();
         }
+        private void debugTestButton_Click(object sender, EventArgs e)
+        {
+            Sounds.PlayClickSoundOnce();
+            UpdateButtons();
+        }
 
         #endregion
 
@@ -976,10 +986,12 @@ namespace RED.mbnq
             if (mbDebugonCheckbox.Checked)
             {
                 mIsDebugOn = true;
+                UpdateButtons();
             }
             else
             {
                 mIsDebugOn = false;
+                UpdateButtons();
             }
         }
         private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
