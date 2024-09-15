@@ -66,7 +66,6 @@ namespace RED.mbnq
         #region ControlPanel Init
         public ControlPanel()
         {
-            InitializeTabs();
             InitializeComponent();
             UpdateButtons();
 
@@ -218,59 +217,57 @@ namespace RED.mbnq
         }
         #endregion
 
-        #region Tabs
-
-        /* --- --- Tabs --- --- */
-
-        private void InitializeTabs()
-        {
-
-            mbTabControl = new MaterialTabControl
-            {
-                Dock = DockStyle.Fill,                  // we need this
-                Enabled = true                          // we don't really need this
-            };
-
-            mbTab1 = new TabPage("Xhair");
-            mbTab2 = new TabPage("Options");
-            mbTab3 = new TabPage("Tools");
-
-            mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
-
-            // ---
-
-            mbTabSelector = new MaterialTabSelector
-            {
-                BaseTabControl = mbTabControl,
-                Dock = DockStyle.Bottom,
-                TabIndicatorHeight = 5,
-                Enabled = true
-            };
-
-            mbTabControl.SelectedIndexChanged += (s, e) =>
-            {
-                Sounds.PlayClickSound();
-            };
-
-            Controls.Add(mbTabControl);
-            Controls.Add(mbTabSelector);
-
-            // ---
-
-            foreach (TabPage tab in mbTabControl.TabPages)
-            {
-                tab.Text = tab.Text.ToUpper();
-            }
-
-        }
-
-        #endregion
-
         #region GUI
         private void InitializeComponent()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
             // -------------------------------------------------------
+
+            #region Tabs
+            /* --- --- Tabs --- --- */
+
+            void InitializeTabs()
+            {
+
+                mbTabControl = new MaterialTabControl
+                {
+                    Dock = DockStyle.Fill,                  // we need this
+                    Enabled = true                          // we don't really need this
+                };
+
+                mbTab1 = new TabPage("Xhair");
+                mbTab2 = new TabPage("Options");
+                mbTab3 = new TabPage("Tools");
+
+                mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
+
+                // ---
+
+                mbTabSelector = new MaterialTabSelector
+                {
+                    BaseTabControl = mbTabControl,
+                    Dock = DockStyle.Bottom,
+                    TabIndicatorHeight = 5,
+                    Enabled = true
+                };
+
+                mbTabControl.SelectedIndexChanged += (s, e) =>
+                {
+                    Sounds.PlayClickSound();
+                };
+
+                Controls.Add(mbTabControl);
+                Controls.Add(mbTabSelector);
+
+                // ---
+
+                foreach (TabPage tab in mbTabControl.TabPages)
+                {
+                    tab.Text = tab.Text.ToUpper();
+                }
+            }
+
+            #endregion
 
             #region FlowLayoutPanels
 
@@ -545,6 +542,8 @@ namespace RED.mbnq
             #endregion
 
             #region tabs buildup
+            InitializeTabs();
+
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
             mbTab1.Controls.Add(mbProgressBar0);
