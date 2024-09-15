@@ -244,11 +244,11 @@
     <Compile Include="core\mbControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="core\mbTestBox.cs">
+    <Compile Include="core\mbAboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="core\mbTestBox.Designer.cs">
-      <DependentUpon>mbTestBox.cs</DependentUpon>
+    <Compile Include="core\mbAboutForm.Designer.cs">
+      <DependentUpon>mbAboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="glass\glassControls.cs" />
     <Compile Include="glass\glassRmbMenu.cs">
@@ -284,8 +284,8 @@
     <Compile Include="core\mbSaveLoad.cs" />
     <Compile Include="core\mbSounds.cs" />
     <Compile Include="core\mbZoomMode.cs" />
-    <EmbeddedResource Include="core\mbTestBox.resx">
-      <DependentUpon>mbTestBox.cs</DependentUpon>
+    <EmbeddedResource Include="core\mbAboutForm.resx">
+      <DependentUpon>mbAboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

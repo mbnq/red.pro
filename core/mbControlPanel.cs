@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using RED.mbnq.core;
 
 namespace RED.mbnq
 {
@@ -43,7 +44,7 @@ namespace RED.mbnq
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         public mbProgressBar mbProgressBar0;
         public mbCrosshair mbCrosshairDisplay;
-        public string mbMaterialThemeType;
+        public static string mbMaterialThemeType;
 
         public string mbUserFilesPath = Path.Combine(SaveLoad.SettingsDirectory);
 
@@ -967,6 +968,9 @@ namespace RED.mbnq
         {
             Sounds.PlayClickSoundOnce();
             UpdateButtons();
+
+            mbAboutForm testBoxForm = new mbAboutForm(); // Instantiate the form
+            testBoxForm.Show();
         }
 
         #endregion
