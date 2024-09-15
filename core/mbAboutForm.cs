@@ -3,7 +3,7 @@
 
     www.mbnq.pl 2024 
     https://mbnq.pl/
-    mbnq00 on gmail
+    mbnq00 on gmail 
 
 */
 
