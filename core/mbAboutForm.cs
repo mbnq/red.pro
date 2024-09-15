@@ -12,22 +12,16 @@ using System.Diagnostics;
 
 namespace RED.mbnq.core
 {
-    public partial class mbAboutForm : MaterialSkin.Controls.MaterialForm           // public class ControlPanel : 
+    public partial class mbAboutForm : MaterialSkin.Controls.MaterialForm
     {
         public mbAboutForm()
         {
+            var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
 
-            void InitializeMaterialSkin()
-            {
-                var aboutFormTheme = ControlPanel.mbMaterialThemeType;
-                var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
-                materialSkinManager.EnforceBackcolorOnAllComponents = true;
-                materialSkinManager.AddFormToManage(this);
-                materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;  // or your default theme
-            }
+            this.FormClosing += (sender, e) => Sounds.PlayClickSoundOnce();
 
-            InitializeMaterialSkin();
-            InitializeComponent();
+            InitializeAboutForm();
         }
         private void materialLabel5_Click(object sender, EventArgs e)
         {
