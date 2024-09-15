@@ -225,46 +225,41 @@ namespace RED.mbnq
 
             #region Tabs
             /* --- --- Tabs --- --- */
-
-            void InitializeTabs()
+            mbTabControl = new MaterialTabControl
             {
+                Dock = DockStyle.Fill,                  // we need this
+                Enabled = true                          // we don't really need this
+            };
 
-                mbTabControl = new MaterialTabControl
-                {
-                    Dock = DockStyle.Fill,                  // we need this
-                    Enabled = true                          // we don't really need this
-                };
+            mbTab1 = new TabPage("Xhair");
+            mbTab2 = new TabPage("Options");
+            mbTab3 = new TabPage("Tools");
 
-                mbTab1 = new TabPage("Xhair");
-                mbTab2 = new TabPage("Options");
-                mbTab3 = new TabPage("Tools");
+            mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
 
-                mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
+            // ---
 
-                // ---
+            mbTabSelector = new MaterialTabSelector
+            {
+                BaseTabControl = mbTabControl,
+                Dock = DockStyle.Bottom,
+                TabIndicatorHeight = 5,
+                Enabled = true
+            };
 
-                mbTabSelector = new MaterialTabSelector
-                {
-                    BaseTabControl = mbTabControl,
-                    Dock = DockStyle.Bottom,
-                    TabIndicatorHeight = 5,
-                    Enabled = true
-                };
+            mbTabControl.SelectedIndexChanged += (s, e) =>
+            {
+                Sounds.PlayClickSound();
+            };
 
-                mbTabControl.SelectedIndexChanged += (s, e) =>
-                {
-                    Sounds.PlayClickSound();
-                };
+            Controls.Add(mbTabControl);
+            Controls.Add(mbTabSelector);
 
-                Controls.Add(mbTabControl);
-                Controls.Add(mbTabSelector);
+            // ---
 
-                // ---
-
-                foreach (TabPage tab in mbTabControl.TabPages)
-                {
-                    tab.Text = tab.Text.ToUpper();
-                }
+            foreach (TabPage tab in mbTabControl.TabPages)
+            {
+                tab.Text = tab.Text.ToUpper();
             }
 
             #endregion
@@ -415,10 +410,7 @@ namespace RED.mbnq
                     }
                 }
             }
-
-
             // ---
-
 
             mbMbToolsDropDown = new MaterialComboBox
             {
@@ -426,7 +418,6 @@ namespace RED.mbnq
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 MaxDropDownItems = 10
             };
-
 
             mbMbToolsDropDown.Items.Add("Test Ping");
             mbMbToolsDropDown.Items.Add("My IP");
@@ -466,7 +457,6 @@ namespace RED.mbnq
                     }
                 }
             }
-
 
             // ---
 
@@ -542,8 +532,6 @@ namespace RED.mbnq
             #endregion
 
             #region tabs buildup
-            InitializeTabs();
-
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
             mbTab1.Controls.Add(mbProgressBar0);
