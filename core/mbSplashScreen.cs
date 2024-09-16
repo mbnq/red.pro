@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,12 +11,14 @@ namespace RED.mbnq.core
         {
             InitializeSplashScreen();
             StartCloseTimerAsync();
-            Sounds.PlayClickSoundOnce();
-        }
 
+            var splashSound = new SoundPlayer(Properties.Resources.mbSplash);
+            splashSound.Load();
+            splashSound.Play();
+        }
         private async void StartCloseTimerAsync()
         {
-            await Task.Delay(3000); // Wait for 3 seconds
+            await Task.Delay(4000); // Wait for 3 seconds
             this.Close();
         }
     }
