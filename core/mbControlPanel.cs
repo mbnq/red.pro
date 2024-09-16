@@ -61,7 +61,7 @@ namespace RED.mbnq
         public const int mPNGMaxHeight                  = 1080;
         public const int mSplashDuration                = 4000;
 
-        public const int mbCrosshairRedrawTime         = 5000; // interval in ms
+        public const int mbCrosshairRedrawTime          = 5000; // interval in ms
 
         #endregion
 
@@ -201,6 +201,8 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
+            this.Visible = false;
+
             updateMainCrosshair();
 
             if (mbCrosshairOverlay != null)
@@ -580,7 +582,6 @@ namespace RED.mbnq
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
-
         }
         /* --- --- --- --- --- --- --- --- --- --- --- */
         #endregion
