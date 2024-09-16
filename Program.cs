@@ -38,7 +38,7 @@ namespace RED.mbnq
             // Initialize ControlPanel
             ControlPanel controlPanel = new ControlPanel
             {
-                mbCrosshairOverlay = mainCrosshair,
+                mbCrosshairOverlay = mainCrosshair
             };
 
             ZoomMode.InitializeZoomMode(controlPanel);

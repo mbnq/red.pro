@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 // using System.Security.Cryptography.X509Certificates;
 using RED.mbnq.core;
+using System.Runtime.CompilerServices;
 
 namespace RED.mbnq
 {
@@ -69,6 +70,7 @@ namespace RED.mbnq
         #region ControlPanel Init
         public ControlPanel()
         {
+
             InitializeControlPanel();
             UpdateButtons();
 
@@ -86,11 +88,12 @@ namespace RED.mbnq
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
-            this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(mCPWidth, mCPHeight);
+
+            this.Shown += ControlPanel_Shown;
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
@@ -106,6 +109,7 @@ namespace RED.mbnq
             }
 
             updateMainCrosshair();
+
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
@@ -590,6 +594,7 @@ namespace RED.mbnq
             mbTab3.Controls.Add(mbPanelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
+
             #endregion
         }
         /* --- --- --- --- --- --- --- --- --- --- --- */
