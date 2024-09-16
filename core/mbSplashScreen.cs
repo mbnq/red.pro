@@ -10,6 +10,7 @@ namespace RED.mbnq.core
         {
             InitializeSplashScreen();
             StartCloseTimerAsync();
+            Sounds.PlayClickSoundOnce();
         }
 
         private async void StartCloseTimerAsync()
