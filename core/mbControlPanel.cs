@@ -201,10 +201,7 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
-
             updateMainCrosshair();
-
-            this.Visible = false;
 
             if (mbCrosshairOverlay != null)
             {
@@ -226,12 +223,13 @@ namespace RED.mbnq
             splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
             splashScreen.BringToFront();
 
-            // Hide the ControlPanel after the splash screen (optional)
             Task.Delay(mSplashDuration).ContinueWith(_ =>
             {
                 this.Invoke((Action)(() =>
                 {
                     this.Visible = true;
+                    splashScreen.Close();
+                    splashScreen.Dispose();
                 }));
             });
         }
