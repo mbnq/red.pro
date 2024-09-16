@@ -250,6 +250,12 @@
     <Compile Include="core\mbAboutForm.Designer.cs">
       <DependentUpon>mbAboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="core\mbSplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="core\mbSplashScreen.Designer.cs">
+      <DependentUpon>mbSplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="glass\glassControls.cs" />
     <Compile Include="glass\glassRmbMenu.cs">
       <SubType>Form</SubType>
@@ -287,6 +293,9 @@
     <EmbeddedResource Include="core\mbAboutForm.resx">
       <DependentUpon>mbAboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="core\mbSplashScreen.resx">
+      <DependentUpon>mbSplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -310,6 +319,8 @@
     <AdditionalFiles Include="png\cometLaser.png" />
     <AdditionalFiles Include="png\crossBasic.png" />
     <AdditionalFiles Include="png\redDot.png" />
+    <None Include="sounds\mbSplash.wav" />
+    <None Include="png\redProSplash.png" />
     <None Include="gfx\mbnqBackground0.png" />
     <None Include="sounds\mbnqClick.wav" />
     <Content Include="gfx\mbnqIcon.ico" />

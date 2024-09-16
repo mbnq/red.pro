@@ -127,6 +127,7 @@ namespace RED.mbnq
                     case "mbEnableZoomMode": controlPanel.mbEnableZoomModeChecked = bool.Parse(value); break;
                     case "mbEnableFlirMode": controlPanel.mbEnableFlirChecked = bool.Parse(value); break;
                     case "mbEnableDarkMode": controlPanel.mbDarkModeCheckBoxChecked = bool.Parse(value); break;
+                    case "mbEnableSplashScreen": controlPanel.mbSplashCheckBoxChecked = bool.Parse(value); break;
                     case "mbEnableAntiCapsLock": controlPanel.mbAntiCapsCheckBoxChecked = bool.Parse(value); break;
                     case "PositionX": if (controlPanel.mbCrosshairOverlay != null) controlPanel.mbCrosshairOverlay.Left = int.Parse(value); break;
                     case "PositionY": if (controlPanel.mbCrosshairOverlay != null) controlPanel.mbCrosshairOverlay.Top = int.Parse(value); break;
@@ -161,6 +162,7 @@ namespace RED.mbnq
             sb.AppendLine($"mbEnableFlirMode={controlPanel.mbEnableFlirChecked}");
             sb.AppendLine($"mbEnableDarkMode={controlPanel.mbDarkModeCheckBoxChecked}");
             sb.AppendLine($"mbEnableAntiCapsLock={controlPanel.mbAntiCapsCheckBoxChecked}");
+            sb.AppendLine($"mbEnableSplashScreen={controlPanel.mbSplashCheckBoxChecked}");
 
             if (controlPanel.mbCrosshairOverlay != null)
             {
@@ -255,6 +257,7 @@ namespace RED.mbnq
                 sb.AppendLine("mbEnableFlirMode=False");
                 sb.AppendLine("mbEnableDarkMode=True");
                 sb.AppendLine("mbEnableAntiCapsLock=True");
+                sb.AppendLine("mbEnableSplashScreen=True");
 
                 byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
                 File.WriteAllBytes(settingsFilePath, encryptedData);

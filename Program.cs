@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using RED.mbnq.core;
 
 namespace RED.mbnq
 {
@@ -18,7 +19,7 @@ namespace RED.mbnq
     {
         public static mbCrosshair mainCrosshair;
         public static int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps 
-        public static float mbVersion = 0.082f;
+        public static float mbVersion = 0.083f;
 
         [DllImport("user32.dll")]
         static extern bool SetProcessDPIAware();
@@ -37,7 +38,7 @@ namespace RED.mbnq
             // Initialize ControlPanel
             ControlPanel controlPanel = new ControlPanel
             {
-                mbCrosshairOverlay = mainCrosshair,
+                mbCrosshairOverlay = mainCrosshair
             };
 
             ZoomMode.InitializeZoomMode(controlPanel);

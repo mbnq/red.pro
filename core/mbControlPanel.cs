@@ -13,12 +13,13 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Threading;
+// using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
+// using System.Runtime.InteropServices;
 using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
+// using System.Security.Cryptography.X509Certificates;
 using RED.mbnq.core;
+using System.Runtime.CompilerServices;
 
 namespace RED.mbnq
 {
@@ -28,13 +29,14 @@ namespace RED.mbnq
 
         public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
         public static readonly bool mPBIsOn = true;                     // progress bar 
+        public static bool mIsSplashOn      = false;
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
         private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox, mbSplashCheckBox;
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
@@ -59,15 +61,17 @@ namespace RED.mbnq
 
         public const int mPNGMaxWidth                   = 1920;
         public const int mPNGMaxHeight                  = 1080;
+        public const int mSplashDuration                = 4000;
 
-        public const int mbCrosshairRedrawTime         = 5000; // interval in ms
+        public const int mbCrosshairRedrawTime          = 5000; // interval in ms
 
         #endregion
 
         #region ControlPanel Init
         public ControlPanel()
         {
-            InitializeComponent();
+
+            InitializeControlPanel();
             UpdateButtons();
 
             SaveLoad.EnsureSettingsFileExists(this);
@@ -84,11 +88,12 @@ namespace RED.mbnq
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
-            this.Shown += ControlPanel_Shown;
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(mCPWidth, mCPHeight);
+
+            this.Shown += ControlPanel_Shown;
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
@@ -104,6 +109,8 @@ namespace RED.mbnq
             }
 
             updateMainCrosshair();
+
+
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
         }
@@ -199,6 +206,11 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
+            if (mIsSplashOn)
+            {
+                this.Visible = false; 
+            }
+
             updateMainCrosshair();
 
             if (mbCrosshairOverlay != null)
@@ -215,11 +227,29 @@ namespace RED.mbnq
                 mbInitSize = this.Size;
                 // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
             }));
+
+            if (mIsSplashOn)
+            {
+                mbSplashScreen splashScreen = new mbSplashScreen();
+                splashScreen.Show();
+                splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
+                splashScreen.BringToFront();
+
+                Task.Delay(mSplashDuration).ContinueWith(_ =>
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        this.Visible = true;
+                        splashScreen.Close();
+                        splashScreen.Dispose();
+                    }));
+                }); 
+            }
         }
         #endregion
 
         #region GUI
-        private void InitializeComponent()
+        private void InitializeControlPanel()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
             // -------------------------------------------------------
@@ -497,10 +527,11 @@ namespace RED.mbnq
 
             // Usage of the helper method
             mbAutoSaveCheckbox = CreateCheckBox("Save on Exit", true, mbAutoSaveOnExit_CheckedChanged);
+            mbSplashCheckBox = CreateCheckBox("Splash Screen", true, mbSplashCheckBox_CheckedChanged);
             mbDebugonCheckbox = CreateCheckBox("Debug", true, mbDebugonCheckbox_CheckedChanged);
             mbAOnTopCheckBox = CreateCheckBox("Always on Top", true, mbAOnTopCheckBox_CheckedChanged);
             mbHideCrosshairCheckBox = CreateCheckBox("Hide Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
-            mbDisableSoundCheckBox = CreateCheckBox("Sounds", true, mbDisableSoundCheckBox_CheckedChanged);
+            mbDisableSoundCheckBox = CreateCheckBox("Mute Sounds", true, mbDisableSoundCheckBox_CheckedChanged);
             mbEnableZoomModeCheckBox = CreateCheckBox("Sniper Mode", true, mbEnableZoomModeCheckBox_CheckedChanged);
             mbEnableFlirCheckBox = CreateCheckBox("FLIR", mbnqFLIR.mbEnableFlirLogic, mbEnableFlirCheckBox_CheckedChanged);
             mbDarkModeCheckBox = CreateCheckBox("Dark Mode", true, mbDarkModeCheckBox_CheckedChanged);
@@ -548,6 +579,7 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
             mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
+            mbPanelForTab2.Controls.Add(mbSplashCheckBox);
 
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
@@ -562,8 +594,8 @@ namespace RED.mbnq
             mbTab3.Controls.Add(mbPanelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
-            #endregion
 
+            #endregion
         }
         /* --- --- --- --- --- --- --- --- --- --- --- */
         #endregion
@@ -1075,6 +1107,17 @@ namespace RED.mbnq
             {
                 antiCapsLockManager.StopCapsLockMonitor();
             }
+        }        
+        private void mbSplashCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbSplashCheckBox.Checked)
+            {
+                mIsSplashOn = true;
+            }
+            else
+            {
+                mIsSplashOn = false;
+            }
         }
         #endregion
 
@@ -1341,6 +1384,11 @@ namespace RED.mbnq
         {
             get => mbAntiCapsCheckBox.Checked;
             set => mbAntiCapsCheckBox.Checked = value;
+        }
+        public bool mbSplashCheckBoxChecked
+        {
+            get => mbSplashCheckBox.Checked;
+            set => mbSplashCheckBox.Checked = value;
         }
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }

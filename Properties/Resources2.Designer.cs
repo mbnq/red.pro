@@ -110,11 +110,30 @@ namespace RED.mbnq.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream mbSplash {
+            get {
+                return ResourceManager.GetStream("mbSplash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap redDot {
             get {
                 object obj = ResourceManager.GetObject("redDot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redProSplash {
+            get {
+                object obj = ResourceManager.GetObject("redProSplash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
