@@ -104,6 +104,7 @@ namespace RED.mbnq
             }
 
             updateMainCrosshair();
+
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
         }
@@ -199,6 +200,7 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
+
             updateMainCrosshair();
 
             if (mbCrosshairOverlay != null)
@@ -215,6 +217,11 @@ namespace RED.mbnq
                 mbInitSize = this.Size;
                 // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
             }));
+
+            // mbSplashScreen splashScreen = new mbSplashScreen();
+            // splashScreen.Show();
+            // splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
+            // splashScreen.BringToFront();
         }
         #endregion
 

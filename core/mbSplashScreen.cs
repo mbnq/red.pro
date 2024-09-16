@@ -15,6 +15,8 @@ namespace RED.mbnq.core
         public mbSplashScreen()
         {
             InitializeSplashScreen();
+            System.Threading.Thread.Sleep(2000);
+            this.Close();
         }
     }
 }
