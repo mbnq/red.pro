@@ -218,10 +218,10 @@ namespace RED.mbnq
                 // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
             }));
 
-            // mbSplashScreen splashScreen = new mbSplashScreen();
-            // splashScreen.Show();
-            // splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
-            // splashScreen.BringToFront();
+            mbSplashScreen splashScreen = new mbSplashScreen();
+            splashScreen.Show();
+            splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
+            splashScreen.BringToFront();
         }
         #endregion
 
