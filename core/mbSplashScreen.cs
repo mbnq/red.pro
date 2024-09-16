@@ -20,7 +20,7 @@ namespace RED.mbnq.core
         }
         private async void StartCloseTimerAsync()
         {
-            await Task.Delay(4000); // Wait for 3 seconds
+            await Task.Delay(ControlPanel.mSplashDuration); // Wait for 3 seconds
             this.Close();
         }
     }
