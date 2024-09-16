@@ -67,7 +67,7 @@ namespace RED.mbnq
         #region ControlPanel Init
         public ControlPanel()
         {
-            InitializeComponent();
+            InitializeControlPanel();
             UpdateButtons();
 
             SaveLoad.EnsureSettingsFileExists(this);
@@ -219,7 +219,7 @@ namespace RED.mbnq
         #endregion
 
         #region GUI
-        private void InitializeComponent()
+        private void InitializeControlPanel()
         {
             mControlWidth = this.ClientSize.Width - mControlDefSpacer;
             // -------------------------------------------------------
