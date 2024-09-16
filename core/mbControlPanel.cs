@@ -70,7 +70,6 @@ namespace RED.mbnq
         #region ControlPanel Init
         public ControlPanel()
         {
-
             InitializeControlPanel();
             UpdateButtons();
 
@@ -91,7 +90,7 @@ namespace RED.mbnq
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(mCPWidth, mCPHeight);
+            this.Size = new Size(0, 0);
 
             this.Shown += ControlPanel_Shown;
             // this.AutoSize = true;
@@ -109,7 +108,6 @@ namespace RED.mbnq
             }
 
             updateMainCrosshair();
-
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
@@ -206,9 +204,16 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
+            // this is pretty nasty, but it works...
             if (mIsSplashOn)
             {
+                this.Size = new Size(0, 0);
                 this.Visible = false; 
+            }
+            else
+            {
+                this.Size = new Size(mCPWidth, mCPHeight);
+                this.Visible = true;
             }
 
             updateMainCrosshair();
@@ -240,6 +245,7 @@ namespace RED.mbnq
                     this.Invoke((Action)(() =>
                     {
                         this.Visible = true;
+                        this.Size = new Size(mCPWidth, mCPHeight);
                         splashScreen.Close();
                         splashScreen.Dispose();
                     }));

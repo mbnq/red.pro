@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Drawing;
 using RED.mbnq.core;
 
 namespace RED.mbnq
@@ -66,6 +67,8 @@ namespace RED.mbnq
                 }
             };
 
+            controlPanel.Visible = false;
+            controlPanel.Size = new Size(0, 0);
             Application.Run(controlPanel);
         }
     }
