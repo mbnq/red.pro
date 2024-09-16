@@ -28,14 +28,14 @@ namespace RED.mbnq
 
         public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
         public static readonly bool mPBIsOn = true;                     // progress bar 
-        public static bool mIsSplashOn      = true;
+        public static bool mIsSplashOn      = false;
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
         private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox;
+        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox, mbSplashCheckBox;
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
@@ -523,6 +523,7 @@ namespace RED.mbnq
 
             // Usage of the helper method
             mbAutoSaveCheckbox = CreateCheckBox("Save on Exit", true, mbAutoSaveOnExit_CheckedChanged);
+            mbSplashCheckBox = CreateCheckBox("Splash Screen", true, mbSplashCheckBox_CheckedChanged);
             mbDebugonCheckbox = CreateCheckBox("Debug", true, mbDebugonCheckbox_CheckedChanged);
             mbAOnTopCheckBox = CreateCheckBox("Always on Top", true, mbAOnTopCheckBox_CheckedChanged);
             mbHideCrosshairCheckBox = CreateCheckBox("Hide Crosshair", true, mbHideCrosshairCheckBox_CheckedChanged);
@@ -574,6 +575,7 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
             mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
+            mbPanelForTab2.Controls.Add(mbSplashCheckBox);
 
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
@@ -1100,6 +1102,17 @@ namespace RED.mbnq
             {
                 antiCapsLockManager.StopCapsLockMonitor();
             }
+        }        
+        private void mbSplashCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mbSplashCheckBox.Checked)
+            {
+                mIsSplashOn = true;
+            }
+            else
+            {
+                mIsSplashOn = false;
+            }
         }
         #endregion
 
@@ -1366,6 +1379,11 @@ namespace RED.mbnq
         {
             get => mbAntiCapsCheckBox.Checked;
             set => mbAntiCapsCheckBox.Checked = value;
+        }
+        public bool mbSplashCheckBoxChecked
+        {
+            get => mbSplashCheckBox.Checked;
+            set => mbSplashCheckBox.Checked = value;
         }
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
