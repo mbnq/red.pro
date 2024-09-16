@@ -28,6 +28,7 @@ namespace RED.mbnq
 
         public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
         public static readonly bool mPBIsOn = true;                     // progress bar 
+        public static bool mIsSplashOn      = true;
         public bool mHideCrosshair          = false;
         public int mSettingsLoaded          = 0;
 
@@ -201,7 +202,10 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
-            this.Visible = false;
+            if (mIsSplashOn)
+            {
+                this.Visible = false; 
+            }
 
             updateMainCrosshair();
 
@@ -220,20 +224,23 @@ namespace RED.mbnq
                 // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
             }));
 
-            mbSplashScreen splashScreen = new mbSplashScreen();
-            splashScreen.Show();
-            splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
-            splashScreen.BringToFront();
-
-            Task.Delay(mSplashDuration).ContinueWith(_ =>
+            if (mIsSplashOn)
             {
-                this.Invoke((Action)(() =>
+                mbSplashScreen splashScreen = new mbSplashScreen();
+                splashScreen.Show();
+                splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
+                splashScreen.BringToFront();
+
+                Task.Delay(mSplashDuration).ContinueWith(_ =>
                 {
-                    this.Visible = true;
-                    splashScreen.Close();
-                    splashScreen.Dispose();
-                }));
-            });
+                    this.Invoke((Action)(() =>
+                    {
+                        this.Visible = true;
+                        splashScreen.Close();
+                        splashScreen.Dispose();
+                    }));
+                }); 
+            }
         }
         #endregion
 
