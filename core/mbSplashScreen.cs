@@ -12,9 +12,11 @@ namespace RED.mbnq.core
             InitializeSplashScreen();
             StartCloseTimerAsync();
 
-            var splashSound = new SoundPlayer(Properties.Resources.mbSplash);
-            splashSound.Load();
-            splashSound.Play();
+            if (Sounds.IsSoundEnabled) { 
+                var splashSound = new SoundPlayer(Properties.Resources.mbSplash);
+                splashSound.Load();
+                splashSound.Play();
+            }
         }
         private async void StartCloseTimerAsync()
         {
