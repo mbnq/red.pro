@@ -319,6 +319,7 @@
     <AdditionalFiles Include="png\cometLaser.png" />
     <AdditionalFiles Include="png\crossBasic.png" />
     <AdditionalFiles Include="png\redDot.png" />
+    <None Include="png\redProSplash.png" />
     <None Include="gfx\mbnqBackground0.png" />
     <None Include="sounds\mbnqClick.wav" />
     <Content Include="gfx\mbnqIcon.ico" />
