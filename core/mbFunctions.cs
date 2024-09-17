@@ -14,6 +14,8 @@ using System;
 using System.IO;
 public static class mbFnc
 {
+    // ---------------------------------------
+    // for circle drawing, not used yet
     public static void mbFillCircle(this Graphics g, Brush brush, float x, float y, float radius)
     {
         g.FillEllipse(brush, x - radius, y - radius, radius * 2, radius * 2);
@@ -30,6 +32,7 @@ public static class mbFnc
         }
     }
 
+    // ---------------------------------------
     // these two below needs to be uniffied
     // Public static method to get the center point of the primary screen
     public static PointCoordinates mGetPrimaryScreenCenter()
@@ -48,7 +51,6 @@ public static class mbFnc
     }
 
     // Public static method to get the center point of the primary screen II
-
     public static Point mGetPrimaryScreenCenter2()
     {
         Screen primaryScreen = Screen.PrimaryScreen;
@@ -63,6 +65,7 @@ public static class mbFnc
         return new Point(centerX, centerY);
     }
 
+    // ---------------------------------------
     // calculate file hash
     public static string CalculateFileHash(string filePath)
     {
@@ -76,25 +79,6 @@ public static class mbFnc
         }
     }
 
-    // capture overlay and copy to clipboard
-    public static Bitmap CaptureOverlayContent(Form overlayForm, Rectangle captureRect)
-    {
-        Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
-        using (Graphics g = Graphics.FromImage(bitmap))
-        {
-            g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
-        }
-        return bitmap;
-    }
-
-    // Copy overlay content to clipboard
-    public static void CopyOverlayToClipboard(Form overlayForm, Rectangle captureRect)
-    {
-        using (Bitmap bitmap = CaptureOverlayContent(overlayForm, captureRect))
-        {
-            Clipboard.SetImage(bitmap);
-        }
-    }
     // ---------------------------------------
     // currentFps = mbFnc.CalculateFps(ref lastFrameTime);
     public static double CalculateFps(ref DateTime lastFrameTime)
@@ -111,19 +95,44 @@ public static class mbFnc
         lastFrameTime = currentFrameTime;
         return 0.0;
     }
+
     // ---------------------------------------
+    // capture overlay and copy to clipboard
+    public static Bitmap CaptureOverlayContent(Form overlayForm, Rectangle captureRect)
+    {
+        Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
+        using (Graphics g = Graphics.FromImage(bitmap))
+        {
+            g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
+        }
+        return bitmap;
+    }
+
+    // ---------------------------------------
+    // Copy overlay content to clipboard
+    public static void CopyOverlayToClipboard(Form overlayForm, Rectangle captureRect)
+    {
+        using (Bitmap bitmap = CaptureOverlayContent(overlayForm, captureRect))
+        {
+            Clipboard.SetImage(bitmap);
+        }
+    }
+
+    // ---------------------------------------
+    // Copy label text to clipboard, for eventhandler usage only
+
+    private static ToolTip mbToolTip = new ToolTip();
     public static void mbCopyLabelToClipboard(object sender, EventArgs e)
     {
-
         Label clickedLabel = sender as Label;
 
         if (clickedLabel != null)
         {
-            // Copy the text of the clicked label to the clipboard
             Clipboard.SetText(clickedLabel.Text);
+            var mousePosition = Control.MousePosition;
+            Point labelLocation = clickedLabel.PointToClient(mousePosition);
 
-            // Optional: Show a message box to confirm
-            MessageBox.Show($"Copied: {clickedLabel.Text} to clipboard!");
+            mbToolTip.Show($"Copied: {clickedLabel.Text} to clipboard!", clickedLabel, labelLocation.X, labelLocation.Y, 2000);
         }
     }
 }
