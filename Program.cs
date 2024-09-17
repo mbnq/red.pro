@@ -56,7 +56,7 @@ namespace RED.mbnq
             }
 
             // Update the main display after settings have loaded
-            controlPanel.updateMainCrosshair();
+            controlPanel.UpdateMainCrosshair();
 
             // trigger autosave
             controlPanel.FormClosing += (sender, e) =>

@@ -109,7 +109,7 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
             }
 
-            updateMainCrosshair();
+            UpdateMainCrosshair();
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
@@ -218,7 +218,7 @@ namespace RED.mbnq
                 this.Visible = true;
             }
 
-            updateMainCrosshair();
+            UpdateMainCrosshair();
 
             if (mbCrosshairOverlay != null)
             {
@@ -616,7 +616,7 @@ namespace RED.mbnq
         public void LoadCustomCrosshair()
         {
             mbCrosshairOverlay.LoadCustomCrosshair();
-            updateMainCrosshair();
+            UpdateMainCrosshair();
             UpdateLabels();
             UpdateButtons();
         }
@@ -625,7 +625,7 @@ namespace RED.mbnq
         public void RemoveCustomCrosshair()
         {
             mbCrosshairOverlay.RemoveCustomCrosshair();
-            updateMainCrosshair();
+            UpdateMainCrosshair();
             UpdateLabels();
             UpdateButtons();
         }
@@ -634,8 +634,8 @@ namespace RED.mbnq
         public void ApplyCustomCrosshair()
         {
             mbCrosshairOverlay.ApplyCustomCrosshair();
+            UpdateMainCrosshair();
             UpdateLabels();
-            updateMainCrosshair();
             UpdateButtons();
         }
 
@@ -643,7 +643,7 @@ namespace RED.mbnq
         #endregion
 
         #region Updating Stuff
-        public void updateMainCrosshair() // overlay
+        public void UpdateMainCrosshair() // overlay
         {
             if (mbCrosshairOverlay != null)
             {
@@ -943,7 +943,7 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Show();
                 mbCrosshairOverlay.BringToFront();
                 mbCrosshairOverlay.Invalidate();
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
             else
             {
@@ -1017,12 +1017,12 @@ namespace RED.mbnq
             if (mbHideCrosshairCheckBox.Checked)
             {
                 mHideCrosshair = true;
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
             else
             {
                 mHideCrosshair = false;
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
         }
         private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1041,12 +1041,12 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
         }
         private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1246,7 +1246,7 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             };
 
             // Handle double-click to reset to default value
@@ -1254,7 +1254,7 @@ namespace RED.mbnq
             {
                 materialSlider.Value = defaultValue;
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                updateMainCrosshair();
+                UpdateMainCrosshair();
                 Sounds.PlayClickSound();
             };
 

@@ -97,7 +97,7 @@ namespace RED.mbnq
             if (!controlPanel.mbHideCrosshairChecked)
             {
                 controlPanel.mHideCrosshair = hideCrosshair;
-                controlPanel.updateMainCrosshair();
+                controlPanel.UpdateMainCrosshair();
             }
         }
         private static void HoldTimer_Tick(object sender, EventArgs e)
