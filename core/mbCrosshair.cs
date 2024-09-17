@@ -88,6 +88,7 @@ namespace RED.mbnq
                                 crosshairPngOverlay = new Bitmap(img);
                                 this.Invalidate();
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
+                                ControlPanel.mbImageARatio = (double)img.Width / img.Height;
                             }
                             else
                             {
@@ -96,6 +97,7 @@ namespace RED.mbnq
                                 File.Delete(crosshairFilePath);
                                 crosshairPngOverlay = null;
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
+                                ControlPanel.mbImageARatio = 1.00f;
                             }
                         }
                     }

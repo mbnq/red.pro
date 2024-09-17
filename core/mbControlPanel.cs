@@ -54,6 +54,8 @@ namespace RED.mbnq
 
         public int mControlWidth;
 
+        public static double mbImageARatio                = 1.0f;
+
         public Size mbInitSize                          = new Size(0, 0);
         public static readonly int mCPWidth             = 262;
         public static readonly int mCPHeight            = 850;
@@ -702,8 +704,12 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Left = newLeft;
                 mbCrosshairOverlay.Top = newTop;
 
-                // Update size
-                mbCrosshairOverlay.Size = new Size(size.Value, size.Value);
+                // Update size taking into account aspect ratio
+                // It starts with 1.00f by default. If .png is being loaded it calculated it by
+                // '(double)img.Width / img.Height' in mbCrosshair.cs
+                // when .png is removed it falls back to 1.00f
+
+                mbCrosshairOverlay.Size = new Size((int)Math.Round(size.Value * mbImageARatio), (int)Math.Round(size.Value / mbImageARatio));
 
                 // Update colors
                 mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
@@ -711,6 +717,11 @@ namespace RED.mbnq
                 if (mbCrosshairOverlay.HasCustomOverlay)                                    // Check if custom overlay exists
                 {
                     mbCrosshairOverlay.TransparencyKey = mbCrosshairOverlay.BackColor;      // maybe could try something different here
+
+                    // mbImageARatio in mbCrosshair.cs
+                } else
+                {
+                    mbImageARatio = 1.00f;
                 }
 
                 // Update opacity
