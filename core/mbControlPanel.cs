@@ -576,7 +576,7 @@ namespace RED.mbnq
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
             mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
-            mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
+            if (mbnqFLIR.mbEnableFlirLogic) mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbAntiCapsCheckBox);
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
