@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System;
 using System.IO;
+using RED.mbnq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 public static class mbFnc
 {
     // ---------------------------------------
@@ -128,6 +131,8 @@ public static class mbFnc
 
         if (clickedLabel != null)
         {
+            Sounds.PlayClickSoundOnce();
+
             Clipboard.SetText(clickedLabel.Text);
             var mousePosition = Control.MousePosition;
             Point labelLocation = clickedLabel.PointToClient(mousePosition);
