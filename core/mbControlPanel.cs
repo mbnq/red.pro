@@ -19,14 +19,14 @@ using RED.mbnq.core;
 
 namespace RED.mbnq
 {
-    public class ControlPanel : MaterialSkin.Controls.MaterialForm
+    public class ControlPanel : MaterialForm
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
-        public static readonly bool mPBIsOn = true;                     // progress bar 
-        public static bool mIsSplashOn      = false;
-        public bool mHideCrosshair          = false;
+        public static bool mIsDebugOn       = false;                        // init only 
+        public static readonly bool mPBIsOn = true;                         // init only 
+        public static bool mIsSplashOn      = false;                        // init only
+        public bool mHideCrosshair          = false;                        // init only
         public int mSettingsLoaded          = 0;
 
         private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
@@ -50,18 +50,18 @@ namespace RED.mbnq
 
         public int mControlWidth;
 
-        public static double mbImageARatio                = 1.0f;
+        public static double mbImageARatio              = 1.00f;            // init only
 
-        public Size mbInitSize                          = new Size(0, 0);
-        public static readonly int mCPWidth             = 262;
-        public static readonly int mCPHeight            = 850;
-        public static readonly int mControlDefSpacer    = 36;
+        public Size mbInitSize                          = new Size(0, 0);   // init only
+        public static readonly int mCPWidth             = 262;              // init only
+        public static readonly int mCPHeight            = 850;              // init only
+        public static readonly int mControlDefSpacer    = 36;               // init only
 
-        public const int mPNGMaxWidth                   = 1920;
-        public const int mPNGMaxHeight                  = 1080;
-        public const int mSplashDuration                = 4000;
+        public const int mPNGMaxWidth                   = 1920;             // init only
+        public const int mPNGMaxHeight                  = 1080;             // init only
+        public const int mSplashDuration                = 4000;             // duration in ms
 
-        public const int mbCrosshairRedrawTime          = 5000; // interval in ms
+        public const int mbCrosshairRedrawTime          = 5000;             // interval in ms
 
         #endregion
 
@@ -73,11 +73,9 @@ namespace RED.mbnq
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
 
-            UpdateAllUI();
-
             if (mbDarkModeCheckBoxChecked)
             {
-                InitializeMaterialSkin("");
+                InitializeMaterialSkin("DARK");
             }
             else
             {
@@ -106,7 +104,7 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
             }
 
-            UpdateMainCrosshair();
+            UpdateAllUI();
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
@@ -818,7 +816,6 @@ namespace RED.mbnq
         }
 
         // ---
-
         void mbRunSystemFile(string fileName)
         {
             try
