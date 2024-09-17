@@ -16,7 +16,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RED.mbnq.core;
-using System.Drawing.Text;
 
 namespace RED.mbnq
 {
@@ -53,7 +52,6 @@ namespace RED.mbnq
 
         public static double mbImageARatio              = 1.00f;            // init only
 
-        public Size mbInitSize                          = new Size(0, 0);   // init only
         public static readonly int mCPWidth             = 262;              // init only
         public static readonly int mCPHeight            = 850;              // init only
         public static readonly int mControlDefSpacer    = 36;               // init only
@@ -91,6 +89,7 @@ namespace RED.mbnq
             this.Size = new Size(0, 0);
 
             this.Shown += ControlPanel_Shown;
+            this.Resize += new EventHandler(InitSizeMb);
             // this.AutoSize = true;
             // this.AutoSizeMode = AutoSizeMode.GrowOnly;
 
@@ -224,12 +223,6 @@ namespace RED.mbnq
                 // Position the ControlPanel relative to the mbnqCrosshair, if necessary
                 PositionControlPanelRelativeToCrosshair();
             }
-
-            this.BeginInvoke((Action)(() =>
-            {
-                mbInitSize = this.Size;
-                // Debug.WriteLineIf(mIsDebugOn, $"mbnq: Initialized size: {mbInitSize}");
-            }));
 
             if (mIsSplashOn)
             {
@@ -637,6 +630,13 @@ namespace RED.mbnq
         #endregion
 
         #region Updating Stuff
+        public void InitSizeMb(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Size = new Size(mCPWidth, mCPHeight);
+            }
+        }
         public void UpdateAllUI()
         {
             UpdateMainCrosshair();
