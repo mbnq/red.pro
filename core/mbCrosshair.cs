@@ -146,6 +146,34 @@ namespace RED.mbnq
             // Refresh the display
             this.Invalidate();
         }
+        public void ApplyCustomCrosshair()
+        {
+            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            if (File.Exists(customFilePath))
+            {
+                try
+                {
+                    using (var img = Image.FromFile(customFilePath))
+                    {
+                        if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight)
+                        {
+                            ControlPanel.mbCrosshairDisplay.SetCustomPNG();
+                        }
+                        else
+                        {
+                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {ControlPanel.mPNGMaxHeight}x{ControlPanel.mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                            Sounds.PlayClickSoundOnce();
+                            File.Delete(customFilePath);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MaterialMessageBox.Show($"Failed to load the custom crosshair: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    Sounds.PlayClickSoundOnce();
+                }
+            }
+        }
         public void RemoveCustomCrosshair()
         {
             string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");

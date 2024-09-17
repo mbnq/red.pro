@@ -45,7 +45,7 @@ namespace RED.mbnq
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         public mbProgressBar mbProgressBar0;
-        public mbCrosshair mbCrosshairDisplay;
+        public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
         public string mbUserFilesPath = Path.Combine(SaveLoad.SettingsDirectory);
@@ -633,31 +633,7 @@ namespace RED.mbnq
         // Apply custom overlay
         public void ApplyCustomCrosshair()
         {
-            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-            if (File.Exists(customFilePath))
-            {
-                try
-                {
-                    using (var img = Image.FromFile(customFilePath))
-                    {
-                        if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
-                        {
-                            mbCrosshairDisplay.SetCustomPNG();
-                        }
-                        else
-                        {
-                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                            Sounds.PlayClickSoundOnce();
-                            File.Delete(customFilePath);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MaterialMessageBox.Show($"Failed to load the custom crosshair: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                    Sounds.PlayClickSoundOnce();
-                }
-            }
+            mbCrosshairOverlay.ApplyCustomCrosshair();
             UpdateLabels();
             updateMainCrosshair();
             UpdateButtons();
