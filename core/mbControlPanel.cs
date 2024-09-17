@@ -13,13 +13,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
-// using System.Threading;
 using System.Threading.Tasks;
-// using System.Runtime.InteropServices;
 using System.Net.Http;
-// using System.Security.Cryptography.X509Certificates;
 using RED.mbnq.core;
-using System.Runtime.CompilerServices;
 
 namespace RED.mbnq
 {
@@ -616,33 +612,55 @@ namespace RED.mbnq
         public void LoadCustomCrosshair()
         {
             mbCrosshairOverlay.LoadCustomCrosshair();
-            UpdateMainCrosshair();
-            UpdateLabels();
-            UpdateButtons();
+            UpdateAllUI();
         }
 
         // Remove the overlay and refresh display
         public void RemoveCustomCrosshair()
         {
             mbCrosshairOverlay.RemoveCustomCrosshair();
-            UpdateMainCrosshair();
-            UpdateLabels();
-            UpdateButtons();
+            UpdateAllUI();
         }
 
         // Apply custom overlay
         public void ApplyCustomCrosshair()
         {
             mbCrosshairOverlay.ApplyCustomCrosshair();
-            UpdateMainCrosshair();
-            UpdateLabels();
-            UpdateButtons();
+            UpdateAllUI();
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
         #endregion
 
         #region Updating Stuff
+        public void UpdateAllUI()
+        {
+            UpdateMainCrosshair();
+            UpdateLabeledSliders();
+            UpdateButtons();
+            UpdateZoomControls();
+        }
+        public void UpdateZoomControls()
+        {
+            // Update zoom
+            ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
+
+            // it's needed here
+            if (ZoomMode.IsZoomModeEnabled)
+            {
+                zoomLevel.Enabled = true;
+                // zoomLevel.Visible = true;
+                zoomLevel.Parent.Controls[0].Enabled = true;
+                // zoomLevel.Parent.Controls[0].Visible = true;
+            }
+            else
+            {
+                zoomLevel.Enabled = false;
+                // zoomLevel.Visible = false;
+                zoomLevel.Parent.Controls[0].Enabled = false;
+                // zoomLevel.Parent.Controls[0].Visible = false;
+            }
+        }
         public void UpdateMainCrosshair() // overlay
         {
             if (mbCrosshairOverlay != null)
@@ -701,26 +719,10 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Show();
                 mbCrosshairOverlay.BringToFront();
                 mbCrosshairOverlay.Invalidate();
-
-                // Update zoom
-                ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
-
-                // it's needed here
-                if (ZoomMode.IsZoomModeEnabled) { 
-                    zoomLevel.Enabled = true; 
-                    // zoomLevel.Visible = true;
-                    zoomLevel.Parent.Controls[0].Enabled = true;
-                    // zoomLevel.Parent.Controls[0].Visible = true;
-                } else { 
-                    zoomLevel.Enabled = false; 
-                    // zoomLevel.Visible = false;
-                    zoomLevel.Parent.Controls[0].Enabled = false;
-                    // zoomLevel.Parent.Controls[0].Visible = false;
-                }
             }
-            UpdateLabels();
+            UpdateLabeledSliders();
         }
-        private void UpdateLabels()
+        private void UpdateLabeledSliders()
         {
             colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
             colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
@@ -1041,12 +1043,12 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
-                UpdateMainCrosshair();
+                UpdateZoomControls();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
-                UpdateMainCrosshair();
+                UpdateZoomControls();
             }
         }
         private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
