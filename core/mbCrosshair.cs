@@ -69,6 +69,30 @@ namespace RED.mbnq
         #region Custom .png
         /* --- --- ---  --- --- --- */
 
+        public void LoadCustomCrosshair()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
+                openFileDialog.Filter = "PNG files (*.png)|*.png";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+
+                    if (File.Exists(destinationPath))
+                    {
+                        File.Delete(destinationPath);
+                    }
+
+                    File.Copy(filePath, destinationPath);
+
+                    SetCustomPNG();
+                }
+            }
+        }
+
         string crosshairFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomPNG()
         {

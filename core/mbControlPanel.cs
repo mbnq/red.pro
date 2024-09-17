@@ -615,29 +615,10 @@ namespace RED.mbnq
         // Load and set the new Custom .png Crosshair Ovelray and refresh display
         public void LoadCustomCrosshair()
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
-                openFileDialog.Filter = "PNG files (*.png)|*.png";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = openFileDialog.FileName;
-                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-
-                    if (File.Exists(destinationPath))
-                    {
-                        File.Delete(destinationPath);
-                    }
-
-                    File.Copy(filePath, destinationPath);
-
-                    mbCrosshairOverlay.SetCustomPNG();
-                    updateMainCrosshair();
-                    UpdateLabels();
-                    UpdateButtons();
-                }
-            }
+            mbCrosshairOverlay.LoadCustomCrosshair();
+            updateMainCrosshair();
+            UpdateLabels();
+            UpdateButtons();
         }
 
         // Remove the overlay and refresh display
