@@ -69,6 +69,7 @@ namespace RED.mbnq
         #region Custom .png
         /* --- --- ---  --- --- --- */
 
+        /* --- --- --- Load --- --- --- */
         public void LoadCustomCrosshair()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -92,6 +93,8 @@ namespace RED.mbnq
                 }
             }
         }
+
+        /* --- --- --- Set --- --- --- */
 
         string crosshairFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomPNG()
@@ -146,6 +149,8 @@ namespace RED.mbnq
             // Refresh the display
             this.Invalidate();
         }
+
+        /* --- --- --- Apply --- --- --- */
         public void ApplyCustomCrosshair()
         {
             var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
@@ -216,6 +221,8 @@ namespace RED.mbnq
             // Refresh the crosshair
             this.Invalidate();
         }
+
+        /* --- --- --- Dispose --- --- --- */
 
         // ensure the custom overlay image is properly disposed
         protected override void Dispose(bool disposing)
