@@ -413,3 +413,6 @@ artifacts/
 # Logs and temporary files
 *.log
 *.tmp
+
+# mb
+*.eps
