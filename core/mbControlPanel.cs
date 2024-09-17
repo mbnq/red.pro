@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RED.mbnq.core;
+using System.Drawing.Text;
 
 namespace RED.mbnq
 {
@@ -498,6 +499,8 @@ namespace RED.mbnq
             mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbSysDropDown);
 
+            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+
             mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
 
@@ -579,15 +582,17 @@ namespace RED.mbnq
             if (mbnqFLIR.mbEnableFlirLogic) mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbAntiCapsCheckBox);
-            mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
 
+            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
+
+            mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
             mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
             mbPanelForTab2.Controls.Add(mbSplashCheckBox);
-
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
 
+            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
             mbPanelForTab2.Controls.Add(debugTestButton);
 
             mbTab2.Controls.Add(mbPanelForTab2);

@@ -139,5 +139,18 @@ public static class mbFnc
             mbToolTip.Show($"Copied: {clickedLabel.Text} to clipboard!", clickedLabel, labelLocation.X, labelLocation.Y, 2000);
         }
     }
+
+    // ---------------------------------------
+    // Simple spacer for GUI usage
+    public static void mbSpacer2(Control.ControlCollection parentControls, byte desiredHight, string desiredText)
+    {
+        parentControls.Add(new Label
+        {
+            Text = desiredText,
+            Size = new Size(parentControls.Owner.Width, desiredHight),
+            TextAlign = ContentAlignment.MiddleLeft
+        });
+
+    }
 }
 
