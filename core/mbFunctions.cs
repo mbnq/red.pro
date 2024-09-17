@@ -112,5 +112,19 @@ public static class mbFnc
         return 0.0;
     }
     // ---------------------------------------
+    public static void mbCopyLabelToClipboard(object sender, EventArgs e)
+    {
+
+        Label clickedLabel = sender as Label;
+
+        if (clickedLabel != null)
+        {
+            // Copy the text of the clicked label to the clipboard
+            Clipboard.SetText(clickedLabel.Text);
+
+            // Optional: Show a message box to confirm
+            MessageBox.Show($"Copied: {clickedLabel.Text} to clipboard!");
+        }
+    }
 }
 
