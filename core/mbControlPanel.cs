@@ -69,10 +69,11 @@ namespace RED.mbnq
         public ControlPanel()
         {
             InitializeControlPanel();
-            UpdateButtons();
 
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
+
+            UpdateAllUI();
 
             if (mbDarkModeCheckBoxChecked)
             {
