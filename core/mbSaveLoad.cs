@@ -184,7 +184,7 @@ namespace RED.mbnq
 
             controlPanel.mbProgressBar0.Value = 100;
             controlPanel.mbProgressBar0.Visible = false;
-            controlPanel.updateMainCrosshair();
+            controlPanel.UpdateMainCrosshair();
         }
 
         /* --- --- --- loading settings --- --- --- */
@@ -221,7 +221,7 @@ namespace RED.mbnq
 
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
             controlPanel.mbProgressBar0.Value = 100;
-            controlPanel.updateMainCrosshair();
+            controlPanel.UpdateMainCrosshair();
             controlPanel.mSettingsLoaded = 1;
             controlPanel.mbProgressBar0.Visible = false;
         }
@@ -274,7 +274,7 @@ namespace RED.mbnq
 
             if (fileCreated)
             {
-                controlPanel.updateMainCrosshair();
+                controlPanel.UpdateMainCrosshair();
             }
         }
     }

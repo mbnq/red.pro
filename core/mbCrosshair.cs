@@ -69,6 +69,33 @@ namespace RED.mbnq
         #region Custom .png
         /* --- --- ---  --- --- --- */
 
+        /* --- --- --- Load --- --- --- */
+        public void LoadCustomCrosshair()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
+                openFileDialog.Filter = "PNG files (*.png)|*.png";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+
+                    if (File.Exists(destinationPath))
+                    {
+                        File.Delete(destinationPath);
+                    }
+
+                    File.Copy(filePath, destinationPath);
+
+                    SetCustomPNG();
+                }
+            }
+        }
+
+        /* --- --- --- Set --- --- --- */
+
         string crosshairFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
         public void SetCustomPNG()
         {
@@ -88,6 +115,7 @@ namespace RED.mbnq
                                 crosshairPngOverlay = new Bitmap(img);
                                 this.Invalidate();
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
+                                ControlPanel.mbImageARatio = (double)img.Width / img.Height;
                             }
                             else
                             {
@@ -96,6 +124,7 @@ namespace RED.mbnq
                                 File.Delete(crosshairFilePath);
                                 crosshairPngOverlay = null;
                                 Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
+                                ControlPanel.mbImageARatio = 1.00f;
                             }
                         }
                     }
@@ -119,6 +148,36 @@ namespace RED.mbnq
 
             // Refresh the display
             this.Invalidate();
+        }
+
+        /* --- --- --- Apply --- --- --- */
+        public void ApplyCustomCrosshair()
+        {
+            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            if (File.Exists(customFilePath))
+            {
+                try
+                {
+                    using (var img = Image.FromFile(customFilePath))
+                    {
+                        if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight)
+                        {
+                            ControlPanel.mbCrosshairDisplay.SetCustomPNG();
+                        }
+                        else
+                        {
+                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {ControlPanel.mPNGMaxHeight}x{ControlPanel.mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                            Sounds.PlayClickSoundOnce();
+                            File.Delete(customFilePath);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MaterialMessageBox.Show($"Failed to load the custom crosshair: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    Sounds.PlayClickSoundOnce();
+                }
+            }
         }
         public void RemoveCustomCrosshair()
         {
@@ -162,6 +221,8 @@ namespace RED.mbnq
             // Refresh the crosshair
             this.Invalidate();
         }
+
+        /* --- --- --- Dispose --- --- --- */
 
         // ensure the custom overlay image is properly disposed
         protected override void Dispose(bool disposing)

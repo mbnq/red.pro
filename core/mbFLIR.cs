@@ -23,8 +23,8 @@ namespace RED.mbnq
         private int green = 192;
         private int blue = 192;
         private Timer repaintTimer;
-        public static bool mbEnableFlirLogic = false;    // for general enabling and disabling the flir logic
-        public static bool mbEnableFlir = false;        // for dynamic enabling with checkbox 
+        public static bool mbEnableFlirLogic = false;   // set here,  for general enabling and disabling the flir logic
+        public static bool mbEnableFlir = false;        // init only, for dynamic enabling with checkbox 
 
         public mbnqFLIR()
         {

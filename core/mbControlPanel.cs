@@ -13,24 +13,20 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
-// using System.Threading;
 using System.Threading.Tasks;
-// using System.Runtime.InteropServices;
 using System.Net.Http;
-// using System.Security.Cryptography.X509Certificates;
 using RED.mbnq.core;
-using System.Runtime.CompilerServices;
 
 namespace RED.mbnq
 {
-    public class ControlPanel : MaterialSkin.Controls.MaterialForm
+    public class ControlPanel : MaterialForm
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mIsDebugOn       = false;                    // debug mode, there is checkbox for it so shouldn't be changed manually here
-        public static readonly bool mPBIsOn = true;                     // progress bar 
-        public static bool mIsSplashOn      = false;
-        public bool mHideCrosshair          = false;
+        public static bool mIsDebugOn       = false;                        // init only 
+        public static readonly bool mPBIsOn = true;                         // init only 
+        public static bool mIsSplashOn      = false;                        // init only
+        public bool mHideCrosshair          = false;                        // init only
         public int mSettingsLoaded          = 0;
 
         private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
@@ -45,7 +41,7 @@ namespace RED.mbnq
 
         public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
         public mbProgressBar mbProgressBar0;
-        public mbCrosshair mbCrosshairDisplay;
+        public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
         public string mbUserFilesPath = Path.Combine(SaveLoad.SettingsDirectory);
@@ -54,32 +50,32 @@ namespace RED.mbnq
 
         public int mControlWidth;
 
-        public Size mbInitSize                          = new Size(0, 0);
-        public static readonly int mCPWidth             = 262;
-        public static readonly int mCPHeight            = 850;
-        public static readonly int mControlDefSpacer    = 36;
+        public static double mbImageARatio              = 1.00f;            // init only
 
-        public const int mPNGMaxWidth                   = 1920;
-        public const int mPNGMaxHeight                  = 1080;
-        public const int mSplashDuration                = 4000;
+        public Size mbInitSize                          = new Size(0, 0);   // init only
+        public static readonly int mCPWidth             = 262;              // init only
+        public static readonly int mCPHeight            = 850;              // init only
+        public static readonly int mControlDefSpacer    = 36;               // init only
 
-        public const int mbCrosshairRedrawTime          = 5000; // interval in ms
+        public const int mPNGMaxWidth                   = 1920;             // init only
+        public const int mPNGMaxHeight                  = 1080;             // init only
+        public const int mSplashDuration                = 4000;             // duration in ms
+
+        public const int mbCrosshairRedrawTime          = 5000;             // interval in ms
 
         #endregion
 
         #region ControlPanel Init
         public ControlPanel()
         {
-
             InitializeControlPanel();
-            UpdateButtons();
 
             SaveLoad.EnsureSettingsFileExists(this);
             SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
 
             if (mbDarkModeCheckBoxChecked)
             {
-                InitializeMaterialSkin("");
+                InitializeMaterialSkin("DARK");
             }
             else
             {
@@ -91,7 +87,7 @@ namespace RED.mbnq
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(mCPWidth, mCPHeight);
+            this.Size = new Size(0, 0);
 
             this.Shown += ControlPanel_Shown;
             // this.AutoSize = true;
@@ -108,8 +104,7 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
             }
 
-            updateMainCrosshair();
-
+            UpdateAllUI();
 
             Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
@@ -206,12 +201,19 @@ namespace RED.mbnq
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
+            // this is pretty nasty, but it works...
             if (mIsSplashOn)
             {
+                this.Size = new Size(0, 0);
                 this.Visible = false; 
             }
+            else
+            {
+                this.Size = new Size(mCPWidth, mCPHeight);
+                this.Visible = true;
+            }
 
-            updateMainCrosshair();
+            UpdateMainCrosshair();
 
             if (mbCrosshairOverlay != null)
             {
@@ -240,6 +242,7 @@ namespace RED.mbnq
                     this.Invoke((Action)(() =>
                     {
                         this.Visible = true;
+                        this.Size = new Size(mCPWidth, mCPHeight);
                         splashScreen.Close();
                         splashScreen.Dispose();
                     }));
@@ -573,7 +576,7 @@ namespace RED.mbnq
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
             mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
-            mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
+            if (mbnqFLIR.mbEnableFlirLogic) mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbAntiCapsCheckBox);
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
@@ -607,78 +610,57 @@ namespace RED.mbnq
         // Load and set the new Custom .png Crosshair Ovelray and refresh display
         public void LoadCustomCrosshair()
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
-                openFileDialog.Filter = "PNG files (*.png)|*.png";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = openFileDialog.FileName;
-                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-
-                    if (File.Exists(destinationPath))
-                    {
-                        File.Delete(destinationPath);
-                    }
-
-                    File.Copy(filePath, destinationPath);
-
-                    mbCrosshairOverlay.SetCustomPNG();
-                    updateMainCrosshair();
-                    UpdateLabels();
-                    UpdateButtons();
-                }
-            }
+            mbCrosshairOverlay.LoadCustomCrosshair();
+            UpdateAllUI();
         }
 
         // Remove the overlay and refresh display
         public void RemoveCustomCrosshair()
         {
             mbCrosshairOverlay.RemoveCustomCrosshair();
-            updateMainCrosshair();
-            UpdateLabels();
-            UpdateButtons();
+            UpdateAllUI();
         }
 
         // Apply custom overlay
         public void ApplyCustomCrosshair()
         {
-            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
-            if (File.Exists(customFilePath))
-            {
-                try
-                {
-                    using (var img = Image.FromFile(customFilePath))
-                    {
-                        if (img.Width <= mPNGMaxWidth && img.Height <= mPNGMaxHeight)
-                        {
-                            mbCrosshairDisplay.SetCustomPNG();
-                        }
-                        else
-                        {
-                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {mPNGMaxHeight}x{mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                            Sounds.PlayClickSoundOnce();
-                            File.Delete(customFilePath);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MaterialMessageBox.Show($"Failed to load the custom crosshair: {ex.Message}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
-                    Sounds.PlayClickSoundOnce();
-                }
-            }
-            UpdateLabels();
-            updateMainCrosshair();
-            UpdateButtons();
+            mbCrosshairOverlay.ApplyCustomCrosshair();
+            UpdateAllUI();
         }
 
         /* --- --- --- End of custom overlay --- --- --- */
         #endregion
 
         #region Updating Stuff
-        public void updateMainCrosshair() // overlay
+        public void UpdateAllUI()
+        {
+            UpdateMainCrosshair();
+            UpdateLabeledSliders();
+            UpdateButtons();
+            UpdateZoomControls();
+        }
+        public void UpdateZoomControls()
+        {
+            // Update zoom
+            ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
+
+            // it's needed here
+            if (ZoomMode.IsZoomModeEnabled)
+            {
+                zoomLevel.Enabled = true;
+                // zoomLevel.Visible = true;
+                zoomLevel.Parent.Controls[0].Enabled = true;
+                // zoomLevel.Parent.Controls[0].Visible = true;
+            }
+            else
+            {
+                zoomLevel.Enabled = false;
+                // zoomLevel.Visible = false;
+                zoomLevel.Parent.Controls[0].Enabled = false;
+                // zoomLevel.Parent.Controls[0].Visible = false;
+            }
+        }
+        public void UpdateMainCrosshair() // overlay
         {
             if (mbCrosshairOverlay != null)
             {
@@ -696,8 +678,12 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Left = newLeft;
                 mbCrosshairOverlay.Top = newTop;
 
-                // Update size
-                mbCrosshairOverlay.Size = new Size(size.Value, size.Value);
+                // Update size taking into account aspect ratio
+                // It starts with 1.00f by default. If .png is being loaded it calculated it by
+                // '(double)img.Width / img.Height' in mbCrosshair.cs
+                // when .png is removed it falls back to 1.00f
+
+                mbCrosshairOverlay.Size = new Size((int)Math.Round(size.Value * mbImageARatio), (int)Math.Round(size.Value / mbImageARatio));
 
                 // Update colors
                 mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
@@ -705,6 +691,11 @@ namespace RED.mbnq
                 if (mbCrosshairOverlay.HasCustomOverlay)                                    // Check if custom overlay exists
                 {
                     mbCrosshairOverlay.TransparencyKey = mbCrosshairOverlay.BackColor;      // maybe could try something different here
+
+                    // mbImageARatio in mbCrosshair.cs
+                } else
+                {
+                    mbImageARatio = 1.00f;
                 }
 
                 // Update opacity
@@ -727,26 +718,10 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Show();
                 mbCrosshairOverlay.BringToFront();
                 mbCrosshairOverlay.Invalidate();
-
-                // Update zoom
-                ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
-
-                // it's needed here
-                if (ZoomMode.IsZoomModeEnabled) { 
-                    zoomLevel.Enabled = true; 
-                    // zoomLevel.Visible = true;
-                    zoomLevel.Parent.Controls[0].Enabled = true;
-                    // zoomLevel.Parent.Controls[0].Visible = true;
-                } else { 
-                    zoomLevel.Enabled = false; 
-                    // zoomLevel.Visible = false;
-                    zoomLevel.Parent.Controls[0].Enabled = false;
-                    // zoomLevel.Parent.Controls[0].Visible = false;
-                }
             }
-            UpdateLabels();
+            UpdateLabeledSliders();
         }
-        private void UpdateLabels()
+        private void UpdateLabeledSliders()
         {
             colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
             colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
@@ -841,7 +816,6 @@ namespace RED.mbnq
         }
 
         // ---
-
         void mbRunSystemFile(string fileName)
         {
             try
@@ -969,7 +943,7 @@ namespace RED.mbnq
                 mbCrosshairOverlay.Show();
                 mbCrosshairOverlay.BringToFront();
                 mbCrosshairOverlay.Invalidate();
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
             else
             {
@@ -1043,12 +1017,12 @@ namespace RED.mbnq
             if (mbHideCrosshairCheckBox.Checked)
             {
                 mHideCrosshair = true;
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
             else
             {
                 mHideCrosshair = false;
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             }
         }
         private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1067,12 +1041,12 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
-                updateMainCrosshair();
+                UpdateZoomControls();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
-                updateMainCrosshair();
+                UpdateZoomControls();
             }
         }
         private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1272,7 +1246,7 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                updateMainCrosshair();
+                UpdateMainCrosshair();
             };
 
             // Handle double-click to reset to default value
@@ -1280,7 +1254,7 @@ namespace RED.mbnq
             {
                 materialSlider.Value = defaultValue;
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                updateMainCrosshair();
+                UpdateMainCrosshair();
                 Sounds.PlayClickSound();
             };
 

@@ -121,7 +121,7 @@ namespace RED.mbnq
             if (controlPanel.SizeValue < 100) controlPanel.SizeValue = 100;
             AdjustColorsForCustomPNG();
             controlPanel.CenterCrosshairOverlay();
-            controlPanel.updateMainCrosshair();
+            controlPanel.UpdateMainCrosshair();
             UpdateMenuItems();
         }
         public void AdjustColorsForCustomPNG()
@@ -146,7 +146,7 @@ namespace RED.mbnq
             controlPanel.RemoveCustomCrosshair();                           // removes the custom crosshair data from the control panel itself
             controlPanel.ColorRValue++;                                     // Force redraw of crosshair
 
-            controlPanel.updateMainCrosshair();
+            controlPanel.UpdateMainCrosshair();
             UpdateMenuItems();
         }
         public void UpdateMenuItems()
