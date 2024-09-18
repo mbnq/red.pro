@@ -77,4 +77,4 @@ Requirements: Windows 11 with [.NET 4.8 x64](https://dotnet.microsoft.com/en-us/
 
 Dependencies:
   - MaterialSkin (https://licenses.nuget.org/MIT)
-
+  - stoker_1 (https://www.shutterstock.com/pl/g/stoker_1)
