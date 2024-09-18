@@ -63,7 +63,7 @@ namespace RED.mbnq
             {
                 if (controlPanel.AutoSaveOnExitChecked)
                 {
-                    SaveLoad.SaveSettings(controlPanel, false);
+                    SaveLoad.SaveSettings(controlPanel, false, true);
                 }
             };
 
