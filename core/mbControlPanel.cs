@@ -470,6 +470,7 @@ namespace RED.mbnq
 
             mbMbToolsDropDown.Items.Add("Test Ping");
             mbMbToolsDropDown.Items.Add("My IP");
+            mbMbToolsDropDown.Items.Add("Shutdown with Delay");
             mbMbToolsDropDown.Items.Add("Verify System Files");
             mbMbToolsDropDown.Items.Add("Show Windows Key");
 
@@ -496,6 +497,9 @@ namespace RED.mbnq
                             break;
                         case "My IP":
                             mbMyIP_Click(sender, e);
+                            break;
+                        case "Shutdown with Delay":
+                            mbShutDownSys_Click(sender, e);
                             break;
                         case "Verify System Files":
                             mbVerifySys_Click(sender, e);
@@ -798,6 +802,48 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+            }
+        }
+
+        private void mbShutDownSys_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                // Path to a temporary batch file
+                string tempBatchFile = Path.Combine(Path.GetTempPath(), "system_shutdown.bat");
+
+                // Create batch file content
+                string batchContent = @"
+                    @echo off
+                    title RED. PRO
+                    set /a _time = 900
+                    cls
+                    echo Will shutdown your computer after %_time%s
+                    echo Press any key to cancel...
+                    shutdown -f -s -t %_time%
+                    pause > nul
+                    shutdown -a
+                ";
+
+                // Write the batch file content to the file
+                File.WriteAllText(tempBatchFile, batchContent);
+
+                // Create a new process to run the batch file as administrator
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = tempBatchFile,
+                    // Verb = "runas",                         // to run as administrator
+                    // UseShellExecute = true,                 // Required to launch as admin
+                    WindowStyle = ProcessWindowStyle.Normal // Shows the command prompt window
+                };
+
+                // Start the process
+                Process.Start(processInfo);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
 
