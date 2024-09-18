@@ -260,19 +260,25 @@ namespace RED.mbnq
                 Enabled = true                          // we don't really need this
             };
 
-            mbTab1 = new TabPage("Xhair") { ImageKey = "DefaultIcon" };
-            mbTab2 = new TabPage("Options") { ImageKey = "DefaultIcon" };
-            mbTab3 = new TabPage("Tools") { ImageKey = "DefaultIcon" };
+            mbTab1 = new TabPage("Xhair") { ImageKey = "CrosshairIcon" };  
+            mbTab2 = new TabPage("Options") { ImageKey = "SettingsIcon" };
+            mbTab3 = new TabPage("Tools") { ImageKey = "ToolsIcon" };
 
             mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
 
             // ---
 
-            ImageList imageList = new ImageList();
-            imageList.ImageSize = new Size(36, 36);
-            imageList.ColorDepth = ColorDepth.Depth32Bit;
+            ImageList imageList = new ImageList
+            {
+                ImageSize = new Size(32, 32),
+                ColorDepth = ColorDepth.Depth32Bit
+            };
 
+            // resources with associated keys
             imageList.Images.Add("DefaultIcon", Properties.Resources.gui_defaultIcon);
+            imageList.Images.Add("CrosshairIcon", Properties.Resources.gui_crosshairIcon);
+            imageList.Images.Add("SettingsIcon", Properties.Resources.gui_settingsIcon);
+            imageList.Images.Add("ToolsIcon", Properties.Resources.gui_toolsIcon);
 
             mbTabControl.ImageList = imageList;
 
@@ -282,7 +288,7 @@ namespace RED.mbnq
             {
                 BaseTabControl = mbTabControl,
                 Dock = DockStyle.Bottom,
-                TabIndicatorHeight = 5,
+                TabIndicatorHeight = 4,
                 Enabled = true
             };
 

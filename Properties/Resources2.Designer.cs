@@ -83,9 +83,39 @@ namespace RED.mbnq.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gui_crosshairIcon {
+            get {
+                object obj = ResourceManager.GetObject("gui_crosshairIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gui_defaultIcon {
             get {
                 object obj = ResourceManager.GetObject("gui_defaultIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gui_settingsIcon {
+            get {
+                object obj = ResourceManager.GetObject("gui_settingsIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gui_toolsIcon {
+            get {
+                object obj = ResourceManager.GetObject("gui_toolsIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

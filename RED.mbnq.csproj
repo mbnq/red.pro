@@ -324,6 +324,9 @@
     <None Include="gfx\mbnqBackground0.png" />
     <None Include="sounds\mbnqClick.wav" />
     <None Include="gfx\gui_defaultGUIIcon.png" />
+    <None Include="gfx\gui_crosshairIcon.png" />
+    <None Include="gfx\gui_settingsIcon.png" />
+    <None Include="gfx\gui_toolsIcon.png" />
     <Content Include="gfx\mbnqIcon.ico" />
   </ItemGroup>
   <ItemGroup>
