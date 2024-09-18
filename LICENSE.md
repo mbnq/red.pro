@@ -23,4 +23,4 @@ For any questions or additional information, please contact mbnq.pl.
 
 Dependencies:
   - MaterialSkin (https://licenses.nuget.org/MIT)
-
+  - stoker_1 (https://www.shutterstock.com/pl/g/stoker_1)
