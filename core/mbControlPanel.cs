@@ -270,8 +270,9 @@ namespace RED.mbnq
 
             ImageList imageList = new ImageList
             {
-                ImageSize = new Size(32, 32),
-                ColorDepth = ColorDepth.Depth32Bit
+                ImageSize = new Size(24, 24),           // will not work here, const has to be set in MaterialTabSelector.cs ICON_SIZE = 24;
+                ColorDepth = ColorDepth.Depth32Bit,
+                Tag = "MainTabIcons"
             };
 
             // resources with associated keys

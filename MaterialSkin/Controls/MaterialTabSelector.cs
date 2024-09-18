@@ -81,7 +81,7 @@
         private const int mCPWidth = 262;
         private const int mCPHeight = 750;
 
-        private const int ICON_SIZE = 36;
+        private const int ICON_SIZE = 24;
         private const int FIRST_TAB_PADDING = 0;
         private const int TAB_HEADER_PADDING = 0;
         private const int TAB_WIDTH_MIN = (mCPWidth / 3);
