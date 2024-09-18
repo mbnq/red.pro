@@ -130,7 +130,8 @@ namespace RED.mbnq
                     "restart",
                     "reboot",
                     "reinit",
-                    "help"
+                    "help",
+                    "test"
                 },
                 MaxLength = 128,
                 ForeColor = Color.White,
@@ -197,13 +198,11 @@ namespace RED.mbnq
         #endregion
 
         #region Mouse Events
-
         private void TXTHUD_MouseDown(object sender, MouseEventArgs e)
         {
             isDragging = true;
             startPoint = new Point(e.X, e.Y);
         }
-
         private void TXTHUD_MouseMove(object sender, MouseEventArgs e)
         {
             if (isDragging)
@@ -212,16 +211,13 @@ namespace RED.mbnq
                 Location = new Point(p.X - startPoint.X, p.Y - startPoint.Y);
             }
         }
-
         private void TXTHUD_MouseUp(object sender, MouseEventArgs e)
         {
             isDragging = false;
         }
-
         #endregion
 
         #region Update Methods
-
         private async Task UpdatePingAsync()
         {
             string pingResult = await GetPingResultAsync(currentPingAddress);
@@ -237,35 +233,29 @@ namespace RED.mbnq
         #endregion
 
         #region Text Update Methods
-
         private void UpdatePingText(string newText)
         {
             displayTexts[1] = newText;
             this.ThrottlePaint(); // Redraw with the updated text
         }
-
         private void UpdateIpText(string newText)
         {
             displayTexts[2] = newText;
             this.ThrottlePaint(); // Redraw with the updated text
         }
-
         private void UpdateDrawCountText()
         {
             displayTexts[3] = $"Console Draw Count: {paintCounter}";
             this.ThrottlePaint(); // Redraw with the updated draw count
         }
-
         private void UpdateCpuUsageText()
         {
             displayTexts[4] = $"CPU: {GetCpuUsage()}";
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
-
         private void UpdateGeneralDisplay()
         {
             UpdateCpuUsageText();
-
 
             // Check if the debug state has changed, needs isGlobalDebugOn to be changed to ControlPanel.mIsDebugOn 
             if (ControlPanel.mIsDebugOn != isGlobalDebugOn)
@@ -273,7 +263,6 @@ namespace RED.mbnq
                 isGlobalDebugOn = ControlPanel.mIsDebugOn;
                 ToggleShowCommandBox(isGlobalDebugOn);
             }
-
 
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
@@ -369,7 +358,6 @@ namespace RED.mbnq
                 return "Error";
             }
         }
-
         private async Task<string> GetIpAddressAsync()
         {
             string ipAddress = null;
@@ -432,11 +420,9 @@ namespace RED.mbnq
             return "Unavailable";
         }
 
-
         #endregion
 
         #region Throttle Paint Method
-
         private void ThrottlePaint()
         {
             // Check if at least 1 second has passed since the last draw
@@ -485,7 +471,6 @@ namespace RED.mbnq
                 isResizing = false; // Reset the flag once resizing is done
             }
         }
-
         private void TXTHUD_Paint(object sender, PaintEventArgs e)
         {
             // Increment the draw counter
@@ -511,8 +496,6 @@ namespace RED.mbnq
                 }
             }
         }
-
-
         public void ToggleOverlay(string pingAddress = "8.8.8.8")
         {
             currentPingAddress = pingAddress;
@@ -533,13 +516,11 @@ namespace RED.mbnq
         #endregion
 
         #region Timer Control Methods
-
         private void StartTimers()
         {
             pingTimer?.Start();
             ipTimer?.Start();
         }
-
         private void StopTimers()
         {
             pingTimer?.Stop();
@@ -549,7 +530,6 @@ namespace RED.mbnq
         #endregion
 
         #region Cleanup
-
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             StopTimers();
@@ -561,7 +541,7 @@ namespace RED.mbnq
 
         #endregion
 
-        #region Console
+        #region Console IO
 
         private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -695,6 +675,10 @@ namespace RED.mbnq
                 else if (new[] { "cls", "clear" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
                     Debug.WriteLine("");
+                }                
+                else if (new[] { "test" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Debug.WriteLine($"This is a test. Version: {Program.mbVersion} {DateTime.Now}");
                 }
                 else if (new[] { "exit", "quit", "close" }.Any(prefix => command.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
