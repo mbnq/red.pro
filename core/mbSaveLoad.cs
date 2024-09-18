@@ -136,12 +136,15 @@ namespace RED.mbnq
         }
 
         /* --- --- --- saving settings --- --- --- */
-        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true)
+        public static void SaveSettings(ControlPanel controlPanel, bool showMessage = true, bool onExit = false)
         {
             var sb = new StringBuilder();
 
-            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
-            controlPanel.mbProgressBar0.Value = 0;
+            if (!onExit)
+            {
+                controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+                controlPanel.mbProgressBar0.Value = 0;
+            }
 
             sb.AppendLine(";Do not edit if you don't know what you're doing, please.");
             sb.AppendLine("[REDDOT]");
@@ -170,21 +173,24 @@ namespace RED.mbnq
                 sb.AppendLine($"PositionY={controlPanel.mbCrosshairOverlay.Top}");
             }
 
-            controlPanel.mbProgressBar0.Value = 50;
+            if (!onExit) controlPanel.mbProgressBar0.Value = 50;
 
             byte[] encryptedData = EncryptString(sb.ToString(), key, iv);
             File.WriteAllBytes(settingsFilePath, encryptedData);
 
-            if (showMessage)
+            if (showMessage && !onExit)
             {
                 Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
+                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
             }
-            Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
 
-            controlPanel.mbProgressBar0.Value = 100;
-            controlPanel.mbProgressBar0.Visible = false;
-            controlPanel.UpdateMainCrosshair();
+            if (!onExit)
+            {
+                controlPanel.mbProgressBar0.Value = 100;
+                controlPanel.mbProgressBar0.Visible = false;
+                controlPanel.UpdateAllUI();
+            }
         }
 
         /* --- --- --- loading settings --- --- --- */
@@ -222,6 +228,7 @@ namespace RED.mbnq
             Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings Loaded.");
             controlPanel.mbProgressBar0.Value = 100;
             controlPanel.UpdateMainCrosshair();
+            controlPanel.UpdateAllUI();
             controlPanel.mSettingsLoaded = 1;
             controlPanel.mbProgressBar0.Visible = false;
         }
