@@ -182,7 +182,6 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSoundOnce();
                 MaterialMessageBox.Show("Settings saved.", "Save Settings", MessageBoxButtons.OK, MessageBoxIcon.None);
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
             }
 
             if (!onExit)
@@ -191,6 +190,8 @@ namespace RED.mbnq
                 controlPanel.mbProgressBar0.Visible = false;
                 controlPanel.UpdateAllUI();
             }
+
+            Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Settings saved.");
         }
 
         /* --- --- --- loading settings --- --- --- */
