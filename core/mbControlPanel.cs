@@ -253,17 +253,28 @@ namespace RED.mbnq
 
             #region Tabs
             /* --- --- Tabs --- --- */
+
             mbTabControl = new MaterialTabControl
             {
                 Dock = DockStyle.Fill,                  // we need this
                 Enabled = true                          // we don't really need this
             };
 
-            mbTab1 = new TabPage("Xhair");
-            mbTab2 = new TabPage("Options");
-            mbTab3 = new TabPage("Tools");
+            mbTab1 = new TabPage("Xhair") { ImageKey = "DefaultIcon" };
+            mbTab2 = new TabPage("Options") { ImageKey = "DefaultIcon" };
+            mbTab3 = new TabPage("Tools") { ImageKey = "DefaultIcon" };
 
             mbTabControl.TabPages.AddRange(new TabPage[] { mbTab1, mbTab2, mbTab3 });
+
+            // ---
+
+            ImageList imageList = new ImageList();
+            imageList.ImageSize = new Size(36, 36);
+            imageList.ColorDepth = ColorDepth.Depth32Bit;
+
+            imageList.Images.Add("DefaultIcon", Properties.Resources.gui_defaultIcon);
+
+            mbTabControl.ImageList = imageList;
 
             // ---
 
@@ -274,6 +285,8 @@ namespace RED.mbnq
                 TabIndicatorHeight = 5,
                 Enabled = true
             };
+
+            mbTabSelector.TabLabel = MaterialTabSelector.TabLabelStyle.Icon;
 
             mbTabControl.SelectedIndexChanged += (s, e) =>
             {

@@ -323,6 +323,7 @@
     <None Include="png\redProSplash.png" />
     <None Include="gfx\mbnqBackground0.png" />
     <None Include="sounds\mbnqClick.wav" />
+    <None Include="gfx\gui_defaultGUIIcon.png" />
     <Content Include="gfx\mbnqIcon.ico" />
   </ItemGroup>
   <ItemGroup>
