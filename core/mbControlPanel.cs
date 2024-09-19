@@ -717,6 +717,7 @@ namespace RED.mbnq
                 // Update colors
                 mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
                 mbCrosshairOverlay.ForeColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                mbCrosshairOverlay.AllowTransparency = true;
 
                 if (mbCrosshairOverlay.HasCustomOverlay)                                    // Check if custom overlay exists
                 {
