@@ -85,7 +85,7 @@ namespace RED.mbnq
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLineIf(mbIsDebugOn, $"Error parsing INI value: {ex.Message}");
+                    Debug.WriteLineIf(mbIsDebugOn, $"mbnq: Error parsing INI value: {ex.Message}");
                     return defaultValue;
                 }
             }
@@ -99,7 +99,7 @@ namespace RED.mbnq
 
                 if (!success && mbIsDebugOn)
                 {
-                    Debug.WriteLine($"Failed to write to INI file: {filePath}");
+                    Debug.WriteLine($"mbnq: Failed to write to INI file: {filePath}");
                 }
             }
 
