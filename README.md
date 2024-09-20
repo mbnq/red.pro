@@ -64,7 +64,7 @@ I'm a C# beginner and hobbyst, so any feedback would be very appreciated.
 
 The performance of the program will depend on the CPU performance. 
 
-Requirements: Windows 11 with [.NET 4.8 x64](https://dotnet.microsoft.com/en-us/download/dotnet-framework).
+Requirements: Windows 10 or 11 with [.NET 4.8 x64](https://dotnet.microsoft.com/en-us/download/dotnet-framework).
 
 ---
 
