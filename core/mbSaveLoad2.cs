@@ -130,8 +130,8 @@ namespace RED.mbnq
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.OffsetXValue);
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.OffsetYValue);
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "mbHideCrosshair", controlPanel.mbHideCrosshairChecked);
-            if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionX", controlPanel.mbCrosshairOverlay.Left);
-            if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionY", controlPanel.mbCrosshairOverlay.Top);
+            if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
+            if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
 
             // zoomMode aka sniperMode
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
@@ -166,8 +166,8 @@ namespace RED.mbnq
 
             if (controlPanel.mbCrosshairOverlay != null)
             {
-                int posX = SaveLoad2.INIFile.INIread("settings.ini", "General", "PositionX", controlPanel.mbCrosshairOverlay.Left);
-                int posY = SaveLoad2.INIFile.INIread("settings.ini", "General", "PositionY", controlPanel.mbCrosshairOverlay.Top);
+                int posX = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
+                int posY = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
                 controlPanel.mbCrosshairOverlay.Left = posX;
                 controlPanel.mbCrosshairOverlay.Top = posY;
             }
@@ -179,6 +179,5 @@ namespace RED.mbnq
             controlPanel.mSettingsLoaded = 1;
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
         }
-
     }
 }
