@@ -49,7 +49,7 @@ Tested in Windows 10/11 at:
 
 ![NVIDIA_Overlay_Fkaxvz0hji](https://github.com/user-attachments/assets/e8f8645a-24ae-4174-8b97-5f08efe3c246)
 
-![NVIDIA_Overlay_5g2mpavDJd](https://github.com/user-attachments/assets/402dea1d-415a-4583-b5c7-811742161834)
+![NVIDIA_Overlay_5g2mpavDJd](https://github.com/user-attachments/assets/294b423a-6ddb-4dad-8578-1a89205c30b0)
 
 ---
 
