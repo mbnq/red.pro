@@ -23,7 +23,7 @@ namespace RED.mbnq
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mIsDebugOn       = false;                        // init only 
+        public static bool mIsDebugOn       = true;                         // global debug, not for Release version
         public static readonly bool mPBIsOn = true;                         // init only 
         public static bool mIsSplashOn      = false;                        // init only
         public bool mHideCrosshair          = false;                        // init only
