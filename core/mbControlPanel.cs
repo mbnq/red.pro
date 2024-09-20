@@ -197,6 +197,11 @@ namespace RED.mbnq
                     this.Top = Math.Max(screenBounds.Top, Math.Min(screenBounds.Bottom - this.Height, newTop)); // Ensure within vertical bounds
                 }
             }
+            else
+            {
+                this.Left = (Screen.PrimaryScreen.Bounds.Width / 2);
+                this.Top = (Screen.PrimaryScreen.Bounds.Height / 2);
+            }
         }
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
