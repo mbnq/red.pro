@@ -1466,6 +1466,8 @@ namespace RED.mbnq
             get => mbSplashCheckBox.Checked;
             set => mbSplashCheckBox.Checked = value;
         }
+
+        /*
         public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
         public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
         public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
@@ -1473,6 +1475,13 @@ namespace RED.mbnq
         public int TransparencyValue { get => transparency.Value; set => transparency.Value = value; }
         public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
         public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
+
+        public int zoomLevelValue { get => zoomLevel.Value; set => zoomLevel.Value = value; }
+        public int zoomTIntervalValue { get => zoomTInterval.Value; set => zoomTInterval.Value = value; }
+        public int zoomRefreshIntervalValue { get => zoomRefreshInterval.Value; set => zoomRefreshInterval.Value = value; }
+        public int zoomScopeSizeValue { get => zoomScopeSize.Value; set => zoomScopeSize.Value = value; }
+        */
+
         #endregion
     }
 }

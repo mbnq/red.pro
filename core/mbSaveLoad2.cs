@@ -124,13 +124,13 @@ namespace RED.mbnq
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionY", controlPanel.Top);
 
             // crosshair
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorRValue", controlPanel.ColorRValue);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorGValue", controlPanel.ColorGValue);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorBValue", controlPanel.ColorBValue);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "SizeValue", controlPanel.SizeValue);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "TransparencyValue", controlPanel.TransparencyValue);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.OffsetXValue);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.OffsetYValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorRValue", controlPanel.colorR.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorGValue", controlPanel.colorG.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorBValue", controlPanel.colorB.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "SizeValue", controlPanel.size.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "TransparencyValue", controlPanel.transparency.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.offsetX.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.offsetY.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "mbHideCrosshair", controlPanel.mbHideCrosshairChecked);
             if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
             if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
@@ -164,13 +164,13 @@ namespace RED.mbnq
             controlPanel.mbAntiCapsCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", true);
             controlPanel.mbEnableFlirChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
 
-            controlPanel.ColorRValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
-            controlPanel.ColorGValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
-            controlPanel.ColorBValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 0);
-            controlPanel.SizeValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 12);
-            controlPanel.TransparencyValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
-            controlPanel.OffsetXValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
-            controlPanel.OffsetYValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
+            controlPanel.colorR.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
+            controlPanel.colorG.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
+            controlPanel.colorB.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 0);
+            controlPanel.size.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 12);
+            controlPanel.transparency.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
+            controlPanel.offsetX.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
+            controlPanel.offsetY.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
             controlPanel.mbHideCrosshairChecked = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
 
             if (controlPanel.mbCrosshairOverlay != null)
