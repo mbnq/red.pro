@@ -47,7 +47,7 @@ Tested in Windows 10/11 at:
 8. **Zoom Mode (aka Sniper Mode)**:
    - **Zoom Mode (aka Sniper Mode)**: Hold the right mouse button for more than 2 seconds to activate a sniper zoom overlay in the bottom-right corner of the primary screen. This feature is a tribute to the old Delta Force games. It can be toggled on/off, and the zoom level can be adjusted with a dedicated slider.
 
-![image](https://github.com/user-attachments/assets/e185131e-5f78-4213-9050-d6addac51511)
+![NVIDIA_Overlay_Fkaxvz0hji](https://github.com/user-attachments/assets/e8f8645a-24ae-4174-8b97-5f08efe3c246)
 
 ---
 
