@@ -11,7 +11,6 @@ using MaterialSkin.Controls;
 using RED.mbnq.core;
 using System;
 using System.Diagnostics;
-using System.Drawing.Text;
 using System.IO;
 using System.Windows.Forms;
 

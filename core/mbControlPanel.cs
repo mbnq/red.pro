@@ -16,7 +16,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RED.mbnq.core;
-using static RED.mbnq.SaveLoad2;
 
 namespace RED.mbnq
 {
@@ -45,7 +44,7 @@ namespace RED.mbnq
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
-        public static string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
+        public readonly static string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
 
         private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
 
@@ -1046,7 +1045,7 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            mbLoadSettings(this);
+            SaveLoad2.mbLoadSettings(this);
             UpdateButtons();
         }
 

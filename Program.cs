@@ -12,7 +12,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
-// using RED.mbnq.core;
 
 namespace RED.mbnq
 {

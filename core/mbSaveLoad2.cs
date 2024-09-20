@@ -35,8 +35,7 @@ namespace RED.mbnq
 {
     public static class SaveLoad2
     {
-        private static readonly string settingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
-        private static string SettingsDirectory => settingsDirectory;
+        private static readonly string settingsDirectory = ControlPanel.mbUserFilesPath;
         private static bool mbIsDebugOn = ControlPanel.mIsDebugOn;
         private static void EnsureDirectoryExists2()
         {
