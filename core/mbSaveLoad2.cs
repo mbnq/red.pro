@@ -137,6 +137,7 @@ namespace RED.mbnq
 
             // zoomMode aka sniperMode
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.zoomTInterval.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeChecked);
 
             // other
@@ -179,6 +180,7 @@ namespace RED.mbnq
             }
 
             controlPanel.zoomLevel.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
+            controlPanel.zoomTInterval.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.zoomTInterval.Value);
             controlPanel.mbEnableZoomModeChecked = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
 
             controlPanel.UpdateAllUI();
