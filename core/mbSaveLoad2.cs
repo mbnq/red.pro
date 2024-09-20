@@ -109,7 +109,7 @@ namespace RED.mbnq
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             private static extern int GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder result, int size, string filePath);
         }
-        public static void mbSaveSettings(ControlPanel controlPanel, bool onExit = false)
+        public static void mbSaveSettings(ControlPanel controlPanel, bool onExit = false, bool silent = true)
         {
             // general
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "AutoSaveOnExit", controlPanel.AutoSaveOnExitChecked);
@@ -137,14 +137,18 @@ namespace RED.mbnq
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeChecked);
 
+            // other
+            SaveLoad2.INIFile.INIsave("settings.ini", "Debug", "Time", $"{DateTime.Now.TimeOfDay}");
+            SaveLoad2.INIFile.INIsave("settings.ini", "Debug", "Date", $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}");
+
             if (!onExit)
             {
-                Sounds.PlayClickSoundOnce();
+                if (!silent) Sounds.PlayClickSoundOnce();
                 controlPanel.UpdateAllUI();
                 Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings saved.");
             }
         }
-        public static void mbLoadSettings(ControlPanel controlPanel)
+        public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
             controlPanel.AutoSaveOnExitChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
             controlPanel.mbDebugonChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
@@ -178,6 +182,7 @@ namespace RED.mbnq
             controlPanel.UpdateAllUI();
             controlPanel.mSettingsLoaded = 1;
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
+            if (!silent) Sounds.PlayClickSoundOnce();
         }
     }
 }
