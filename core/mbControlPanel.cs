@@ -1046,6 +1046,11 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
+
+            // Create an instance of SettingsManager
+            SaveLoad2.SettingsManager settingsManager = new SaveLoad2.SettingsManager();
+            settingsManager.LoadSettings();
+
             UpdateButtons();
         }
 
