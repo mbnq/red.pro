@@ -501,16 +501,6 @@ namespace RED.mbnq
                 }
             }
 
-            // ---
-
-            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
-            mbPanelForTab3.Controls.Add(mbSysDropDown);
-
-            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
-
-            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
-            mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
-
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
 
@@ -620,9 +610,18 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
-            mbTab3.Controls.Add(mbPanelForTab3);
+            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbSysDropDown);
+
+            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+
+            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
+
             mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
             mbPanelForTab3.Controls.Add(debugTestButton);
+
+            mbTab3.Controls.Add(mbPanelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
 
