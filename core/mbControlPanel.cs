@@ -39,7 +39,7 @@ namespace RED.mbnq
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel, zoomTInterval, zoomRefreshInterval;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel, zoomTInterval, zoomRefreshInterval, zoomScopeSize;
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
@@ -617,6 +617,7 @@ namespace RED.mbnq
 
             AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
             AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref zoomRefreshInterval);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 8, 4, ref zoomScopeSize);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
             mbPanelForTab2.Controls.Add(debugTestButton);
@@ -684,6 +685,7 @@ namespace RED.mbnq
             ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
             ZoomMode.UpdateStartInterval(zoomTInterval.Value);
             ZoomMode.UpdateRefreshInterval(zoomRefreshInterval.Value);
+            ZoomMode.UpdateScopeSize(zoomScopeSize.Value);
 
             // it's needed here
             if (ZoomMode.IsZoomModeEnabled)
@@ -777,9 +779,11 @@ namespace RED.mbnq
             zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
             zoomTInterval.Parent.Controls[0].Text = $"SniperMode Zoom Delay: {zoomTInterval.Value}";
             zoomRefreshInterval.Parent.Controls[0].Text = $"SniperMode Refresh Interval: {zoomRefreshInterval.Value}";
+            zoomScopeSize.Parent.Controls[0].Text = $"SniperMode Scope Size: {zoomScopeSize.Value}";
 
             if (zoomTInterval.Value < 1) { zoomTInterval.Value = 1; };
             if (zoomRefreshInterval.Value < 1) { zoomRefreshInterval.Value = 1; };
+            if (zoomScopeSize.Value < 1) { zoomScopeSize.Value = 1; };
 
         }
         #endregion

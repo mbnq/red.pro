@@ -22,14 +22,15 @@ namespace RED.mbnq
         private static Timer holdTimer;
         private static Timer zoomUpdateTimer;
         private static mbZoomForm zoomForm;
-        private static bool isZooming = false;                                          // init only
+        private static bool isZooming = false;                                                              // init only
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
 
-        public static int zoomDisplaySize = (mbFnc.mGetPrimaryScreenCenter2().Y);       // init only
-        public static int zoomMultiplier = 1;                                           // init only
-        public static int startInterval = 1000;                                         // init only
-        public static int zoomRefreshIntervalInternal = Program.mbFrameDelay;           // init only
+        public static int zoomScopeSizeInternalDefault = (mbFnc.mGetPrimaryScreenCenter2().Y);
+        public static int zoomScopeSizeInternal = zoomScopeSizeInternalDefault;
+        public static int zoomMultiplier = 1;                                                               // init only
+        public static int startInterval = 1000;                                                             // init only
+        public static int zoomRefreshIntervalInternal = Program.mbFrameDelay;                               // init only
 
         public static bool IsZoomModeEnabled = false;
 
@@ -65,7 +66,7 @@ namespace RED.mbnq
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
-            int captureSize = zoomDisplaySize / zoomMultiplier;         // could modiffy size here?
+            int captureSize = (zoomScopeSizeInternal / zoomMultiplier);
             if (captureSize <= 0) captureSize = 1;
 
             zoomBitmap = new Bitmap(captureSize, captureSize);
@@ -89,7 +90,7 @@ namespace RED.mbnq
 
             if (zoomMultiplier <= 1) zoomMultiplier = 1;
 
-            int captureSize = zoomDisplaySize / zoomMultiplier;
+            int captureSize = zoomScopeSizeInternal / zoomMultiplier;
             if (captureSize <= 0) captureSize = 1;
 
             zoomBitmap = new Bitmap(captureSize, captureSize);
@@ -105,13 +106,46 @@ namespace RED.mbnq
         }
         public static void UpdateStartInterval(int InputStartInterval)
         {
-            startInterval = InputStartInterval;
-
             if (InputStartInterval <= 1)
             {
                 InputStartInterval = 1;
             }
+
+            startInterval = InputStartInterval;
         }
+        public static void UpdateScopeSize(int InputzoomScopeSize)
+        {
+            if (InputzoomScopeSize <= 1)
+            {
+                InputzoomScopeSize = 1;
+            }
+
+            InputzoomScopeSize = InputzoomScopeSize * 50;
+
+            // Directly set the zoom scope size
+            zoomScopeSizeInternal = zoomScopeSizeInternalDefault + InputzoomScopeSize;
+
+            // Update the zoom overlay size if it's already displayed
+            if (zoomForm != null)
+            {
+                zoomForm.Size = new Size(zoomScopeSizeInternal, zoomScopeSizeInternal);
+                zoomForm.ApplyCircularRegion(); // Reapply circular region if needed
+                UpdateCenteredCoordinates(); // Recalculate centered coordinates based on new size
+            }
+
+            // Recreate the zoom bitmap with the new size
+            if (zoomBitmap != null)
+            {
+                zoomBitmap.Dispose();
+            }
+
+            int captureSize = zoomScopeSizeInternal / zoomMultiplier;
+            captureSize = captureSize > 0 ? captureSize : 1;
+
+            zoomBitmap = new Bitmap(captureSize, captureSize);
+        }
+
+
         public static void UpdateRefreshInterval(int InputTimeInverval)
         {
             if ( (InputTimeInverval < 1 || InputTimeInverval > 100) || (zoomRefreshIntervalInternal < 1 || zoomRefreshIntervalInternal > 100) ) 
@@ -124,7 +158,7 @@ namespace RED.mbnq
         private static void UpdateCenteredCoordinates()
         {
             Point screenCenter = mbFnc.mGetPrimaryScreenCenter2();
-            int captureSize = zoomDisplaySize / zoomMultiplier;
+            int captureSize = zoomScopeSizeInternal / zoomMultiplier;
             centeredX = screenCenter.X - (captureSize / 2);
             centeredY = screenCenter.Y - (captureSize / 2);
         }
@@ -177,7 +211,7 @@ namespace RED.mbnq
             CaptureScreenToBitmap();
             zoomForm.ApplyClipping(g);              // Draw the zoomed image scaled to fill the zoomForm
 
-            g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomForm.Width, zoomForm.Height));
+            g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomScopeSizeInternal, zoomScopeSizeInternal));
 
             // Draw crosshair lines
             int centerX = zoomForm.Width / 2;
@@ -200,7 +234,7 @@ namespace RED.mbnq
         // Captures the screen area into the bitmap using BitBlt for performance
         private static void CaptureScreenToBitmap()
         {
-            int captureSize = zoomDisplaySize / zoomMultiplier;
+            int captureSize = zoomScopeSizeInternal / zoomMultiplier;
             if (captureSize <= 0) captureSize = 1;
 
             using (Graphics gDest = Graphics.FromImage(zoomBitmap))
@@ -223,7 +257,7 @@ namespace RED.mbnq
                 zoomForm = new mbZoomForm
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(zoomDisplaySize, zoomDisplaySize),
+                    Size = new Size(zoomScopeSizeInternal, zoomScopeSizeInternal),
                     StartPosition = FormStartPosition.Manual,
                     Location = new Point(0, 0),
                     TopMost = true,
@@ -233,6 +267,12 @@ namespace RED.mbnq
                 };
 
                 zoomForm.Paint += ZoomForm_Paint;
+            }
+            else
+            {
+                // Update the size if the form already exists
+                zoomForm.Size = new Size(zoomScopeSizeInternal, zoomScopeSizeInternal);
+                zoomForm.ApplyCircularRegion(); // Reapply circular region if needed
             }
 
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
@@ -245,6 +285,7 @@ namespace RED.mbnq
             zoomUpdateTimer.Interval = zoomRefreshIntervalInternal;
             zoomUpdateTimer.Start();
         }
+
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
