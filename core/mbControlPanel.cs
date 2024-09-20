@@ -45,7 +45,7 @@ namespace RED.mbnq
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
-        public string mbUserFilesPath = Path.Combine(SaveLoad.SettingsDirectory);
+        public string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
 
         private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
 
@@ -70,8 +70,7 @@ namespace RED.mbnq
         {
             InitializeControlPanel();
 
-            SaveLoad.EnsureSettingsFileExists(this);
-            SaveLoad.LoadSettings(this, false);                 // false means do not show dialogbox
+            SaveLoad2.mbLoadSettings(this);                 // false means do not show dialogbox
 
             if (mbDarkModeCheckBoxChecked)
             {
@@ -965,7 +964,7 @@ namespace RED.mbnq
         public void UpdateButtons()
         {
             if (mIsDebugOn) { debugTestButton.Visible = true; } else { debugTestButton.Visible = false; }
-            removePngButton.Enabled = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+            removePngButton.Enabled = File.Exists(Path.Combine(mbUserFilesPath, "RED.custom.png"));
         }
 
         //This one is needed to handle negative values because of materialSkin limitations
@@ -1047,7 +1046,7 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            LoadSettings2(this);
+            mbLoadSettings(this);
             UpdateButtons();
         }
 
@@ -1060,7 +1059,7 @@ namespace RED.mbnq
         {
             if (!mbAutoSaveCheckbox.Checked)
             {
-                SaveLoad.SaveSettings(this, false);
+                SaveLoad2.mbSaveSettings(this);
             }
         }
         private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)

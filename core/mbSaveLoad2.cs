@@ -4,12 +4,25 @@
     https://mbnq.pl/
     mbnq00 on gmail
 
-    Example usage:
+    Example usage: INIFile
                                         filename       section    keyname def
 
             SaveLoad2.INIFile.INIsave("settings.ini", "Settings", "Test", 100);
             volume = INIFile.INIread("settings.ini", "Settings", "Test", 0);
             MessageBox.Show($"Loaded variable value:{volume}", "Test", MessageBoxButtons.OK, MessageBoxIcon.None);
+
+
+    Example usage: mbSaveSettings
+                                      instance
+
+               SaveLoad2.mbSaveSettings(this);
+
+
+    Example usage: mbLoadSettings
+                                      instance
+
+                SaveLoad2.mbLoadSettings(this);
+
 */
 
 using System;
@@ -24,12 +37,12 @@ namespace RED.mbnq
     {
         private static readonly string settingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
         private static string SettingsDirectory => settingsDirectory;
-        private static bool IsDebugOn = ControlPanel.mIsDebugOn;
-        private static void EnsureDirectoryExists()
+        private static bool mbIsDebugOn = ControlPanel.mIsDebugOn;
+        private static void EnsureDirectoryExists2()
         {
             if (!Directory.Exists(settingsDirectory))
             {
-                Debug.WriteLineIf(IsDebugOn, "mbnq: Creating folder for user files...");
+                Debug.WriteLineIf(mbIsDebugOn, "mbnq: Creating folder for user files...");
                 Directory.CreateDirectory(settingsDirectory);
             }
         }
@@ -37,6 +50,8 @@ namespace RED.mbnq
         {
             public static T INIread<T>(string fileName, string section, string key, T defaultValue)
             {
+                EnsureDirectoryExists2();
+
                 string filePath = Path.Combine(settingsDirectory, fileName);
 
                 StringBuilder result = new StringBuilder(255);
@@ -71,17 +86,19 @@ namespace RED.mbnq
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLineIf(IsDebugOn, $"Error parsing INI value: {ex.Message}");
+                    Debug.WriteLineIf(mbIsDebugOn, $"Error parsing INI value: {ex.Message}");
                     return defaultValue;
                 }
             }
             public static void INIsave<T>(string fileName, string section, string key, T value)
             {
+                EnsureDirectoryExists2();
+
                 string filePath = Path.Combine(settingsDirectory, fileName);
                 string valueToSave = value.ToString();
                 bool success = WritePrivateProfileString(section, key, valueToSave, filePath);
 
-                if (!success && IsDebugOn)
+                if (!success && mbIsDebugOn)
                 {
                     Debug.WriteLine($"Failed to write to INI file: {filePath}");
                 }
@@ -93,9 +110,7 @@ namespace RED.mbnq
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             private static extern int GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder result, int size, string filePath);
         }
-
-        // Usage: SaveLoad2.mbSaveSettings2(this);
-        public static void mbSaveSettings2(ControlPanel controlPanel)
+        public static void mbSaveSettings(ControlPanel controlPanel, bool onExit = false)
         {
             // general
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "AutoSaveOnExit", controlPanel.AutoSaveOnExitChecked);
@@ -122,29 +137,32 @@ namespace RED.mbnq
             // zoomMode aka sniperMode
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeChecked);
-        }
 
-        // Usage: volume = INIFile.INIread("settings.ini", "Settings", "Test", 0);
-        // Usage: SaveLoad2.mbSaveSettings2(this);
-        // Usage: SaveLoad2.LoadSettings2(this);
-        public static void LoadSettings2(ControlPanel controlPanel)
+            if (!onExit)
+            {
+                Sounds.PlayClickSoundOnce();
+                controlPanel.UpdateAllUI();
+                Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings saved.");
+            }
+        }
+        public static void mbLoadSettings(ControlPanel controlPanel)
         {
-            controlPanel.AutoSaveOnExitChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", false);
+            controlPanel.AutoSaveOnExitChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
             controlPanel.mbDebugonChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
             controlPanel.mbAOnTopChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
             controlPanel.mbDisableSoundChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDisableSound", false);
-            controlPanel.mbDarkModeCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableDarkMode", false);
-            controlPanel.mbSplashCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableSplashScreen", false);
-            controlPanel.mbAntiCapsCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", false);
+            controlPanel.mbDarkModeCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableDarkMode", true);
+            controlPanel.mbSplashCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableSplashScreen", true);
+            controlPanel.mbAntiCapsCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", true);
             controlPanel.mbEnableFlirChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
 
-            controlPanel.ColorRValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255); // Assuming default red
-            controlPanel.ColorGValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 255); // Assuming default green
-            controlPanel.ColorBValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 255); // Assuming default blue
-            controlPanel.SizeValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 5); // Default size
-            controlPanel.TransparencyValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 100); // Default transparency
-            controlPanel.OffsetXValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 0); // Default X offset
-            controlPanel.OffsetYValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 0); // Default Y offset
+            controlPanel.ColorRValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
+            controlPanel.ColorGValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
+            controlPanel.ColorBValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 0);
+            controlPanel.SizeValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 12);
+            controlPanel.TransparencyValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
+            controlPanel.OffsetXValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
+            controlPanel.OffsetYValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
             controlPanel.mbHideCrosshairChecked = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
 
             if (controlPanel.mbCrosshairOverlay != null)
@@ -159,6 +177,7 @@ namespace RED.mbnq
             controlPanel.mbEnableZoomModeChecked = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
 
             controlPanel.UpdateAllUI();
+            Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
         }
 
     }

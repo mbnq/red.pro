@@ -105,8 +105,8 @@ namespace RED.mbnq
             GlassHudOverlay.displayOverlay = new GlassHudOverlay(captureArea, captureArea);
             GlassHudOverlay.displayOverlay.Show();
         }
-        private void saveMenuItem_Click(object sender, EventArgs e) => SaveLoad.SaveSettings(controlPanel, false);
-        private void loadMenuItem_Click(object sender, EventArgs e) => SaveLoad.LoadSettings(controlPanel, false);
+        private void saveMenuItem_Click(object sender, EventArgs e) => SaveLoad2.mbSaveSettings(controlPanel);
+        private void loadMenuItem_Click(object sender, EventArgs e) => SaveLoad2.mbLoadSettings(controlPanel);
         private void AboutMenuItem_Click(object sender, EventArgs e) 
         {
             mbAboutForm aboutBox = new mbAboutForm();
