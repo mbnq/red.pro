@@ -39,7 +39,7 @@ namespace RED.mbnq
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel, zoomTInterval;
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
@@ -343,15 +343,6 @@ namespace RED.mbnq
                 panel.Controls.Add(labeledSlider.Panel);
             }
 
-            AddLabeledSlider(mbPanelForTab1, "Red", 0, 255, 255, ref colorR);
-            AddLabeledSlider(mbPanelForTab1, "Green", 0, 255, 0, ref colorG);
-            AddLabeledSlider(mbPanelForTab1, "Blue", 0, 255, 0, ref colorB);
-            AddLabeledSlider(mbPanelForTab1, "Size", 1, 200, 50, ref size);
-            AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
-            AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
-            AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
-            AddLabeledSlider(mbPanelForTab1, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
-
             #endregion
 
             #region Buttons
@@ -375,11 +366,6 @@ namespace RED.mbnq
             loadChangePngButton = CreateButton("Load PNG", mControlWidth, loadChangePngButton_Click);
             removePngButton = CreateButton("Remove PNG", mControlWidth, removePngButton_Click);
             debugTestButton = CreateButton("Debug Test", mControlWidth, debugTestButton_Click); debugTestButton.Visible = true;
-
-            // Add the buttons to the respective panels
-            mbPanelForTab1.Controls.Add(centerButton);
-            mbPanelForTab1.Controls.Add(loadChangePngButton);
-            mbPanelForTab1.Controls.Add(removePngButton);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -595,6 +581,20 @@ namespace RED.mbnq
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
             mbTab1.Controls.Add(mbProgressBar0);
+
+            AddLabeledSlider(mbPanelForTab1, "Red", 0, 255, 255, ref colorR);
+            AddLabeledSlider(mbPanelForTab1, "Green", 0, 255, 0, ref colorG);
+            AddLabeledSlider(mbPanelForTab1, "Blue", 0, 255, 0, ref colorB);
+            AddLabeledSlider(mbPanelForTab1, "Size", 1, 200, 50, ref size);
+            AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
+            AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
+            AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
+            AddLabeledSlider(mbPanelForTab1, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
+
+            mbPanelForTab1.Controls.Add(centerButton);
+            mbPanelForTab1.Controls.Add(loadChangePngButton);
+            mbPanelForTab1.Controls.Add(removePngButton);
+
             mbTab1.Controls.Add(mbPanelForTab1);
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
@@ -614,7 +614,12 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
+
+            AddLabeledSlider(mbPanelForTab2, "Sniper Mode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
+
+            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
             mbPanelForTab2.Controls.Add(debugTestButton);
+
 
             mbTab2.Controls.Add(mbPanelForTab2);
 
@@ -676,6 +681,7 @@ namespace RED.mbnq
         {
             // Update zoom
             ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
+            ZoomMode.UpdateStartInterval(zoomTInterval.Value);
 
             // it's needed here
             if (ZoomMode.IsZoomModeEnabled)
@@ -763,9 +769,10 @@ namespace RED.mbnq
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
             size.Parent.Controls[0].Text = $"Size: {size.Value}";
             transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
-            zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
+            zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
+            zoomTInterval.Parent.Controls[0].Text = $"Sniper Mode Zoom Delay: {zoomTInterval.Value}";
         }
         #endregion
 
@@ -1324,7 +1331,8 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                UpdateMainCrosshair();
+                // UpdateMainCrosshair();
+                UpdateAllUI();
             };
 
             // Handle double-click to reset to default value
@@ -1332,7 +1340,8 @@ namespace RED.mbnq
             {
                 materialSlider.Value = defaultValue;
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                UpdateMainCrosshair();
+                // UpdateMainCrosshair();
+                UpdateAllUI();
                 Sounds.PlayClickSound();
             };
 

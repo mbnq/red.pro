@@ -26,6 +26,8 @@ namespace RED.mbnq
 
         public static int zoomDisplaySize = (mbFnc.mGetPrimaryScreenCenter2().Y);
         public static int zoomMultiplier = 1;
+        public static int startInterval = 1000;
+
         public static bool IsZoomModeEnabled = false;
 
         private static int centeredX;
@@ -57,6 +59,15 @@ namespace RED.mbnq
 
             UpdateCenteredCoordinates();
         }
+        public static void UpdateStartInterval(int InputStartInterval)
+        {
+            startInterval = InputStartInterval;
+
+            if (InputStartInterval <= 1)
+            {
+                InputStartInterval = 1;
+            }
+        }
 
         // Initializes the zoom mode with the specified control panel.
         public static void InitializeZoomMode(ControlPanel panel)
@@ -65,7 +76,7 @@ namespace RED.mbnq
 
             holdTimer = new Timer
             {
-                Interval = 1000                                 // Time of holding RMB before showing zoom in milliseconds
+                Interval = startInterval                                 // Time of holding RMB before showing zoom in milliseconds
             };
             holdTimer.Tick += HoldTimer_Tick;
 
@@ -116,6 +127,7 @@ namespace RED.mbnq
         {
             if (!isZooming)
             {
+                holdTimer.Interval = startInterval;
                 holdTimer.Start();
             }
         }
