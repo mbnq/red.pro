@@ -21,8 +21,6 @@ Tested in Windows 10/11 at:
 
 [Example .png crosshairs](https://github.com/mbnq/red.pro/tree/master/png)
 
-![NVIDIA_Overlay_whPU0TjAA1](https://github.com/user-attachments/assets/fe815beb-469a-42f4-9e58-9c63c8b9bcff)
-
 #### 1.) Detailed Features:
 
 1. **Color Customization**:
@@ -43,26 +41,13 @@ Tested in Windows 10/11 at:
 6. **Custom PNG Overlay**:
    - **Custom PNG Overlay**: Players can load custom crosshairs in transparent or non-transparent .png format. Each loaded .png file is copied to the userdata folder, and a file hash is calculated for each file to prevent duplicate storage.
 
-![image](https://github.com/user-attachments/assets/66bc06d3-e2a7-4c0b-9a42-5a50f499b7b6)
-
 7. **Glass Overlay**:
    - **Glass Overlay Elements**: Players can cut any region of the primary screen, similar to how the Windows screenshot tool works, to spawn a glass item that mirrors and displays the selected screen area in real-time. Additional options, such as zoom, offset, transparency, etc., can be adjusted. Players can spawn as many glass elements as needed; however, their options are not saved in userdata yet.
-
-![image](https://github.com/user-attachments/assets/dde6de70-0f4d-49d8-8453-b2427b9d87b6)
-![image](https://github.com/user-attachments/assets/8bf0c99b-7da3-4bc3-9c7c-7ffa3d1691be)
-![image](https://github.com/user-attachments/assets/52be35c2-6908-4543-a277-5597d7f640dc)
-
 
 8. **Zoom Mode (aka Sniper Mode)**:
    - **Zoom Mode (aka Sniper Mode)**: Hold the right mouse button for more than 2 seconds to activate a sniper zoom overlay in the bottom-right corner of the primary screen. This feature is a tribute to the old Delta Force games. It can be toggled on/off, and the zoom level can be adjusted with a dedicated slider.
 
-![image](https://github.com/user-attachments/assets/c0731f90-ced1-4c6d-aaef-9eaa0e7538eb)
-
-![image](https://github.com/user-attachments/assets/df525056-0eb1-4614-afe9-c94d3d0af61c)
-![image](https://github.com/user-attachments/assets/3d1cebda-4de6-43ab-84d2-5cc0f2f0b0bc)
-![image](https://github.com/user-attachments/assets/1dadb01d-31ac-44cc-9072-1042041a927d)
-
-![NVIDIA_Overlay_UieteTVxXj](https://github.com/user-attachments/assets/ff1cec74-fa74-4715-8f5a-16528df585f3)
+![image](https://github.com/user-attachments/assets/e185131e-5f78-4213-9050-d6addac51511)
 
 ---
 
