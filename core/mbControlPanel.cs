@@ -615,8 +615,8 @@ namespace RED.mbnq
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
 
-            AddLabeledSlider(mbPanelForTab2, "Sniper Mode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
-            AddLabeledSlider(mbPanelForTab2, "Sniper Mode Refresh Interval", 1, 100, Program.mbFrameDelay, ref zoomRefreshInterval);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref zoomRefreshInterval);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
             mbPanelForTab2.Controls.Add(debugTestButton);
@@ -775,8 +775,8 @@ namespace RED.mbnq
             offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
-            zoomTInterval.Parent.Controls[0].Text = $"Sniper Mode Zoom Delay: {zoomTInterval.Value}";
-            zoomRefreshInterval.Parent.Controls[0].Text = $"Sniper Mode Refresh Interval: {zoomRefreshInterval.Value}";
+            zoomTInterval.Parent.Controls[0].Text = $"SniperMode Zoom Delay: {zoomTInterval.Value}";
+            zoomRefreshInterval.Parent.Controls[0].Text = $"SniperMode Refresh Interval: {zoomRefreshInterval.Value}";
 
             if (zoomTInterval.Value < 1) { zoomTInterval.Value = 1; };
             if (zoomRefreshInterval.Value < 1) { zoomRefreshInterval.Value = 1; };
