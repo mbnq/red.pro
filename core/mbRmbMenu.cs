@@ -72,7 +72,7 @@ namespace RED.mbnq
         {
             try
             {
-                string settingsDir = SaveLoad.SettingsDirectory;
+                string settingsDir = ControlPanel.mbUserFilesPath;
                 if (Directory.Exists(settingsDir))
                     Process.Start("explorer.exe", settingsDir);
                 else
@@ -151,7 +151,7 @@ namespace RED.mbnq
         }
         public void UpdateMenuItems()
         {
-            bool hasCustomOverlay = File.Exists(Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png"));
+            bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
 
             loadCustomMenuItem.Enabled = !hasCustomOverlay;
             removeCustomMenuItem.Enabled = hasCustomOverlay;

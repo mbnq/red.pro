@@ -74,13 +74,13 @@ namespace RED.mbnq
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = SaveLoad.SettingsDirectory;
+                openFileDialog.InitialDirectory = ControlPanel.mbUserFilesPath;
                 openFileDialog.Filter = "PNG files (*.png)|*.png";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
-                    string destinationPath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+                    string destinationPath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
 
                     if (File.Exists(destinationPath))
                     {
@@ -96,7 +96,7 @@ namespace RED.mbnq
 
         /* --- --- --- Set --- --- --- */
 
-        string crosshairFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+        string crosshairFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
         public void SetCustomPNG()
         {
 
@@ -153,7 +153,7 @@ namespace RED.mbnq
         /* --- --- --- Apply --- --- --- */
         public void ApplyCustomCrosshair()
         {
-            var customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            var customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
                 try
@@ -181,14 +181,14 @@ namespace RED.mbnq
         }
         public void RemoveCustomCrosshair()
         {
-            string customFilePath = Path.Combine(SaveLoad.SettingsDirectory, "RED.custom.png");
+            string customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
                 // Calculate hash of the current .png file
                 string currentFileHash = mbFnc.CalculateFileHash(customFilePath);
 
                 // Check for existing in backup files with same hash
-                var backupFiles = Directory.GetFiles(SaveLoad.SettingsDirectory, "old.*.custom.png");
+                var backupFiles = Directory.GetFiles(ControlPanel.mbUserFilesPath, "old.*.custom.png");
 
                 bool shouldCreateBackup = true;
 
@@ -205,7 +205,7 @@ namespace RED.mbnq
                 if (shouldCreateBackup)
                 {
                     string backupFileName = $"old.{DateTime.Now:yyyyMMddHHmmss}.custom.png";
-                    string backupFilePath = Path.Combine(SaveLoad.SettingsDirectory, backupFileName);
+                    string backupFilePath = Path.Combine(ControlPanel.mbUserFilesPath, backupFileName);
                     File.Move(customFilePath, backupFilePath);
                 }
                 else

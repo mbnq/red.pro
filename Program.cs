@@ -49,7 +49,7 @@ namespace RED.mbnq
             SaveLoad2.mbLoadSettings(controlPanel);
 
             // Check for a custom overlay file
-            var customFilePath = Path.Combine(controlPanel.mbUserFilesPath, "RED.custom.png");
+            var customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
             if (File.Exists(customFilePath))
             {
                 mainCrosshair.SetCustomPNG();

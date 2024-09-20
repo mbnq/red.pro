@@ -45,7 +45,7 @@ namespace RED.mbnq
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
-        public string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
+        public static string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
 
         private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
 
