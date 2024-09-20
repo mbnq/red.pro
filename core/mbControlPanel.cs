@@ -32,7 +32,7 @@ namespace RED.mbnq
         private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
         private TabPage mbTab1, mbTab2, mbTab3;
-        private CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox, mbSplashCheckBox;
+        public CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox, mbSplashCheckBox;
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
@@ -71,7 +71,7 @@ namespace RED.mbnq
 
             SaveLoad2.mbLoadSettings(this);                 // false means do not show dialogbox
 
-            if (mbDarkModeCheckBoxChecked)
+            if (mbDarkModeCheckBox.Checked)
             {
                 InitializeMaterialSkin("DARK");
             }
@@ -1413,75 +1413,5 @@ namespace RED.mbnq
 
         #endregion
 
-        #region For SaveLoad logic
-        /* --- --- ---  --- --- --- */
-
-        public bool AutoSaveOnExitChecked
-        {
-            get => mbAutoSaveCheckbox.Checked;
-            set => mbAutoSaveCheckbox.Checked = value;
-        }
-        public bool mbDebugonChecked
-        {
-            get => mbDebugonCheckbox.Checked;
-            set => mbDebugonCheckbox.Checked = value;
-        }
-        public bool mbAOnTopChecked
-        {
-            get => mbAOnTopCheckBox.Checked;
-            set => mbAOnTopCheckBox.Checked = value;
-        }
-        public bool mbHideCrosshairChecked
-        {
-            get => mbHideCrosshairCheckBox.Checked;
-            set => mbHideCrosshairCheckBox.Checked = value;
-        }
-        public bool mbDisableSoundChecked
-        {
-            get => mbDisableSoundCheckBox.Checked;
-            set => mbDisableSoundCheckBox.Checked = value;
-        }
-        public bool mbEnableZoomModeChecked
-        {
-            get => mbEnableZoomModeCheckBox.Checked;
-            set => mbEnableZoomModeCheckBox.Checked = value;
-        }
-        public bool mbEnableFlirChecked
-        {
-            get => mbEnableFlirCheckBox.Checked;
-            set => mbEnableFlirCheckBox.Checked = value;
-        }
-        public bool mbDarkModeCheckBoxChecked
-        {
-            get => mbDarkModeCheckBox.Checked;
-            set => mbDarkModeCheckBox.Checked = value;
-        }
-        public bool mbAntiCapsCheckBoxChecked
-        {
-            get => mbAntiCapsCheckBox.Checked;
-            set => mbAntiCapsCheckBox.Checked = value;
-        }
-        public bool mbSplashCheckBoxChecked
-        {
-            get => mbSplashCheckBox.Checked;
-            set => mbSplashCheckBox.Checked = value;
-        }
-
-        /*
-        public int ColorRValue { get => colorR.Value; set => colorR.Value = value; }
-        public int ColorGValue { get => colorG.Value; set => colorG.Value = value; }
-        public int ColorBValue { get => colorB.Value; set => colorB.Value = value; }
-        public int SizeValue { get => size.Value; set => size.Value = value; }
-        public int TransparencyValue { get => transparency.Value; set => transparency.Value = value; }
-        public int OffsetXValue { get => offsetX.Value; set => offsetX.Value = value; }
-        public int OffsetYValue { get => offsetY.Value; set => offsetY.Value = value; }
-
-        public int zoomLevelValue { get => zoomLevel.Value; set => zoomLevel.Value = value; }
-        public int zoomTIntervalValue { get => zoomTInterval.Value; set => zoomTInterval.Value = value; }
-        public int zoomRefreshIntervalValue { get => zoomRefreshInterval.Value; set => zoomRefreshInterval.Value = value; }
-        public int zoomScopeSizeValue { get => zoomScopeSize.Value; set => zoomScopeSize.Value = value; }
-        */
-
-        #endregion
     }
 }

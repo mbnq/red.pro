@@ -295,7 +295,7 @@ namespace RED.mbnq
         // Hides crosshair when zoom overlay is active
         private static void mTempHideCrosshair(bool hideCrosshair)
         {
-            if (!controlPanel.mbHideCrosshairChecked)
+            if (!controlPanel.mbHideCrosshairCheckBox.Checked)
             {
                 controlPanel.mHideCrosshair = hideCrosshair;
                 controlPanel.UpdateMainCrosshair();

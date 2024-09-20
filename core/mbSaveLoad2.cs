@@ -112,14 +112,14 @@ namespace RED.mbnq
         public static void mbSaveSettings(ControlPanel controlPanel, bool onExit = false, bool silent = true)
         {
             // general
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "AutoSaveOnExit", controlPanel.AutoSaveOnExitChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbDebugon", controlPanel.mbDebugonChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbAOnTop", controlPanel.mbAOnTopChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbDisableSound", controlPanel.mbDisableSoundChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableDarkMode", controlPanel.mbDarkModeCheckBoxChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableSplashScreen", controlPanel.mbSplashCheckBoxChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableAntiCapsLock", controlPanel.mbAntiCapsCheckBoxChecked);
-            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableFlirMode", controlPanel.mbEnableFlirChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "AutoSaveOnExit", controlPanel.mbAutoSaveCheckbox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbDebugon", controlPanel.mbDebugonCheckbox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbAOnTop", controlPanel.mbAOnTopCheckBox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbDisableSound", controlPanel.mbDisableSoundCheckBox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableDarkMode", controlPanel.mbDarkModeCheckBox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableSplashScreen", controlPanel.mbSplashCheckBox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableAntiCapsLock", controlPanel.mbAntiCapsCheckBox.Checked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableFlirMode", controlPanel.mbEnableFlirCheckBox.Checked);
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionX", controlPanel.Left);
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionY", controlPanel.Top);
 
@@ -131,7 +131,7 @@ namespace RED.mbnq
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "TransparencyValue", controlPanel.transparency.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.offsetX.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.offsetY.Value);
-            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "mbHideCrosshair", controlPanel.mbHideCrosshairChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "mbHideCrosshair", controlPanel.mbHideCrosshairCheckBox.Checked);
             if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
             if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
 
@@ -140,7 +140,7 @@ namespace RED.mbnq
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.zoomScopeSize.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.zoomTInterval.Value);
             SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.zoomRefreshInterval.Value);
-            SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeCheckBox.Checked);
 
             // other
             SaveLoad2.INIFile.INIsave("settings.ini", "Debug", "Time", $"{DateTime.Now.TimeOfDay}");
@@ -155,14 +155,14 @@ namespace RED.mbnq
         }
         public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
-            controlPanel.AutoSaveOnExitChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
-            controlPanel.mbDebugonChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
-            controlPanel.mbAOnTopChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
-            controlPanel.mbDisableSoundChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDisableSound", false);
-            controlPanel.mbDarkModeCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableDarkMode", true);
-            controlPanel.mbSplashCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableSplashScreen", true);
-            controlPanel.mbAntiCapsCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", true);
-            controlPanel.mbEnableFlirChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
+            controlPanel.mbAutoSaveCheckbox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
+            controlPanel.mbDebugonCheckbox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
+            controlPanel.mbAOnTopCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
+            controlPanel.mbDisableSoundCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDisableSound", false);
+            controlPanel.mbDarkModeCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableDarkMode", true);
+            controlPanel.mbSplashCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableSplashScreen", true);
+            controlPanel.mbAntiCapsCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", true);
+            controlPanel.mbEnableFlirCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
 
             controlPanel.colorR.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
             controlPanel.colorG.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
@@ -171,7 +171,7 @@ namespace RED.mbnq
             controlPanel.transparency.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
             controlPanel.offsetX.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
             controlPanel.offsetY.Value = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
-            controlPanel.mbHideCrosshairChecked = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
+            controlPanel.mbHideCrosshairCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
 
             if (controlPanel.mbCrosshairOverlay != null)
             {
@@ -183,7 +183,7 @@ namespace RED.mbnq
 
             controlPanel.zoomTInterval.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.zoomTInterval.Value);
             controlPanel.zoomRefreshInterval.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.zoomRefreshInterval.Value);
-            controlPanel.mbEnableZoomModeChecked = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
+            controlPanel.mbEnableZoomModeCheckBox.Checked = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
             controlPanel.zoomLevel.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
             controlPanel.zoomScopeSize.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.zoomScopeSize.Value);
 

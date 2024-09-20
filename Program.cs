@@ -60,7 +60,7 @@ namespace RED.mbnq
             // trigger autosave
             controlPanel.FormClosing += (sender, e) =>
             {
-                if (controlPanel.AutoSaveOnExitChecked)
+                if (controlPanel.mbAutoSaveCheckbox.Checked)
                 {
                     SaveLoad2.mbSaveSettings(controlPanel);
                 }
