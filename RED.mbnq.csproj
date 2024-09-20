@@ -250,7 +250,7 @@
     <Compile Include="core\mbAboutForm.Designer.cs">
       <DependentUpon>mbAboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="core\mbSaveLoad2.cs" />
+    <Compile Include="core\mbSaveLoad.cs" />
     <Compile Include="core\mbSplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>

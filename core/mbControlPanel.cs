@@ -69,7 +69,7 @@ namespace RED.mbnq
         {
             InitializeControlPanel();
 
-            SaveLoad2.mbLoadSettings(this);                 // false means do not show dialogbox
+            SaveLoad.mbLoadSettings(this);                 // false means do not show dialogbox
 
             if (mbDarkModeCheckBox.Checked)
             {
@@ -1085,7 +1085,7 @@ namespace RED.mbnq
         {
             if (!mbAutoSaveCheckbox.Checked)
             {
-                SaveLoad2.mbSaveSettings(this);
+                SaveLoad.mbSaveSettings(this);
             }
         }
         private void mbDebugonCheckbox_CheckedChanged(object sender, EventArgs e)

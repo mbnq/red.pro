@@ -45,7 +45,7 @@ namespace RED.mbnq
             GlobalMouseHook.SetHook();
 
             // Load settings and update display
-            SaveLoad2.mbLoadSettings(controlPanel);
+            SaveLoad.mbLoadSettings(controlPanel);
 
             // Check for a custom overlay file
             var customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
@@ -62,7 +62,7 @@ namespace RED.mbnq
             {
                 if (controlPanel.mbAutoSaveCheckbox.Checked)
                 {
-                    SaveLoad2.mbSaveSettings(controlPanel);
+                    SaveLoad.mbSaveSettings(controlPanel);
                 }
             };
 
