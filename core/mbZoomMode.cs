@@ -120,17 +120,14 @@ namespace RED.mbnq
                 InputzoomScopeSize = 1;
             }
 
-            InputzoomScopeSize = InputzoomScopeSize * 5;
-
-            // Directly set the zoom scope size
-            zoomScopeSizeInternal = zoomScopeSizeInternalDefault + InputzoomScopeSize;
+            zoomScopeSizeInternal = zoomScopeSizeInternalDefault + (InputzoomScopeSize * 5);
 
             // Update the zoom overlay size if it's already displayed
             if (zoomForm != null)
             {
                 zoomForm.Size = new Size(zoomScopeSizeInternal, zoomScopeSizeInternal);
-                zoomForm.ApplyCircularRegion(); // Reapply circular region if needed
-                UpdateCenteredCoordinates(); // Recalculate centered coordinates based on new size
+                zoomForm.ApplyCircularRegion();         // Reapply circular region if needed
+                UpdateCenteredCoordinates();            // Recalculate centered coordinates based on new size
             }
 
             // Recreate the zoom bitmap with the new size
@@ -144,8 +141,6 @@ namespace RED.mbnq
 
             zoomBitmap = new Bitmap(captureSize, captureSize);
         }
-
-
         public static void UpdateRefreshInterval(int InputTimeInverval)
         {
             if ( (InputTimeInverval < 1 || InputTimeInverval > 100) || (zoomRefreshIntervalInternal < 1 || zoomRefreshIntervalInternal > 100) ) 

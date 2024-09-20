@@ -618,15 +618,13 @@ namespace RED.mbnq
             AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
             AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 80, 10, ref zoomScopeSize);
 
-            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
-            mbPanelForTab2.Controls.Add(debugTestButton);
-
-
             mbTab2.Controls.Add(mbPanelForTab2);
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
             mbTab3.Controls.Add(mbPanelForTab3);
+            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+            mbPanelForTab3.Controls.Add(debugTestButton);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
 
@@ -1068,7 +1066,6 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            SaveLoad2.mbLoadSettings(this);
             UpdateButtons();
         }
 
