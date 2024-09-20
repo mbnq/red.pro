@@ -120,6 +120,8 @@ namespace RED.mbnq
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableSplashScreen", controlPanel.mbSplashCheckBoxChecked);
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableAntiCapsLock", controlPanel.mbAntiCapsCheckBoxChecked);
             SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableFlirMode", controlPanel.mbEnableFlirChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionX", controlPanel.Left);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionY", controlPanel.Top);
 
             // crosshair
             SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorRValue", controlPanel.ColorRValue);
