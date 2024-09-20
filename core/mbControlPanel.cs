@@ -598,18 +598,16 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 2 goes here --- --- --- */
 
-            mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
             if (mbnqFLIR.mbEnableFlirLogic) mbPanelForTab2.Controls.Add(mbEnableFlirCheckBox);
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbAntiCapsCheckBox);
-
-
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
             mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
             mbPanelForTab2.Controls.Add(mbSplashCheckBox);
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
+            mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
 
