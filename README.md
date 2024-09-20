@@ -49,6 +49,8 @@ Tested in Windows 10/11 at:
 
 ![NVIDIA_Overlay_Fkaxvz0hji](https://github.com/user-attachments/assets/e8f8645a-24ae-4174-8b97-5f08efe3c246)
 
+![NVIDIA_Overlay_5g2mpavDJd](https://github.com/user-attachments/assets/402dea1d-415a-4583-b5c7-811742161834)
+
 ---
 
 This program is still in development; bugs and glitches may occur. 
