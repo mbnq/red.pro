@@ -93,5 +93,73 @@ namespace RED.mbnq
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             private static extern int GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder result, int size, string filePath);
         }
+
+        // Usage: SaveLoad2.mbSaveSettings2(this);
+        public static void mbSaveSettings2(ControlPanel controlPanel)
+        {
+            // general
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "AutoSaveOnExit", controlPanel.AutoSaveOnExitChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbDebugon", controlPanel.mbDebugonChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbAOnTop", controlPanel.mbAOnTopChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbDisableSound", controlPanel.mbDisableSoundChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableDarkMode", controlPanel.mbDarkModeCheckBoxChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableSplashScreen", controlPanel.mbSplashCheckBoxChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableAntiCapsLock", controlPanel.mbAntiCapsCheckBoxChecked);
+            SaveLoad2.INIFile.INIsave("settings.ini", "General", "mbEnableFlirMode", controlPanel.mbEnableFlirChecked);
+
+            // crosshair
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorRValue", controlPanel.ColorRValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorGValue", controlPanel.ColorGValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "ColorBValue", controlPanel.ColorBValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "SizeValue", controlPanel.SizeValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "TransparencyValue", controlPanel.TransparencyValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.OffsetXValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.OffsetYValue);
+            SaveLoad2.INIFile.INIsave("settings.ini", "Crosshair", "mbHideCrosshair", controlPanel.mbHideCrosshairChecked);
+            if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionX", controlPanel.mbCrosshairOverlay.Left);
+            if (controlPanel.mbCrosshairOverlay != null) SaveLoad2.INIFile.INIsave("settings.ini", "General", "PositionY", controlPanel.mbCrosshairOverlay.Top);
+
+            // zoomMode aka sniperMode
+            SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
+            SaveLoad2.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeChecked);
+        }
+
+        // Usage: volume = INIFile.INIread("settings.ini", "Settings", "Test", 0);
+        // Usage: SaveLoad2.mbSaveSettings2(this);
+        // Usage: SaveLoad2.LoadSettings2(this);
+        public static void LoadSettings2(ControlPanel controlPanel)
+        {
+            controlPanel.AutoSaveOnExitChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", false);
+            controlPanel.mbDebugonChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
+            controlPanel.mbAOnTopChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
+            controlPanel.mbDisableSoundChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbDisableSound", false);
+            controlPanel.mbDarkModeCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableDarkMode", false);
+            controlPanel.mbSplashCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableSplashScreen", false);
+            controlPanel.mbAntiCapsCheckBoxChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", false);
+            controlPanel.mbEnableFlirChecked = SaveLoad2.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
+
+            controlPanel.ColorRValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255); // Assuming default red
+            controlPanel.ColorGValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 255); // Assuming default green
+            controlPanel.ColorBValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 255); // Assuming default blue
+            controlPanel.SizeValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 5); // Default size
+            controlPanel.TransparencyValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 100); // Default transparency
+            controlPanel.OffsetXValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 0); // Default X offset
+            controlPanel.OffsetYValue = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 0); // Default Y offset
+            controlPanel.mbHideCrosshairChecked = SaveLoad2.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
+
+            if (controlPanel.mbCrosshairOverlay != null)
+            {
+                int posX = SaveLoad2.INIFile.INIread("settings.ini", "General", "PositionX", controlPanel.mbCrosshairOverlay.Left);
+                int posY = SaveLoad2.INIFile.INIread("settings.ini", "General", "PositionY", controlPanel.mbCrosshairOverlay.Top);
+                controlPanel.mbCrosshairOverlay.Left = posX;
+                controlPanel.mbCrosshairOverlay.Top = posY;
+            }
+
+            controlPanel.zoomLevel.Value = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
+            controlPanel.mbEnableZoomModeChecked = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
+
+            controlPanel.UpdateAllUI();
+        }
+
     }
 }

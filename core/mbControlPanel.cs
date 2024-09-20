@@ -1047,6 +1047,7 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
+            LoadSettings2(this);
             UpdateButtons();
         }
 
