@@ -78,7 +78,6 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
         #region Update fncs
 
-        // Updates the zoom multiplier and adjusts related components.
         public static void UpdateZoomMultiplier(int newZoomMultiplier)
         {
             zoomMultiplier = newZoomMultiplier;
@@ -122,8 +121,6 @@ namespace RED.mbnq
 
             zoomRefreshIntervalInternal = InputTimeInverval;
         }
-
-        // Updates the centered coordinates based on the screen center.
         private static void UpdateCenteredCoordinates()
         {
             Point screenCenter = mbFnc.mGetPrimaryScreenCenter2();
@@ -146,7 +143,7 @@ namespace RED.mbnq
         {
             if (zoomForm != null)
             {
-                zoomForm.Invalidate(); // Forces the zoomForm to repaint
+                zoomForm.Invalidate();      // Forces zoomForm to repaint
             }
         }
         public static void StartHoldTimer()
@@ -167,7 +164,6 @@ namespace RED.mbnq
 
         /* --- --- ---  --- --- --- */
         #region Gaphics
-        // Handles the Paint event for the zoom form.
         private static void ZoomForm_Paint(object sender, PaintEventArgs e)
         {
             if (controlPanel == null || controlPanel.mbCrosshairOverlay == null) return;
@@ -177,11 +173,9 @@ namespace RED.mbnq
             g.InterpolationMode = InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = PixelOffsetMode.None;
 
-            // Capture the screen directly into zoomBitmap
-            CaptureScreenToBitmap();
 
-            // Draw the zoomed image scaled to fill the zoomForm
-            zoomForm.ApplyClipping(g);
+            CaptureScreenToBitmap();
+            zoomForm.ApplyClipping(g);              // Draw the zoomed image scaled to fill the zoomForm
 
             g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomForm.Width, zoomForm.Height));
 
@@ -191,10 +185,8 @@ namespace RED.mbnq
 
             using (Pen crosshairPen = new Pen(Color.Black, 2))
             {
-                // Vertical line
-                g.DrawLine(crosshairPen, centerX, 0, centerX, zoomForm.Height);
 
-                // Horizontal line
+                g.DrawLine(crosshairPen, centerX, 0, centerX, zoomForm.Height);
                 g.DrawLine(crosshairPen, 0, centerY, zoomForm.Width, centerY);
             }
 
@@ -205,13 +197,12 @@ namespace RED.mbnq
             }
         }
 
-        // Captures the screen area into the bitmap using BitBlt for performance.
+        // Captures the screen area into the bitmap using BitBlt for performance
         private static void CaptureScreenToBitmap()
         {
             int captureSize = zoomDisplaySize / zoomMultiplier;
             if (captureSize <= 0) captureSize = 1;
 
-            // Use BitBlt for faster screen capture
             using (Graphics gDest = Graphics.FromImage(zoomBitmap))
             {
                 IntPtr hdcDest = gDest.GetHdc();
@@ -224,7 +215,7 @@ namespace RED.mbnq
             }
         }
 
-        /// Displays the zoom overlay.
+        // Displays the zoom overlay.
         public static void ShowZoomOverlay()
         {
             if (zoomForm == null)
@@ -232,7 +223,7 @@ namespace RED.mbnq
                 zoomForm = new mbZoomForm
                 {
                     FormBorderStyle = FormBorderStyle.None,
-                    Size = new Size(zoomDisplaySize, zoomDisplaySize), // Keep size constant
+                    Size = new Size(zoomDisplaySize, zoomDisplaySize),
                     StartPosition = FormStartPosition.Manual,
                     Location = new Point(0, 0),
                     TopMost = true,
@@ -252,15 +243,13 @@ namespace RED.mbnq
             isZooming = true;
             mTempHideCrosshair(true);
             zoomUpdateTimer.Interval = zoomRefreshIntervalInternal;
-            zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
+            zoomUpdateTimer.Start();
         }
-
-        // Hides the zoom overlay
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
             {
-                zoomUpdateTimer.Stop();                     // Stop the update timer when zooming ends
+                zoomUpdateTimer.Stop();
                 zoomForm.Hide();
                 mTempHideCrosshair(false);
                 isZooming = false;
