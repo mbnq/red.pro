@@ -120,7 +120,7 @@ namespace RED.mbnq
                 InputzoomScopeSize = 1;
             }
 
-            InputzoomScopeSize = InputzoomScopeSize * 50;
+            InputzoomScopeSize = InputzoomScopeSize * 5;
 
             // Directly set the zoom scope size
             zoomScopeSizeInternal = zoomScopeSizeInternalDefault + InputzoomScopeSize;

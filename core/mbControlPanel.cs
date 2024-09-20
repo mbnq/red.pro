@@ -53,7 +53,7 @@ namespace RED.mbnq
         public static double mbImageARatio              = 1.00f;            // init only
 
         public static readonly int mCPWidth             = 262;              // init only
-        public static readonly int mCPHeight            = 850;              // init only
+        public static readonly int mCPHeight            = 780;              // init only
         public static readonly int mControlDefSpacer    = 36;               // init only
 
         public const int mPNGMaxWidth                   = 1920;             // init only
@@ -589,7 +589,6 @@ namespace RED.mbnq
             AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
             AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
             AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
-            AddLabeledSlider(mbPanelForTab1, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
 
             mbPanelForTab1.Controls.Add(centerButton);
             mbPanelForTab1.Controls.Add(loadChangePngButton);
@@ -604,7 +603,6 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbHideCrosshairCheckBox);
             mbPanelForTab2.Controls.Add(mbAntiCapsCheckBox);
 
-            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
 
             mbPanelForTab2.Controls.Add(mbDisableSoundCheckBox);
             mbPanelForTab2.Controls.Add(mbDarkModeCheckBox);
@@ -617,7 +615,8 @@ namespace RED.mbnq
 
             AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
             AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref zoomRefreshInterval);
-            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 8, 4, ref zoomScopeSize);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 80, 10, ref zoomScopeSize);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
             mbPanelForTab2.Controls.Add(debugTestButton);
