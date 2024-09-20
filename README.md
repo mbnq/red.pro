@@ -51,6 +51,12 @@ Tested in Windows 10/11 at:
 
 ![NVIDIA_Overlay_5g2mpavDJd](https://github.com/user-attachments/assets/294b423a-6ddb-4dad-8578-1a89205c30b0)
 
+![image](https://github.com/user-attachments/assets/d852621c-7715-4040-af94-46d7b6d8bfc3)
+
+![image](https://github.com/user-attachments/assets/248d3adc-c12c-4490-b40c-ee70fd42306f)
+
+![image](https://github.com/user-attachments/assets/b44eadf8-bd4b-4dd8-b683-8d95394e21f1)
+
 ---
 
 This program is still in development; bugs and glitches may occur. 
