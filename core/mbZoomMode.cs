@@ -17,22 +17,66 @@ namespace RED.mbnq
 {
     public class ZoomMode
     {
+        /* --- --- ---  --- --- --- */
+        #region init
         private static Timer holdTimer;
         private static Timer zoomUpdateTimer;
-        private static CustomZoomForm zoomForm;
-        private static bool isZooming = false;
+        private static mbZoomForm zoomForm;
+        private static bool isZooming = false;                                          // init only
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
 
-        public static int zoomDisplaySize = (mbFnc.mGetPrimaryScreenCenter2().Y);
-        public static int zoomMultiplier = 1;
-        public static int startInterval = 1000;
-        public static int zoomRefreshIntervalInternal = Program.mbFrameDelay;
+        public static int zoomDisplaySize = (mbFnc.mGetPrimaryScreenCenter2().Y);       // init only
+        public static int zoomMultiplier = 1;                                           // init only
+        public static int startInterval = 1000;                                         // init only
+        public static int zoomRefreshIntervalInternal = Program.mbFrameDelay;           // init only
 
         public static bool IsZoomModeEnabled = false;
 
         private static int centeredX;
         private static int centeredY;
+
+        // PInvoke declarations for BitBlt
+        private const int SRCCOPY = 0x00CC0020;
+
+        [DllImport("gdi32.dll")]
+        private static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest,
+            int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        public static void InitializeZoomMode(ControlPanel panel)
+        {
+            controlPanel = panel;
+
+            holdTimer = new Timer
+            {
+                Interval = startInterval                                 // Time of holding RMB before showing zoom in milliseconds
+            };
+            holdTimer.Tick += HoldTimer_Tick;
+
+            zoomUpdateTimer = new Timer
+            {
+                Interval = zoomRefreshIntervalInternal                  // refresh rate
+            };
+            zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
+
+            int captureSize = zoomDisplaySize / zoomMultiplier;         // could modiffy size here?
+            if (captureSize <= 0) captureSize = 1;
+
+            zoomBitmap = new Bitmap(captureSize, captureSize);
+
+            UpdateCenteredCoordinates();
+        }
+        #endregion
+        /* --- --- ---  --- --- --- */
+
+        /* --- --- ---  --- --- --- */
+        #region Update fncs
 
         // Updates the zoom multiplier and adjusts related components.
         public static void UpdateZoomMultiplier(int newZoomMultiplier)
@@ -47,7 +91,7 @@ namespace RED.mbnq
             if (zoomMultiplier <= 1) zoomMultiplier = 1;
 
             int captureSize = zoomDisplaySize / zoomMultiplier;
-            if (captureSize <= 0) captureSize = 1; // Prevent division by zero
+            if (captureSize <= 0) captureSize = 1;
 
             zoomBitmap = new Bitmap(captureSize, captureSize);
 
@@ -79,32 +123,6 @@ namespace RED.mbnq
             zoomRefreshIntervalInternal = InputTimeInverval;
         }
 
-        // Initializes the zoom mode with the specified control panel.
-        public static void InitializeZoomMode(ControlPanel panel)
-        {
-            controlPanel = panel;
-
-            holdTimer = new Timer
-            {
-                Interval = startInterval                                 // Time of holding RMB before showing zoom in milliseconds
-            };
-            holdTimer.Tick += HoldTimer_Tick;
-
-            // Timer for continuous updates to the zoom display
-            zoomUpdateTimer = new Timer
-            {
-                Interval = zoomRefreshIntervalInternal                 // refresh rate
-            };
-            zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
-
-            int captureSize = zoomDisplaySize / zoomMultiplier;
-            if (captureSize <= 0) captureSize = 1;
-
-            zoomBitmap = new Bitmap(captureSize, captureSize);
-
-            UpdateCenteredCoordinates();
-        }
-
         // Updates the centered coordinates based on the screen center.
         private static void UpdateCenteredCoordinates()
         {
@@ -113,14 +131,12 @@ namespace RED.mbnq
             centeredX = screenCenter.X - (captureSize / 2);
             centeredY = screenCenter.Y - (captureSize / 2);
         }
-        private static void mTempHideCrosshair(bool hideCrosshair)
-        {
-            if (!controlPanel.mbHideCrosshairChecked)
-            {
-                controlPanel.mHideCrosshair = hideCrosshair;
-                controlPanel.UpdateMainCrosshair();
-            }
-        }
+
+        #endregion
+        /* --- --- ---  --- --- --- */
+
+        /* --- --- ---  --- --- --- */
+        #region timers
         private static void HoldTimer_Tick(object sender, EventArgs e)
         {
             holdTimer.Stop();
@@ -146,6 +162,11 @@ namespace RED.mbnq
             holdTimer.Stop();
         }
 
+        #endregion
+        /* --- --- ---  --- --- --- */
+
+        /* --- --- ---  --- --- --- */
+        #region Gaphics
         // Handles the Paint event for the zoom form.
         private static void ZoomForm_Paint(object sender, PaintEventArgs e)
         {
@@ -208,7 +229,7 @@ namespace RED.mbnq
         {
             if (zoomForm == null)
             {
-                zoomForm = new CustomZoomForm
+                zoomForm = new mbZoomForm
                 {
                     FormBorderStyle = FormBorderStyle.None,
                     Size = new Size(zoomDisplaySize, zoomDisplaySize), // Keep size constant
@@ -234,37 +255,40 @@ namespace RED.mbnq
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
         }
 
-        // Hides the zoom overlay.
+        // Hides the zoom overlay
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
             {
-                zoomUpdateTimer.Stop(); // Stop the update timer when zooming ends
+                zoomUpdateTimer.Stop();                     // Stop the update timer when zooming ends
                 zoomForm.Hide();
                 mTempHideCrosshair(false);
                 isZooming = false;
             }
         }
 
-        // PInvoke declarations for BitBlt
-        private const int SRCCOPY = 0x00CC0020;
+        // Hides crosshair when zoom overlay is active
+        private static void mTempHideCrosshair(bool hideCrosshair)
+        {
+            if (!controlPanel.mbHideCrosshairChecked)
+            {
+                controlPanel.mHideCrosshair = hideCrosshair;
+                controlPanel.UpdateMainCrosshair();
+            }
+        }
 
-        [DllImport("gdi32.dll")]
-        private static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest,
-            int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
+        #endregion
+        /* --- --- ---  --- --- --- */
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetDC(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
     }
 
-    // Custom form for displaying the zoom overlay.
-    public class CustomZoomForm : Form
+    /* --- --- ---  --- --- --- */
+    #region mbZoomForm
+    // Custom form for displaying zoom overlay
+    public class mbZoomForm : Form
     {
         private GraphicsPath ellipsePath;
-        public CustomZoomForm()
+        public mbZoomForm()
         {
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint |
@@ -295,4 +319,6 @@ namespace RED.mbnq
             ApplyCircularRegion();
         }
     }
+    #endregion
+    /* --- --- ---  --- --- --- */
 }
