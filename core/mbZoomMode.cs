@@ -27,6 +27,7 @@ namespace RED.mbnq
         public static int zoomDisplaySize = (mbFnc.mGetPrimaryScreenCenter2().Y);
         public static int zoomMultiplier = 1;
         public static int startInterval = 1000;
+        public static int zoomRefreshIntervalInternal = Program.mbFrameDelay;
 
         public static bool IsZoomModeEnabled = false;
 
@@ -68,6 +69,15 @@ namespace RED.mbnq
                 InputStartInterval = 1;
             }
         }
+        public static void UpdateRefreshInterval(int InputTimeInverval)
+        {
+            if ( (InputTimeInverval < 1 || InputTimeInverval > 100) || (zoomRefreshIntervalInternal < 1 || zoomRefreshIntervalInternal > 100) ) 
+            { 
+                zoomRefreshIntervalInternal = Program.mbFrameDelay;  
+            }
+
+            zoomRefreshIntervalInternal = InputTimeInverval;
+        }
 
         // Initializes the zoom mode with the specified control panel.
         public static void InitializeZoomMode(ControlPanel panel)
@@ -83,7 +93,7 @@ namespace RED.mbnq
             // Timer for continuous updates to the zoom display
             zoomUpdateTimer = new Timer
             {
-                Interval = Program.mbFrameDelay                 // refresh rate
+                Interval = zoomRefreshIntervalInternal                 // refresh rate
             };
             zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
@@ -151,6 +161,7 @@ namespace RED.mbnq
 
             // Draw the zoomed image scaled to fill the zoomForm
             zoomForm.ApplyClipping(g);
+
             g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomForm.Width, zoomForm.Height));
 
             // Draw crosshair lines
@@ -213,12 +224,13 @@ namespace RED.mbnq
             }
 
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
-            zoomForm.Left = screenBounds.Width - zoomForm.Width - 10;
-            zoomForm.Top = screenBounds.Height - zoomForm.Height - 10;
+            zoomForm.Left = (screenBounds.Width - zoomForm.Width);
+            zoomForm.Top = (screenBounds.Height - zoomForm.Height);
 
             zoomForm.Show();
             isZooming = true;
             mTempHideCrosshair(true);
+            zoomUpdateTimer.Interval = zoomRefreshIntervalInternal;
             zoomUpdateTimer.Start(); // Start the update timer for real-time zoom
         }
 

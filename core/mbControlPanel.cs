@@ -39,7 +39,7 @@ namespace RED.mbnq
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel, zoomTInterval;
+        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel, zoomTInterval, zoomRefreshInterval;
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
@@ -616,6 +616,7 @@ namespace RED.mbnq
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
 
             AddLabeledSlider(mbPanelForTab2, "Sniper Mode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
+            AddLabeledSlider(mbPanelForTab2, "Sniper Mode Refresh Interval", 1, 100, Program.mbFrameDelay, ref zoomRefreshInterval);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
             mbPanelForTab2.Controls.Add(debugTestButton);
@@ -682,6 +683,7 @@ namespace RED.mbnq
             // Update zoom
             ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
             ZoomMode.UpdateStartInterval(zoomTInterval.Value);
+            ZoomMode.UpdateRefreshInterval(zoomRefreshInterval.Value);
 
             // it's needed here
             if (ZoomMode.IsZoomModeEnabled)
@@ -764,6 +766,7 @@ namespace RED.mbnq
         }
         private void UpdateLabeledSliders()
         {
+
             colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
             colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
             colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
@@ -773,6 +776,11 @@ namespace RED.mbnq
             offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
             zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
             zoomTInterval.Parent.Controls[0].Text = $"Sniper Mode Zoom Delay: {zoomTInterval.Value}";
+            zoomRefreshInterval.Parent.Controls[0].Text = $"Sniper Mode Refresh Interval: {zoomRefreshInterval.Value}";
+
+            if (zoomTInterval.Value < 1) { zoomTInterval.Value = 1; };
+            if (zoomRefreshInterval.Value < 1) { zoomRefreshInterval.Value = 1; };
+
         }
         #endregion
 
