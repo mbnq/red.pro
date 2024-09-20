@@ -3,7 +3,7 @@
 ### Program Overview: RED. PRO
 **RED. PRO (Red Dot Pro)** is a tool designed for customizing on-screen overlays, crosshairs, and other visual elements for gaming or other screen-based activities. The program offers a variety of settings that allow users to create and fine-tune custom visual elements according to their preferences. Below is a breakdown of the key features:
 
-![NVIDIA_Overlay_UIC0yO5UXm](https://github.com/user-attachments/assets/cba245ea-f3c2-4d42-bcf7-97e4ed2e2658)
+![NVIDIA_Overlay_RJJdebx7yy](https://github.com/user-attachments/assets/9304d970-be01-46d6-ab04-1272c0e27280)
 
 Tested in Windows 10/11 at:
 - 1080p
