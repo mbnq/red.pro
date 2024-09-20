@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RED.mbnq.core;
+using static RED.mbnq.SaveLoad2;
 
 namespace RED.mbnq
 {
@@ -1046,11 +1047,6 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-
-            // Create an instance of SettingsManager
-            SaveLoad2.SettingsManager settingsManager = new SaveLoad2.SettingsManager();
-            settingsManager.LoadSettings();
-
             UpdateButtons();
         }
 

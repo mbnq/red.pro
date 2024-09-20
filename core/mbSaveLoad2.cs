@@ -4,6 +4,12 @@
     https://mbnq.pl/
     mbnq00 on gmail
 
+    Example usage:
+                                        filename       section    keyname def
+
+            SaveLoad2.INIFile.INIsave("settings.ini", "Settings", "Test", 100);
+            volume = INIFile.INIread("settings.ini", "Settings", "Test", 0);
+            MessageBox.Show($"Loaded variable value:{volume}", "Test", MessageBoxButtons.OK, MessageBoxIcon.None);
 */
 
 using System;
@@ -11,22 +17,15 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using static RED.mbnq.SaveLoad2;
 
 namespace RED.mbnq
 {
     public static class SaveLoad2
     {
-        private static readonly string settingsDirectory = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "mbnqplSoft"
-        );
-        private static readonly string settingsFilePath = Path.Combine(settingsDirectory, "RED.settings.ini");
+        private static readonly string settingsDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
         private static string SettingsDirectory => settingsDirectory;
         private static bool IsDebugOn = ControlPanel.mIsDebugOn;
-
-        // Ensures that the settings directory exists. Creates it if it doesn't.
-        public static void EnsureDirectoryExists()
+        private static void EnsureDirectoryExists()
         {
             if (!Directory.Exists(settingsDirectory))
             {
@@ -34,14 +33,10 @@ namespace RED.mbnq
                 Directory.CreateDirectory(settingsDirectory);
             }
         }
-
-        // Handles reading from and writing to INI files.
         public static class INIFile
         {
-            // Reads a value from the INI file.
             public static T INIread<T>(string fileName, string section, string key, T defaultValue)
             {
-                // Combine the file name with the settings directory
                 string filePath = Path.Combine(settingsDirectory, fileName);
 
                 StringBuilder result = new StringBuilder(255);
@@ -80,11 +75,8 @@ namespace RED.mbnq
                     return defaultValue;
                 }
             }
-
-            // Writes a value to the INI file.
             public static void INIsave<T>(string fileName, string section, string key, T value)
             {
-                // Combine the file name with the settings directory
                 string filePath = Path.Combine(settingsDirectory, fileName);
                 string valueToSave = value.ToString();
                 bool success = WritePrivateProfileString(section, key, valueToSave, filePath);
@@ -100,37 +92,6 @@ namespace RED.mbnq
 
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             private static extern int GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder result, int size, string filePath);
-        }
-        public class SettingsManager
-        {
-             /*
-              
-                Usage:
-                          SaveLoad2.SettingsManager settingsManager = new SaveLoad2.SettingsManager();
-                          settingsManager.LoadSettings();
-             */
-            
-            public void SaveSettings()
-            {
-                EnsureDirectoryExists();
-
-                INIFile.INIsave("controls.ini", "Settings", "CheckboxState", true); // Boolean
-                INIFile.INIsave("settings.ini", "Settings", "Volume", 75); // Integer
-                INIFile.INIsave("settings.ini", "Settings", "Theme", "Dark"); // String
-            }
-            public void LoadSettings()
-            {
-                EnsureDirectoryExists();
-
-                bool checkboxState = INIFile.INIread("controls.ini", "Settings", "CheckboxState", false);
-                int volume = INIFile.INIread("settings.ini", "Settings", "Volume", 50);
-                string theme = INIFile.INIread("settings.ini", "Settings", "Theme", "Light");
-
-
-                Console.WriteLine($"Checkbox State: {checkboxState}");
-                Console.WriteLine($"Volume: {volume}");
-                Console.WriteLine($"Theme: {theme}");
-            }
         }
     }
 }
