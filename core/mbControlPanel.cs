@@ -541,7 +541,7 @@ namespace RED.mbnq
                     checkedChangedHandler(s, e);
                     if (mSettingsLoaded > 0)
                     {
-                        Sounds.PlayClickSound();
+                        Sounds.PlayClickSoundOnce();
                     }
                 };
 

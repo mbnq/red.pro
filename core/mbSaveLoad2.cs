@@ -177,6 +177,7 @@ namespace RED.mbnq
             controlPanel.mbEnableZoomModeChecked = SaveLoad2.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
 
             controlPanel.UpdateAllUI();
+            controlPanel.mSettingsLoaded = 1;
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
         }
 
