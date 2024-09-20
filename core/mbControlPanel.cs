@@ -23,7 +23,7 @@ namespace RED.mbnq
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mIsDebugOn       = true;                         // global debug, not for Release version
+        public static bool mIsDebugOn       = false;                        // global debug, not for Release version
         public static readonly bool mPBIsOn = true;                         // init only 
         public static bool mIsSplashOn      = false;                        // init only
         public bool mHideCrosshair          = false;                        // init only
@@ -688,16 +688,26 @@ namespace RED.mbnq
             if (ZoomMode.IsZoomModeEnabled)
             {
                 zoomLevel.Enabled = true;
-                // zoomLevel.Visible = true;
+                zoomTInterval.Enabled = true;
+                zoomRefreshInterval.Enabled = true;
+                zoomScopeSize.Enabled = true;
+
                 zoomLevel.Parent.Controls[0].Enabled = true;
-                // zoomLevel.Parent.Controls[0].Visible = true;
+                zoomTInterval.Parent.Controls[0].Enabled = true;
+                zoomRefreshInterval.Parent.Controls[0].Enabled = true;
+                zoomScopeSize.Parent.Controls[0].Enabled = true;
             }
             else
             {
                 zoomLevel.Enabled = false;
-                // zoomLevel.Visible = false;
+                zoomTInterval.Enabled = false;
+                zoomRefreshInterval.Enabled = false;
+                zoomScopeSize.Enabled = false;
+
                 zoomLevel.Parent.Controls[0].Enabled = false;
-                // zoomLevel.Parent.Controls[0].Visible = false;
+                zoomTInterval.Parent.Controls[0].Enabled = false;
+                zoomRefreshInterval.Parent.Controls[0].Enabled = false;
+                zoomScopeSize.Parent.Controls[0].Enabled = false;
             }
         }
         public void UpdateMainCrosshair() // overlay
