@@ -85,7 +85,7 @@ namespace RED.mbnq
         Color mDefColWhite = Color.White;
         int sliderSpacing = 50;
         int GlassZoomMax = 200;
-        private void ToggleGlassMenu()
+        public void ToggleGlassMenu()
         {
             glassInfoDisplay.IsGlassMenuEnabled = !glassInfoDisplay.IsGlassMenuEnabled;
 
@@ -314,6 +314,20 @@ namespace RED.mbnq
             // Optionally invalidate the form to trigger a repaint if needed
             this.Invalidate();
         }
+        public void UpdateGlassMenu()
+        {
+            glassInfoDisplay.IsGlassMenuEnabled = glassIsMenuEnabled;
+            offsetXSlider.Visible = glassIsMenuEnabled;
+            offsetYSlider.Visible = glassIsMenuEnabled;
+            zoomSlider.Visible = glassIsMenuEnabled;
+            offsetXLabel.Visible = glassIsMenuEnabled;
+            offsetYLabel.Visible = glassIsMenuEnabled;
+            zoomLabel.Visible = glassIsMenuEnabled;
+            opacityLabel.Visible = glassIsMenuEnabled;
+            opacitySlider.Visible = glassIsMenuEnabled;
+            refreshRateLabel.Visible = glassIsMenuEnabled;
+            refreshRateSlider.Visible = glassIsMenuEnabled;
+        }
     }
 
     // for saveLoad logics
@@ -327,6 +341,7 @@ namespace RED.mbnq
         public bool glassIsBorderVisible { get => isBorderVisible; set => isBorderVisible = value; }
         public bool glassIsCircle { get => isCircle; set => isCircle = value; }
         public bool glassIsBind { get => isMoveEnabled; set => isMoveEnabled = value; }
+        public bool glassIsMenuEnabled { get => glassInfoDisplay.IsGlassMenuEnabled; set => glassInfoDisplay.IsGlassMenuEnabled = value; }
         public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
         public Point glassAbsolutePos
         {

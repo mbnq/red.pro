@@ -210,6 +210,7 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBorderVisible", glassOverlay.glassIsBorderVisible);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsCircle", glassOverlay.glassIsCircle);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBind", glassOverlay.glassIsBind);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsMenuEnabled", glassOverlay.glassIsMenuEnabled);
 
             // Save each property of the capture area
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaX", glassOverlay.glassCaptureAreaValue.X);
@@ -244,20 +245,22 @@ namespace RED.mbnq
             await GlassHudOverlay.ReloadWithNewAreaAsync();
             glassOverlay.glassAbsolutePos = new Point(posX, posY);
 
-            // trackbars
             glassOverlay.InitializeTrackBars();
 
+            // trackbars
             glassOverlay.glassOffsetXValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
             glassOverlay.glassOffsetYValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
             glassOverlay.glassZoomValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 100);
             glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
             glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
- 
+            glassOverlay.glassIsMenuEnabled = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsMenuEnabled", false);
+
             glassOverlay.UpdateOffsets();
             glassOverlay.UpdateZoom();
             glassOverlay.UpdateOpacity();
             glassOverlay.UpdateRefreshRate();
-            glassOverlay.UpdateTrackBarLabels(); 
+            glassOverlay.UpdateTrackBarLabels();
+            glassOverlay.UpdateGlassMenu();
         }
     }
 }
