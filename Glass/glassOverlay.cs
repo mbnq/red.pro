@@ -56,14 +56,14 @@ namespace RED.mbnq
         private bool isBorderVisible = true;
         
         /* --- --- ---  --- --- --- */
-        public GlassHudOverlay(Rectangle mbDisplay, Rectangle selectedArea)
+        public GlassHudOverlay(Rectangle mbGlassElement, Rectangle selectedArea)
         {
-            this.glassCaptureArea = mbDisplay;
+            this.glassCaptureArea = mbGlassElement;
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(mbDisplay.Right, mbDisplay.Top);
-            this.Size = mbDisplay.Size;
+            this.Location = new Point(mbGlassElement.Right, mbGlassElement.Top);
+            this.Size = mbGlassElement.Size;
             this.Opacity = 1.0;
             this.DoubleBuffered = true;
             this.ShowInTaskbar = false;

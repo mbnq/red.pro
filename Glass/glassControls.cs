@@ -313,5 +313,10 @@ namespace RED.mbnq
         public bool glassIsBorderVisible { get => isBorderVisible; set => isBorderVisible = value; }
         public bool glassIsCircle { get => isCircle; set => isCircle = value; }
         public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
+        public Point glassAbsolutePos
+        {
+            get => new Point(GlassHudOverlay.displayOverlay.Left , GlassHudOverlay.displayOverlay.Top);
+            set => glassAbsolutePos = new Point(GlassHudOverlay.displayOverlay.Left, GlassHudOverlay.displayOverlay.Top);
+        }
     }
 }

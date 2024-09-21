@@ -215,6 +215,8 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaY", glassOverlay.glassCaptureAreaValue.Y);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaWidth", glassOverlay.glassCaptureAreaValue.Width);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaHeight", glassOverlay.glassCaptureAreaValue.Height);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassAbsolutePos", glassOverlay.glassAbsolutePos);
+
         }
 
         public static async Task mbLoadGlassSettings(GlassHudOverlay glassOverlay)
@@ -236,6 +238,9 @@ namespace RED.mbnq
 
             // Reconstruct the capture area Rectangle
             glassOverlay.glassCaptureAreaValue = new Rectangle(x, y, width, height);
+            glassOverlay.glassCaptureAreaValue = glassOverlay.GetAdjustedCaptureArea();
+
+            glassOverlay.glassAbsolutePos = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassAbsolutePos", (new Point (0, 0)));
 
             // Apply settings after loading
             glassOverlay.UpdateOffsets();
