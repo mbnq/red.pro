@@ -310,6 +310,8 @@ namespace RED.mbnq
         public int glassZoomValue    { get => zoomSlider.Value;    set => zoomSlider.Value = value;    }
         public int glassOpacityValue { get => opacitySlider.Value; set => opacitySlider.Value = value; }
         public int glassRefreshRate { get => refreshRateSlider.Value; set => refreshRateSlider.Value = value; }
+        public bool glassIsBorderVisible { get => isBorderVisible; set => isBorderVisible = value; }
+        public bool glassIsCircle { get => isCircle; set => isCircle = value; }
         public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
     }
 }

@@ -207,6 +207,8 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassZoomValue", glassOverlay.glassZoomValue);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOpacityValue", glassOverlay.glassOpacityValue);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassRefreshRate", glassOverlay.glassRefreshRate);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBorderVisible", glassOverlay.glassIsBorderVisible);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsCircle", glassOverlay.glassIsCircle);
 
             // Save each property of the capture area
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaX", glassOverlay.glassCaptureAreaValue.X);
@@ -223,6 +225,8 @@ namespace RED.mbnq
             glassOverlay.glassZoomValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 100);
             glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
             glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
+            glassOverlay.glassIsBorderVisible = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsBorderVisible", true);
+            glassOverlay.glassIsCircle = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsCircle", false);
 
             // Load each property of the capture area
             int x = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaX", 0);

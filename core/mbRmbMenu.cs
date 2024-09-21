@@ -162,7 +162,6 @@ namespace RED.mbnq
             LoadCaptureRegionMenuItem.Enabled = (SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassSaveExist", false));
             loadCustomMenuItem.Enabled = !hasCustomOverlay;
             removeCustomMenuItem.Enabled = hasCustomOverlay;
-
         }
         private void ShowMessageBox(string message, string caption)
         {
