@@ -314,9 +314,4 @@ namespace RED.mbnq
             }
         }
     }
-    public partial class GlassHudOverlay : Form
-    {
-        public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
-
-    }
 }

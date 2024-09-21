@@ -61,8 +61,8 @@ namespace RED.mbnq
                     SaveLoad.mbSaveGlassSettings(this);
                     playSND();
                 });
-                menu.Items.Add("Load Settings", null, (s, ea) => {
-                    SaveLoad.mbLoadGlassSettings(this);
+                menu.Items.Add("Load Settings", null, async (s, ea) => {
+                    await SaveLoad.mbLoadGlassSettings(this);
                     playSND();
                 });
 

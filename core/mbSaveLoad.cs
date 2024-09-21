@@ -205,8 +205,14 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassZoomValue", glassOverlay.glassZoomValue);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOpacityValue", glassOverlay.glassOpacityValue);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassRefreshRate", glassOverlay.glassRefreshRate);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassCaptureAreaValue", glassOverlay.glassCaptureAreaValue);
+
+            // Save each property of the capture area
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaX", glassOverlay.glassCaptureAreaValue.X);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaY", glassOverlay.glassCaptureAreaValue.Y);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaWidth", glassOverlay.glassCaptureAreaValue.Width);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaHeight", glassOverlay.glassCaptureAreaValue.Height);
         }
+
         public static async Task mbLoadGlassSettings(GlassHudOverlay glassOverlay)
         {
             // Load the settings and set the slider values
@@ -216,20 +222,22 @@ namespace RED.mbnq
             glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
             glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
 
+            // Load each property of the capture area
             int x = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaX", 0);
             int y = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaY", 0);
             int width = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaWidth", 100);
             int height = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaHeight", 100);
 
-            // glassOverlay.glassCaptureAreaValue = new Rectangle(x, y, width, height);
+            // Reconstruct the capture area Rectangle
+            glassOverlay.glassCaptureAreaValue = new Rectangle(x, y, width, height);
 
             // Apply settings after loading
             glassOverlay.UpdateOffsets();
             glassOverlay.UpdateZoom();
             glassOverlay.UpdateOpacity();
             glassOverlay.UpdateRefreshRate();
-            glassOverlay.UpdateCaptureArea(glassOverlay.glassCaptureAreaValue);
             await GlassHudOverlay.ReloadWithNewAreaAsync();
         }
+
     }
 }
