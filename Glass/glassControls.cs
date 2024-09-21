@@ -315,8 +315,12 @@ namespace RED.mbnq
         public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
         public Point glassAbsolutePos
         {
-            get => new Point(GlassHudOverlay.displayOverlay.Left , GlassHudOverlay.displayOverlay.Top);
-            set => glassAbsolutePos = new Point(GlassHudOverlay.displayOverlay.Left, GlassHudOverlay.displayOverlay.Top);
+            get => new Point(GlassHudOverlay.displayOverlay.Left, GlassHudOverlay.displayOverlay.Top);
+            set
+            {
+                GlassHudOverlay.displayOverlay.Left = value.X;
+                GlassHudOverlay.displayOverlay.Top = value.Y;
+            }
         }
     }
 }
