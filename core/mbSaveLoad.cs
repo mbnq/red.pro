@@ -199,6 +199,8 @@ namespace RED.mbnq
         }
         public static void mbSaveGlassSettings(GlassHudOverlay glassOverlay)
         {
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassSaveExist", true);
+
             // Glass settings
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOffsetXValue", glassOverlay.glassOffsetXValue);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOffsetYValue", glassOverlay.glassOffsetYValue);
