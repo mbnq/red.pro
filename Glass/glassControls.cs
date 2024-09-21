@@ -326,6 +326,7 @@ namespace RED.mbnq
         public int glassRefreshRate { get => refreshRateSlider.Value; set => refreshRateSlider.Value = value; }
         public bool glassIsBorderVisible { get => isBorderVisible; set => isBorderVisible = value; }
         public bool glassIsCircle { get => isCircle; set => isCircle = value; }
+        public bool glassIsBind { get => isMoveEnabled; set => isMoveEnabled = value; }
         public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
         public Point glassAbsolutePos
         {

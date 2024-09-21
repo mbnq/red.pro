@@ -209,6 +209,7 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassRefreshRate", glassOverlay.glassRefreshRate);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBorderVisible", glassOverlay.glassIsBorderVisible);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsCircle", glassOverlay.glassIsCircle);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBind", glassOverlay.glassIsBind);
 
             // Save each property of the capture area
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaX", glassOverlay.glassCaptureAreaValue.X);
@@ -225,6 +226,7 @@ namespace RED.mbnq
             // the loading sequence order is critical!
             glassOverlay.glassIsBorderVisible = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsBorderVisible", true);
             glassOverlay.glassIsCircle = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsCircle", false);
+            glassOverlay.glassIsBind = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsBind", false);
 
             // Load each property of the capture area
             int x = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaX", 0);
