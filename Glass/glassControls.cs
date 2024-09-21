@@ -19,6 +19,7 @@ namespace RED.mbnq
         private bool isGlassMenuEnabled = true;
         private Rectangle selectedRegion;
         private GlassHudOverlay displayOverlayForm;
+        public static int mbGlassControlsMargin;
         public bool IsGlassMenuEnabled
         {
             get { return isGlassMenuEnabled; }
@@ -73,6 +74,8 @@ namespace RED.mbnq
                     g.FillRectangle(debugBackgroundBrush, textBackgroundRect);
                     g.DrawString(debugLines[i], debugFont, debugTextBrush, 10, 10 + i * textSize.Height);
                 }
+
+                mbGlassControlsMargin = (int)(debugLines.Length * g.MeasureString("Sample Text", debugFont).Height);
             }
         }
     }
@@ -80,7 +83,6 @@ namespace RED.mbnq
     {
         Color mDefColGray = Color.Gray;
         Color mDefColWhite = Color.White;
-        int marginFromBottom = 20;
         int sliderSpacing = 50;
         int GlassZoomMax = 200;
         private void ToggleGlassMenu()
@@ -166,11 +168,11 @@ namespace RED.mbnq
             };
             refreshRateSlider.Scroll += (s, e) => UpdateRefreshRate();
 
-            opacitySlider.Location = new Point(10, this.Height - marginFromBottom - opacitySlider.Height);
-            zoomSlider.Location = new Point(10, opacitySlider.Location.Y - sliderSpacing);
-            offsetYSlider.Location = new Point(10, zoomSlider.Location.Y - sliderSpacing);
-            offsetXSlider.Location = new Point(10, offsetYSlider.Location.Y - sliderSpacing);
-            refreshRateSlider.Location = new Point(10, offsetYSlider.Location.Y - (sliderSpacing * 2));
+            opacitySlider.Location = new Point(((this.Width / 2) - (opacitySlider.Width / 2)), (this.Height/2) + glassControls.mbGlassControlsMargin + 4);
+            zoomSlider.Location = new Point(opacitySlider.Location.X, opacitySlider.Location.Y - sliderSpacing);
+            offsetYSlider.Location = new Point(opacitySlider.Location.X, zoomSlider.Location.Y - sliderSpacing);
+            offsetXSlider.Location = new Point(opacitySlider.Location.X, offsetYSlider.Location.Y - sliderSpacing);
+            refreshRateSlider.Location = new Point(opacitySlider.Location.X, offsetYSlider.Location.Y - (sliderSpacing * 2));
 
             // don't forget to put all sliders here!
             List<TrackBar> sliders = new List<TrackBar>
