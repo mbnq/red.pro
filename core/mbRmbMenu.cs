@@ -29,6 +29,14 @@ namespace RED.mbnq
             InitializeMenuItems();
             UpdateMenuItems();
         }
+        protected override void OnOpening(System.ComponentModel.CancelEventArgs e)
+        {
+            // Call the base method
+            base.OnOpening(e);
+
+            // Ensure the menu items are updated before the menu is shown
+            UpdateMenuItems();
+        }
 
         private void InitializeMenuItems()
         {
@@ -158,8 +166,8 @@ namespace RED.mbnq
         }
         public void UpdateMenuItems()
         {
-            bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
             LoadCaptureRegionMenuItem.Enabled = (SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassSaveExist", false));
+            bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
             loadCustomMenuItem.Enabled = !hasCustomOverlay;
             removeCustomMenuItem.Enabled = hasCustomOverlay;
         }
