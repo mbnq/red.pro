@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RED.mbnq.core;
+using System.Drawing.Text;
 
 namespace RED.mbnq
 {
@@ -631,11 +632,50 @@ namespace RED.mbnq
             #region ToolTips
             /* --- --- ---  Tooltips --- --- --- */
 
-            mbToolTip = new ToolTip();
+            mbToolTip = new ToolTip()
+            {
+                IsBalloon = true,
+                InitialDelay = 1000,
+                UseFading = true,
+                UseAnimation = true,
+                Active = true,           // use this to disable tooltips
+            };
 
-            mbToolTip.SetToolTip(centerButton, "Centers the crosshair");
-            mbToolTip.SetToolTip(loadChangePngButton, "Load custom crosshair in .png format");
+            void mbCreateToolTip(Control inputControl, string inputText = "Missing ToolTip Text")
+            {
+                mbToolTip.SetToolTip(inputControl, inputText);
+            }
 
+            mbCreateToolTip(centerButton, "Centers the crosshair");
+            mbCreateToolTip(loadChangePngButton, "Load custom crosshair in .png format");
+            mbCreateToolTip(removePngButton, "Removes custom crosshair");
+            mbCreateToolTip(debugTestButton, "For Debug purposes only");
+            mbCreateToolTip(mbTab1, "Crosshair settings");                                  // doesn't work atm
+            mbCreateToolTip(mbTab2, "Options and SniperMode controlls");                    // doesn't work atm
+            mbCreateToolTip(mbTab2, "Tools and misc");                                      // doesn't work atm
+            mbCreateToolTip(mbAutoSaveCheckbox, "Autosave settings and options on exit?");
+            mbCreateToolTip(mbDebugonCheckbox, "For Debug purposes only");
+            mbCreateToolTip(mbAOnTopCheckBox, "Should main windows be always on the top?");
+            mbCreateToolTip(mbHideCrosshairCheckBox, "Hide crosshair?");
+            mbCreateToolTip(mbDisableSoundCheckBox, "Disable program sounds?");
+            mbCreateToolTip(mbEnableZoomModeCheckBox, "Enables SniperMode and its controlls");
+            mbCreateToolTip(mbEnableFlirCheckBox, "Flir is not ready yet, WIP");
+            mbCreateToolTip(mbDarkModeCheckBox, "Toggle between Dark and Ligh GUI mode");
+            mbCreateToolTip(mbAntiCapsCheckBox, "Prevents CapsLock key from being active during playing");
+            mbCreateToolTip(mbSplashCheckBox, "Toggle splash screen - intro image");
+            mbCreateToolTip(mbSysDropDown, "List of basic system tools and shortcuts");
+            mbCreateToolTip(mbMbToolsDropDown, "List of additional tools");
+            mbCreateToolTip(colorR, "Crosshair Red color level");
+            mbCreateToolTip(colorG, "Crosshair Green color level");
+            mbCreateToolTip(colorB, "Crosshair Blue color level");
+            mbCreateToolTip(size, "Crosshair size in allowed range");
+            mbCreateToolTip(transparency, "Crosshair Transparency level");
+            mbCreateToolTip(offsetX, "Adjust Crosshair horizonal position");
+            mbCreateToolTip(offsetY, "Adjust Crosshair vertical position");
+            mbCreateToolTip(zoomLevel, "SniperMode zoom level");
+            mbCreateToolTip(zoomTInterval, "SniperMode, how long user have to hold RMB button to activate it");
+            mbCreateToolTip(zoomRefreshInterval, "SniperMode, how often image is being redrawn - CPU usage");
+            mbCreateToolTip(zoomScopeSize, "SniperMode size of the sniper scope overlay");
 
             /* --- --- ---  Tooltips --- --- --- */
             #endregion
