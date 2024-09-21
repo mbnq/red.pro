@@ -31,6 +31,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace RED.mbnq
 {
@@ -206,7 +207,7 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassRefreshRate", glassOverlay.glassRefreshRate);
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassCaptureAreaValue", glassOverlay.glassCaptureAreaValue);
         }
-        public static void mbLoadGlassSettings(GlassHudOverlay glassOverlay)
+        public static async Task mbLoadGlassSettings(GlassHudOverlay glassOverlay)
         {
             // Load the settings and set the slider values
             glassOverlay.glassOffsetXValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
@@ -220,14 +221,15 @@ namespace RED.mbnq
             int width = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaWidth", 100);
             int height = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaHeight", 100);
 
-            glassOverlay.glassCaptureAreaValue = new Rectangle(x, y, width, height);
+            // glassOverlay.glassCaptureAreaValue = new Rectangle(x, y, width, height);
 
             // Apply settings after loading
             glassOverlay.UpdateOffsets();
             glassOverlay.UpdateZoom();
             glassOverlay.UpdateOpacity();
             glassOverlay.UpdateRefreshRate();
-
+            glassOverlay.UpdateCaptureArea(glassOverlay.glassCaptureAreaValue);
+            await GlassHudOverlay.ReloadWithNewAreaAsync();
         }
     }
 }

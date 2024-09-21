@@ -18,11 +18,6 @@ namespace RED.mbnq
     // for saveLoad logics
     public partial class GlassHudOverlay : Form
     {
-        // Make the slider values both readable and writable
-        public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
-    }
-    public partial class GlassHudOverlay : Form
-    {
         private Rectangle glassCaptureArea;
         private System.Windows.Forms.Timer glassRefreshTimer;
         private bool isMoving = false;
@@ -300,5 +295,28 @@ namespace RED.mbnq
                 });
             }
         }
+        public static async Task ReloadWithNewAreaAsync()
+        {
+            if (displayOverlay != null)
+            {
+                await Task.Run(() =>
+                {
+                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.Hide()));
+                });
+
+                Rectangle newArea = displayOverlay.glassCaptureAreaValue;
+
+                await Task.Run(() =>
+                {
+                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.UpdateCaptureArea(newArea))); // Update the area on the main thread
+                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.Show())); // Show the updated overlay on the main thread
+                });
+            }
+        }
+    }
+    public partial class GlassHudOverlay : Form
+    {
+        public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
+
     }
 }
