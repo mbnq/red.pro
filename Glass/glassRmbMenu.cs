@@ -57,6 +57,16 @@ namespace RED.mbnq
                 });
 
                 menu.Items.Add(new ToolStripSeparator());
+                menu.Items.Add("Save Settings", null, (s, ea) => {
+                    SaveLoad.mbSaveGlassSettings(this);
+                    playSND();
+                });
+                menu.Items.Add("Load Settings", null, (s, ea) => {
+                    SaveLoad.mbLoadGlassSettings(this);
+                    playSND();
+                });
+
+                menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Close Glass", null, (s, ea) => { 
                     this.Close();
                     playSND();

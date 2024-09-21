@@ -30,6 +30,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace RED.mbnq
 {
@@ -142,6 +143,9 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.mbZoomRefreshIntervalSlider.Value);
             SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeCheckBox.Checked);
 
+            // glass settings, would be nice if it looked like this
+            // SaveLoad.INIFile.INIsave("settings.ini", "Glass", "ZoomLevel", glassControls.isGlassMenuEnabled);
+
             // other
             SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Time", $"{DateTime.Now.TimeOfDay}");
             SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Date", $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}");
@@ -191,6 +195,39 @@ namespace RED.mbnq
             controlPanel.mbSettingsLoaded = 1;
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
             if (!silent) Sounds.PlayClickSoundOnce();
+        }
+        public static void mbSaveGlassSettings(GlassHudOverlay glassOverlay)
+        {
+            // Glass settings
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOffsetXValue", glassOverlay.glassOffsetXValue);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOffsetYValue", glassOverlay.glassOffsetYValue);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassZoomValue", glassOverlay.glassZoomValue);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOpacityValue", glassOverlay.glassOpacityValue);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassRefreshRate", glassOverlay.glassRefreshRate);
+            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassCaptureAreaValue", glassOverlay.glassCaptureAreaValue);
+        }
+        public static void mbLoadGlassSettings(GlassHudOverlay glassOverlay)
+        {
+            // Load the settings and set the slider values
+            glassOverlay.glassOffsetXValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
+            glassOverlay.glassOffsetYValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
+            glassOverlay.glassZoomValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 100);
+            glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
+            glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
+
+            int x = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaX", 0);
+            int y = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaY", 0);
+            int width = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaWidth", 100);
+            int height = SaveLoad.INIFile.INIread("settings.ini", "Glass", "CaptureAreaHeight", 100);
+
+            glassOverlay.glassCaptureAreaValue = new Rectangle(x, y, width, height);
+
+            // Apply settings after loading
+            glassOverlay.UpdateOffsets();
+            glassOverlay.UpdateZoom();
+            glassOverlay.UpdateOpacity();
+            glassOverlay.UpdateRefreshRate();
+
         }
     }
 }

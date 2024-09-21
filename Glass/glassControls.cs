@@ -257,7 +257,7 @@ namespace RED.mbnq
 
             ToggleGlassMenu();
         }
-        private void UpdateOffsets()
+        public void UpdateOffsets()
         {
             offsetX = offsetXSlider.Value / 100f;
             offsetY = offsetYSlider.Value / 100f;
@@ -267,7 +267,7 @@ namespace RED.mbnq
 
             this.Invalidate();
         }
-        private void UpdateZoom()
+        public void UpdateZoom()
         {
             // Reverse the zoom factor calculation
             zoomFactor = (GlassZoomMax - zoomSlider.Value) / 100f;
@@ -277,7 +277,7 @@ namespace RED.mbnq
 
             this.Invalidate();
         }
-        private void UpdateOpacity()
+        public void UpdateOpacity()
         {
             opacityFactor = opacitySlider.Value / 100f;
             opacityLabel.Text = $"Opacity: {opacitySlider.Value}%";
@@ -300,5 +300,15 @@ namespace RED.mbnq
 
             this.Invalidate();  // Ensure the form is invalidated for redraw
         }
+    }
+
+    // for saveLoad logics
+    public partial class GlassHudOverlay : Form
+    {
+        public int glassOffsetXValue { get => offsetXSlider.Value; set => offsetXSlider.Value = value; }
+        public int glassOffsetYValue { get => offsetYSlider.Value; set => offsetYSlider.Value = value; }
+        public int glassZoomValue    { get => zoomSlider.Value;    set => zoomSlider.Value = value;    }
+        public int glassOpacityValue { get => opacitySlider.Value; set => opacitySlider.Value = value; }
+        public int glassRefreshRate { get => refreshRateSlider.Value; set => refreshRateSlider.Value = value; }
     }
 }
