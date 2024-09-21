@@ -49,6 +49,7 @@ namespace RED.mbnq
         private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
 
         public int mControlWidth;
+        public static ToolTip mbToolTip;
 
         public static double mbImageARatio              = 1.00f;            // init only
 
@@ -625,6 +626,18 @@ namespace RED.mbnq
 
             /* --- --- ---  --- --- --- --- --- --- --- */
 
+            #endregion
+
+            #region ToolTips
+            /* --- --- ---  Tooltips --- --- --- */
+
+            mbToolTip = new ToolTip();
+
+            mbToolTip.SetToolTip(centerButton, "Centers the crosshair");
+            mbToolTip.SetToolTip(loadChangePngButton, "Load custom crosshair in .png format");
+
+
+            /* --- --- ---  Tooltips --- --- --- */
             #endregion
         }
         /* --- --- --- --- --- --- --- --- --- --- --- */
