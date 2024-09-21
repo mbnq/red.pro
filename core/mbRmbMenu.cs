@@ -11,6 +11,7 @@ using MaterialSkin.Controls;
 using RED.mbnq.core;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -20,7 +21,7 @@ namespace RED.mbnq
     {
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem removeCustomMenuItem, loadCustomMenuItem, saveMenuItem, loadMenuItem, openSettingsDirMenuItem, textConsoleMenuItem, newCaptureRegionMenuItem, aboutMenuItem, closeMenuItem;
+        private ToolStripMenuItem removeCustomMenuItem, loadCustomMenuItem, saveMenuItem, loadMenuItem, openSettingsDirMenuItem, textConsoleMenuItem, newCaptureRegionMenuItem, LoadCaptureRegionMenuItem, aboutMenuItem, closeMenuItem;
 
         public mbRmbMenu(ControlPanel controlPanel)
         {
@@ -40,6 +41,7 @@ namespace RED.mbnq
 
             textConsoleMenuItem = CreateMenuItem("Toggle Debug Console", TextHUDConsoleMenuItem_Click);
             newCaptureRegionMenuItem = CreateMenuItem("New Glass Element", NewCaptureRegionMenuItem_Click);
+            LoadCaptureRegionMenuItem = CreateMenuItem("Load Glass Element", LoadCaptureRegionMenuItem_Click);
             aboutMenuItem = CreateMenuItem("About", AboutMenuItem_Click);
             closeMenuItem = CreateMenuItem("Close", CloseMenuItem_Click);
 
@@ -49,7 +51,7 @@ namespace RED.mbnq
                 openSettingsDirMenuItem, new ToolStripSeparator(),
                 loadCustomMenuItem, removeCustomMenuItem, new ToolStripSeparator(),
                 textConsoleMenuItem, new ToolStripSeparator(),
-                newCaptureRegionMenuItem, new ToolStripSeparator(),
+                newCaptureRegionMenuItem, LoadCaptureRegionMenuItem, new ToolStripSeparator(),
                 aboutMenuItem, new ToolStripSeparator(),
                 closeMenuItem
             });
@@ -103,6 +105,12 @@ namespace RED.mbnq
             var captureArea = selector.SelectCaptureArea();
             GlassHudOverlay.displayOverlay = new GlassHudOverlay(captureArea, captureArea);
             GlassHudOverlay.displayOverlay.Show();
+        }
+        private async void LoadCaptureRegionMenuItem_Click(object sender, EventArgs e)
+        {
+            GlassHudOverlay.displayOverlay = new GlassHudOverlay(new Rectangle(0, 0, 0, 0), new Rectangle(0, 0, 0, 0));
+            GlassHudOverlay.displayOverlay.Show();
+            await SaveLoad.mbLoadGlassSettings(GlassHudOverlay.displayOverlay);
         }
         private void saveMenuItem_Click(object sender, EventArgs e) => SaveLoad.mbSaveSettings(controlPanel);
         private void loadMenuItem_Click(object sender, EventArgs e) => SaveLoad.mbLoadSettings(controlPanel);
