@@ -222,12 +222,7 @@ namespace RED.mbnq
 
         public static async Task mbLoadGlassSettings(GlassHudOverlay glassOverlay)
         {
-            // Load the settings and set the slider values
-            glassOverlay.glassOffsetXValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
-            glassOverlay.glassOffsetYValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
-            glassOverlay.glassZoomValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 100);
-            glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
-            glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
+            // the loading sequence order is critical!
             glassOverlay.glassIsBorderVisible = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsBorderVisible", true);
             glassOverlay.glassIsCircle = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsCircle", false);
 
@@ -244,15 +239,23 @@ namespace RED.mbnq
             int posX = SaveLoad.INIFile.INIread("settings.ini", "Glass", "AbsolutePosX", 0);
             int posY = SaveLoad.INIFile.INIread("settings.ini", "Glass", "AbsolutePosY", 0);
 
-            // Apply settings after loading
-            // the order is very crucial!
+            await GlassHudOverlay.ReloadWithNewAreaAsync();
+            glassOverlay.glassAbsolutePos = new Point(posX, posY);
 
+            // trackbars
+            glassOverlay.InitializeTrackBars();
+
+            glassOverlay.glassOffsetXValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
+            glassOverlay.glassOffsetYValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
+            glassOverlay.glassZoomValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 100);
+            glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
+            glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
+ 
             glassOverlay.UpdateOffsets();
             glassOverlay.UpdateZoom();
             glassOverlay.UpdateOpacity();
             glassOverlay.UpdateRefreshRate();
-            await GlassHudOverlay.ReloadWithNewAreaAsync();
-            glassOverlay.glassAbsolutePos = new Point(posX, posY);
+            glassOverlay.UpdateTrackBarLabels(); 
         }
     }
 }

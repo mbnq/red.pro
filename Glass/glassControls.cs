@@ -98,7 +98,7 @@ namespace RED.mbnq
             refreshRateLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             refreshRateSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
         }
-        private void InitializeTrackBars()
+        public void InitializeTrackBars()
         {
 
             /* --- --- Here goes the sliders  --- --- */
@@ -299,6 +299,18 @@ namespace RED.mbnq
             this.UpdateRefreshInterval(refreshRate);
 
             this.Invalidate();  // Ensure the form is invalidated for redraw
+        }
+        public void UpdateTrackBarLabels()
+        {
+            // Update each label based on the slider values
+            offsetXLabel.Text = $"Offset X: {offsetXSlider.Value}%";
+            offsetYLabel.Text = $"Offset Y: {offsetYSlider.Value}%";
+            zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
+            opacityLabel.Text = $"Opacity: {opacitySlider.Value}%";
+            refreshRateLabel.Text = $"Refresh Rate: {refreshRateSlider.Value}ms";
+
+            // Optionally invalidate the form to trigger a repaint if needed
+            this.Invalidate();
         }
     }
 
