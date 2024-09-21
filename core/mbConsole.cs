@@ -56,7 +56,7 @@ namespace RED.mbnq
         private double throttlePaintTime = 1.00f;
         public mbnqConsole(ControlPanel controlPanel)
         {
-            controlPanel.mbProgressBar0.Visible = ControlPanel.mPBIsOn;
+            controlPanel.mbProgressBar0.Visible = ControlPanel.mbPBIsOn;
             controlPanel.mbProgressBar0.Value = 10;
 
             InitializeComponent();
@@ -258,9 +258,9 @@ namespace RED.mbnq
             UpdateCpuUsageText();
 
             // Check if the debug state has changed, needs isGlobalDebugOn to be changed to ControlPanel.mIsDebugOn 
-            if (ControlPanel.mIsDebugOn != isGlobalDebugOn)
+            if (ControlPanel.mbIsDebugOn != isGlobalDebugOn)
             {
-                isGlobalDebugOn = ControlPanel.mIsDebugOn;
+                isGlobalDebugOn = ControlPanel.mbIsDebugOn;
                 ToggleShowCommandBox(isGlobalDebugOn);
             }
 
@@ -354,7 +354,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: {ex.Message}");
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: {ex.Message}");
                 return "Error";
             }
         }
@@ -464,7 +464,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
             finally
             {

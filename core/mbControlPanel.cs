@@ -24,11 +24,11 @@ namespace RED.mbnq
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mIsDebugOn       = false;                        // global debug, not for Release version
-        public static readonly bool mPBIsOn = true;                         // init only 
-        public static bool mIsSplashOn      = false;                        // init only
-        public bool mHideCrosshair          = false;                        // init only
-        public int mSettingsLoaded          = 0;
+        public static bool mbIsDebugOn       = false;                        // global debug, not for Release version
+        public static readonly bool mbPBIsOn = true;                         // init only 
+        public static bool mbIsSplashOn      = false;                        // init only
+        public bool mbHideCrosshair          = false;                        // init only
+        public int mbSettingsLoaded          = 0;
 
         private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
         private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
@@ -40,29 +40,29 @@ namespace RED.mbnq
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
 
-        public MaterialSlider colorR, colorG, colorB, size, transparency, offsetX, offsetY, zoomLevel, zoomTInterval, zoomRefreshInterval, zoomScopeSize;
+        public MaterialSlider mbColorRSlider, mbColorGSlider, mbColorBSlider, mbSizeSlider, mbTransparencySlider, mbOffsetXSlider, mbOffsetYSlider, mbZoomLevelSlider, mbZoomTIntervalSlider, mbZoomRefreshIntervalSlider, mbZoomScopeSizeSlider;
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
         public readonly static string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
 
-        private AntiCapsLockManager antiCapsLockManager = new AntiCapsLockManager();
+        private mbAntiCapsLockManager mbAntiCapsLockManager = new mbAntiCapsLockManager();
 
-        public int mControlWidth;
+        public int mbControlWidth;
         public static ToolTip mbToolTip;
 
-        public static double mbImageARatio              = 1.00f;            // init only
+        public static double mbImageARatio               = 1.00f;            // init only
 
-        public static readonly int mCPWidth             = 262;              // init only
-        public static readonly int mCPHeight            = 780;              // init only
-        public static readonly int mControlDefSpacer    = 36;               // init only
+        public static readonly int mbCPWidth             = 262;              // init only
+        public static readonly int mbCPHeight            = 780;              // init only
+        public static readonly int mbControlDefSpacer    = 36;               // init only
 
-        public const int mPNGMaxWidth                   = 1920;             // init only
-        public const int mPNGMaxHeight                  = 1080;             // init only
-        public const int mSplashDuration                = 4000;             // duration in ms
+        public const int mbPNGMaxWidth                   = 1920;             // init only
+        public const int mbPNGMaxHeight                  = 1080;             // init only
+        public const int mbSplashDuration                = 4000;             // duration in ms
 
-        public const int mbCrosshairRedrawTime          = 5000;             // interval in ms
+        public const int mbCrosshairRedrawTime           = 5000;             // interval in ms
 
         #endregion
 
@@ -102,13 +102,13 @@ namespace RED.mbnq
             {
                 FlirOverlayForm = new mbnqFLIR();
                 _ = ManageOverlayAsync();
-                Debug.WriteLineIf(mIsDebugOn, "mbnq: FlirLogic is ON!");
+                Debug.WriteLineIf(mbIsDebugOn, "mbnq: FlirLogic is ON!");
             }
 
             UpdateAllUI();
 
-            Debug.WriteLineIf(mIsDebugOn, "mbnq: Debug is ON!");
-            Debug.WriteLineIf(mIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
+            Debug.WriteLineIf(mbIsDebugOn, "mbnq: Debug is ON!");
+            Debug.WriteLineIf(mbIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
         }
 
         // Material Skin Init
@@ -208,14 +208,14 @@ namespace RED.mbnq
         private void ControlPanel_Shown(object sender, EventArgs e)
         {
             // this is pretty nasty, but it works...
-            if (mIsSplashOn)
+            if (mbIsSplashOn)
             {
                 this.Size = new Size(0, 0);
                 this.Visible = false; 
             }
             else
             {
-                this.Size = new Size(mCPWidth, mCPHeight);
+                this.Size = new Size(mbCPWidth, mbCPHeight);
                 this.Visible = true;
             }
 
@@ -230,19 +230,19 @@ namespace RED.mbnq
                 PositionControlPanelRelativeToCrosshair();
             }
 
-            if (mIsSplashOn)
+            if (mbIsSplashOn)
             {
                 mbSplashScreen splashScreen = new mbSplashScreen();
                 splashScreen.Show();
-                splashScreen.Location = new Point((this.Location.X + (mCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mCPHeight / 2)) - (splashScreen.Size.Height / 2));
+                splashScreen.Location = new Point((this.Location.X + (mbCPWidth / 2)) - (splashScreen.Size.Width / 2), (this.Location.Y + (mbCPHeight / 2)) - (splashScreen.Size.Height / 2));
                 splashScreen.BringToFront();
 
-                Task.Delay(mSplashDuration).ContinueWith(_ =>
+                Task.Delay(mbSplashDuration).ContinueWith(_ =>
                 {
                     this.Invoke((Action)(() =>
                     {
                         this.Visible = true;
-                        this.Size = new Size(mCPWidth, mCPHeight);
+                        this.Size = new Size(mbCPWidth, mbCPHeight);
                         splashScreen.Close();
                         splashScreen.Dispose();
                     }));
@@ -254,7 +254,7 @@ namespace RED.mbnq
         #region GUI
         private void InitializeControlPanel()
         {
-            mControlWidth = this.ClientSize.Width - mControlDefSpacer;
+            mbControlWidth = this.ClientSize.Width - mbControlDefSpacer;
             // -------------------------------------------------------
 
             #region Tabs
@@ -364,10 +364,10 @@ namespace RED.mbnq
             }
 
             // Usage of the helper method in your InitializeComponent or constructor
-            centerButton = CreateButton("Center", mControlWidth, CenterButton_Click);
-            loadChangePngButton = CreateButton("Load PNG", mControlWidth, loadChangePngButton_Click);
-            removePngButton = CreateButton("Remove PNG", mControlWidth, removePngButton_Click);
-            debugTestButton = CreateButton("Debug Test", mControlWidth, debugTestButton_Click); debugTestButton.Visible = true;
+            centerButton = CreateButton("Center", mbControlWidth, CenterButton_Click);
+            loadChangePngButton = CreateButton("Load PNG", mbControlWidth, loadChangePngButton_Click);
+            removePngButton = CreateButton("Remove PNG", mbControlWidth, removePngButton_Click);
+            debugTestButton = CreateButton("Debug Test", mbControlWidth, debugTestButton_Click); debugTestButton.Visible = true;
 
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
@@ -377,7 +377,7 @@ namespace RED.mbnq
 
             mbSysDropDown = new MaterialComboBox
             {
-                Width = (mCPWidth - (mControlDefSpacer / 2) + 3),
+                Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 MaxDropDownItems = 12
             };
@@ -446,7 +446,7 @@ namespace RED.mbnq
                             mbRunSystemFile("msconfig.exe");
                             break;
                         default:
-                            Debug.WriteLineIf(mIsDebugOn, $"mbnq: Unknown system tool selected - {selectedItem}");
+                            Debug.WriteLineIf(mbIsDebugOn, $"mbnq: Unknown system tool selected - {selectedItem}");
                             break;
                     }
                 }
@@ -455,7 +455,7 @@ namespace RED.mbnq
 
             mbMbToolsDropDown = new MaterialComboBox
             {
-                Width = (mCPWidth - (mControlDefSpacer / 2) + 3),
+                Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 MaxDropDownItems = 10
             };
@@ -521,7 +521,7 @@ namespace RED.mbnq
                 checkBox.CheckedChanged += (s, e) =>
                 {
                     checkedChangedHandler(s, e);
-                    if (mSettingsLoaded > 0)
+                    if (mbSettingsLoaded > 0)
                     {
                         Sounds.PlayClickSoundOnce();
                     }
@@ -551,7 +551,7 @@ namespace RED.mbnq
             mbProgressBar0 = new mbProgressBar
             {
                 Location = new Point(0,1),
-                Width = mCPWidth,
+                Width = mbCPWidth,
                 Visible = false,
                 Value = 0
             };
@@ -559,7 +559,7 @@ namespace RED.mbnq
             // eventhandler
             mbProgressBar0.ValueChanged += (s, e) =>
             {
-                if (mIsDebugOn)
+                if (mbIsDebugOn)
                 {
                     System.Threading.Thread.Sleep(25);   // for debug purposes 
                 }
@@ -574,13 +574,13 @@ namespace RED.mbnq
 
             mbTab1.Controls.Add(mbProgressBar0);
 
-            AddLabeledSlider(mbPanelForTab1, "Red", 0, 255, 255, ref colorR);
-            AddLabeledSlider(mbPanelForTab1, "Green", 0, 255, 0, ref colorG);
-            AddLabeledSlider(mbPanelForTab1, "Blue", 0, 255, 0, ref colorB);
-            AddLabeledSlider(mbPanelForTab1, "Size", 1, 200, 50, ref size);
-            AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref transparency);
-            AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref offsetX);
-            AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref offsetY);
+            AddLabeledSlider(mbPanelForTab1, "Red", 0, 255, 255, ref mbColorRSlider);
+            AddLabeledSlider(mbPanelForTab1, "Green", 0, 255, 0, ref mbColorGSlider);
+            AddLabeledSlider(mbPanelForTab1, "Blue", 0, 255, 0, ref mbColorBSlider);
+            AddLabeledSlider(mbPanelForTab1, "Size", 1, 200, 50, ref mbSizeSlider);
+            AddLabeledSlider(mbPanelForTab1, "Transparency", 0, 100, 64, ref mbTransparencySlider);
+            AddLabeledSlider(mbPanelForTab1, "Offset X", 0, 2000, 1000, ref mbOffsetXSlider);
+            AddLabeledSlider(mbPanelForTab1, "Offset Y", 0, 2000, 1000, ref mbOffsetYSlider);
 
             mbPanelForTab1.Controls.Add(centerButton);
             mbPanelForTab1.Controls.Add(loadChangePngButton);
@@ -603,10 +603,10 @@ namespace RED.mbnq
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
 
-            AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref zoomTInterval);
-            AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref zoomRefreshInterval);
-            AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Level", 1, 10, 3, ref zoomLevel);
-            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 80, 10, ref zoomScopeSize);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref mbZoomTIntervalSlider);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref mbZoomRefreshIntervalSlider);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Level", 1, 10, 3, ref mbZoomLevelSlider);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 80, 10, ref mbZoomScopeSizeSlider);
 
             mbTab2.Controls.Add(mbPanelForTab2);
 
@@ -635,7 +635,7 @@ namespace RED.mbnq
             mbToolTip = new ToolTip()
             {
                 IsBalloon = true,
-                InitialDelay = 1000,
+                InitialDelay = 1500,
                 UseFading = true,
                 UseAnimation = true,
                 Active = true,           // use this to disable tooltips
@@ -665,17 +665,17 @@ namespace RED.mbnq
             mbCreateToolTip(mbSplashCheckBox, "Toggle splash screen - intro image");
             mbCreateToolTip(mbSysDropDown, "List of basic system tools and shortcuts");
             mbCreateToolTip(mbMbToolsDropDown, "List of additional tools");
-            mbCreateToolTip(colorR, "Crosshair Red color level");
-            mbCreateToolTip(colorG, "Crosshair Green color level");
-            mbCreateToolTip(colorB, "Crosshair Blue color level");
-            mbCreateToolTip(size, "Crosshair size in allowed range");
-            mbCreateToolTip(transparency, "Crosshair Transparency level");
-            mbCreateToolTip(offsetX, "Adjust Crosshair horizonal position");
-            mbCreateToolTip(offsetY, "Adjust Crosshair vertical position");
-            mbCreateToolTip(zoomLevel, "SniperMode zoom level");
-            mbCreateToolTip(zoomTInterval, "SniperMode, how long user have to hold RMB button to activate it");
-            mbCreateToolTip(zoomRefreshInterval, "SniperMode, how often image is being redrawn - CPU usage");
-            mbCreateToolTip(zoomScopeSize, "SniperMode size of the sniper scope overlay");
+            mbCreateToolTip(mbColorRSlider, "Crosshair Red color level");
+            mbCreateToolTip(mbColorGSlider, "Crosshair Green color level");
+            mbCreateToolTip(mbColorBSlider, "Crosshair Blue color level");
+            mbCreateToolTip(mbSizeSlider, "Crosshair size in allowed range");
+            mbCreateToolTip(mbTransparencySlider, "Crosshair Transparency level");
+            mbCreateToolTip(mbOffsetXSlider, "Adjust Crosshair horizonal position");
+            mbCreateToolTip(mbOffsetYSlider, "Adjust Crosshair vertical position");
+            mbCreateToolTip(mbZoomLevelSlider, "SniperMode zoom level");
+            mbCreateToolTip(mbZoomTIntervalSlider, "SniperMode, how long user have to hold RMB button to activate it");
+            mbCreateToolTip(mbZoomRefreshIntervalSlider, "SniperMode, how often image is being redrawn - CPU usage");
+            mbCreateToolTip(mbZoomScopeSizeSlider, "SniperMode size of the sniper scope overlay");
 
             /* --- --- ---  Tooltips --- --- --- */
             #endregion
@@ -716,7 +716,7 @@ namespace RED.mbnq
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                this.Size = new Size(mCPWidth, mCPHeight);
+                this.Size = new Size(mbCPWidth, mbCPHeight);
             }
         }
         public void UpdateAllUI()
@@ -729,35 +729,35 @@ namespace RED.mbnq
         public void UpdateZoomControls()
         {
             // Update zoom
-            ZoomMode.UpdateZoomMultiplier(zoomLevel.Value);
-            ZoomMode.UpdateStartInterval(zoomTInterval.Value);
-            ZoomMode.UpdateRefreshInterval(zoomRefreshInterval.Value);
-            ZoomMode.UpdateScopeSize(zoomScopeSize.Value);
+            ZoomMode.UpdateZoomMultiplier(mbZoomLevelSlider.Value);
+            ZoomMode.UpdateStartInterval(mbZoomTIntervalSlider.Value);
+            ZoomMode.UpdateRefreshInterval(mbZoomRefreshIntervalSlider.Value);
+            ZoomMode.UpdateScopeSize(mbZoomScopeSizeSlider.Value);
 
             // it's needed here
             if (ZoomMode.IsZoomModeEnabled)
             {
-                zoomLevel.Enabled = true;
-                zoomTInterval.Enabled = true;
-                zoomRefreshInterval.Enabled = true;
-                zoomScopeSize.Enabled = true;
+                mbZoomLevelSlider.Enabled = true;
+                mbZoomTIntervalSlider.Enabled = true;
+                mbZoomRefreshIntervalSlider.Enabled = true;
+                mbZoomScopeSizeSlider.Enabled = true;
 
-                zoomLevel.Parent.Controls[0].Enabled = true;
-                zoomTInterval.Parent.Controls[0].Enabled = true;
-                zoomRefreshInterval.Parent.Controls[0].Enabled = true;
-                zoomScopeSize.Parent.Controls[0].Enabled = true;
+                mbZoomLevelSlider.Parent.Controls[0].Enabled = true;
+                mbZoomTIntervalSlider.Parent.Controls[0].Enabled = true;
+                mbZoomRefreshIntervalSlider.Parent.Controls[0].Enabled = true;
+                mbZoomScopeSizeSlider.Parent.Controls[0].Enabled = true;
             }
             else
             {
-                zoomLevel.Enabled = false;
-                zoomTInterval.Enabled = false;
-                zoomRefreshInterval.Enabled = false;
-                zoomScopeSize.Enabled = false;
+                mbZoomLevelSlider.Enabled = false;
+                mbZoomTIntervalSlider.Enabled = false;
+                mbZoomRefreshIntervalSlider.Enabled = false;
+                mbZoomScopeSizeSlider.Enabled = false;
 
-                zoomLevel.Parent.Controls[0].Enabled = false;
-                zoomTInterval.Parent.Controls[0].Enabled = false;
-                zoomRefreshInterval.Parent.Controls[0].Enabled = false;
-                zoomScopeSize.Parent.Controls[0].Enabled = false;
+                mbZoomLevelSlider.Parent.Controls[0].Enabled = false;
+                mbZoomTIntervalSlider.Parent.Controls[0].Enabled = false;
+                mbZoomRefreshIntervalSlider.Parent.Controls[0].Enabled = false;
+                mbZoomScopeSizeSlider.Parent.Controls[0].Enabled = false;
             }
         }
         public void UpdateMainCrosshair() // overlay
@@ -768,8 +768,8 @@ namespace RED.mbnq
                 Point centeredPosition = GetCenteredPosition();
 
                 // Translate the offset values
-                int translatedOffsetX = TranslateOffset(offsetX.Value);
-                int translatedOffsetY = TranslateOffset(offsetY.Value);
+                int translatedOffsetX = TranslateOffset(mbOffsetXSlider.Value);
+                int translatedOffsetY = TranslateOffset(mbOffsetYSlider.Value);
 
                 // Apply the new position with translated offsets
                 int newLeft = centeredPosition.X + translatedOffsetX;
@@ -783,11 +783,11 @@ namespace RED.mbnq
                 // '(double)img.Width / img.Height' in mbCrosshair.cs
                 // when .png is removed it falls back to 1.00f
 
-                mbCrosshairOverlay.Size = new Size((int)Math.Round(size.Value * mbImageARatio), (int)Math.Round(size.Value / mbImageARatio));
+                mbCrosshairOverlay.Size = new Size((int)Math.Round(mbSizeSlider.Value * mbImageARatio), (int)Math.Round(mbSizeSlider.Value / mbImageARatio));
 
                 // Update colors
-                mbCrosshairOverlay.BackColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
-                mbCrosshairOverlay.ForeColor = Color.FromArgb(colorR.Value, colorG.Value, colorB.Value);
+                mbCrosshairOverlay.BackColor = Color.FromArgb(mbColorRSlider.Value, mbColorGSlider.Value, mbColorBSlider.Value);
+                mbCrosshairOverlay.ForeColor = Color.FromArgb(mbColorRSlider.Value, mbColorGSlider.Value, mbColorBSlider.Value);
                 mbCrosshairOverlay.AllowTransparency = true;
 
                 if (mbCrosshairOverlay.HasCustomOverlay)                                    // Check if custom overlay exists
@@ -801,15 +801,15 @@ namespace RED.mbnq
                 }
 
                 // Update opacity
-                if (mHideCrosshair) 
+                if (mbHideCrosshair) 
                 { 
                     mbCrosshairOverlay.Opacity = 0;
-                    transparency.Enabled = false;
+                    mbTransparencySlider.Enabled = false;
                 } 
                 else 
                 { 
-                    mbCrosshairOverlay.Opacity = transparency.Value / 100.0;
-                    transparency.Enabled = true;
+                    mbCrosshairOverlay.Opacity = mbTransparencySlider.Value / 100.0;
+                    mbTransparencySlider.Enabled = true;
                 };
 
                 // Ensure it is within the screen bounds
@@ -826,21 +826,21 @@ namespace RED.mbnq
         private void UpdateLabeledSliders()
         {
 
-            colorR.Parent.Controls[0].Text = $"Red: {colorR.Value}";
-            colorG.Parent.Controls[0].Text = $"Green: {colorG.Value}";
-            colorB.Parent.Controls[0].Text = $"Blue: {colorB.Value}";
-            size.Parent.Controls[0].Text = $"Size: {size.Value}";
-            transparency.Parent.Controls[0].Text = $"Transparency: {transparency.Value}";
-            offsetX.Parent.Controls[0].Text = $"Offset X: {offsetX.Value}";
-            offsetY.Parent.Controls[0].Text = $"Offset Y: {offsetY.Value}";
-            zoomLevel.Parent.Controls[0].Text = $"SniperMode Zoom Level: {zoomLevel.Value}";
-            zoomTInterval.Parent.Controls[0].Text = $"SniperMode Zoom Delay: {zoomTInterval.Value}";
-            zoomRefreshInterval.Parent.Controls[0].Text = $"SniperMode Refresh Interval: {zoomRefreshInterval.Value}";
-            zoomScopeSize.Parent.Controls[0].Text = $"SniperMode Scope Size: {zoomScopeSize.Value}";
+            mbColorRSlider.Parent.Controls[0].Text = $"Red: {mbColorRSlider.Value}";
+            mbColorGSlider.Parent.Controls[0].Text = $"Green: {mbColorGSlider.Value}";
+            mbColorBSlider.Parent.Controls[0].Text = $"Blue: {mbColorBSlider.Value}";
+            mbSizeSlider.Parent.Controls[0].Text = $"Size: {mbSizeSlider.Value}";
+            mbTransparencySlider.Parent.Controls[0].Text = $"Transparency: {mbTransparencySlider.Value}";
+            mbOffsetXSlider.Parent.Controls[0].Text = $"Offset X: {mbOffsetXSlider.Value}";
+            mbOffsetYSlider.Parent.Controls[0].Text = $"Offset Y: {mbOffsetYSlider.Value}";
+            mbZoomLevelSlider.Parent.Controls[0].Text = $"SniperMode Zoom Level: {mbZoomLevelSlider.Value}";
+            mbZoomTIntervalSlider.Parent.Controls[0].Text = $"SniperMode Zoom Delay: {mbZoomTIntervalSlider.Value}";
+            mbZoomRefreshIntervalSlider.Parent.Controls[0].Text = $"SniperMode Refresh Interval: {mbZoomRefreshIntervalSlider.Value}";
+            mbZoomScopeSizeSlider.Parent.Controls[0].Text = $"SniperMode Scope Size: {mbZoomScopeSizeSlider.Value}";
 
-            if (zoomTInterval.Value < 1) { zoomTInterval.Value = 1; };
-            if (zoomRefreshInterval.Value < 1) { zoomRefreshInterval.Value = 1; };
-            if (zoomScopeSize.Value < 1) { zoomScopeSize.Value = 1; };
+            if (mbZoomTIntervalSlider.Value < 1) { mbZoomTIntervalSlider.Value = 1; };
+            if (mbZoomRefreshIntervalSlider.Value < 1) { mbZoomRefreshIntervalSlider.Value = 1; };
+            if (mbZoomScopeSizeSlider.Value < 1) { mbZoomScopeSizeSlider.Value = 1; };
 
         }
         #endregion
@@ -883,7 +883,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+                Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
         }
 
@@ -925,7 +925,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+                Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
 
@@ -964,7 +964,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
+                Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run system file check {ex.Message}");
             }
         }
 
@@ -982,7 +982,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {fileName}: {ex.Message}");
+                Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run {fileName}: {ex.Message}");
             }
         }
 
@@ -1008,7 +1008,7 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to retrieve webpage content: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+                Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
         private void mbTestPing_Click(object sender, EventArgs e)
@@ -1032,7 +1032,7 @@ namespace RED.mbnq
             }
             catch (Exception ex)
             {
-                Debug.WriteLineIf(mIsDebugOn, $"mbnq: failed to run {ex.Message}");
+                Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
 
@@ -1043,7 +1043,7 @@ namespace RED.mbnq
         /* --- --- --- Buttons Code --- --- --- */
         public void UpdateButtons()
         {
-            if (mIsDebugOn) { debugTestButton.Visible = true; } else { debugTestButton.Visible = false; }
+            if (mbIsDebugOn) { debugTestButton.Visible = true; } else { debugTestButton.Visible = false; }
             removePngButton.Enabled = File.Exists(Path.Combine(mbUserFilesPath, "RED.custom.png"));
         }
 
@@ -1079,12 +1079,12 @@ namespace RED.mbnq
             if (mbCrosshairOverlay != null)
             {
                 // Reset the offset values to the midpoint, which corresponds to 0 in the new translation
-                offsetX.Value = 1000;
-                offsetY.Value = 1000;
+                mbOffsetXSlider.Value = 1000;
+                mbOffsetYSlider.Value = 1000;
 
                 // Update the labels for the translated offsets
-                offsetX.Parent.Controls[0].Text = $"Offset X: {TranslateOffset(offsetX.Value)}";
-                offsetY.Parent.Controls[0].Text = $"Offset Y: {TranslateOffset(offsetY.Value)}";
+                mbOffsetXSlider.Parent.Controls[0].Text = $"Offset X: {TranslateOffset(mbOffsetXSlider.Value)}";
+                mbOffsetYSlider.Parent.Controls[0].Text = $"Offset Y: {TranslateOffset(mbOffsetYSlider.Value)}";
 
                 Point centeredPosition = GetCenteredPosition();
 
@@ -1145,12 +1145,12 @@ namespace RED.mbnq
         {
             if (mbDebugonCheckbox.Checked)
             {
-                mIsDebugOn = true;
+                mbIsDebugOn = true;
                 UpdateButtons();
             }
             else
             {
-                mIsDebugOn = false;
+                mbIsDebugOn = false;
                 UpdateButtons();
             }
         }
@@ -1169,12 +1169,12 @@ namespace RED.mbnq
         {
             if (mbHideCrosshairCheckBox.Checked)
             {
-                mHideCrosshair = true;
+                mbHideCrosshair = true;
                 UpdateMainCrosshair();
             }
             else
             {
-                mHideCrosshair = false;
+                mbHideCrosshair = false;
                 UpdateMainCrosshair();
             }
         }
@@ -1228,22 +1228,22 @@ namespace RED.mbnq
         {
             if (mbAntiCapsCheckBox.Checked)
             {
-                antiCapsLockManager.StartCapsLockMonitor();
+                mbAntiCapsLockManager.StartCapsLockMonitor();
             }
             else
             {
-                antiCapsLockManager.StopCapsLockMonitor();
+                mbAntiCapsLockManager.StopCapsLockMonitor();
             }
         }        
         private void mbSplashCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (mbSplashCheckBox.Checked)
             {
-                mIsSplashOn = true;
+                mbIsSplashOn = true;
             }
             else
             {
-                mIsSplashOn = false;
+                mbIsSplashOn = false;
             }
         }
         #endregion
@@ -1270,7 +1270,7 @@ namespace RED.mbnq
                         {
                             FlirOverlayForm.Show();
                         }
-                        Debug.WriteLineIf(mIsDebugOn, "mbnq: FLIR Overlay Shown");
+                        Debug.WriteLineIf(mbIsDebugOn, "mbnq: FLIR Overlay Shown");
                     }
                 }
                 else
@@ -1287,7 +1287,7 @@ namespace RED.mbnq
                         {
                             FlirOverlayForm.Hide();
                         }
-                        Debug.WriteLineIf(mIsDebugOn, "mbnq: FLIR Overlay Hidden");
+                        Debug.WriteLineIf(mbIsDebugOn, "mbnq: FLIR Overlay Hidden");
                     }
                 }
 
@@ -1348,7 +1348,7 @@ namespace RED.mbnq
                     Clipboard.SetText(message); // Copy the content to the clipboard
                     Sounds.PlayClickSoundOnce();
                     // MessageBox.Show("Content copied to clipboard.", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Debug.WriteLineIf(mIsDebugOn, $"mbnq: Content copied to clipboard.");
+                    Debug.WriteLineIf(mbIsDebugOn, $"mbnq: Content copied to clipboard.");
                 };
 
                 // ------------------------------------------
@@ -1415,8 +1415,8 @@ namespace RED.mbnq
 
             var panel = new Panel()
             {
-                Width = mControlWidth,
-                Height = ((mControlDefSpacer * 2) - 6),
+                Width = mbControlWidth,
+                Height = ((mbControlDefSpacer * 2) - 6),
             };
 
             label.Location = new Point(3, 3);

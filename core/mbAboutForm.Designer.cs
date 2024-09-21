@@ -120,8 +120,8 @@ namespace RED.mbnq.core
             this.TopMost = true;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(
-                ControlPanel.ActiveForm.Location.X + ControlPanel.mCPWidth + 10,
-                ControlPanel.ActiveForm.Location.Y + (ControlPanel.mCPHeight / 2)
+                ControlPanel.ActiveForm.Location.X + ControlPanel.mbCPWidth + 10,
+                ControlPanel.ActiveForm.Location.Y + (ControlPanel.mbCPHeight / 2)
             );
 
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

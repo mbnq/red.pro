@@ -297,7 +297,7 @@ namespace RED.mbnq
         {
             if (!controlPanel.mbHideCrosshairCheckBox.Checked)
             {
-                controlPanel.mHideCrosshair = hideCrosshair;
+                controlPanel.mbHideCrosshair = hideCrosshair;
                 controlPanel.UpdateMainCrosshair();
             }
         }

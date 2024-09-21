@@ -34,7 +34,7 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Failed to load sound: {ex.Message}");
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: Failed to load sound: {ex.Message}");
             }
         }
         public static void PlayClickSound()
@@ -65,7 +65,7 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to play sound: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"Failed to play sound: {ex.Message}");
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"Failed to play sound: {ex.Message}");
             }
             finally
             {

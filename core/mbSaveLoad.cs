@@ -36,7 +36,7 @@ namespace RED.mbnq
     public static class SaveLoad
     {
         private static readonly string settingsDirectory = ControlPanel.mbUserFilesPath;
-        private static bool mbIsDebugOn = ControlPanel.mIsDebugOn;
+        private static bool mbIsDebugOn = ControlPanel.mbIsDebugOn;
         public static void EnsureDirectoryExists()
         {
             if (!Directory.Exists(settingsDirectory))
@@ -124,22 +124,22 @@ namespace RED.mbnq
             SaveLoad.INIFile.INIsave("settings.ini", "General", "PositionY", controlPanel.Top);
 
             // crosshair
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "ColorRValue", controlPanel.colorR.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "ColorGValue", controlPanel.colorG.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "ColorBValue", controlPanel.colorB.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "SizeValue", controlPanel.size.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "TransparencyValue", controlPanel.transparency.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.offsetX.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.offsetY.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "ColorRValue", controlPanel.mbColorRSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "ColorGValue", controlPanel.mbColorGSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "ColorBValue", controlPanel.mbColorBSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "SizeValue", controlPanel.mbSizeSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "TransparencyValue", controlPanel.mbTransparencySlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "OffsetXValue", controlPanel.mbOffsetXSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "OffsetYValue", controlPanel.mbOffsetYSlider.Value);
             SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "mbHideCrosshair", controlPanel.mbHideCrosshairCheckBox.Checked);
             if (controlPanel.mbCrosshairOverlay != null) SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
             if (controlPanel.mbCrosshairOverlay != null) SaveLoad.INIFile.INIsave("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
 
             // zoomMode aka sniperMode
-            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.zoomScopeSize.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.zoomTInterval.Value);
-            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.zoomRefreshInterval.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.mbZoomLevelSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.mbZoomScopeSizeSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.mbZoomTIntervalSlider.Value);
+            SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.mbZoomRefreshIntervalSlider.Value);
             SaveLoad.INIFile.INIsave("settings.ini", "ZoomMode", "mbEnableZoomMode", controlPanel.mbEnableZoomModeCheckBox.Checked);
 
             // other
@@ -164,13 +164,13 @@ namespace RED.mbnq
             controlPanel.mbAntiCapsCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", true);
             controlPanel.mbEnableFlirCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
 
-            controlPanel.colorR.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
-            controlPanel.colorG.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
-            controlPanel.colorB.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 0);
-            controlPanel.size.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 12);
-            controlPanel.transparency.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
-            controlPanel.offsetX.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
-            controlPanel.offsetY.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
+            controlPanel.mbColorRSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
+            controlPanel.mbColorGSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
+            controlPanel.mbColorBSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 0);
+            controlPanel.mbSizeSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 12);
+            controlPanel.mbTransparencySlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
+            controlPanel.mbOffsetXSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
+            controlPanel.mbOffsetYSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
             controlPanel.mbHideCrosshairCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
 
             if (controlPanel.mbCrosshairOverlay != null)
@@ -181,14 +181,14 @@ namespace RED.mbnq
                 controlPanel.mbCrosshairOverlay.Top = posY;
             }
 
-            controlPanel.zoomTInterval.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.zoomTInterval.Value);
-            controlPanel.zoomRefreshInterval.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.zoomRefreshInterval.Value);
+            controlPanel.mbZoomTIntervalSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.mbZoomTIntervalSlider.Value);
+            controlPanel.mbZoomRefreshIntervalSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.mbZoomRefreshIntervalSlider.Value);
             controlPanel.mbEnableZoomModeCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
-            controlPanel.zoomLevel.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.zoomLevel.Value);
-            controlPanel.zoomScopeSize.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.zoomScopeSize.Value);
+            controlPanel.mbZoomLevelSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.mbZoomLevelSlider.Value);
+            controlPanel.mbZoomScopeSizeSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.mbZoomScopeSizeSlider.Value);
 
             controlPanel.UpdateAllUI();
-            controlPanel.mSettingsLoaded = 1;
+            controlPanel.mbSettingsLoaded = 1;
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
             if (!silent) Sounds.PlayClickSoundOnce();
         }

@@ -41,7 +41,7 @@ namespace RED.mbnq
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.MinimumSize = new Size(1, 1);
-            this.Size = new Size(ControlPanel.mPNGMaxWidth, ControlPanel.mPNGMaxHeight);
+            this.Size = new Size(ControlPanel.mbPNGMaxWidth, ControlPanel.mbPNGMaxHeight);
             this.BackColor = Color.Red;
             this.Opacity = 0.5;
             this.TopMost = true;
@@ -108,13 +108,13 @@ namespace RED.mbnq
                     {
                         using (var img = Image.FromStream(ms))
                         {
-                            if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
+                            if (img.Width <= ControlPanel.mbPNGMaxWidth && img.Height <= ControlPanel.mbPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
                             {
                                 // Dispose of the existing overlay if it exists
                                 crosshairPngOverlay?.Dispose();
                                 crosshairPngOverlay = new Bitmap(img);
                                 this.Invalidate();
-                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay successfully loaded.");
+                                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay successfully loaded.");
                                 ControlPanel.mbImageARatio = (double)img.Width / img.Height;
                             }
                             else
@@ -123,7 +123,7 @@ namespace RED.mbnq
                                 Sounds.PlayClickSoundOnce();
                                 File.Delete(crosshairFilePath);
                                 crosshairPngOverlay = null;
-                                Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
+                                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
                                 ControlPanel.mbImageARatio = 1.00f;
                             }
                         }
@@ -134,14 +134,14 @@ namespace RED.mbnq
                     // MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                     crosshairPngOverlay = null;
-                    Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Custom overlay file does not exist.");
+                    Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay file does not exist.");
                 }
             }
             catch (Exception ex)
             {
                 MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
-                if (ControlPanel.mIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
-                Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Exception occurred while loading custom overlay: {ex.Message}");
+                if (ControlPanel.mbIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: Exception occurred while loading custom overlay: {ex.Message}");
                 crosshairPngOverlay = null;
                 Sounds.PlayClickSoundOnce();
             }
@@ -160,13 +160,13 @@ namespace RED.mbnq
                 {
                     using (var img = Image.FromFile(customFilePath))
                     {
-                        if (img.Width <= ControlPanel.mPNGMaxWidth && img.Height <= ControlPanel.mPNGMaxHeight)
+                        if (img.Width <= ControlPanel.mbPNGMaxWidth && img.Height <= ControlPanel.mbPNGMaxHeight)
                         {
                             ControlPanel.mbCrosshairDisplay.SetCustomPNG();
                         }
                         else
                         {
-                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {ControlPanel.mPNGMaxHeight}x{ControlPanel.mPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                            MaterialMessageBox.Show($"Maximum allowed .png dimensions are {ControlPanel.mbPNGMaxHeight}x{ControlPanel.mbPNGMaxWidth} pixels.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                             Sounds.PlayClickSoundOnce();
                             File.Delete(customFilePath);
                         }

@@ -117,7 +117,7 @@ namespace RED.mbnq
         {
             controlPanel.LoadCustomCrosshair();
             controlPanel.mbCrosshairOverlay.SetCustomPNG();
-            if (controlPanel.size.Value < 100) controlPanel.size.Value = 100;
+            if (controlPanel.mbSizeSlider.Value < 100) controlPanel.mbSizeSlider.Value = 100;
             AdjustColorsForCustomPNG();
             controlPanel.CenterCrosshairOverlay();
             controlPanel.UpdateMainCrosshair();
@@ -125,25 +125,25 @@ namespace RED.mbnq
         }
         public void AdjustColorsForCustomPNG()
         {
-            if (controlPanel.colorR.Value > 200 || controlPanel.colorG.Value > 200 || controlPanel.colorB.Value > 200)
+            if (controlPanel.mbColorRSlider.Value > 200 || controlPanel.mbColorGSlider.Value > 200 || controlPanel.mbColorBSlider.Value > 200)
             {
-                controlPanel.colorR.Value = 10;
-                controlPanel.colorG.Value = 10;
-                controlPanel.colorB.Value = 10;
+                controlPanel.mbColorRSlider.Value = 10;
+                controlPanel.mbColorGSlider.Value = 10;
+                controlPanel.mbColorBSlider.Value = 10;
             }
         }
         public void RemoveCustomMenuItem_Click(object sender, EventArgs e)
         {
-            if (!(controlPanel.colorR.Value > 50 || controlPanel.colorG.Value > 50 || controlPanel.colorB.Value > 50))
+            if (!(controlPanel.mbColorRSlider.Value > 50 || controlPanel.mbColorGSlider.Value > 50 || controlPanel.mbColorBSlider.Value > 50))
             {
-                controlPanel.colorR.Value = 50;
-                controlPanel.colorG.Value = 50;
-                controlPanel.colorB.Value = 50;
+                controlPanel.mbColorRSlider.Value = 50;
+                controlPanel.mbColorGSlider.Value = 50;
+                controlPanel.mbColorBSlider.Value = 50;
             }
 
             controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();        // ensures that the crosshair overlay on the screen is removed
             controlPanel.RemoveCustomCrosshair();                           // removes the custom crosshair data from the control panel itself
-            controlPanel.colorR.Value++;                                     // Force redraw of crosshair
+            controlPanel.mbColorRSlider.Value++;                                     // Force redraw of crosshair
 
             controlPanel.UpdateMainCrosshair();
             UpdateMenuItems();

@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace RED.mbnq
 {
-    public class AntiCapsLockManager
+    public class mbAntiCapsLockManager
     {
         const int VK_CAPITAL = 0x14;
         const uint KEYEVENTF_KEYUP = 0x0002;
