@@ -219,7 +219,7 @@ namespace RED.mbnq
                 this.Visible = true;
             }
 
-            UpdateMainCrosshair();
+            UpdateAllUI();
 
             if (mbCrosshairOverlay != null)
             {
@@ -563,7 +563,7 @@ namespace RED.mbnq
                 {
                     System.Threading.Thread.Sleep(25);   // for debug purposes 
                 }
-                // updateMainCrosshair();               // is it really needed?
+                // UpdateAllUI();                        // is it really needed?
             };
 
             /* --- --- ---  --- --- --- --- --- --- --- */
@@ -1108,25 +1108,25 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
             PositionControlPanelRelativeToCrosshair();
             CenterCrosshairOverlay();
-            UpdateButtons();
+            UpdateAllUI();
         }
         private void loadChangePngButton_Click(object sender, EventArgs e)
         {
             RemoveCustomCrosshair();
             Sounds.PlayClickSoundOnce();
             rightClickMenu.LoadCustomPNG_Click(this, e);
-            UpdateButtons();
+            UpdateAllUI();
         }
         private void removePngButton_Click(object sender, EventArgs e)
         {
             rightClickMenu.RemoveCustomMenuItem_Click(this, e);
             Sounds.PlayClickSoundOnce();
-            UpdateButtons();
+            UpdateAllUI();
         }
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            UpdateButtons();
+            UpdateAllUI();
         }
 
         #endregion
@@ -1146,12 +1146,12 @@ namespace RED.mbnq
             if (mbDebugonCheckbox.Checked)
             {
                 mbIsDebugOn = true;
-                UpdateButtons();
+                UpdateAllUI();
             }
             else
             {
                 mbIsDebugOn = false;
-                UpdateButtons();
+                UpdateAllUI();
             }
         }
         private void mbAOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1170,12 +1170,12 @@ namespace RED.mbnq
             if (mbHideCrosshairCheckBox.Checked)
             {
                 mbHideCrosshair = true;
-                UpdateMainCrosshair();
+                UpdateAllUI();
             }
             else
             {
                 mbHideCrosshair = false;
-                UpdateMainCrosshair();
+                UpdateAllUI();
             }
         }
         private void mbDisableSoundCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1194,23 +1194,25 @@ namespace RED.mbnq
             if (mbEnableZoomModeCheckBox.Checked)
             {
                 ZoomMode.IsZoomModeEnabled = true;
-                UpdateZoomControls();
+                UpdateAllUI();
             }
             else
             {
                 ZoomMode.IsZoomModeEnabled = false;
-                UpdateZoomControls();
+                UpdateAllUI();
             }
         }
         private void mbEnableFlirCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (mbEnableFlirCheckBox.Checked)
             {
-                mbnqFLIR.mbEnableFlir = true; // Enable FLIR overlay
+                mbnqFLIR.mbEnableFlir = true;
+                UpdateAllUI();
             }
             else
             {
-                mbnqFLIR.mbEnableFlir = false; // Disable FLIR overlay
+                mbnqFLIR.mbEnableFlir = false;
+                UpdateAllUI();
             }
         }
         private void mbDarkModeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1218,10 +1220,12 @@ namespace RED.mbnq
             if (mbDarkModeCheckBox.Checked)
             {
                 InitializeMaterialSkin("");
+                UpdateAllUI();
             }
             else
             {
                 InitializeMaterialSkin("LIGHT");
+                UpdateAllUI();
             }
         }
         private void mbAntiCapsCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -1399,7 +1403,6 @@ namespace RED.mbnq
             {
                 Sounds.PlayClickSound();
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                // UpdateMainCrosshair();
                 UpdateAllUI();
             };
 
@@ -1408,7 +1411,6 @@ namespace RED.mbnq
             {
                 materialSlider.Value = defaultValue;
                 label.Text = $"{labelText}: {materialSlider.Value}";
-                // UpdateMainCrosshair();
                 UpdateAllUI();
                 Sounds.PlayClickSound();
             };
