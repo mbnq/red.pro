@@ -20,7 +20,7 @@ namespace RED.mbnq
         #region variables and constants
         public static mbCrosshair mainCrosshair;
         public const int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps 
-        public const string mbVersion = "0.1.0.6";
+        public const string mbVersion = "0.1.0.7";
         #endregion
 
         #region DPI
