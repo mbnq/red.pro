@@ -16,6 +16,8 @@ using RED.mbnq;
 [assembly: AssemblyTrademark("www.mbnq.pl")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
+[assembly: AssemblyDefaultAlias("RED.PRO")]
+[assembly: AssemblyMetadata("mbnq00 on gmail", "https://github.com/mbnq")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -37,3 +39,4 @@ using RED.mbnq;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion(Program.mbVersion)]
 [assembly: AssemblyFileVersion(Program.mbVersion)]
+
