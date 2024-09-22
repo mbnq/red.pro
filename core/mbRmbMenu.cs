@@ -97,9 +97,9 @@ namespace RED.mbnq
         public void UpdateMenuItems()
         {
             LoadCaptureRegionMenuItem.Enabled = (SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassSaveExist", false));
-            bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
-            loadCustomMenuItem.Enabled = !hasCustomOverlay;
-            removeCustomMenuItem.Enabled = hasCustomOverlay;
+            // bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
+            // loadCustomMenuItem.Enabled = !hasCustomOverlay;
+            // removeCustomMenuItem.Enabled = hasCustomOverlay;
         }
 
         #endregion

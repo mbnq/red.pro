@@ -1114,7 +1114,6 @@ namespace RED.mbnq
         }
         private void loadChangePngButton_Click(object sender, EventArgs e)
         {
-            RemoveCustomCrosshair();
             Sounds.PlayClickSoundOnce();
             rightClickMenu.LoadCustomPNG_Click(this, e);
             UpdateAllUI();

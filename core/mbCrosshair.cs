@@ -85,6 +85,15 @@ namespace RED.mbnq
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
+                    string fileName = Path.GetFileName(filePath);
+
+                    // Exclude "RED.custom.png"
+                    if (fileName.Equals("RED.custom.png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Sounds.PlayClickSoundOnce();
+                        return;
+                    }
+
                     string destinationPath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
 
                     if (File.Exists(destinationPath))
@@ -98,6 +107,7 @@ namespace RED.mbnq
                 }
             }
         }
+
 
         /* --- --- --- Set --- --- --- */
 
