@@ -23,7 +23,12 @@ namespace RED.mbnq
 
         private Timer crosshairRefreshTimer;
         private Image crosshairPngOverlay;
+        private ControlPanel controlPanelInstance;
         public int mbXhairPaintCount = 0;
+        public void SetControlPanelInstance(ControlPanel controlPanel)
+        {
+            controlPanelInstance = controlPanel;
+        }
 
         /* --- --- ---  --- --- --- */
         #endregion
@@ -148,6 +153,7 @@ namespace RED.mbnq
 
             // Refresh the display
             this.Invalidate();
+            controlPanelInstance?.UpdateAllUI();
         }
 
         /* --- --- --- Apply --- --- --- */

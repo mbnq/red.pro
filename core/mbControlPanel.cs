@@ -139,13 +139,14 @@ namespace RED.mbnq
             );
         }
 
-        // Crosshair Init
+        // Crosshair Init, passing instance
         public mbCrosshair mbCrosshairOverlay
         {
             get { return mbCrosshairDisplay; }
             set
             {
                 mbCrosshairDisplay = value;
+                mbCrosshairDisplay.SetControlPanelInstance(this);
                 InitializeCrosshairPos();
             }
         }
@@ -304,6 +305,7 @@ namespace RED.mbnq
             mbTabControl.SelectedIndexChanged += (s, e) =>
             {
                 Sounds.PlayClickSound();
+                UpdateAllUI();
             };
 
             Controls.Add(mbTabControl);
