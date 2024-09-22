@@ -148,8 +148,8 @@ namespace RED.mbnq
             // SaveLoad.INIFile.INIsave("settings.ini", "Glass", "ZoomLevel", glassControls.isGlassMenuEnabled);
 
             // other
-            SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Time", $"{DateTime.Now.TimeOfDay}");
-            SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Date", $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}");
+            // SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Time", $"{DateTime.Now.TimeOfDay}");
+            // SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Date", $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}");
 
             if (!onExit)
             {
