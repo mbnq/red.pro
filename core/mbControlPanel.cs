@@ -65,6 +65,10 @@ namespace RED.mbnq
         public const int mbCrosshairRedrawTime           = 5000;             // interval in ms
 
         public static string mbIPdicoveryProvider = "https://mbnq.pl/myip/";
+        public static string mbIPdicoveryProvider2 = "";
+        public static string mbIPdicoveryProvider3 = "";
+        public static string mbIPdicoveryProvider4 = "";
+
         public static string mbIPpingTestTarget = "8.8.8.8";
 
         #endregion

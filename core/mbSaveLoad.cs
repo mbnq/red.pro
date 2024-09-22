@@ -158,7 +158,9 @@ namespace RED.mbnq
 
             SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPpingTestTarget", ControlPanel.mbIPpingTestTarget);
             SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPdicoveryProvider", ControlPanel.mbIPdicoveryProvider);
-
+            SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPdicoveryProvider2", ControlPanel.mbIPdicoveryProvider2);
+            SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPdicoveryProvider3", ControlPanel.mbIPdicoveryProvider3);
+            SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPdicoveryProvider4", ControlPanel.mbIPdicoveryProvider4);
 
             if (!onExit)
             {
@@ -203,6 +205,9 @@ namespace RED.mbnq
 
             ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
             ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
+            ControlPanel.mbIPdicoveryProvider2 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider2", "https://api.seeip.org/");
+            ControlPanel.mbIPdicoveryProvider3 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider3", "https://api.my-ip.io/v2/ip.txt");
+            ControlPanel.mbIPdicoveryProvider4 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider4", "https://wtfismyip.com/text/");
 
             controlPanel.UpdateAllUI();
             controlPanel.mbSettingsLoaded = 1;

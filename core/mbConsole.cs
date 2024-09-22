@@ -366,24 +366,24 @@ namespace RED.mbnq
             {
                 try
                 {
-                    ipAddress = await client.GetStringAsync("https://api.seeip.org/");
+                    ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider2);
                     return ipAddress.Trim();
                 }
                 catch (HttpRequestException ex)
                 {
-                    Debug.WriteLine($"Failed to fetch IP from https://api.seeip.org/: {ex.Message}");
+                    Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider2}: {ex.Message}");
                 }
 
                 if (string.IsNullOrEmpty(ipAddress))
                 {
                     try
                     {
-                        ipAddress = await client.GetStringAsync("https://api.my-ip.io/v2/ip.txt");
+                        ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider3);
                         return ipAddress.Trim();
                     }
                     catch (HttpRequestException ex)
                     {
-                        Debug.WriteLine($"Failed to fetch IP from https://api.my-ip.io/v2/ip.txt: {ex.Message}");
+                        Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider3}: {ex.Message}");
                     }
                 }
                 
@@ -391,12 +391,12 @@ namespace RED.mbnq
                 {
                     try
                     {
-                        ipAddress = await client.GetStringAsync("https://wtfismyip.com/text/");
+                        ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider4);
                         return ipAddress.Trim();
                     }
                     catch (HttpRequestException ex)
                     {
-                        Debug.WriteLine($"Failed to fetch IP from https://wtfismyip.com/text/: {ex.Message}");
+                        Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider4}: {ex.Message}");
                     }
                 }
 
