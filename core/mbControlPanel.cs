@@ -64,6 +64,9 @@ namespace RED.mbnq
 
         public const int mbCrosshairRedrawTime           = 5000;             // interval in ms
 
+        public const string ipDicoveryProvider = "https://mbnq.pl/myip/";
+        public const string ipPingTestTarget = "8.8.8.8";
+
         #endregion
 
         #region ControlPanel Init
@@ -946,7 +949,7 @@ namespace RED.mbnq
         }
 
         // ---
-        private async void mbMyIP_Click(object sender, EventArgs e)
+        private async void mbMyIP_Click(object sender, EventArgs e, string ipProvider = ipDicoveryProvider)
         {
             Sounds.PlayClickSoundOnce();
 
@@ -955,7 +958,7 @@ namespace RED.mbnq
                 // Download the content of the webpage
                 using (HttpClient client = new HttpClient())
                 {
-                    string url = "https://mbnq.pl/myip/";
+                    string url = ipProvider;
                     string pageContent = await client.GetStringAsync(url);
                     string mBoxTitle = "Your IP:";
 
@@ -970,7 +973,7 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
-        private void mbTestPing_Click(object sender, EventArgs e)
+        private void mbTestPing_Click(object sender, EventArgs e, string ipTestTarget = ipPingTestTarget)
         {
             Sounds.PlayClickSoundOnce();
 
@@ -980,7 +983,7 @@ namespace RED.mbnq
                 ProcessStartInfo processInfo = new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
-                    Arguments = "/c ping 8.8.8.8 -t",
+                    Arguments = $"/c ping {ipTestTarget} -t",
                     // Verb = "runas",                          // Run as administrator
                     // UseShellExecute = true,                  // Required for elevated privileges
                     WindowStyle = ProcessWindowStyle.Normal     // Shows the command prompt window
