@@ -48,7 +48,7 @@ namespace RED.mbnq
             removeCustomMenuItem = CreateMenuItem("Remove Custom PNG", RemoveCustomMenuItem_Click);
 
             textConsoleMenuItem = CreateMenuItem("Toggle Debug Console", TextHUDConsoleMenuItem_Click);
-            newCaptureRegionMenuItem = CreateMenuItem("New Glass Element", NewCaptureRegionMenuItem_Click);
+            newCaptureRegionMenuItem = CreateMenuItem("Glass Element Editor", NewCaptureRegionMenuItem_Click);
             LoadCaptureRegionMenuItem = CreateMenuItem("Load Glass Element", LoadCaptureRegionMenuItem_Click);
             aboutMenuItem = CreateMenuItem("About", AboutMenuItem_Click);
             closeMenuItem = CreateMenuItem("Close", CloseMenuItem_Click);
