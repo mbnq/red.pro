@@ -5,6 +5,9 @@
     https://mbnq.pl/
     mbnq00 on gmail
 
+    This code is a very early concept and never was continued.
+    Kept as placeholder, may be used in the future.
+
 */
 
 using System;
