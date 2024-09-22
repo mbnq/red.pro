@@ -37,6 +37,7 @@ namespace RED.mbnq
 {
     public static class SaveLoad
     {
+        #region init
         private static readonly string settingsDirectory = ControlPanel.mbUserFilesPath;
         private static bool mbIsDebugOn = ControlPanel.mbIsDebugOn;
         public static void EnsureDirectoryExists()
@@ -47,6 +48,9 @@ namespace RED.mbnq
                 Directory.CreateDirectory(settingsDirectory);
             }
         }
+        #endregion
+
+        #region INIIO
         public static class INIFile
         {
             public static T INIread<T>(string fileName, string section, string key, T defaultValue)
@@ -111,6 +115,10 @@ namespace RED.mbnq
             [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
             private static extern int GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder result, int size, string filePath);
         }
+
+        #endregion
+
+        #region SaveLoad
         public static void mbSaveSettings(ControlPanel controlPanel, bool onExit = false, bool silent = true)
         {
             // general
@@ -197,6 +205,10 @@ namespace RED.mbnq
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
             if (!silent) Sounds.PlayClickSoundOnce();
         }
+
+        #endregion
+
+        #region SaveLoadGlass
         public static void mbSaveGlassSettings(GlassHudOverlay glassOverlay)
         {
             SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassSaveExist", true);
@@ -262,5 +274,6 @@ namespace RED.mbnq
             glassOverlay.UpdateTrackBarLabels();
             glassOverlay.UpdateGlassMenu();
         }
+        #endregion
     }
 }
