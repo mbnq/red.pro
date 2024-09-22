@@ -20,27 +20,10 @@ namespace RED.mbnq
         private bool mIsAntiCapsLockEnabled = true;
         private Thread capsLockMonitorThread;
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        public static extern short GetKeyState(int keyCode);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)] public static extern short GetKeyState(int keyCode);
 
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        [DllImport("user32.dll")] static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
-        // Method to monitor and disable Caps Lock
-        private void MonitorCapsLock()
-        {
-            while (mIsAntiCapsLockEnabled)
-            {
-                // Check if Caps Lock is on
-                if (((ushort)GetKeyState(VK_CAPITAL) & 0xffff) != 0)
-                {
-                    // Turn off Caps Lock by sending both key down and key up events
-                    keybd_event((byte)VK_CAPITAL, 0x45, 0, (UIntPtr)0);                 // Key down
-                    keybd_event((byte)VK_CAPITAL, 0x45, KEYEVENTF_KEYUP, (UIntPtr)0);   // Key up
-                }
-                Thread.Sleep(100);
-            }
-        }
         public void StartCapsLockMonitor()
         {
             if (capsLockMonitorThread == null || !capsLockMonitorThread.IsAlive)
@@ -51,12 +34,26 @@ namespace RED.mbnq
                 capsLockMonitorThread.Start();
             }
         }
+        private void MonitorCapsLock()
+        {
+            while (mIsAntiCapsLockEnabled)
+            {
+                // check if CapsLock is on
+                if (((ushort)GetKeyState(VK_CAPITAL) & 0xffff) != 0)
+                {
+                    // turn it of
+                    keybd_event((byte)VK_CAPITAL, 0x45, 0, (UIntPtr)0);                 // key down
+                    keybd_event((byte)VK_CAPITAL, 0x45, KEYEVENTF_KEYUP, (UIntPtr)0);   // Key up
+                }
+                Thread.Sleep(100);
+            }
+        }
         public void StopCapsLockMonitor()
         {
             if (capsLockMonitorThread != null && capsLockMonitorThread.IsAlive)
             {
                 mIsAntiCapsLockEnabled = false;
-                capsLockMonitorThread.Join();  // Wait for the thread to stop
+                capsLockMonitorThread.Join();  // wait for thread to stop
             }
         }
     }
