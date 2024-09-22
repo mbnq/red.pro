@@ -64,8 +64,8 @@ namespace RED.mbnq
 
         public const int mbCrosshairRedrawTime           = 5000;             // interval in ms
 
-        public const string ipDicoveryProvider = "https://mbnq.pl/myip/";
-        public const string ipPingTestTarget = "8.8.8.8";
+        public static string mbIPdicoveryProvider = "https://mbnq.pl/myip/";
+        public static string mbIPpingTestTarget = "8.8.8.8";
 
         #endregion
 
@@ -489,10 +489,10 @@ namespace RED.mbnq
                     switch (mbMbToolsDropDown.SelectedItem.ToString())
                     {
                         case "Test Ping":
-                            mbTestPing_Click(sender, e);
+                            mbTestPing_Click(sender, e, mbIPpingTestTarget);
                             break;
                         case "My IP":
-                            mbMyIP_Click(sender, e);
+                            mbMyIP_Click(sender, e, mbIPdicoveryProvider);
                             break;
                         case "Shutdown with Delay":
                             mbShutDownSys_Click(sender, e);
@@ -949,7 +949,7 @@ namespace RED.mbnq
         }
 
         // ---
-        private async void mbMyIP_Click(object sender, EventArgs e, string ipProvider = ipDicoveryProvider)
+        private async void mbMyIP_Click(object sender, EventArgs e, string ipProvider)
         {
             Sounds.PlayClickSoundOnce();
 
@@ -973,7 +973,7 @@ namespace RED.mbnq
                 Debug.WriteLineIf(mbIsDebugOn, $"mbnq: failed to run {ex.Message}");
             }
         }
-        private void mbTestPing_Click(object sender, EventArgs e, string ipTestTarget = ipPingTestTarget)
+        private void mbTestPing_Click(object sender, EventArgs e, string ipTestTarget)
         {
             Sounds.PlayClickSoundOnce();
 

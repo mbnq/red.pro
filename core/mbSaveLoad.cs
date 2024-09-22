@@ -156,6 +156,10 @@ namespace RED.mbnq
             // SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Time", $"{DateTime.Now.TimeOfDay}");
             // SaveLoad.INIFile.INIsave("settings.ini", "Debug", "Date", $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}");
 
+            SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPpingTestTarget", ControlPanel.mbIPpingTestTarget);
+            SaveLoad.INIFile.INIsave("settings.ini", "Network", "mbIPdicoveryProvider", ControlPanel.mbIPdicoveryProvider);
+
+
             if (!onExit)
             {
                 if (!silent) Sounds.PlayClickSoundOnce();
@@ -165,6 +169,9 @@ namespace RED.mbnq
         }
         public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
+            ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
+            ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
+
             controlPanel.mbAutoSaveCheckbox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
             controlPanel.mbDebugonCheckbox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
             controlPanel.mbAOnTopCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
