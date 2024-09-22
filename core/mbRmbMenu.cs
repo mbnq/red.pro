@@ -19,22 +19,36 @@ namespace RED.mbnq
 {
     public class mbRmbMenu : MaterialContextMenuStrip
     {
+
+        #region Vars
+
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem removeCustomMenuItem, loadCustomMenuItem, saveMenuItem, loadMenuItem, openSettingsDirMenuItem, textConsoleMenuItem, newCaptureRegionMenuItem, LoadCaptureRegionMenuItem, aboutMenuItem, closeMenuItem;
+        private ToolStripMenuItem 
+            removeCustomMenuItem,          
+            loadCustomMenuItem, 
+            saveMenuItem, 
+            loadMenuItem, 
+            openSettingsDirMenuItem, 
+            textConsoleMenuItem, 
+            newCaptureRegionMenuItem, 
+            LoadCaptureRegionMenuItem, 
+            aboutMenuItem, 
+            closeMenuItem;
 
+        #endregion
+
+        #region Init
         public mbRmbMenu(ControlPanel controlPanel)
         {
             this.controlPanel = controlPanel;
             InitializeMenuItems();
             UpdateMenuItems();
         }
+
         protected override void OnOpening(System.ComponentModel.CancelEventArgs e)
         {
-            // Call the base method
             base.OnOpening(e);
-
-            // Ensure the menu items are updated before the menu is shown
             UpdateMenuItems();
         }
 
@@ -67,6 +81,9 @@ namespace RED.mbnq
             UpdateMenuItems();
         }
 
+        #endregion
+
+        #region CreateMenuFnc
         private ToolStripMenuItem CreateMenuItem(string text, EventHandler onClick)
         {
             var menuItem = new ToolStripMenuItem(text);
@@ -77,6 +94,17 @@ namespace RED.mbnq
             };
             return menuItem;
         }
+        public void UpdateMenuItems()
+        {
+            LoadCaptureRegionMenuItem.Enabled = (SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassSaveExist", false));
+            bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
+            loadCustomMenuItem.Enabled = !hasCustomOverlay;
+            removeCustomMenuItem.Enabled = hasCustomOverlay;
+        }
+
+        #endregion
+
+        #region MenuFncs
         private void OpenSettingsDirMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -120,15 +148,12 @@ namespace RED.mbnq
             GlassHudOverlay.displayOverlay.Show();
             await SaveLoad.mbLoadGlassSettings(GlassHudOverlay.displayOverlay);
         }
+
+        // saveLoad
         private void saveMenuItem_Click(object sender, EventArgs e) => SaveLoad.mbSaveSettings(controlPanel);
         private void loadMenuItem_Click(object sender, EventArgs e) => SaveLoad.mbLoadSettings(controlPanel);
-        private void AboutMenuItem_Click(object sender, EventArgs e) 
-        {
-            mbAboutForm aboutBox = new mbAboutForm();
-            aboutBox.Show();
-            // Process.Start(new ProcessStartInfo("https://www.mbnq.pl") { UseShellExecute = true });
-        }
-        private void CloseMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+
+        // png custom crosshair
         public void LoadCustomPNG_Click(object sender, EventArgs e)
         {
             controlPanel.LoadCustomCrosshair();
@@ -136,7 +161,7 @@ namespace RED.mbnq
             if (controlPanel.mbSizeSlider.Value < 100) controlPanel.mbSizeSlider.Value = 100;
             AdjustColorsForCustomPNG();
             controlPanel.CenterCrosshairOverlay();
-            controlPanel.UpdateMainCrosshair();
+            controlPanel.UpdateAllUI();
             UpdateMenuItems();
         }
         public void AdjustColorsForCustomPNG()
@@ -159,18 +184,21 @@ namespace RED.mbnq
 
             controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();        // ensures that the crosshair overlay on the screen is removed
             controlPanel.RemoveCustomCrosshair();                           // removes the custom crosshair data from the control panel itself
-            controlPanel.mbColorRSlider.Value++;                                     // Force redraw of crosshair
+            controlPanel.mbColorRSlider.Value++;                            // force crosshair redraw 
 
-            controlPanel.UpdateMainCrosshair();
+            controlPanel.UpdateAllUI();
             UpdateMenuItems();
         }
-        public void UpdateMenuItems()
-        {
-            LoadCaptureRegionMenuItem.Enabled = (SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassSaveExist", false));
-            bool hasCustomOverlay = File.Exists(Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png"));
-            loadCustomMenuItem.Enabled = !hasCustomOverlay;
-            removeCustomMenuItem.Enabled = hasCustomOverlay;
-        }
+
+        // about
+        private void AboutMenuItem_Click(object sender, EventArgs e) { mbAboutForm aboutBox = new mbAboutForm(); aboutBox.Show(); }
+
+        // exit app
+        private void CloseMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+
+        #endregion
+
+        // message box helper fnc
         private void ShowMessageBox(string message, string caption)
         {
             MaterialMessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.None);
