@@ -327,6 +327,8 @@ namespace RED.mbnq
             opacitySlider.Visible = glassIsMenuEnabled;
             refreshRateLabel.Visible = glassIsMenuEnabled;
             refreshRateSlider.Visible = glassIsMenuEnabled;
+
+            this.Invalidate();
         }
     }
 

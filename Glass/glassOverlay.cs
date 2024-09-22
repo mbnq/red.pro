@@ -240,8 +240,8 @@ namespace RED.mbnq
                             using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
                             {
                                 path.AddEllipse(destRect);
-                                g.SetClip(path);  // Corrected line
-                                g.DrawImage(bitmap, destRect);  // Corrected line
+                                g.SetClip(path);
+                                g.DrawImage(bitmap, destRect);
                             }
                         }
                         else
