@@ -169,9 +169,6 @@ namespace RED.mbnq
         }
         public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
-            ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
-            ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
-
             controlPanel.mbAutoSaveCheckbox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
             controlPanel.mbDebugonCheckbox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
             controlPanel.mbAOnTopCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
@@ -203,6 +200,9 @@ namespace RED.mbnq
             controlPanel.mbEnableZoomModeCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
             controlPanel.mbZoomLevelSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.mbZoomLevelSlider.Value);
             controlPanel.mbZoomScopeSizeSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.mbZoomScopeSizeSlider.Value);
+
+            ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
+            ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
 
             controlPanel.UpdateAllUI();
             controlPanel.mbSettingsLoaded = 1;

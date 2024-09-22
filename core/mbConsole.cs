@@ -40,7 +40,7 @@ namespace RED.mbnq
         private System.Windows.Forms.Timer pingTimer;
         private System.Windows.Forms.Timer ipTimer;
         private System.Windows.Forms.Timer generalDisplayTimer;
-        private string currentPingAddress = "8.8.8.8";
+        private string targetPingAddress = ControlPanel.mbIPpingTestTarget;
 
         // Fields to track mouse movements
         private bool isDragging = false;
@@ -220,8 +220,8 @@ namespace RED.mbnq
         #region Update Methods
         private async Task UpdatePingAsync()
         {
-            string pingResult = await GetPingResultAsync(currentPingAddress);
-            UpdatePingText($"Ping {currentPingAddress}: {pingResult} ms");
+            string pingResult = await GetPingResultAsync(targetPingAddress);
+            UpdatePingText($"Ping {targetPingAddress}: {pingResult} ms");
         }
 
         private async Task UpdateIpAddressAsync()
@@ -406,13 +406,13 @@ namespace RED.mbnq
                     try
                     {
                         // Second attempt: https://mbnq.pl/myip/
-                        ipAddress = await client.GetStringAsync("https://mbnq.pl/myip/");
+                        ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider);
                         return ipAddress.Trim();
                     }
                     catch (HttpRequestException ex)
                     {
                         // Log the exception if needed
-                        Debug.WriteLine($"Failed to fetch IP from https://mbnq.pl/myip/: {ex.Message}");
+                        Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider}: {ex.Message}");
                     }
                 } 
             }
@@ -498,7 +498,7 @@ namespace RED.mbnq
         }
         public void ToggleOverlay(string pingAddress = "8.8.8.8")
         {
-            currentPingAddress = pingAddress;
+            targetPingAddress = pingAddress;
 
             if (this.Visible)
             {

@@ -127,7 +127,7 @@ namespace RED.mbnq
             if (textHUD == null || textHUD.IsDisposed)
             {
                 textHUD = new mbnqConsole(controlPanel);
-                textHUD.ToggleOverlay();
+                textHUD.ToggleOverlay(ControlPanel.mbIPpingTestTarget);
             }
             else
             {
