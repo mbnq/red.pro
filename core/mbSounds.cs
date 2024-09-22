@@ -18,12 +18,11 @@ namespace RED.mbnq
     public static class Sounds
     {
         private static SoundPlayer clickSoundPlayer;
+
         private static bool isPlayingSound = false;
+
         public static bool IsSoundEnabled { get; set; } = true;
-        static Sounds()
-        {
-            LoadClickSound();
-        }
+        static Sounds() { LoadClickSound(); }
         private static void LoadClickSound()
         {
             try
@@ -39,19 +38,11 @@ namespace RED.mbnq
         }
         public static void PlayClickSound()
         {
-            if (IsSoundEnabled)
-            {
-                Task.Run(() => PlaySoundInternal());
-                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Playing Click sound.");
-            }
+            if (IsSoundEnabled) { Task.Run(() => PlaySoundInternal()); }
         }
         public static void PlayClickSoundOnce()
         {
-            if (IsSoundEnabled)
-            {
-                Task.Run(() => clickSoundPlayer.Play());
-                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Playing Click sound once.");
-            }
+            if (IsSoundEnabled) { Task.Run(() => clickSoundPlayer.Play()); }
         }
         private static void PlaySoundInternal()
         {
@@ -60,7 +51,7 @@ namespace RED.mbnq
             try
             {
                 isPlayingSound = true;
-                clickSoundPlayer.PlaySync(); // PlaySync ensures that the sound plays synchronously and waits until the sound is done
+                clickSoundPlayer.PlaySync(); // plays synchronously and waits until the sound is done
             }
             catch (Exception ex)
             {
@@ -69,7 +60,7 @@ namespace RED.mbnq
             }
             finally
             {
-                isPlayingSound = false; // Reset the flag once the sound is done playing
+                isPlayingSound = false;
             }
         }
     }
