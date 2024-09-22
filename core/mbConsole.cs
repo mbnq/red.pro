@@ -361,62 +361,34 @@ namespace RED.mbnq
         private async Task<string> GetIpAddressAsync()
         {
             string ipAddress = null;
+            List<string> ipProviders = new List<string>
+            {
+                ControlPanel.mbIPdicoveryProvider2,
+                ControlPanel.mbIPdicoveryProvider3,
+                ControlPanel.mbIPdicoveryProvider4,
+                ControlPanel.mbIPdicoveryProvider
+            };
 
             using (HttpClient client = new HttpClient())
             {
-                try
-                {
-                    ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider2);
-                    return ipAddress.Trim();
-                }
-                catch (HttpRequestException ex)
-                {
-                    Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider2}: {ex.Message}");
-                }
-
-                if (string.IsNullOrEmpty(ipAddress))
+                foreach (var ipProvider in ipProviders)
                 {
                     try
                     {
-                        ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider3);
-                        return ipAddress.Trim();
+                        ipAddress = await client.GetStringAsync(ipProvider);
+                        if (!string.IsNullOrEmpty(ipAddress))
+                        {
+                            return ipAddress.Trim();
+                        }
                     }
                     catch (HttpRequestException ex)
                     {
-                        Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider3}: {ex.Message}");
+                        Debug.WriteLine($"Failed to fetch IP from {ipProvider}: {ex.Message}");
                     }
                 }
-                
-                if (string.IsNullOrEmpty(ipAddress))
-                {
-                    try
-                    {
-                        ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider4);
-                        return ipAddress.Trim();
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider4}: {ex.Message}");
-                    }
-                }
-
-
-                if (string.IsNullOrEmpty(ipAddress))
-                {
-                    try
-                    {
-                        // Second attempt: https://mbnq.pl/myip/
-                        ipAddress = await client.GetStringAsync(ControlPanel.mbIPdicoveryProvider);
-                        return ipAddress.Trim();
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        // Log the exception if needed
-                        Debug.WriteLine($"Failed to fetch IP from {ControlPanel.mbIPdicoveryProvider}: {ex.Message}");
-                    }
-                } 
             }
-            // If all attempts fail, return "Unavailable"
+
+            // if all fails
             return "Unavailable";
         }
 
