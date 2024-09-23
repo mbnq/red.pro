@@ -30,17 +30,53 @@ namespace RED.mbnq
         public bool mbHideCrosshair          = false;                        // init only
         public int mbSettingsLoaded          = 0;
 
-        private Button centerButton, loadChangePngButton, removePngButton, debugTestButton;
-        private FlowLayoutPanel mbPanelForTab1, mbPanelForTab2, mbPanelForTab3;
-        private TabPage mbTab1, mbTab2, mbTab3;
-        public CheckBox mbAutoSaveCheckbox, mbDebugonCheckbox, mbAOnTopCheckBox, mbHideCrosshairCheckBox, mbDisableSoundCheckBox, mbEnableZoomModeCheckBox, mbEnableFlirCheckBox, mbDarkModeCheckBox, mbAntiCapsCheckBox, mbSplashCheckBox;
+        private Button 
+            centerButton, 
+            loadChangePngButton, 
+            removePngButton, 
+            debugTestButton;
+
+        private FlowLayoutPanel 
+            mbPanelForTab1, 
+            mbPanelForTab2, 
+            mbPanelForTab3;
+
+        private TabPage 
+            mbTab1, 
+            mbTab2, 
+            mbTab3;
+
+        public CheckBox 
+            mbAutoSaveCheckbox, 
+            mbDebugonCheckbox, 
+            mbAOnTopCheckBox, 
+            mbHideCrosshairCheckBox, 
+            mbDisableSoundCheckBox, 
+            mbEnableZoomModeCheckBox, 
+            mbEnableFlirCheckBox, 
+            mbDarkModeCheckBox, 
+            mbAntiCapsCheckBox, 
+            mbSplashCheckBox;
+
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
 
-        public MaterialSlider mbColorRSlider, mbColorGSlider, mbColorBSlider, mbSizeSlider, mbTransparencySlider, mbOffsetXSlider, mbOffsetYSlider, mbZoomLevelSlider, mbZoomTIntervalSlider, mbZoomRefreshIntervalSlider, mbZoomScopeSizeSlider;
+        public MaterialSlider 
+            mbColorRSlider, 
+            mbColorGSlider, 
+            mbColorBSlider, 
+            mbSizeSlider, 
+            mbTransparencySlider, 
+            mbOffsetXSlider, 
+            mbOffsetYSlider, 
+            mbZoomLevelSlider, 
+            mbZoomTIntervalSlider, 
+            mbZoomRefreshIntervalSlider, 
+            mbZoomScopeSizeSlider;
+
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
