@@ -19,7 +19,7 @@ namespace RED.mbnq
     public partial class GlassHudOverlay : Form
     {
         private Rectangle glassCaptureArea;
-        private System.Windows.Forms.Timer glassRefreshTimer;
+        private Timer glassRefreshTimer;
         private bool isMoving = false;
         private bool isMoveEnabled = false;
         public bool isCircle = false;

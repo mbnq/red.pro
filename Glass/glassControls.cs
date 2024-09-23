@@ -159,7 +159,7 @@ namespace RED.mbnq
             refreshRateSlider = new TrackBar
             {
                 Minimum = 1,            // ms
-                Maximum = 1000,
+                Maximum = 100,
                 Value = Program.mbFrameDelay,
                 TickFrequency = 50,
                 Width = 200,
