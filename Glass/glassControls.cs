@@ -26,15 +26,17 @@ namespace RED.mbnq
             set
             {
                 isGlassMenuEnabled = value;
-                displayOverlayForm.Invalidate(); // Redraw when toggling debug mode
+                displayOverlayForm.Invalidate();
             }
         }
+
+        /*
         public glassControls(GlassHudOverlay overlayForm)
         {
             this.displayOverlayForm = overlayForm;
             this.selectedRegion = overlayForm.CaptureArea;
         }
-
+        */
         public glassControls(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             this.displayOverlayForm = overlayForm;
@@ -112,7 +114,6 @@ namespace RED.mbnq
                 Value = 0,
                 TickFrequency = 10,
                 Width = 200,
-                // Location = new Point(10, this.Height),
                 AutoSize = true,
                 BackColor = mDefColGray
             };
@@ -125,7 +126,6 @@ namespace RED.mbnq
                 Value = 0,
                 TickFrequency = 10,
                 Width = 200,
-                // Location = new Point(10, this.Height),
                 AutoSize = true,
                 BackColor = mDefColGray
             };
@@ -150,7 +150,6 @@ namespace RED.mbnq
                 Value = 100,
                 TickFrequency = 10,
                 Width = 200,
-                // Location = new Point(10, this.Height),
                 AutoSize = true,
                 BackColor = mDefColGray
             };
@@ -158,7 +157,7 @@ namespace RED.mbnq
 
             refreshRateSlider = new TrackBar
             {
-                Minimum = 1,            // ms
+                Minimum = 1,
                 Maximum = 100,
                 Value = Program.mbFrameDelay,
                 TickFrequency = 50,
@@ -271,10 +270,8 @@ namespace RED.mbnq
         }
         public void UpdateZoom()
         {
-            // Reverse the zoom factor calculation
+            // reverse the zoom factor calculation
             zoomFactor = (GlassZoomMax - zoomSlider.Value) / 100f;
-
-            // Update the label to reflect the correct zoom level
             zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
 
             this.Invalidate();
@@ -294,24 +291,21 @@ namespace RED.mbnq
         {
             int refreshRate = refreshRateSlider.Value;
 
-
             refreshRateLabel.Text = $"Refresh Rate: {refreshRate}ms";
 
-            // Assuming displayOverlayForm has a method to update the refresh rate interval
             this.UpdateRefreshInterval(refreshRate);
 
-            this.Invalidate();  // Ensure the form is invalidated for redraw
+            this.Invalidate();
         }
         public void UpdateTrackBarLabels()
         {
-            // Update each label based on the slider values
+            // update each label based on the slider values
             offsetXLabel.Text = $"Offset X: {offsetXSlider.Value}%";
             offsetYLabel.Text = $"Offset Y: {offsetYSlider.Value}%";
             zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
             opacityLabel.Text = $"Opacity: {opacitySlider.Value}%";
             refreshRateLabel.Text = $"Refresh Rate: {refreshRateSlider.Value}ms";
 
-            // Optionally invalidate the form to trigger a repaint if needed
             this.Invalidate();
         }
         public void UpdateGlassMenu()

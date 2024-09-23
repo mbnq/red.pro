@@ -152,5 +152,16 @@ public static class mbFnc
         });
 
     }
+
+    // ---------------------------------------
+    // make rectangle from 2 points
+    public static Rectangle mbGetRectangle(Point p1, Point p2)
+    {
+        int x = Math.Min(p1.X, p2.X);
+        int y = Math.Min(p1.Y, p2.Y);
+        int width = Math.Abs(p2.X - p1.X);
+        int height = Math.Abs(p2.Y - p1.Y);
+        return new Rectangle(x, y, width, height);
+    }
 }
 

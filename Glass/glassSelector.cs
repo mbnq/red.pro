@@ -7,13 +7,14 @@
 
 */
 
+// using MaterialSkin.Controls;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace RED.mbnq
 {
-    public class selector : Form
+    public class selector : Form // : MaterialForm
     {
         public Rectangle SelectedArea { get; private set; }
 
@@ -73,22 +74,19 @@ namespace RED.mbnq
 
             using (Graphics g = Graphics.FromImage(greyImage))
             {
-                // Create a color matrix to transform the image to grayscale
                 System.Drawing.Imaging.ColorMatrix colorMatrix = new System.Drawing.Imaging.ColorMatrix(
                     new float[][]
                     {
-                new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
-                new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
-                new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
-                new float[] { 0, 0, 0, 1, 0 },
-                new float[] { 0, 0, 0, 0, 1 }
+                        new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+                        new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                        new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { 0, 0, 0, 0, 1 }
                     });
 
-                // Create image attributes and set the color matrix
+
                 var attributes = new System.Drawing.Imaging.ImageAttributes();
                 attributes.SetColorMatrix(colorMatrix);
-
-                // Draw the original image with the grayscale color matrix applied
                 g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
             }
 
@@ -117,11 +115,9 @@ namespace RED.mbnq
             {
                 selectingInProgress = false;
 
-                // Normalize the rectangle
-                Rectangle selectionRect = GetRectangle(startPoint, endPoint);
+                Rectangle selectionRect = mbFnc.mbGetRectangle(startPoint, endPoint);
                 Point screenPoint = this.PointToScreen(selectionRect.Location);
 
-                // Set the SelectedArea with screen coordinates
                 SelectedArea = new Rectangle(screenPoint, selectionRect.Size);
 
                 if (SelectedArea.Width >= 10 && SelectedArea.Height >= 10)
@@ -131,7 +127,7 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    // Optionally, re-enter selection mode if the selection is too small
+                    // re-enter selection mode if the selection is too small
                     selectingInProgress = true;
                     startPoint = endPoint;
                 }
@@ -145,32 +141,26 @@ namespace RED.mbnq
                 this.Close();
             }
         }
-        private Rectangle GetRectangle(Point p1, Point p2)
-        {
-            int x = Math.Min(p1.X, p2.X);
-            int y = Math.Min(p1.Y, p2.Y);
-            int width = Math.Abs(p2.X - p1.X);
-            int height = Math.Abs(p2.Y - p1.Y);
-            return new Rectangle(x, y, width, height);
-        }
+
+        // this is needed when selecting area
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            // Draw the captured screen as the background
+            // draw the captured screen as the background
             e.Graphics.DrawImage(backgroundScreenshot, Point.Empty);
 
             if (selectingInProgress)
             {
-                Rectangle selectionRect = GetRectangle(startPoint, endPoint);
+                Rectangle selectionRect = mbFnc.mbGetRectangle(startPoint, endPoint);
 
-                // Draw the semi-transparent selection rectangle
+                // semi-transparent selection rectangle
                 using (SolidBrush selectionBrush = new SolidBrush(Color.FromArgb(128, Color.Blue)))
                 {
                     e.Graphics.FillRectangle(selectionBrush, selectionRect);
                 }
 
-                // Draw the dashed border
+                // dashed border
                 e.Graphics.DrawRectangle(selectionPen, selectionRect);
             }
         }
@@ -194,7 +184,7 @@ namespace RED.mbnq
                 else
                 {
                     Environment.Exit(0);
-                    return Rectangle.Empty; // will never get here but we need it for compilation
+                    return Rectangle.Empty;
                 }
             }
         }
