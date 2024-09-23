@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
+// using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -138,7 +138,7 @@ namespace RED.mbnq
                     Enabled = true,
                 #else
                     Enabled = false,
-                    Text = "Console input in Debug version only",
+                    Text = " Input n/a in Release version",
                 #endif
 
                 MaxLength = 128,
@@ -169,7 +169,13 @@ namespace RED.mbnq
             displayTextVisibility.Add(true);
             displayTexts.Add("CPU: -- %");
             displayTextVisibility.Add(true);
-            displayTexts.Add("Debug: --");
+
+            #if DEBUG
+                displayTexts.Add("Debug: --");
+            #else
+                displayTexts.Add("");
+            #endif
+
             displayTextVisibility.Add(true);
 
             AdjustSize();
