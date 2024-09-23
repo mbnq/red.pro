@@ -133,6 +133,14 @@ namespace RED.mbnq
                     "help",
                     "test"
                 },
+
+                #if DEBUG
+                    Enabled = true,
+                #else
+                    Enabled = false,
+                    Text = "Console input in Debug version only",
+                #endif
+
                 MaxLength = 128,
                 ForeColor = Color.White,
                 BackColor = Color.Black,
@@ -195,7 +203,7 @@ namespace RED.mbnq
             this.MouseUp += new MouseEventHandler(TXTHUD_MouseUp);
         }
 
-        #endregion
+#endregion
 
         #region Mouse Events
         private void TXTHUD_MouseDown(object sender, MouseEventArgs e)
