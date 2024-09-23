@@ -96,8 +96,12 @@ namespace RED.mbnq.core
             // this.labelVersionInfo.Size = new System.Drawing.Size(250, 24);
             this.labelVersionInfo2.AutoSize = true;
             this.labelVersionInfo2.TabIndex = 0;
-            this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion}";
 
+            #if DEBUG
+                this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion} Debug";
+            #else
+                this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion}";
+            #endif
 
             // Add the label to the form
             this.Controls.Add(this.labelVersionInfo);
@@ -107,6 +111,6 @@ namespace RED.mbnq.core
             this.PerformLayout();
         }
 
-        #endregion
+#endregion
     }
 }
