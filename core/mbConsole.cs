@@ -134,13 +134,12 @@ namespace RED.mbnq
                     "test"
                 },
 
-                #if DEBUG
-                    Enabled = true,
-                #else
-                    Enabled = false,
-                    Text = " Input n/a in Release version",
-                #endif
-
+#if DEBUG
+                Enabled = true,
+#else
+                Enabled = false,
+                Text = " Input n/a in Release version",
+#endif
                 MaxLength = 128,
                 ForeColor = Color.White,
                 BackColor = Color.Black,
@@ -170,11 +169,11 @@ namespace RED.mbnq
             displayTexts.Add("CPU: -- %");
             displayTextVisibility.Add(true);
 
-            #if DEBUG
-                displayTexts.Add("Debug: --");
-            #else
-                displayTexts.Add("");
-            #endif
+#if DEBUG
+            displayTexts.Add("Debug: --");
+#else
+            displayTexts.Add("");
+#endif
 
             displayTextVisibility.Add(true);
 

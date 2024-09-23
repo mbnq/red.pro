@@ -644,7 +644,14 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbSplashCheckBox);
             mbPanelForTab2.Controls.Add(mbAOnTopCheckBox);
             mbPanelForTab2.Controls.Add(mbAutoSaveCheckbox);
+
+#if DEBUG
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
+#else
+            mbIsDebugOn = false;
+            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
+#endif
+
             mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
 
             mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
@@ -667,13 +674,16 @@ namespace RED.mbnq
             mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
 
             mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+
+#if DEBUG
             mbPanelForTab3.Controls.Add(debugTestButton);
+#endif
 
             mbTab3.Controls.Add(mbPanelForTab3);
 
             /* --- --- ---  --- --- --- --- --- --- --- */
 
-            #endregion
+#endregion
 
             #region ToolTips
             /* --- --- ---  Tooltips --- --- --- */
@@ -727,7 +737,7 @@ namespace RED.mbnq
             #endregion
         }
         /* --- --- --- --- --- --- --- --- --- --- --- */
-        #endregion
+#endregion
 
         #region Custom Overlay Crosshair
 

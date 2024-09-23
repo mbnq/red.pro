@@ -97,11 +97,11 @@ namespace RED.mbnq.core
             this.labelVersionInfo2.AutoSize = true;
             this.labelVersionInfo2.TabIndex = 0;
 
-            #if DEBUG
-                this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion} Debug";
-            #else
-                this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion}";
-            #endif
+#if DEBUG
+            this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion} Debug";
+#else
+            this.labelVersionInfo2.Text = $"RED.PRO v.{Program.mbVersion}";
+#endif
 
             // Add the label to the form
             this.Controls.Add(this.labelVersionInfo);
