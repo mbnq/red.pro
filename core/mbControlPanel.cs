@@ -34,17 +34,20 @@ namespace RED.mbnq
             centerButton, 
             loadChangePngButton, 
             removePngButton, 
-            debugTestButton;
+            debugTestButton
+        ;
 
         private FlowLayoutPanel 
             mbPanelForTab1, 
             mbPanelForTab2, 
-            mbPanelForTab3;
+            mbPanelForTab3
+        ;
 
         private TabPage 
             mbTab1, 
             mbTab2, 
-            mbTab3;
+            mbTab3
+        ;
 
         public CheckBox 
             mbAutoSaveCheckbox, 
@@ -56,7 +59,8 @@ namespace RED.mbnq
             mbEnableFlirCheckBox, 
             mbDarkModeCheckBox, 
             mbAntiCapsCheckBox, 
-            mbSplashCheckBox;
+            mbSplashCheckBox
+        ;
 
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
@@ -75,7 +79,8 @@ namespace RED.mbnq
             mbZoomLevelSlider, 
             mbZoomTIntervalSlider, 
             mbZoomRefreshIntervalSlider, 
-            mbZoomScopeSizeSlider;
+            mbZoomScopeSizeSlider
+        ;
 
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
