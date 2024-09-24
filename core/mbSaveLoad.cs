@@ -296,27 +296,35 @@ namespace RED.mbnq
         #region SaveLoadGlass
         public static void mbSaveGlassSettings(GlassHudOverlay glassOverlay)
         {
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassSaveExist", true);
+            var glassSettings = new Dictionary<string, object>
+            {
+                { "glassSaveExist", true },
+                { "glassOffsetXValue", glassOverlay.glassOffsetXValue },
+                { "glassOffsetYValue", glassOverlay.glassOffsetYValue },
+                { "glassZoomValue", glassOverlay.glassZoomValue },
+                { "glassOpacityValue", glassOverlay.glassOpacityValue },
+                { "glassRefreshRate", glassOverlay.glassRefreshRate },
+                { "glassIsBorderVisible", glassOverlay.glassIsBorderVisible },
+                { "glassIsCircle", glassOverlay.glassIsCircle },
+                { "glassIsBind", glassOverlay.glassIsBind },
+                { "glassIsMenuEnabled", glassOverlay.glassIsMenuEnabled },
+                { "CaptureAreaX", glassOverlay.glassCaptureAreaValue.X },
+                { "CaptureAreaY", glassOverlay.glassCaptureAreaValue.Y },
+                { "CaptureAreaWidth", glassOverlay.glassCaptureAreaValue.Width },
+                { "CaptureAreaHeight", glassOverlay.glassCaptureAreaValue.Height },
+                { "AbsolutePosX", glassOverlay.glassAbsolutePos.X },
+                { "AbsolutePosY", glassOverlay.glassAbsolutePos.Y }
+            };
 
-            // Glass settings
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOffsetXValue", glassOverlay.glassOffsetXValue);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOffsetYValue", glassOverlay.glassOffsetYValue);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassZoomValue", glassOverlay.glassZoomValue);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassOpacityValue", glassOverlay.glassOpacityValue);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassRefreshRate", glassOverlay.glassRefreshRate);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBorderVisible", glassOverlay.glassIsBorderVisible);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsCircle", glassOverlay.glassIsCircle);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsBind", glassOverlay.glassIsBind);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "glassIsMenuEnabled", glassOverlay.glassIsMenuEnabled);
+            mbSaveSettingsBatch("Glass", glassSettings);
 
-            // Save each property of the capture area
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaX", glassOverlay.glassCaptureAreaValue.X);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaY", glassOverlay.glassCaptureAreaValue.Y);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaWidth", glassOverlay.glassCaptureAreaValue.Width);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "CaptureAreaHeight", glassOverlay.glassCaptureAreaValue.Height);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "AbsolutePosX", glassOverlay.glassAbsolutePos.X);
-            SaveLoad.INIFile.INIsave("settings.ini", "Glass", "AbsolutePosY", glassOverlay.glassAbsolutePos.Y);
-
+            static void mbSaveSettingsBatch(string section, Dictionary<string, object> settings)
+            {
+                foreach (var setting in settings)
+                {
+                    SaveLoad.INIFile.INIsave("settings.ini", section, setting.Key, setting.Value);
+                }
+            }
         }
 
         public static async Task mbLoadGlassSettings(GlassHudOverlay glassOverlay)
