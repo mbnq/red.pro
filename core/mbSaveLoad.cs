@@ -193,23 +193,23 @@ namespace RED.mbnq
                 controlPanel.UpdateAllUI();
                 Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings saved.");
             }
-        }
 
-        private static void mbSaveSettingsBatch(string section, Dictionary<string, object> settings)
-        {
-            foreach (var setting in settings)
+            // ---
+            static void mbSaveSettingsBatch(string section, Dictionary<string, object> settings)
             {
-                try
+                foreach (var setting in settings)
                 {
-                    SaveLoad.INIFile.INIsave("settings.ini", section, setting.Key, setting.Value);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: saving {section}{setting.Key}{setting.Value} failed {ex.Message}");
+                    try
+                    {
+                        SaveLoad.INIFile.INIsave("settings.ini", section, setting.Key, setting.Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: saving {section}{setting.Key}{setting.Value} failed {ex.Message}");
+                    }
                 }
             }
         }
-
         #endregion
 
         #region Load
@@ -271,25 +271,26 @@ namespace RED.mbnq
             controlPanel.mbSettingsLoaded = 1;
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
             if (!silent) Sounds.PlayClickSoundOnce();
-        }
 
-        private static void mbLoadSettingsBatch(string section, Dictionary<string, Action<object>> settings, object defaultValue = null)
-        {
-            foreach (var setting in settings)
+            // ---
+            static void mbLoadSettingsBatch(string section, Dictionary<string, Action<object>> settings, object defaultValue = null)
             {
-                try
+                foreach (var setting in settings)
                 {
-                    var value = SaveLoad.INIFile.INIread("settings.ini", section, setting.Key, defaultValue ?? default);
-                    setting.Value(value);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: loading {section}{setting.Key}{setting.Value} failed {ex.Message}");
+                    try
+                    {
+                        var value = SaveLoad.INIFile.INIread("settings.ini", section, setting.Key, defaultValue ?? default);
+                        setting.Value(value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: loading {section}{setting.Key}{setting.Value} failed {ex.Message}");
+                    }
                 }
             }
         }
-
         #endregion
+
         #endregion
 
         #region SaveLoadGlass
