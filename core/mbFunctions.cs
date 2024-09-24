@@ -14,6 +14,7 @@ using System;
 using System.IO;
 using RED.mbnq;
 using System.Diagnostics;
+using MaterialSkin.Controls;
 
 public static class mbFnc
 {
@@ -177,6 +178,99 @@ public static class mbFnc
         int width = Math.Abs(p2.X - p1.X);
         int height = Math.Abs(p2.Y - p1.Y);
         return new Rectangle(x, y, width, height);
+    }
+
+    // ------------------------------------------
+    // simple message box with copy to clipboard
+    public partial class mbMessageBox : MaterialForm
+    {
+        public mbMessageBox(string message, string mBoxTitle)
+        {
+
+            // ------------------------------------------
+            MaterialTextBox2 txtMessage = new MaterialTextBox2
+            {
+                Text = message,
+                ReadOnly = true,
+                // AutoSize = true,
+                Dock = DockStyle.Bottom
+            };
+
+            // ------------------------------------------
+            MaterialButton btnOK = new MaterialButton
+            {
+                Text = "Close",
+                AutoSize = true,
+                Dock = DockStyle.Bottom
+            };
+            btnOK.Click += (s, e) =>
+            {
+                Sounds.PlayClickSoundOnce();
+                this.Close();
+            };
+
+            // ------------------------------------------
+            MaterialButton btnCopy = new MaterialButton
+            {
+                Text = "Copy to Clipboard",
+                AutoSize = true,
+                Dock = DockStyle.Bottom
+            };
+
+            btnCopy.Click += (s, e) =>
+            {
+                Clipboard.SetText(message); // Copy the content to the clipboard
+                Sounds.PlayClickSoundOnce();
+                // MessageBox.Show("Content copied to clipboard.", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: Content copied to clipboard.");
+            };
+
+            // ------------------------------------------
+            this.Text = mBoxTitle;
+            this.Size = new Size(200, 200);
+            // this.AutoSize = true;
+            // this.AutoSizeMode = AutoSizeMode.GrowOnly;
+            this.TopMost = true;
+            this.Padding = new Padding(4, 4, 4, 4);
+            this.Margin = new Padding(10, 10, 10, 10);
+            this.BackColor = Color.FromArgb(50, 50, 50);
+            this.ForeColor = Color.FromArgb(50, 50, 50);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.StartPosition = FormStartPosition.CenterParent;
+            // this.Location = ;
+
+            this.Controls.Add(txtMessage);
+            this.Controls.Add(btnCopy);
+            this.Controls.Add(btnOK);
+            this.Activate();    // doesn't really needed
+        }
+    }
+
+    // ------------------------------------------
+    // customized progressBar
+    public class mbProgressBar : MaterialProgressBar
+    {
+        private int _value;
+        public new int Value
+        {
+            get => _value;
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    OnValueChanged(EventArgs.Empty);
+                }
+                base.Value = _value;
+            }
+        }
+
+        public event EventHandler ValueChanged;
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            ValueChanged?.Invoke(this, e);
+        }
     }
 }
 

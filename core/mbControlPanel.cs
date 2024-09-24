@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
 using RED.mbnq.core;
+using static mbFnc;
 // using System.Drawing.Text;
 
 namespace RED.mbnq
@@ -82,7 +83,7 @@ namespace RED.mbnq
             mbZoomScopeSizeSlider
         ;
 
-        public mbProgressBar mbProgressBar0;
+        public mbFnc.mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
@@ -1018,7 +1019,7 @@ namespace RED.mbnq
                     string mBoxTitle = "Your IP:";
 
                     // Show the custom message box with the content
-                    mbMessageBox messageBox = new mbMessageBox(pageContent, mBoxTitle);
+                    mbFnc.mbMessageBox messageBox = new mbFnc.mbMessageBox(pageContent, mBoxTitle);
                     messageBox.ShowDialog();
                 }
             }
@@ -1324,76 +1325,6 @@ namespace RED.mbnq
 
         #endregion
 
-        #region mbMessageBox form
-
-        /* --- --- ---  --- --- --- */
-
-        public partial class mbMessageBox : MaterialForm
-        {
-            public mbMessageBox(string message, string mBoxTitle)
-            {
-
-                // ------------------------------------------
-                MaterialTextBox2 txtMessage = new MaterialTextBox2
-                {
-                    Text = message,
-                    ReadOnly = true,
-                    // AutoSize = true,
-                    Dock = DockStyle.Bottom
-                };
-
-                // ------------------------------------------
-                MaterialButton btnOK = new MaterialButton
-                {
-                    Text = "Close",
-                    AutoSize = true,
-                    Dock = DockStyle.Bottom
-                };
-                btnOK.Click += (s, e) =>
-                {
-                    Sounds.PlayClickSoundOnce(); 
-                    this.Close();
-                };
-
-                // ------------------------------------------
-                MaterialButton btnCopy = new MaterialButton
-                {
-                    Text = "Copy to Clipboard",
-                    AutoSize = true,
-                    Dock = DockStyle.Bottom
-                };
-
-                btnCopy.Click += (s, e) =>
-                {
-                    Clipboard.SetText(message); // Copy the content to the clipboard
-                    Sounds.PlayClickSoundOnce();
-                    // MessageBox.Show("Content copied to clipboard.", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Debug.WriteLineIf(mbIsDebugOn, $"mbnq: Content copied to clipboard.");
-                };
-
-                // ------------------------------------------
-                this.Text = mBoxTitle;
-                this.Size = new Size(200, 200);
-                // this.AutoSize = true;
-                // this.AutoSizeMode = AutoSizeMode.GrowOnly;
-                this.TopMost = true;
-                this.Padding = new Padding(4, 4, 4, 4);
-                this.Margin = new Padding(10, 10, 10, 10);
-                this.BackColor = Color.FromArgb(50, 50, 50);
-                this.ForeColor = Color.FromArgb(50, 50, 50);
-                this.MaximizeBox = false;
-                this.MinimizeBox = false;
-                this.StartPosition = FormStartPosition.CenterParent;
-                // this.Location = ;
-
-                this.Controls.Add(txtMessage);
-                this.Controls.Add(btnCopy);
-                this.Controls.Add(btnOK);
-                this.Activate();    // doesn't really needed
-            }
-        }
-        #endregion
-
         #region mbLabeledSlider form
         /* --- --- --- Mix sliders with labels here --- --- --- */
         private mbLabeledSlider CreateLabeledSlider(string labelText, int min, int max, int defaultValue = 0)
@@ -1455,33 +1386,6 @@ namespace RED.mbnq
                 Slider = slider;
             }
         }
-        #endregion
-
-        #region Custom ProgressBar
-        public class mbProgressBar : MaterialProgressBar
-        {
-            private int _value;
-            public new int Value
-            {
-                get => _value;
-                set
-                {
-                    if (_value != value)
-                    {
-                        _value = value;
-                        OnValueChanged(EventArgs.Empty);
-                    }
-                    base.Value = _value;
-                }
-            }
-
-            public event EventHandler ValueChanged;
-            protected virtual void OnValueChanged(EventArgs e)
-            {
-                ValueChanged?.Invoke(this, e);
-            }
-        }
-
         #endregion
 
     }
