@@ -33,6 +33,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using RED.mbnq.Properties;
 
 namespace RED.mbnq
 {
@@ -102,11 +103,14 @@ namespace RED.mbnq
 
                 string filePath = Path.Combine(settingsDirectory, fileName);
                 string valueToSave = value.ToString();
-                bool success = WritePrivateProfileString(section, key, valueToSave, filePath);
-
-                if (!success && mbIsDebugOn)
+                try
                 {
-                    Debug.WriteLine($"mbnq: Failed to write to INI file: {filePath}");
+                    WritePrivateProfileString(section, key, valueToSave, filePath);
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: writing to file {filePath} failed {ex.Message}");
                 }
             }
 
@@ -138,7 +142,7 @@ namespace RED.mbnq
                 { "PositionX", controlPanel.Left },
                 { "PositionY", controlPanel.Top }
             };
-            SaveSettingsBatch("General", generalSettings);
+            mbSaveSettingsBatch("General", generalSettings);
 
             // Crosshair settings
             var crosshairSettings = new Dictionary<string, object>
@@ -158,7 +162,7 @@ namespace RED.mbnq
                 crosshairSettings.Add("PositionX", controlPanel.mbCrosshairOverlay.Left);
                 crosshairSettings.Add("PositionY", controlPanel.mbCrosshairOverlay.Top);
             }
-            SaveSettingsBatch("Crosshair", crosshairSettings);
+            mbSaveSettingsBatch("Crosshair", crosshairSettings);
 
             // ZoomMode (sniper mode) settings
             var zoomModeSettings = new Dictionary<string, object>
@@ -169,7 +173,7 @@ namespace RED.mbnq
                 { "zoomRefreshInterval", controlPanel.mbZoomRefreshIntervalSlider.Value },
                 { "mbEnableZoomMode", controlPanel.mbEnableZoomModeCheckBox.Checked }
             };
-            SaveSettingsBatch("ZoomMode", zoomModeSettings);
+            mbSaveSettingsBatch("ZoomMode", zoomModeSettings);
 
             // Network settings
             var networkSettings = new Dictionary<string, object>
@@ -180,7 +184,7 @@ namespace RED.mbnq
                 { "mbIPdicoveryProvider3", ControlPanel.mbIPdicoveryProvider3 },
                 { "mbIPdicoveryProvider4", ControlPanel.mbIPdicoveryProvider4 }
             };
-            SaveSettingsBatch("Network", networkSettings);
+            mbSaveSettingsBatch("Network", networkSettings);
 
             // Perform actions onExit and silent settings
             if (!onExit)
@@ -191,7 +195,7 @@ namespace RED.mbnq
             }
         }
 
-        private static void SaveSettingsBatch(string section, Dictionary<string, object> settings)
+        private static void mbSaveSettingsBatch(string section, Dictionary<string, object> settings)
         {
             foreach (var setting in settings)
             {
@@ -208,40 +212,55 @@ namespace RED.mbnq
 
         #endregion
 
+        #region Load
         public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
-            controlPanel.mbAutoSaveCheckbox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "AutoSaveOnExit", true);
-            controlPanel.mbDebugonCheckbox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbDebugon", false);
-            controlPanel.mbAOnTopCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbAOnTop", false);
-            controlPanel.mbDisableSoundCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbDisableSound", false);
-            controlPanel.mbDarkModeCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbEnableDarkMode", true);
-            controlPanel.mbSplashCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbEnableSplashScreen", true);
-            controlPanel.mbAntiCapsCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbEnableAntiCapsLock", true);
-            controlPanel.mbEnableFlirCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "General", "mbEnableFlirMode", false);
+            // General settings
+            var generalSettings = new Dictionary<string, Action<object>>
+            {
+                { "AutoSaveOnExit", val => controlPanel.mbAutoSaveCheckbox.Checked = Convert.ToBoolean(val) },
+                { "mbDebugon", val => controlPanel.mbDebugonCheckbox.Checked = Convert.ToBoolean(val) },
+                { "mbAOnTop", val => controlPanel.mbAOnTopCheckBox.Checked = Convert.ToBoolean(val) },
+                { "mbDisableSound", val => controlPanel.mbDisableSoundCheckBox.Checked = Convert.ToBoolean(val) },
+                { "mbEnableDarkMode", val => controlPanel.mbDarkModeCheckBox.Checked = Convert.ToBoolean(val) },
+                { "mbEnableSplashScreen", val => controlPanel.mbSplashCheckBox.Checked = Convert.ToBoolean(val) },
+                { "mbEnableAntiCapsLock", val => controlPanel.mbAntiCapsCheckBox.Checked = Convert.ToBoolean(val) },
+                { "mbEnableFlirMode", val => controlPanel.mbEnableFlirCheckBox.Checked = Convert.ToBoolean(val) }
+            };
+            mbLoadSettingsBatch("General", generalSettings, true);
 
-            controlPanel.mbColorRSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorRValue", 255);
-            controlPanel.mbColorGSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorGValue", 0);
-            controlPanel.mbColorBSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "ColorBValue", 0);
-            controlPanel.mbSizeSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "SizeValue", 12);
-            controlPanel.mbTransparencySlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "TransparencyValue", 64);
-            controlPanel.mbOffsetXSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "OffsetXValue", 1000);
-            controlPanel.mbOffsetYSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "OffsetYValue", 1000);
-            controlPanel.mbHideCrosshairCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "mbHideCrosshair", false);
+            // Crosshair settings
+            var crosshairSettings = new Dictionary<string, Action<object>>
+            {
+                { "ColorRValue", val => controlPanel.mbColorRSlider.Value = Convert.ToInt32(val) },
+                { "ColorGValue", val => controlPanel.mbColorGSlider.Value = Convert.ToInt32(val) },
+                { "ColorBValue", val => controlPanel.mbColorBSlider.Value = Convert.ToInt32(val) },
+                { "SizeValue", val => controlPanel.mbSizeSlider.Value = Convert.ToInt32(val) },
+                { "TransparencyValue", val => controlPanel.mbTransparencySlider.Value = Convert.ToInt32(val) },
+                { "OffsetXValue", val => controlPanel.mbOffsetXSlider.Value = Convert.ToInt32(val) },
+                { "OffsetYValue", val => controlPanel.mbOffsetYSlider.Value = Convert.ToInt32(val) },
+                { "mbHideCrosshair", val => controlPanel.mbHideCrosshairCheckBox.Checked = Convert.ToBoolean(val) }
+            };
+            mbLoadSettingsBatch("Crosshair", crosshairSettings);
 
             if (controlPanel.mbCrosshairOverlay != null)
             {
-                int posX = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
-                int posY = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
-                controlPanel.mbCrosshairOverlay.Left = posX;
-                controlPanel.mbCrosshairOverlay.Top = posY;
+                controlPanel.mbCrosshairOverlay.Left = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "PositionX", controlPanel.mbCrosshairOverlay.Left);
+                controlPanel.mbCrosshairOverlay.Top = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
             }
 
-            controlPanel.mbZoomTIntervalSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomTInterval", controlPanel.mbZoomTIntervalSlider.Value);
-            controlPanel.mbZoomRefreshIntervalSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomRefreshInterval", controlPanel.mbZoomRefreshIntervalSlider.Value);
-            controlPanel.mbEnableZoomModeCheckBox.Checked = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "mbEnableZoomMode", false);
-            controlPanel.mbZoomLevelSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "ZoomLevel", controlPanel.mbZoomLevelSlider.Value);
-            controlPanel.mbZoomScopeSizeSlider.Value = SaveLoad.INIFile.INIread("settings.ini", "ZoomMode", "zoomScopeSize", controlPanel.mbZoomScopeSizeSlider.Value);
+            // ZoomMode (sniper mode) settings
+            var zoomModeSettings = new Dictionary<string, Action<object>>
+            {
+                { "ZoomLevel", val => controlPanel.mbZoomLevelSlider.Value = Convert.ToInt32(val) },
+                { "zoomScopeSize", val => controlPanel.mbZoomScopeSizeSlider.Value = Convert.ToInt32(val) },
+                { "zoomTInterval", val => controlPanel.mbZoomTIntervalSlider.Value = Convert.ToInt32(val) },
+                { "zoomRefreshInterval", val => controlPanel.mbZoomRefreshIntervalSlider.Value = Convert.ToInt32(val) },
+                { "mbEnableZoomMode", val => controlPanel.mbEnableZoomModeCheckBox.Checked = Convert.ToBoolean(val) }
+            };
+            mbLoadSettingsBatch("ZoomMode", zoomModeSettings);
 
+            // Network settings
             ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
             ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
             ControlPanel.mbIPdicoveryProvider2 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider2", "https://api.seeip.org/");
@@ -254,6 +273,23 @@ namespace RED.mbnq
             if (!silent) Sounds.PlayClickSoundOnce();
         }
 
+        private static void mbLoadSettingsBatch(string section, Dictionary<string, Action<object>> settings, object defaultValue = null)
+        {
+            foreach (var setting in settings)
+            {
+                try
+                {
+                    var value = SaveLoad.INIFile.INIread("settings.ini", section, setting.Key, defaultValue ?? default);
+                    setting.Value(value);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: loading {section}{setting.Key}{setting.Value} failed {ex.Message}");
+                }
+            }
+        }
+
+        #endregion
         #endregion
 
         #region SaveLoadGlass
