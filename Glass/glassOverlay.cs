@@ -29,8 +29,8 @@ namespace RED.mbnq
         private DateTime lastFrameTime = DateTime.MinValue;
         public double currentFps = 0.0;
 
-        private float offsetX = 0f; // 0.31f
-        private float offsetY = 0f; // 0.18f
+        private float offsetX = 0f;             // 0.31f
+        private float offsetY = 0f;             // 0.18f
         private float zoomFactor = 1.0f;
         private float opacityFactor = 1.0f;
 
@@ -132,7 +132,7 @@ namespace RED.mbnq
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            // Reapply the circular region whenever the form is resized
+            // reapply the circular region whenever the form is resized
             ApplyCircularRegion();
         }
         public Rectangle CaptureArea => glassCaptureArea;

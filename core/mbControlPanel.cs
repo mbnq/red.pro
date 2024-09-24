@@ -15,7 +15,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.Http;
-// using RED.mbnq.core;
 using static mbFnc;
 
 namespace RED.mbnq

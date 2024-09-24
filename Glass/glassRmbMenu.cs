@@ -15,7 +15,7 @@ namespace RED.mbnq
 {
     public partial class GlassHudOverlay
     {
-        private Action playSND = Sounds.PlayClickSoundOnce;     // PlayClickSoundOnce
+        private Action playSND = Sounds.PlayClickSoundOnce;
         private void OverlayForm_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -26,7 +26,7 @@ namespace RED.mbnq
                 menu.Items.Add((glassInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => { 
                     ToggleGlassMenu();
                     playSND();
-                });  // Open Menu
+                });
 
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Change Capture Region", null, async (s, ea) =>

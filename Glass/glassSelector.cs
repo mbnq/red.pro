@@ -25,7 +25,6 @@ namespace RED.mbnq
         private Image backgroundScreenshot;
         public selector()
         {
-            // Capture the entire screen
             backgroundScreenshot = MakeScreenshotGrey((Bitmap)mbMakeScreenShot());
 
             this.FormBorderStyle = FormBorderStyle.None;
@@ -35,10 +34,9 @@ namespace RED.mbnq
             this.TopMost = true;
             // this.AllowTransparency = true;
 
-            // Span the selector form across all screens
             this.Bounds = Screen.PrimaryScreen.Bounds;
 
-            // Semi-transparent pen for selection rectangle
+            // pen for selection rectangle
             selectionPen = new Pen(Color.Blue, 2)
             {
                 DashStyle = System.Drawing.Drawing2D.DashStyle.Dash,
@@ -106,7 +104,7 @@ namespace RED.mbnq
             if (selectingInProgress)
             {
                 endPoint = e.Location;
-                this.Invalidate(); // Redraw the selection rectangle
+                this.Invalidate();              // redraw the selection rectangle
             }
         }
         private void ScreenAreaSelector_MouseUp(object sender, MouseEventArgs e)
