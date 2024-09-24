@@ -103,19 +103,12 @@ public static class mbFnc
     // capture overlay and copy to clipboard
     public static Bitmap CaptureOverlayContent(Form overlayForm, Rectangle captureRect)
     {
-        try
+        Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
+        using (Graphics g = Graphics.FromImage(bitmap))
         {
-            Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
-            }
-            return bitmap;
+            g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: function failed {ex.Message}");
-        }
+        return bitmap;
     }
 
     // ---------------------------------------
