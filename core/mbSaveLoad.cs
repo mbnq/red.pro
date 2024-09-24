@@ -52,7 +52,7 @@ namespace RED.mbnq
         }
         #endregion
 
-        #region INIIO
+        #region IO
         public static class INIFile
         {
             public static T INIread<T>(string fileName, string section, string key, T defaultValue)

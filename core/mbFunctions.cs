@@ -12,9 +12,9 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System;
 using System.IO;
-using RED.mbnq;
 using System.Diagnostics;
 using MaterialSkin.Controls;
+using RED.mbnq;
 
 public static class mbFnc
 {
