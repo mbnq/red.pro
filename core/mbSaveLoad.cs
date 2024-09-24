@@ -33,7 +33,6 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using RED.mbnq.Properties;
 
 namespace RED.mbnq
 {
