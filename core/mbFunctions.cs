@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System;
 using System.IO;
 using RED.mbnq;
+using System.Diagnostics;
 
 public static class mbFnc
 {
@@ -102,21 +103,35 @@ public static class mbFnc
     // capture overlay and copy to clipboard
     public static Bitmap CaptureOverlayContent(Form overlayForm, Rectangle captureRect)
     {
-        Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
-        using (Graphics g = Graphics.FromImage(bitmap))
+        try
         {
-            g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
+            Bitmap bitmap = new Bitmap(overlayForm.Width, overlayForm.Height);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.CopyFromScreen(captureRect.Location, Point.Empty, captureRect.Size);
+            }
+            return bitmap;
         }
-        return bitmap;
+        catch (Exception ex)
+        {
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: function failed {ex.Message}");
+        }
     }
 
     // ---------------------------------------
     // Copy overlay content to clipboard
     public static void CopyOverlayToClipboard(Form overlayForm, Rectangle captureRect)
     {
-        using (Bitmap bitmap = CaptureOverlayContent(overlayForm, captureRect))
+        try
         {
-            Clipboard.SetImage(bitmap);
+            using (Bitmap bitmap = CaptureOverlayContent(overlayForm, captureRect))
+            {
+                Clipboard.SetImage(bitmap);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: function failed {ex.Message}");
         }
     }
 
@@ -126,17 +141,24 @@ public static class mbFnc
     private static ToolTip mbToolTip = new ToolTip();
     public static void mbCopyLabelToClipboard(object sender, EventArgs e)
     {
-        Label clickedLabel = sender as Label;
-
-        if (clickedLabel != null)
+        try
         {
-            Sounds.PlayClickSoundOnce();
+            Label clickedLabel = sender as Label;
 
-            Clipboard.SetText(clickedLabel.Text);
-            var mousePosition = Control.MousePosition;
-            Point labelLocation = clickedLabel.PointToClient(mousePosition);
+            if (clickedLabel != null)
+            {
+                Sounds.PlayClickSoundOnce();
 
-            mbToolTip.Show($"Copied: {clickedLabel.Text} to clipboard!", clickedLabel, labelLocation.X, labelLocation.Y, 2000);
+                Clipboard.SetText(clickedLabel.Text);
+                var mousePosition = Control.MousePosition;
+                Point labelLocation = clickedLabel.PointToClient(mousePosition);
+
+                mbToolTip.Show($"Copied: {clickedLabel.Text} to clipboard!", clickedLabel, labelLocation.X, labelLocation.Y, 2000);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: function failed {ex.Message}");
         }
     }
 
