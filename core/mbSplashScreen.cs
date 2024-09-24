@@ -7,11 +7,10 @@
 
 */
 
-using System;
 using System.Media;
 using System.Windows.Forms;
 
-namespace RED.mbnq.core
+namespace RED.mbnq
 {
     public partial class mbSplashScreen : Form
     {

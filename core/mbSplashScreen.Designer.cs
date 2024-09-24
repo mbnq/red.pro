@@ -7,9 +7,7 @@
 
 */
 
-using System;
-
-namespace RED.mbnq.core
+namespace RED.mbnq
 {
     partial class mbSplashScreen
     {
