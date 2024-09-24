@@ -1328,7 +1328,7 @@ namespace RED.mbnq
 
         /* --- --- ---  --- --- --- */
 
-        public partial class mbMessageBox : MaterialSkin.Controls.MaterialForm
+        public partial class mbMessageBox : MaterialForm
         {
             public mbMessageBox(string message, string mBoxTitle)
             {
@@ -1458,7 +1458,7 @@ namespace RED.mbnq
         #endregion
 
         #region Custom ProgressBar
-        public class mbProgressBar : MaterialSkin.Controls.MaterialProgressBar
+        public class mbProgressBar : MaterialProgressBar
         {
             private int _value;
             public new int Value
