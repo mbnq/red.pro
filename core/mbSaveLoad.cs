@@ -221,31 +221,31 @@ namespace RED.mbnq
         #region Load
         public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
-            // General settings
-            var generalSettings = new Dictionary<string, Action<object>>
+            // General settings with default values
+            var generalSettings = new Dictionary<string, (Action<object> setAction, object defaultValue)>
             {
-                { "AutoSaveOnExit", val => controlPanel.mbAutoSaveCheckbox.Checked = Convert.ToBoolean(val) },
-                { "mbDebugon", val => controlPanel.mbDebugonCheckbox.Checked = Convert.ToBoolean(val) },
-                { "mbAOnTop", val => controlPanel.mbAOnTopCheckBox.Checked = Convert.ToBoolean(val) },
-                { "mbDisableSound", val => controlPanel.mbDisableSoundCheckBox.Checked = Convert.ToBoolean(val) },
-                { "mbEnableDarkMode", val => controlPanel.mbDarkModeCheckBox.Checked = Convert.ToBoolean(val) },
-                { "mbEnableSplashScreen", val => controlPanel.mbSplashCheckBox.Checked = Convert.ToBoolean(val) },
-                { "mbEnableAntiCapsLock", val => controlPanel.mbAntiCapsCheckBox.Checked = Convert.ToBoolean(val) },
-                { "mbEnableFlirMode", val => controlPanel.mbEnableFlirCheckBox.Checked = Convert.ToBoolean(val) }
+                { "AutoSaveOnExit", (val => controlPanel.mbAutoSaveCheckbox.Checked = Convert.ToBoolean(val), true) },
+                { "mbDebugon", (val => controlPanel.mbDebugonCheckbox.Checked = Convert.ToBoolean(val), false) },
+                { "mbAOnTop", (val => controlPanel.mbAOnTopCheckBox.Checked = Convert.ToBoolean(val), true) },
+                { "mbDisableSound", (val => controlPanel.mbDisableSoundCheckBox.Checked = Convert.ToBoolean(val), false) },
+                { "mbEnableDarkMode", (val => controlPanel.mbDarkModeCheckBox.Checked = Convert.ToBoolean(val), true) },
+                { "mbEnableSplashScreen", (val => controlPanel.mbSplashCheckBox.Checked = Convert.ToBoolean(val), true) },
+                { "mbEnableAntiCapsLock", (val => controlPanel.mbAntiCapsCheckBox.Checked = Convert.ToBoolean(val), true) },
+                { "mbEnableFlirMode", (val => controlPanel.mbEnableFlirCheckBox.Checked = Convert.ToBoolean(val), false) }
             };
-            mbLoadSettingsBatch("General", generalSettings, true);
+            mbLoadSettingsBatch("General", generalSettings);
 
-            // Crosshair settings
-            var crosshairSettings = new Dictionary<string, Action<object>>
+            // Crosshair settings with default values
+            var crosshairSettings = new Dictionary<string, (Action<object> setAction, object defaultValue)>
             {
-                { "ColorRValue", val => controlPanel.mbColorRSlider.Value = Convert.ToInt32(val) },
-                { "ColorGValue", val => controlPanel.mbColorGSlider.Value = Convert.ToInt32(val) },
-                { "ColorBValue", val => controlPanel.mbColorBSlider.Value = Convert.ToInt32(val) },
-                { "SizeValue", val => controlPanel.mbSizeSlider.Value = Convert.ToInt32(val) },
-                { "TransparencyValue", val => controlPanel.mbTransparencySlider.Value = Convert.ToInt32(val) },
-                { "OffsetXValue", val => controlPanel.mbOffsetXSlider.Value = Convert.ToInt32(val) },
-                { "OffsetYValue", val => controlPanel.mbOffsetYSlider.Value = Convert.ToInt32(val) },
-                { "mbHideCrosshair", val => controlPanel.mbHideCrosshairCheckBox.Checked = Convert.ToBoolean(val) }
+                { "ColorRValue", (val => controlPanel.mbColorRSlider.Value = Convert.ToInt32(val), 255) },
+                { "ColorGValue", (val => controlPanel.mbColorGSlider.Value = Convert.ToInt32(val), 1) },
+                { "ColorBValue", (val => controlPanel.mbColorBSlider.Value = Convert.ToInt32(val), 1) },
+                { "SizeValue", (val => controlPanel.mbSizeSlider.Value = Convert.ToInt32(val), 20) },
+                { "TransparencyValue", (val => controlPanel.mbTransparencySlider.Value = Convert.ToInt32(val), 50) },
+                { "OffsetXValue", (val => controlPanel.mbOffsetXSlider.Value = Convert.ToInt32(val), 1000) },
+                { "OffsetYValue", (val => controlPanel.mbOffsetYSlider.Value = Convert.ToInt32(val), 1000) },
+                { "mbHideCrosshair", (val => controlPanel.mbHideCrosshairCheckBox.Checked = Convert.ToBoolean(val), false) }
             };
             mbLoadSettingsBatch("Crosshair", crosshairSettings);
 
@@ -255,18 +255,18 @@ namespace RED.mbnq
                 controlPanel.mbCrosshairOverlay.Top = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
             }
 
-            // ZoomMode (sniper mode) settings
-            var zoomModeSettings = new Dictionary<string, Action<object>>
+            // ZoomMode (sniper mode) settings with default values
+            var zoomModeSettings = new Dictionary<string, (Action<object> setAction, object defaultValue)>
             {
-                { "ZoomLevel", val => controlPanel.mbZoomLevelSlider.Value = Convert.ToInt32(val) },
-                { "zoomScopeSize", val => controlPanel.mbZoomScopeSizeSlider.Value = Convert.ToInt32(val) },
-                { "zoomTInterval", val => controlPanel.mbZoomTIntervalSlider.Value = Convert.ToInt32(val) },
-                { "zoomRefreshInterval", val => controlPanel.mbZoomRefreshIntervalSlider.Value = Convert.ToInt32(val) },
-                { "mbEnableZoomMode", val => controlPanel.mbEnableZoomModeCheckBox.Checked = Convert.ToBoolean(val) }
+                { "ZoomLevel", (val => controlPanel.mbZoomLevelSlider.Value = Convert.ToInt32(val), 1) },
+                { "zoomScopeSize", (val => controlPanel.mbZoomScopeSizeSlider.Value = Convert.ToInt32(val), 6) },
+                { "zoomTInterval", (val => controlPanel.mbZoomTIntervalSlider.Value = Convert.ToInt32(val), 100) },
+                { "zoomRefreshInterval", (val => controlPanel.mbZoomRefreshIntervalSlider.Value = Convert.ToInt32(val), 16) },
+                { "mbEnableZoomMode", (val => controlPanel.mbEnableZoomModeCheckBox.Checked = Convert.ToBoolean(val), false) }
             };
             mbLoadSettingsBatch("ZoomMode", zoomModeSettings);
 
-            // Network settings
+            // Network settings with default values
             ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
             ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
             ControlPanel.mbIPdicoveryProvider2 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider2", "https://api.seeip.org/");
@@ -279,22 +279,23 @@ namespace RED.mbnq
             if (!silent) Sounds.PlayClickSoundOnce();
 
             // ---
-            static void mbLoadSettingsBatch(string section, Dictionary<string, Action<object>> settings, object defaultValue = null)
+            static void mbLoadSettingsBatch(string section, Dictionary<string, (Action<object> setAction, object defaultValue)> settings)
             {
                 foreach (var setting in settings)
                 {
                     try
                     {
-                        var value = SaveLoad.INIFile.INIread("settings.ini", section, setting.Key, defaultValue ?? default);
-                        setting.Value(value);
+                        var value = SaveLoad.INIFile.INIread("settings.ini", section, setting.Key, setting.Value.defaultValue);
+                        setting.Value.setAction(value);
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: loading {section}{setting.Key}{setting.Value} failed {ex.Message}");
+                        Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: loading {section}{setting.Key} failed {ex.Message}");
                     }
                 }
             }
         }
+
         #endregion
 
         #endregion
