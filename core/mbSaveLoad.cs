@@ -221,7 +221,6 @@ namespace RED.mbnq
         #region Load
         public static void mbLoadSettings(ControlPanel controlPanel, bool silent = true)
         {
-            // General settings with default values
             var generalSettings = new Dictionary<string, (Action<object> setAction, object defaultValue)>
             {
                 { "AutoSaveOnExit", (val => controlPanel.mbAutoSaveCheckbox.Checked = Convert.ToBoolean(val), true) },
@@ -235,7 +234,6 @@ namespace RED.mbnq
             };
             mbLoadSettingsBatch("General", generalSettings);
 
-            // Crosshair settings with default values
             var crosshairSettings = new Dictionary<string, (Action<object> setAction, object defaultValue)>
             {
                 { "ColorRValue", (val => controlPanel.mbColorRSlider.Value = Convert.ToInt32(val), 255) },
@@ -255,7 +253,6 @@ namespace RED.mbnq
                 controlPanel.mbCrosshairOverlay.Top = SaveLoad.INIFile.INIread("settings.ini", "Crosshair", "PositionY", controlPanel.mbCrosshairOverlay.Top);
             }
 
-            // ZoomMode (sniper mode) settings with default values
             var zoomModeSettings = new Dictionary<string, (Action<object> setAction, object defaultValue)>
             {
                 { "ZoomLevel", (val => controlPanel.mbZoomLevelSlider.Value = Convert.ToInt32(val), 1) },
@@ -266,7 +263,6 @@ namespace RED.mbnq
             };
             mbLoadSettingsBatch("ZoomMode", zoomModeSettings);
 
-            // Network settings with default values
             ControlPanel.mbIPpingTestTarget = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPpingTestTarget", "8.8.8.8");
             ControlPanel.mbIPdicoveryProvider = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider", "https://mbnq.pl/myip/");
             ControlPanel.mbIPdicoveryProvider2 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider2", "https://api.seeip.org/");

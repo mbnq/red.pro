@@ -658,7 +658,7 @@ namespace RED.mbnq
             AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref mbZoomTIntervalSlider);
             AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref mbZoomRefreshIntervalSlider);
             AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Level", 1, 10, 3, ref mbZoomLevelSlider);
-            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 80, 10, ref mbZoomScopeSizeSlider);
+            AddLabeledSlider(mbPanelForTab2, "SniperMode Scope Size", 1, 40, 10, ref mbZoomScopeSizeSlider);
 
             mbTab2.Controls.Add(mbPanelForTab2);
 
