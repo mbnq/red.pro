@@ -45,8 +45,15 @@ namespace RED.mbnq
         {
             if (!Directory.Exists(settingsDirectory))
             {
-                Debug.WriteLineIf(mbIsDebugOn, "mbnq: Creating folder for user files...");
-                Directory.CreateDirectory(settingsDirectory);
+                try
+                {
+                    Debug.WriteLineIf(mbIsDebugOn, "mbnq: Creating folder for user files...");
+                    Directory.CreateDirectory(settingsDirectory);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLineIf(mbIsDebugOn, $"mbnq: wasn't able to create user data folder: {ex.Message}");
+                }
             }
         }
         #endregion
