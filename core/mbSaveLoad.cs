@@ -147,6 +147,7 @@ namespace RED.mbnq
                 { "mbEnableFlirMode", controlPanel.mbEnableFlirCheckBox.Checked },
                 { "PositionX", controlPanel.Left },
                 { "PositionY", controlPanel.Top }
+                // { "AbsolutePos", controlPanel.mbCPabsolutePos }
             };
             mbSaveSettingsBatch("General", generalSettings);
 
@@ -243,6 +244,7 @@ namespace RED.mbnq
                 { "TransparencyValue", (val => controlPanel.mbTransparencySlider.Value = Convert.ToInt32(val), 50) },
                 { "OffsetXValue", (val => controlPanel.mbOffsetXSlider.Value = Convert.ToInt32(val), 1000) },
                 { "OffsetYValue", (val => controlPanel.mbOffsetYSlider.Value = Convert.ToInt32(val), 1000) },
+                // { "AbsolutePos", (val => controlPanel.mbCPabsolutePos = (Point)val, mbFnc.mGetPrimaryScreenCenter2()) },
                 { "mbHideCrosshair", (val => controlPanel.mbHideCrosshairCheckBox.Checked = Convert.ToBoolean(val), false) }
             };
             mbLoadSettingsBatch("Crosshair", crosshairSettings);

@@ -157,6 +157,11 @@ namespace RED.mbnq
             Debug.WriteLineIf(mbIsDebugOn, "mbnq: Debug is ON!");
             Debug.WriteLineIf(mbIsDebugOn, $"mbnq: User files path is: {mbUserFilesPath}");
         }
+        public Point mbCPabsolutePos
+        {
+            get => this.Location;
+            set => this.Location = value;
+        }
 
         // Material Skin Init
         public void InitializeMaterialSkin(string mbTheme)
@@ -1141,6 +1146,7 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
+            Console.WriteLine($"CP POS: {mbCPabsolutePos}");
             UpdateAllUI();
         }
 
