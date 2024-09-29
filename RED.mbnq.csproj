@@ -251,6 +251,12 @@
       <DependentUpon>mbAboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="core\mbSaveLoad.cs" />
+    <Compile Include="gui\mbGlassCP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gui\mbGlassCP.Designer.cs">
+      <DependentUpon>mbGlassCP.cs</DependentUpon>
+    </Compile>
     <Compile Include="gui\mbSplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -292,6 +298,9 @@
     <Compile Include="core\mbZoomMode.cs" />
     <EmbeddedResource Include="gui\mbAboutForm.resx">
       <DependentUpon>mbAboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gui\mbGlassCP.resx">
+      <DependentUpon>mbGlassCP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gui\mbSplashScreen.resx">
       <DependentUpon>mbSplashScreen.cs</DependentUpon>

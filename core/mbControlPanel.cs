@@ -1143,10 +1143,14 @@ namespace RED.mbnq
             Sounds.PlayClickSoundOnce();
             UpdateAllUI();
         }
+
+        // ---
+        private mbGlassCP mbglassCPInstance;
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
-            Console.WriteLine($"CP POS: {mbCPabsolutePos}");
+            mbglassCPInstance = new mbGlassCP();
+            mbglassCPInstance.Show();
             UpdateAllUI();
         }
 
