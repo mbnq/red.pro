@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mbGlassCP));
             this.gcpRRSlider = new MaterialSkin.Controls.MaterialSlider();
             this.gcpOffX = new MaterialSkin.Controls.MaterialSlider();
             this.gcpOffY = new MaterialSkin.Controls.MaterialSlider();
@@ -39,13 +40,9 @@
             // 
             this.gcpRRSlider.Depth = 0;
             this.gcpRRSlider.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gcpRRSlider.Location = new System.Drawing.Point(18, 88);
+            resources.ApplyResources(this.gcpRRSlider, "gcpRRSlider");
             this.gcpRRSlider.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpRRSlider.Name = "gcpRRSlider";
-            this.gcpRRSlider.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.gcpRRSlider.Size = new System.Drawing.Size(395, 40);
-            this.gcpRRSlider.TabIndex = 0;
-            this.gcpRRSlider.Text = "Refresh Rate";
             this.gcpRRSlider.Value = 16;
             this.gcpRRSlider.ValueMax = 100;
             // 
@@ -53,65 +50,53 @@
             // 
             this.gcpOffX.Depth = 0;
             this.gcpOffX.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gcpOffX.Location = new System.Drawing.Point(18, 134);
+            resources.ApplyResources(this.gcpOffX, "gcpOffX");
             this.gcpOffX.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpOffX.Name = "gcpOffX";
-            this.gcpOffX.Size = new System.Drawing.Size(395, 40);
-            this.gcpOffX.TabIndex = 1;
             this.gcpOffX.TabStop = false;
-            this.gcpOffX.Text = "Offset X        ";
             // 
             // gcpOffY
             // 
             this.gcpOffY.Depth = 0;
             this.gcpOffY.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gcpOffY.Location = new System.Drawing.Point(18, 180);
+            resources.ApplyResources(this.gcpOffY, "gcpOffY");
             this.gcpOffY.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpOffY.Name = "gcpOffY";
-            this.gcpOffY.Size = new System.Drawing.Size(395, 40);
-            this.gcpOffY.TabIndex = 2;
-            this.gcpOffY.Text = "Offset Y        ";
             // 
             // gcpZoom
             // 
             this.gcpZoom.Depth = 0;
             this.gcpZoom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gcpZoom.Location = new System.Drawing.Point(18, 226);
+            resources.ApplyResources(this.gcpZoom, "gcpZoom");
             this.gcpZoom.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpZoom.Name = "gcpZoom";
             this.gcpZoom.RangeMax = 199;
-            this.gcpZoom.Size = new System.Drawing.Size(395, 40);
-            this.gcpZoom.TabIndex = 3;
-            this.gcpZoom.Text = "Zoom            ";
             this.gcpZoom.ValueMax = 199;
             // 
             // gcpAlpha
             // 
             this.gcpAlpha.Depth = 0;
             this.gcpAlpha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gcpAlpha.Location = new System.Drawing.Point(18, 272);
+            resources.ApplyResources(this.gcpAlpha, "gcpAlpha");
             this.gcpAlpha.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpAlpha.Name = "gcpAlpha";
-            this.gcpAlpha.Size = new System.Drawing.Size(395, 40);
-            this.gcpAlpha.TabIndex = 4;
-            this.gcpAlpha.Text = "Opacity         ";
             // 
             // mbGlassCP
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(443, 334);
             this.Controls.Add(this.gcpAlpha);
             this.Controls.Add(this.gcpZoom);
             this.Controls.Add(this.gcpOffY);
             this.Controls.Add(this.gcpOffX);
             this.Controls.Add(this.gcpRRSlider);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "mbGlassCP";
             this.ShowInTaskbar = false;
-            this.Text = "RED. PRO (Glass ControlPanel)";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

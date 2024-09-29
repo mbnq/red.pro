@@ -20,11 +20,16 @@ namespace RED.mbnq
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
 
-            this.FormClosing += (sender, e) => Sounds.PlayClickSoundOnce();
-
             InitializeComponent();
 
             this.overlay = overlay;
+
+            this.FormClosing += (sender, e) =>
+            {
+                Sounds.PlayClickSoundOnce();
+                overlay.ToggleGlassMenu();
+                e.Cancel = true;                  // prevents instance from closing
+            };
 
             gcpRRSlider.onValueChanged += (s, e) => {
                 if (gcpRRSlider.Value < 1) gcpRRSlider.Value = 1;
