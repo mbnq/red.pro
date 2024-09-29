@@ -26,12 +26,11 @@ namespace RED.mbnq
 
             this.overlay = overlay;
 
-            gcpRRSlider.onValueChanged += (s, e) => overlay.glassRefreshRate = gcpRRSlider.Value; // overlay.UpdateRefreshRate(gcpRRSlider.Value);
-            gcpOffX.onValueChanged += (s, e) => overlay.UpdateOffsetX(gcpOffX.Value);
-            gcpOffY.onValueChanged += (s, e) => overlay.UpdateOffsetY(gcpOffY.Value);
-            gcpZoom.onValueChanged += (s, e) => overlay.UpdateZoom(gcpZoom.Value);
-            gcpAlpha.onValueChanged += (s, e) => overlay.UpdateOpacity(gcpAlpha.Value / 100f);
-
+            gcpRRSlider.onValueChanged += (s, e) => { overlay.glassRefreshRate = gcpRRSlider.Value; overlay.UpdateGlassMenu(); };
+            gcpOffX.onValueChanged += (s, e) => { overlay.glassOffsetXValue = gcpOffX.Value; overlay.UpdateOffsetX(gcpOffX.Value); overlay.UpdateGlassMenu(); };
+            gcpOffY.onValueChanged += (s, e) => { overlay.glassOffsetYValue = gcpOffY.Value; overlay.UpdateOffsetY(gcpOffY.Value); overlay.UpdateGlassMenu(); };
+            gcpZoom.onValueChanged += (s, e) => { overlay.glassZoomValue = gcpZoom.Value; overlay.UpdateZoom(gcpZoom.Value); overlay.UpdateGlassMenu(); };
+            gcpAlpha.onValueChanged += (s, e) => { overlay.glassOpacityValue = gcpAlpha.Value; overlay.UpdateOpacity(gcpAlpha.Value / 100f); overlay.UpdateGlassMenu(); };
         }
         private void materialSlider1_Click(object sender, EventArgs e)
         {
