@@ -67,7 +67,7 @@ namespace RED.mbnq
             // autoSave on exist eventHandler
             controlPanel.FormClosing += (sender, e) =>
             {
-                if (controlPanel.mbAutoSaveCheckbox.Checked) { SaveLoad.mbSaveSettings(controlPanel); }
+                if (controlPanel.mbAutoSaveCheckbox.Checked) { SaveLoad.mbSaveSettings(controlPanel, true, true); }
             };
 
             // hiding controlPanel before showing splashScreen
