@@ -88,8 +88,27 @@ namespace RED.mbnq
         int sliderSpacing = 50;
         int GlassZoomMax = 200;
         mbGlassCP mbglassCPInstance;
+        public void UpdateGlassMenu()
+        {
+            /*
+            glassInfoDisplay.IsGlassMenuEnabled = glassIsMenuEnabled;
+            offsetXSlider.Visible = glassIsMenuEnabled;
+            offsetYSlider.Visible = glassIsMenuEnabled;
+            zoomSlider.Visible = glassIsMenuEnabled;
+            offsetXLabel.Visible = glassIsMenuEnabled;
+            offsetYLabel.Visible = glassIsMenuEnabled;
+            zoomLabel.Visible = glassIsMenuEnabled;
+            opacityLabel.Visible = glassIsMenuEnabled;
+            opacitySlider.Visible = glassIsMenuEnabled;
+            refreshRateLabel.Visible = glassIsMenuEnabled;
+            refreshRateSlider.Visible = glassIsMenuEnabled;
+            */
+
+            this.Invalidate();
+        }
         public void ToggleGlassMenu()
         {
+            UpdateGlassMenu();
             glassInfoDisplay.IsGlassMenuEnabled = !glassInfoDisplay.IsGlassMenuEnabled;
 
             /*
@@ -104,6 +123,26 @@ namespace RED.mbnq
             refreshRateLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             refreshRateSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             */
+
+            List<Control> controls = new List<Control>
+            {
+                offsetXSlider,
+                offsetYSlider,
+                zoomSlider,
+                opacitySlider,
+                refreshRateSlider,
+                offsetXLabel,
+                offsetYLabel,
+                zoomLabel,
+                opacityLabel,
+                refreshRateLabel
+            };
+
+            // Set visibility for all controls in one loop
+            foreach (var control in controls)
+            {
+                control.Visible = false;
+            }
 
             if (mbglassCPInstance == null)
             {
@@ -186,7 +225,7 @@ namespace RED.mbnq
             };
             refreshRateSlider.Scroll += (s, e) => UpdateRefreshRate();
 
-            opacitySlider.Location = new Point(-10000,-10000); // new Point(((this.Width / 2) - (opacitySlider.Width / 2)), (this.Height/2) + glassControls.mbGlassControlsMargin + 4);
+            opacitySlider.Location = new Point(((this.Width / 2) - (opacitySlider.Width / 2)), (this.Height/2) + glassControls.mbGlassControlsMargin + 4);
             zoomSlider.Location = new Point(opacitySlider.Location.X, opacitySlider.Location.Y - sliderSpacing);
             offsetYSlider.Location = new Point(opacitySlider.Location.X, zoomSlider.Location.Y - sliderSpacing);
             offsetXSlider.Location = new Point(opacitySlider.Location.X, offsetYSlider.Location.Y - sliderSpacing);
@@ -326,22 +365,6 @@ namespace RED.mbnq
             zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
             opacityLabel.Text = $"Opacity: {opacitySlider.Value}%";
             refreshRateLabel.Text = $"Refresh Rate: {refreshRateSlider.Value}ms";
-
-            this.Invalidate();
-        }
-        public void UpdateGlassMenu()
-        {
-            glassInfoDisplay.IsGlassMenuEnabled = glassIsMenuEnabled;
-            offsetXSlider.Visible = glassIsMenuEnabled;
-            offsetYSlider.Visible = glassIsMenuEnabled;
-            zoomSlider.Visible = glassIsMenuEnabled;
-            offsetXLabel.Visible = glassIsMenuEnabled;
-            offsetYLabel.Visible = glassIsMenuEnabled;
-            zoomLabel.Visible = glassIsMenuEnabled;
-            opacityLabel.Visible = glassIsMenuEnabled;
-            opacitySlider.Visible = glassIsMenuEnabled;
-            refreshRateLabel.Visible = glassIsMenuEnabled;
-            refreshRateSlider.Visible = glassIsMenuEnabled;
 
             this.Invalidate();
         }
