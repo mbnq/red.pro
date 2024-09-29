@@ -244,17 +244,17 @@
     <Compile Include="core\mbControlPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="core\mbAboutForm.cs">
+    <Compile Include="gui\mbAboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="core\mbAboutForm.Designer.cs">
+    <Compile Include="gui\mbAboutForm.Designer.cs">
       <DependentUpon>mbAboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="core\mbSaveLoad.cs" />
-    <Compile Include="core\mbSplashScreen.cs">
+    <Compile Include="gui\mbSplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="core\mbSplashScreen.Designer.cs">
+    <Compile Include="gui\mbSplashScreen.Designer.cs">
       <DependentUpon>mbSplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="glass\glassControls.cs" />
@@ -290,10 +290,10 @@
     </Compile>
     <Compile Include="core\mbSounds.cs" />
     <Compile Include="core\mbZoomMode.cs" />
-    <EmbeddedResource Include="core\mbAboutForm.resx">
+    <EmbeddedResource Include="gui\mbAboutForm.resx">
       <DependentUpon>mbAboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="core\mbSplashScreen.resx">
+    <EmbeddedResource Include="gui\mbSplashScreen.resx">
       <DependentUpon>mbSplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
