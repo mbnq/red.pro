@@ -1145,7 +1145,6 @@ namespace RED.mbnq
         }
 
         // ---
-        private mbGlassCP mbglassCPInstance;
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();

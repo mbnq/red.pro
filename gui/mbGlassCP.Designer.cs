@@ -46,6 +46,8 @@
             this.gcpRRSlider.Size = new System.Drawing.Size(395, 40);
             this.gcpRRSlider.TabIndex = 0;
             this.gcpRRSlider.Text = "Refresh Rate";
+            this.gcpRRSlider.Value = 16;
+            this.gcpRRSlider.ValueMax = 100;
             this.gcpRRSlider.Click += new System.EventHandler(this.materialSlider1_Click);
             // 
             // gcpOffX
@@ -104,7 +106,10 @@
             this.Controls.Add(this.gcpOffY);
             this.Controls.Add(this.gcpOffX);
             this.Controls.Add(this.gcpRRSlider);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "mbGlassCP";
+            this.ShowInTaskbar = false;
             this.Text = "RED. PRO (Glass ControlPanel)";
             this.ResumeLayout(false);
 

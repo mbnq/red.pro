@@ -105,7 +105,7 @@ namespace RED.mbnq
 
             if (mbglassCPInstance == null)
             {
-                mbglassCPInstance = new mbGlassCP();
+                mbglassCPInstance = new mbGlassCP(this);
             }
             else
             {
@@ -308,6 +308,8 @@ namespace RED.mbnq
         {
             int refreshRate = refreshRateSlider.Value;
 
+            if (refreshRate < 1) refreshRate = 1;
+
             refreshRateLabel.Text = $"Refresh Rate: {refreshRate}ms";
 
             this.UpdateRefreshInterval(refreshRate);
@@ -346,11 +348,11 @@ namespace RED.mbnq
     // for saveLoad logics
     public partial class GlassHudOverlay : Form
     {
+        public int glassRefreshRate { get => refreshRateSlider.Value; set { refreshRateSlider.Value = value; UpdateRefreshRate(); } }
         public int glassOffsetXValue { get => offsetXSlider.Value; set => offsetXSlider.Value = value; }
         public int glassOffsetYValue { get => offsetYSlider.Value; set => offsetYSlider.Value = value; }
         public int glassZoomValue    { get => zoomSlider.Value;    set => zoomSlider.Value = value;    }
         public int glassOpacityValue { get => opacitySlider.Value; set => opacitySlider.Value = value; }
-        public int glassRefreshRate { get => refreshRateSlider.Value; set => refreshRateSlider.Value = value; }
         public bool glassIsBorderVisible { get => isBorderVisible; set => isBorderVisible = value; }
         public bool glassIsCircle { get => isCircle; set => isCircle = value; }
         public bool glassIsBind { get => isMoveEnabled; set => isMoveEnabled = value; }
@@ -364,6 +366,40 @@ namespace RED.mbnq
                 GlassHudOverlay.displayOverlay.Left = value.X;
                 GlassHudOverlay.displayOverlay.Top = value.Y;
             }
+        }
+        public void UpdateRefreshRate(int refreshRate)
+        {
+            glassRefreshTimer.Interval = refreshRate;
+            refreshRateLabel.Text = $"Refresh Rate: {refreshRate}ms";
+            this.Invalidate();
+        }
+
+        public void UpdateOffsetX(int offsetXValue)
+        {
+            offsetX = offsetXValue / 100f;
+            offsetXLabel.Text = $"Offset X: {offsetXValue}%";
+            this.Invalidate();
+        }
+
+        public void UpdateOffsetY(int offsetYValue)
+        {
+            offsetY = offsetYValue / 100f;
+            offsetYLabel.Text = $"Offset Y: {offsetYValue}%";
+            this.Invalidate();
+        }
+
+        public void UpdateZoom(int zoomValue)
+        {
+            zoomFactor = (GlassZoomMax - zoomValue) / 100f;
+            zoomLabel.Text = $"Zoom: {zoomValue}%";
+            this.Invalidate();
+        }
+
+        public void UpdateOpacity(float opacityValue)
+        {
+            opacityFactor = opacityValue;
+            opacityLabel.Text = $"Opacity: {(int)(opacityValue * 100)}%";
+            this.Invalidate();
         }
     }
 }
