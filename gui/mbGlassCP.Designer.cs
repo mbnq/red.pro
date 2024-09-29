@@ -79,10 +79,11 @@
             this.gcpZoom.Location = new System.Drawing.Point(18, 226);
             this.gcpZoom.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpZoom.Name = "gcpZoom";
+            this.gcpZoom.RangeMax = 199;
             this.gcpZoom.Size = new System.Drawing.Size(395, 40);
             this.gcpZoom.TabIndex = 3;
             this.gcpZoom.Text = "Zoom            ";
-            this.gcpZoom.ValueMax = 100;
+            this.gcpZoom.ValueMax = 199;
             // 
             // gcpAlpha
             // 
