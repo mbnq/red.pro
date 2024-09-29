@@ -5416,7 +5416,7 @@
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>RED. PRO (Glass ControlPanel)</value>
+    <value>RED. PRO (Glass Editor)</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>mbGlassCP</value>

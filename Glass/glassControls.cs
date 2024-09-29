@@ -92,6 +92,7 @@ namespace RED.mbnq
         {
             glassInfoDisplay.IsGlassMenuEnabled = !glassInfoDisplay.IsGlassMenuEnabled;
 
+            /*
             offsetXSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             offsetYSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             zoomSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
@@ -102,6 +103,7 @@ namespace RED.mbnq
             opacitySlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             refreshRateLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             refreshRateSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+            */
 
             if (mbglassCPInstance == null)
             {
@@ -184,7 +186,7 @@ namespace RED.mbnq
             };
             refreshRateSlider.Scroll += (s, e) => UpdateRefreshRate();
 
-            opacitySlider.Location = new Point(((this.Width / 2) - (opacitySlider.Width / 2)), (this.Height/2) + glassControls.mbGlassControlsMargin + 4);
+            opacitySlider.Location = new Point(-10000,-10000); // new Point(((this.Width / 2) - (opacitySlider.Width / 2)), (this.Height/2) + glassControls.mbGlassControlsMargin + 4);
             zoomSlider.Location = new Point(opacitySlider.Location.X, opacitySlider.Location.Y - sliderSpacing);
             offsetYSlider.Location = new Point(opacitySlider.Location.X, zoomSlider.Location.Y - sliderSpacing);
             offsetXSlider.Location = new Point(opacitySlider.Location.X, offsetYSlider.Location.Y - sliderSpacing);
@@ -239,7 +241,7 @@ namespace RED.mbnq
                 Text = "Opacity: 100%",
                 ForeColor = mDefColWhite,
                 BackColor = mDefColGray,
-                AutoSize = true,
+                AutoSize = true
             };
             opacityLabel.Location = mbGetLabelLocation(opacitySlider, opacityLabel);
 
