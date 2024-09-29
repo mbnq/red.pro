@@ -25,7 +25,6 @@ namespace RED.mbnq
 
                 menu.Items.Add((glassInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => { 
                     ToggleGlassMenu();
-
                     playSND();
                 });
 

@@ -47,7 +47,7 @@ namespace RED.mbnq
         private Label refreshRateLabel;
 
         private bool isBorderVisible = true;
-        
+
         /* --- --- ---  --- --- --- */
         public GlassHudOverlay(Rectangle mbGlassElement, Rectangle selectedArea)
         {
@@ -71,6 +71,7 @@ namespace RED.mbnq
 
             InitializeTrackBars();
 
+            this.FormClosed += (sender, e) => { if (mbglassCPInstance != null) mbglassCPInstance.Close(); };
             this.MouseClick += OverlayForm_MouseClick;
 
             glassRefreshTimer = new System.Windows.Forms.Timer();
