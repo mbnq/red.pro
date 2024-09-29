@@ -48,7 +48,6 @@
             this.gcpRRSlider.Text = "Refresh Rate";
             this.gcpRRSlider.Value = 16;
             this.gcpRRSlider.ValueMax = 100;
-            this.gcpRRSlider.Click += new System.EventHandler(this.materialSlider1_Click);
             // 
             // gcpOffX
             // 
@@ -83,6 +82,7 @@
             this.gcpZoom.Size = new System.Drawing.Size(395, 40);
             this.gcpZoom.TabIndex = 3;
             this.gcpZoom.Text = "Zoom            ";
+            this.gcpZoom.ValueMax = 100;
             // 
             // gcpAlpha
             // 

@@ -26,15 +26,33 @@ namespace RED.mbnq
 
             this.overlay = overlay;
 
-            gcpRRSlider.onValueChanged += (s, e) => { overlay.glassRefreshRate = gcpRRSlider.Value; overlay.UpdateGlassMenu(); };
-            gcpOffX.onValueChanged += (s, e) => { overlay.glassOffsetXValue = gcpOffX.Value; overlay.UpdateOffsetX(gcpOffX.Value); overlay.UpdateGlassMenu(); };
-            gcpOffY.onValueChanged += (s, e) => { overlay.glassOffsetYValue = gcpOffY.Value; overlay.UpdateOffsetY(gcpOffY.Value); overlay.UpdateGlassMenu(); };
-            gcpZoom.onValueChanged += (s, e) => { overlay.glassZoomValue = gcpZoom.Value; overlay.UpdateZoom(gcpZoom.Value); overlay.UpdateGlassMenu(); };
-            gcpAlpha.onValueChanged += (s, e) => { overlay.glassOpacityValue = gcpAlpha.Value; overlay.UpdateOpacity(gcpAlpha.Value / 100f); overlay.UpdateGlassMenu(); };
-        }
-        private void materialSlider1_Click(object sender, EventArgs e)
-        {
-            // Handle the click event
+            gcpRRSlider.onValueChanged += (s, e) => {
+                if (gcpRRSlider.Value < 1) gcpRRSlider.Value = 1;
+                overlay.glassRefreshRate = gcpRRSlider.Value;
+                overlay.UpdateRefreshRate();
+                overlay.UpdateGlassMenu();
+            };
+            gcpOffX.onValueChanged += (s, e) => { 
+                overlay.glassOffsetXValue = gcpOffX.Value; 
+                overlay.UpdateOffsetX(gcpOffX.Value); 
+                overlay.UpdateGlassMenu(); 
+            };
+            gcpOffY.onValueChanged += (s, e) => { 
+                overlay.glassOffsetYValue = gcpOffY.Value; 
+                overlay.UpdateOffsetY(gcpOffY.Value); 
+                overlay.UpdateGlassMenu(); };
+            gcpZoom.onValueChanged += (s, e) => {
+                if (gcpZoom.Value < 1) gcpZoom.Value = 1;
+                overlay.glassZoomValue = gcpZoom.Value; 
+                overlay.UpdateZoom(gcpZoom.Value); 
+                overlay.UpdateGlassMenu(); 
+            };
+            gcpAlpha.onValueChanged += (s, e) => {
+                if (gcpAlpha.Value < 1) gcpAlpha.Value = 1;
+                overlay.glassOpacityValue = gcpAlpha.Value; 
+                overlay.UpdateOpacity(gcpAlpha.Value / 100f); 
+                overlay.UpdateGlassMenu(); 
+            };
         }
     }
 }
