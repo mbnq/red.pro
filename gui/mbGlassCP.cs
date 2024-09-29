@@ -33,13 +33,13 @@ namespace RED.mbnq
                 overlay.UpdateGlassMenu();
             };
             gcpOffX.onValueChanged += (s, e) => { 
-                overlay.glassOffsetXValue = gcpOffX.Value; 
-                overlay.UpdateOffsetX(gcpOffX.Value); 
+                overlay.glassOffsetXValue = (2 * gcpOffX.Value - 100); 
+                overlay.UpdateOffsetX(2 * gcpOffX.Value - 100); 
                 overlay.UpdateGlassMenu(); 
             };
             gcpOffY.onValueChanged += (s, e) => { 
-                overlay.glassOffsetYValue = gcpOffY.Value; 
-                overlay.UpdateOffsetY(gcpOffY.Value); 
+                overlay.glassOffsetYValue = (2 * gcpOffY.Value - 100); 
+                overlay.UpdateOffsetY(2 * gcpOffY.Value - 100); 
                 overlay.UpdateGlassMenu(); };
             gcpZoom.onValueChanged += (s, e) => {
                 if (gcpZoom.Value < 1) gcpZoom.Value = 1;
