@@ -87,6 +87,7 @@ namespace RED.mbnq
         Color mDefColWhite = Color.White;
         int sliderSpacing = 50;
         int GlassZoomMax = 200;
+        mbGlassCP mbglassCPInstance;
         public void ToggleGlassMenu()
         {
             glassInfoDisplay.IsGlassMenuEnabled = !glassInfoDisplay.IsGlassMenuEnabled;
@@ -101,6 +102,22 @@ namespace RED.mbnq
             opacitySlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             refreshRateLabel.Visible = glassInfoDisplay.IsGlassMenuEnabled;
             refreshRateSlider.Visible = glassInfoDisplay.IsGlassMenuEnabled;
+
+            if (mbglassCPInstance == null)
+            {
+                mbglassCPInstance = new mbGlassCP();
+            }
+            else
+            {
+                if (mbglassCPInstance.Visible != true)
+                {
+                    mbglassCPInstance.Show();
+                }
+                else
+                {
+                    mbglassCPInstance.Hide();
+                }
+            }
         }
         public void InitializeTrackBars()
         {
