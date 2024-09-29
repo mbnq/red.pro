@@ -20,6 +20,8 @@ namespace RED.mbnq
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
 
+            this.StartPosition = FormStartPosition.CenterParent;
+
             InitializeComponent();
 
             this.overlay = overlay;
