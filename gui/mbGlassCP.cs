@@ -36,11 +36,11 @@ namespace RED.mbnq
                 e.Cancel = true;                  // prevents instance from closing
             };
 
-            InitializeSlidersApplyValues();
-            AddSliderEventHandlers();
-            InitializeDebugInfoTimer();
+            InitializeCPApplyValues();
+            AddCPEventHandlers();
+            InitializeCPInfoTimer();
         }
-        private void InitializeSlidersApplyValues()
+        private void InitializeCPApplyValues()
         {
             gcpRRSlider.Value = overlay.glassRefreshRate;
             gcpOffX.Value = (overlay.glassOffsetXValue + 100) / 2;
@@ -48,7 +48,7 @@ namespace RED.mbnq
             gcpZoom.Value = overlay.glassZoomValue;
             gcpAlpha.Value = overlay.glassOpacityValue;
         }
-        private void AddSliderEventHandlers()
+        private void AddCPEventHandlers()
         {
             gcpRRSlider.onValueChanged += (s, e) => {
                 if (gcpRRSlider.Value < 1) gcpRRSlider.Value = 1;
@@ -69,14 +69,14 @@ namespace RED.mbnq
                 overlay.glassOpacityValue = gcpAlpha.Value;
             };
         }
-        private void InitializeDebugInfoTimer()
+        private void InitializeCPInfoTimer()
         {
             debugInfoTimer = new Timer();
             debugInfoTimer.Interval = 1000; // Update every second (adjust as needed)
-            debugInfoTimer.Tick += (s, e) => UpdateDebugInfo();
+            debugInfoTimer.Tick += (s, e) => UpdateCPInfo();
             debugInfoTimer.Start();
         }
-        private void UpdateDebugInfo()
+        private void UpdateCPInfo()
         {
             if (overlay == null)
                 return;
