@@ -362,9 +362,9 @@ namespace RED.mbnq
             glassOverlay.glassRefreshRate = INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", 60);
             glassOverlay.glassOpacityValue = INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
 
-            glassOverlay.UpdateZoom(glassOverlay.glassZoomValue);
+            glassOverlay.UpdateZoom();
             glassOverlay.UpdateRefreshRate();
-            glassOverlay.UpdateOpacity(glassOverlay.glassOpacityValue / 100f);
+            glassOverlay.UpdateOpacity();
 
             // glassOverlay.UpdateGlassMenu();
         }

@@ -244,17 +244,5 @@ namespace RED.mbnq
             offsetY = offsetYValue / 100f;
             this.Invalidate();
         }
-
-        public void UpdateZoom(int zoomValue)
-        {
-            zoomFactor = (GlassZoomMax - zoomValue) / 100f;
-            this.Invalidate();
-        }
-
-        public void UpdateOpacity(float opacityValue)
-        {
-            opacityFactor = opacityValue;
-            this.Invalidate();
-        }
     }
 }

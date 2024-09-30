@@ -52,14 +52,10 @@ namespace RED.mbnq
             gcpZoom.onValueChanged += (s, e) => {
                 if (gcpZoom.Value < 1) gcpZoom.Value = 1;
                 overlay.glassZoomValue = gcpZoom.Value; 
-                overlay.UpdateZoom(gcpZoom.Value); 
-                overlay.UpdateGlassMenu(); 
             };
             gcpAlpha.onValueChanged += (s, e) => {
                 if (gcpAlpha.Value < 1) gcpAlpha.Value = 1;
                 overlay.glassOpacityValue = gcpAlpha.Value; 
-                overlay.UpdateOpacity(gcpAlpha.Value / 100f); 
-                overlay.UpdateGlassMenu(); 
             };
         }
     }
