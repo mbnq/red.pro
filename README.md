@@ -57,6 +57,8 @@ Tested in Windows 10/11 at:
 
 ![image](https://github.com/user-attachments/assets/b44eadf8-bd4b-4dd8-b683-8d95394e21f1)
 
+![image](https://github.com/user-attachments/assets/1233f2f8-87bf-4148-9511-caa30a098784)
+
 ---
 
 This program is still in development; bugs and glitches may occur. 
