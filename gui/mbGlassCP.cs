@@ -10,6 +10,7 @@
 using MaterialSkin.Controls;
 using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -48,6 +49,9 @@ namespace RED.mbnq
             gcpOffY.Value = (overlay.glassOffsetYValue + 100) / 2;
             gcpZoom.Value = overlay.glassZoomValue;
             gcpAlpha.Value = overlay.glassOpacityValue;
+            gcpBindButton.Text = overlay.glassIsBind ? "Bind" : "Unbind";
+            gcpReshapeButton.Text = overlay.glassIsCircle ? "Square" : "Circle";
+            gcpBorderButton.Text = overlay.glassIsBorderVisible ? "Unframe" : "Frame";
         }
         private void AddCPEventHandlers()
         {
@@ -112,11 +116,21 @@ namespace RED.mbnq
             InitializeCPApplyValues();
             this.Refresh();
             playSND();
+            gcpLoadSettingsButton.Text = "Loaded!";
+            gcpLoadSettingsButton.Enabled = false;
+            await Task.Delay(2000);
+            gcpLoadSettingsButton.Text = "Load";
+            gcpLoadSettingsButton.Enabled = true;
         }
-        private void gcpSaveSettingsButton_Click(object sender, EventArgs e)
+        private async void gcpSaveSettingsButton_Click(object sender, EventArgs e)
         {
             SaveLoad.mbSaveGlassSettings(overlay);
             playSND();
+            gcpSaveSettingsButton.Text = "Saved!";
+            gcpSaveSettingsButton.Enabled = false;
+            await Task.Delay(2000);
+            gcpSaveSettingsButton.Text = "Save";
+            gcpSaveSettingsButton.Enabled = true;
         }
 
         private void materialButton1_Click(object sender, EventArgs e)
@@ -126,18 +140,21 @@ namespace RED.mbnq
         private void gcpReshapeButton_Click(object sender, EventArgs e)
         {
             overlay.ToggleShape();
+            gcpReshapeButton.Text = overlay.glassIsCircle ? "Square" : "Circle";
             playSND();
         }
 
         private void gcpBorderButton_Click(object sender, EventArgs e)
         {
             overlay.ToggleFrameVisibility();
+            gcpBorderButton.Text = overlay.glassIsBorderVisible ? "Unframe" : "Frame";
             playSND();
         }
 
         private void gcpBindButton_Click(object sender, EventArgs e)
         {
             overlay.ToggleMoveOption();
+            gcpBindButton.Text = overlay.glassIsBind ? "Bind" : "Unbind";
             playSND();
         }
 

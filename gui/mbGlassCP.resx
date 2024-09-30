@@ -270,6 +270,9 @@
   <data name="&gt;&gt;materialMultiLineTextBox1.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="gcpLoadSettingsButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="gcpLoadSettingsButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
@@ -299,6 +302,9 @@
   </data>
   <data name="&gt;&gt;gcpLoadSettingsButton.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="gcpSaveSettingsButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="gcpSaveSettingsButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
