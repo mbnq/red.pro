@@ -69,8 +69,6 @@ namespace RED.mbnq
 
             this.glassInfoDisplay = new glassControls(this, selectedArea);
 
-            InitializeTrackBars();
-
             this.FormClosed += (sender, e) => { if (mbglassCPInstance != null) mbglassCPInstance.Close(); };
             this.MouseClick += OverlayForm_MouseClick;
 

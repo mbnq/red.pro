@@ -355,22 +355,19 @@ namespace RED.mbnq
             await GlassHudOverlay.ReloadWithNewAreaAsync();
             glassOverlay.glassAbsolutePos = new Point(posX, posY);
 
-            glassOverlay.InitializeTrackBars();
-
             // trackbars
-            glassOverlay.glassOffsetXValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
-            glassOverlay.glassOffsetYValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
-            glassOverlay.glassZoomValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 100);
-            glassOverlay.glassOpacityValue = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
-            glassOverlay.glassRefreshRate = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", Program.mbFrameDelay);
-            glassOverlay.glassIsMenuEnabled = SaveLoad.INIFile.INIread("settings.ini", "Glass", "glassIsMenuEnabled", false);
+            glassOverlay.glassZoomValue = INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 1);
+            glassOverlay.glassOffsetXValue = INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
+            glassOverlay.glassOffsetYValue = INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
+            glassOverlay.glassRefreshRate = INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", 60);
+            glassOverlay.glassOpacityValue = INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
 
-            glassOverlay.UpdateOffsets();
-            glassOverlay.UpdateZoom();
-            glassOverlay.UpdateOpacity();
+            glassOverlay.UpdateZoom(glassOverlay.glassZoomValue);
+            glassOverlay.UpdateOffsets(glassOverlay.glassOffsetXValue, glassOverlay.glassOffsetYValue);
             glassOverlay.UpdateRefreshRate();
-            glassOverlay.UpdateTrackBarLabels();
-            glassOverlay.UpdateGlassMenu();
+            glassOverlay.UpdateOpacity(glassOverlay.glassOpacityValue / 100f);
+
+            // glassOverlay.UpdateGlassMenu();
         }
         #endregion
     }
