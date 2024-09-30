@@ -38,6 +38,9 @@ namespace RED.mbnq
             selectedRegion = newSelectedRegion;
             displayOverlayForm.Invalidate();
         }
+
+        // no longer needed
+        /*
         public void DrawDebugInfo(Graphics g)
         {
             if (!isGlassMenuEnabled)
@@ -71,6 +74,7 @@ namespace RED.mbnq
                 mbGlassControlsMargin = (int)(debugLines.Length * g.MeasureString("Sample Text", debugFont).Height);
             }
         }
+        */
     }
     public partial class GlassHudOverlay
     {

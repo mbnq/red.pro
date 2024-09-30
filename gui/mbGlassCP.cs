@@ -84,15 +84,12 @@ namespace RED.mbnq
             Rectangle adjustedRegion = overlay.GetAdjustedCaptureArea();
             DateTime mbDateTime = DateTime.Now;
 
-            // Construct the debug lines
             string[] debugLines = {
-            $"Debug Mode - mbnq - v.{Program.mbVersion} - {mbDateTime}",
+            $"RED.PRO - Glass Info - v.{Program.mbVersion} - {mbDateTime}",
             $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
-            $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s",
-            ""
-        };
+            $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s"
+            };
 
-            // Update the materialMultiLineTextBox1 with the debug information
             materialMultiLineTextBox1.Text = string.Join(Environment.NewLine, debugLines);
         }
     }
