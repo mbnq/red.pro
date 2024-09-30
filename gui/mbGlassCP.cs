@@ -92,5 +92,18 @@ namespace RED.mbnq
 
             materialMultiLineTextBox1.Text = string.Join(Environment.NewLine, debugLines);
         }
+
+        // just in case, shouldn't be needed since we have e.Cancel = true in this.FormClosing 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (debugInfoTimer != null)
+            {
+                debugInfoTimer.Stop();
+                debugInfoTimer.Dispose();
+                debugInfoTimer = null;
+            }
+        }
     }
 }
