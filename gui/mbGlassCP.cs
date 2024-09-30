@@ -36,18 +36,12 @@ namespace RED.mbnq
             gcpRRSlider.onValueChanged += (s, e) => {
                 if (gcpRRSlider.Value < 1) gcpRRSlider.Value = 1;
                 overlay.glassRefreshRate = gcpRRSlider.Value;
-                overlay.UpdateRefreshRate();
-                overlay.UpdateGlassMenu();
             };
             gcpOffX.onValueChanged += (s, e) => { 
                 overlay.glassOffsetXValue = (2 * gcpOffX.Value - 100); 
-                overlay.UpdateOffsetX(2 * gcpOffX.Value - 100); 
-                overlay.UpdateGlassMenu(); 
             };
             gcpOffY.onValueChanged += (s, e) => { 
                 overlay.glassOffsetYValue = (2 * gcpOffY.Value - 100); 
-                overlay.UpdateOffsetY(2 * gcpOffY.Value - 100); 
-                overlay.UpdateGlassMenu(); 
             };
             gcpZoom.onValueChanged += (s, e) => {
                 if (gcpZoom.Value < 1) gcpZoom.Value = 1;
