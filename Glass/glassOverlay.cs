@@ -217,7 +217,7 @@ namespace RED.mbnq
                         }
                     } 
                 }
-                // draw debug information if enabled, menu in this case
+                // draw debug information if enabled
                 glassInfoDisplay.DrawDebugInfo(g);
                 this.Opacity = opacityFactor;
 
