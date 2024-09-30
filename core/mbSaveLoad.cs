@@ -33,6 +33,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace RED.mbnq
 {
@@ -367,6 +368,43 @@ namespace RED.mbnq
             glassOverlay.UpdateOpacity();
 
             // glassOverlay.UpdateGlassMenu();
+        }
+        public static async Task mbLoadGlassSettingsNew(GlassHudOverlay glassOverlay)
+        {
+            // Load settings into the glassOverlay instance
+            glassOverlay.glassIsBorderVisible = INIFile.INIread("settings.ini", "Glass", "glassIsBorderVisible", true);
+            glassOverlay.glassIsCircle = INIFile.INIread("settings.ini", "Glass", "glassIsCircle", false);
+            glassOverlay.glassIsBind = INIFile.INIread("settings.ini", "Glass", "glassIsBind", false);
+
+            // Load capture area properties
+            int x = INIFile.INIread("settings.ini", "Glass", "CaptureAreaX", 0);
+            int y = INIFile.INIread("settings.ini", "Glass", "CaptureAreaY", 0);
+            int width = INIFile.INIread("settings.ini", "Glass", "CaptureAreaWidth", 100);
+            int height = INIFile.INIread("settings.ini", "Glass", "CaptureAreaHeight", 100);
+            Rectangle captureArea = new Rectangle(x, y, width, height);
+
+            // Update the capture area
+            await glassOverlay.UpdateCaptureArea(captureArea);
+
+            // Update the overlay's position
+            int posX = INIFile.INIread("settings.ini", "Glass", "AbsolutePosX", 0);
+            int posY = INIFile.INIread("settings.ini", "Glass", "AbsolutePosY", 0);
+            glassOverlay.Invoke((MethodInvoker)(() => glassOverlay.Location = new Point(posX, posY)));
+
+            // Load trackbar values
+            glassOverlay.glassZoomValue = INIFile.INIread("settings.ini", "Glass", "glassZoomValue", 1);
+            glassOverlay.glassOffsetXValue = INIFile.INIread("settings.ini", "Glass", "glassOffsetXValue", 0);
+            glassOverlay.glassOffsetYValue = INIFile.INIread("settings.ini", "Glass", "glassOffsetYValue", 0);
+            glassOverlay.glassRefreshRate = INIFile.INIread("settings.ini", "Glass", "glassRefreshRate", 60);
+            glassOverlay.glassOpacityValue = INIFile.INIread("settings.ini", "Glass", "glassOpacityValue", 100);
+
+            // Update the overlay properties
+            glassOverlay.UpdateZoom();
+            glassOverlay.UpdateRefreshRate();
+            glassOverlay.UpdateOpacity();
+
+            // If needed, refresh the overlay
+            glassOverlay.Invalidate();
         }
         #endregion
     }

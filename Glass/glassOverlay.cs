@@ -125,7 +125,7 @@ namespace RED.mbnq
         }
         public Rectangle CaptureArea => glassCaptureArea;
 
-        public async void UpdateCaptureArea(Rectangle newCaptureArea)
+        public async Task UpdateCaptureArea(Rectangle newCaptureArea)
         {
             this.glassCaptureArea = newCaptureArea;
             this.Location = new Point(newCaptureArea.Right + 20, newCaptureArea.Top);
@@ -256,7 +256,7 @@ namespace RED.mbnq
 
                 await Task.Run(() =>
                 {
-                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.UpdateCaptureArea(newArea)));
+                    displayOverlay.Invoke((MethodInvoker)(() => _=displayOverlay.UpdateCaptureArea(newArea)));
                     displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.Show()));
                 });
             }
@@ -274,7 +274,7 @@ namespace RED.mbnq
 
                 await Task.Run(() =>
                 {
-                    displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.UpdateCaptureArea(newArea)));
+                    displayOverlay.Invoke((MethodInvoker)(() => _=displayOverlay.UpdateCaptureArea(newArea)));
                     displayOverlay.Invoke((MethodInvoker)(() => displayOverlay.Show()));
                 });
             }

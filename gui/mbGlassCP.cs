@@ -18,6 +18,7 @@ namespace RED.mbnq
     {
         private GlassHudOverlay overlay;
         private Timer debugInfoTimer;
+        private Action playSND = Sounds.PlayClickSoundOnce;
         public mbGlassCP(GlassHudOverlay overlay)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
@@ -104,6 +105,18 @@ namespace RED.mbnq
                 debugInfoTimer.Dispose();
                 debugInfoTimer = null;
             }
+        }
+        private async void gcpLoadSettingsButton_Click(object sender, EventArgs e)
+        {
+            await SaveLoad.mbLoadGlassSettingsNew(overlay);
+            InitializeCPApplyValues();
+            this.Refresh();
+            playSND();
+        }
+        private void gcpSaveSettingsButton_Click(object sender, EventArgs e)
+        {
+            SaveLoad.mbSaveGlassSettings(overlay);
+            playSND();
         }
     }
 }

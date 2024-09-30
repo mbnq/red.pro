@@ -44,6 +44,8 @@ namespace RED.mbnq
             this.gcpZoom = new MaterialSkin.Controls.MaterialSlider();
             this.gcpAlpha = new MaterialSkin.Controls.MaterialSlider();
             this.materialMultiLineTextBox1 = new MaterialSkin.Controls.MaterialMultiLineTextBox();
+            this.gcpLoadSettingsButton = new MaterialSkin.Controls.MaterialButton();
+            this.gcpSaveSettingsButton = new MaterialSkin.Controls.MaterialButton();
             this.SuspendLayout();
             // 
             // gcpRRSlider
@@ -101,10 +103,42 @@ namespace RED.mbnq
             this.materialMultiLineTextBox1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialMultiLineTextBox1.Name = "materialMultiLineTextBox1";
             // 
+            // gcpLoadSettingsButton
+            // 
+            resources.ApplyResources(this.gcpLoadSettingsButton, "gcpLoadSettingsButton");
+            this.gcpLoadSettingsButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpLoadSettingsButton.Depth = 0;
+            this.gcpLoadSettingsButton.HighEmphasis = true;
+            this.gcpLoadSettingsButton.Icon = null;
+            this.gcpLoadSettingsButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpLoadSettingsButton.Name = "gcpLoadSettingsButton";
+            this.gcpLoadSettingsButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpLoadSettingsButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpLoadSettingsButton.UseAccentColor = false;
+            this.gcpLoadSettingsButton.UseVisualStyleBackColor = true;
+            this.gcpLoadSettingsButton.Click += new System.EventHandler(this.gcpLoadSettingsButton_Click);
+            // 
+            // gcpSaveSettingsButton
+            // 
+            resources.ApplyResources(this.gcpSaveSettingsButton, "gcpSaveSettingsButton");
+            this.gcpSaveSettingsButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpSaveSettingsButton.Depth = 0;
+            this.gcpSaveSettingsButton.HighEmphasis = true;
+            this.gcpSaveSettingsButton.Icon = null;
+            this.gcpSaveSettingsButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpSaveSettingsButton.Name = "gcpSaveSettingsButton";
+            this.gcpSaveSettingsButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpSaveSettingsButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpSaveSettingsButton.UseAccentColor = false;
+            this.gcpSaveSettingsButton.UseVisualStyleBackColor = true;
+            this.gcpSaveSettingsButton.Click += new System.EventHandler(this.gcpSaveSettingsButton_Click);
+            // 
             // mbGlassCP
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gcpSaveSettingsButton);
+            this.Controls.Add(this.gcpLoadSettingsButton);
             this.Controls.Add(this.materialMultiLineTextBox1);
             this.Controls.Add(this.gcpAlpha);
             this.Controls.Add(this.gcpZoom);
@@ -119,6 +153,7 @@ namespace RED.mbnq
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.TopMost = true;
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,5 +165,7 @@ namespace RED.mbnq
         private MaterialSkin.Controls.MaterialSlider gcpZoom;
         private MaterialSkin.Controls.MaterialSlider gcpAlpha;
         private MaterialSkin.Controls.MaterialMultiLineTextBox materialMultiLineTextBox1;
+        private MaterialSkin.Controls.MaterialButton gcpLoadSettingsButton;
+        private MaterialSkin.Controls.MaterialButton gcpSaveSettingsButton;
     }
 }
