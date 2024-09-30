@@ -145,7 +145,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpRRSlider.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="gcpOffX.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 134</value>
@@ -169,7 +169,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpOffX.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="gcpOffY.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 180</value>
@@ -193,7 +193,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpOffY.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="gcpZoom.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 226</value>
@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpZoom.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="gcpAlpha.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 272</value>
@@ -241,7 +241,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpAlpha.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="materialMultiLineTextBox1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 14px</value>
@@ -268,25 +268,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;materialMultiLineTextBox1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="gcpLoadSettingsButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
   <data name="gcpLoadSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 394</value>
+    <value>18, 459</value>
   </data>
   <data name="gcpLoadSettingsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 6, 4, 6</value>
   </data>
   <data name="gcpLoadSettingsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 36</value>
+    <value>64, 36</value>
   </data>
   <data name="gcpLoadSettingsButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="gcpLoadSettingsButton.Text" xml:space="preserve">
-    <value>Load Settings</value>
+    <value>Load</value>
   </data>
   <data name="&gt;&gt;gcpLoadSettingsButton.Name" xml:space="preserve">
     <value>gcpLoadSettingsButton</value>
@@ -298,25 +298,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpLoadSettingsButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="gcpSaveSettingsButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
   <data name="gcpSaveSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>283, 394</value>
+    <value>90, 459</value>
   </data>
   <data name="gcpSaveSettingsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 6, 4, 6</value>
   </data>
   <data name="gcpSaveSettingsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 36</value>
+    <value>64, 36</value>
   </data>
   <data name="gcpSaveSettingsButton.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="gcpSaveSettingsButton.Text" xml:space="preserve">
-    <value>Save Settings</value>
+    <value>Save</value>
   </data>
   <data name="&gt;&gt;gcpSaveSettingsButton.Name" xml:space="preserve">
     <value>gcpSaveSettingsButton</value>
@@ -328,6 +328,36 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpSaveSettingsButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="gcpCloseAllButton.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="gcpCloseAllButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 459</value>
+  </data>
+  <data name="gcpCloseAllButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 6, 4, 6</value>
+  </data>
+  <data name="gcpCloseAllButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 36</value>
+  </data>
+  <data name="gcpCloseAllButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="gcpCloseAllButton.Text" xml:space="preserve">
+    <value>Close Glass</value>
+  </data>
+  <data name="&gt;&gt;gcpCloseAllButton.Name" xml:space="preserve">
+    <value>gcpCloseAllButton</value>
+  </data>
+  <data name="&gt;&gt;gcpCloseAllButton.Type" xml:space="preserve">
+    <value>MaterialSkin.Controls.MaterialButton, MaterialSkin, Version=2.3.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;gcpCloseAllButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gcpCloseAllButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -340,7 +370,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>436, 439</value>
+    <value>436, 504</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

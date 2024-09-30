@@ -46,6 +46,7 @@ namespace RED.mbnq
             this.materialMultiLineTextBox1 = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             this.gcpLoadSettingsButton = new MaterialSkin.Controls.MaterialButton();
             this.gcpSaveSettingsButton = new MaterialSkin.Controls.MaterialButton();
+            this.gcpCloseAllButton = new MaterialSkin.Controls.MaterialButton();
             this.SuspendLayout();
             // 
             // gcpRRSlider
@@ -133,10 +134,26 @@ namespace RED.mbnq
             this.gcpSaveSettingsButton.UseVisualStyleBackColor = true;
             this.gcpSaveSettingsButton.Click += new System.EventHandler(this.gcpSaveSettingsButton_Click);
             // 
+            // gcpCloseAllButton
+            // 
+            resources.ApplyResources(this.gcpCloseAllButton, "gcpCloseAllButton");
+            this.gcpCloseAllButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpCloseAllButton.Depth = 0;
+            this.gcpCloseAllButton.HighEmphasis = true;
+            this.gcpCloseAllButton.Icon = null;
+            this.gcpCloseAllButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpCloseAllButton.Name = "gcpCloseAllButton";
+            this.gcpCloseAllButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpCloseAllButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpCloseAllButton.UseAccentColor = false;
+            this.gcpCloseAllButton.UseVisualStyleBackColor = true;
+            this.gcpCloseAllButton.Click += new System.EventHandler(this.materialButton1_Click);
+            // 
             // mbGlassCP
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gcpCloseAllButton);
             this.Controls.Add(this.gcpSaveSettingsButton);
             this.Controls.Add(this.gcpLoadSettingsButton);
             this.Controls.Add(this.materialMultiLineTextBox1);
@@ -167,5 +184,6 @@ namespace RED.mbnq
         private MaterialSkin.Controls.MaterialMultiLineTextBox materialMultiLineTextBox1;
         private MaterialSkin.Controls.MaterialButton gcpLoadSettingsButton;
         private MaterialSkin.Controls.MaterialButton gcpSaveSettingsButton;
+        private MaterialSkin.Controls.MaterialButton gcpCloseAllButton;
     }
 }

@@ -118,5 +118,10 @@ namespace RED.mbnq
             SaveLoad.mbSaveGlassSettings(overlay);
             playSND();
         }
+
+        private void materialButton1_Click(object sender, EventArgs e)
+        {
+            overlay.Close();
+        }
     }
 }
