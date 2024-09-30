@@ -21,6 +21,7 @@ namespace RED.mbnq
         public static mbCrosshair mainCrosshair;
         public const int mbFrameDelay = 16;     // in ms, for glass hud, default 60fps 
         public const string mbVersion = "0.1.1.6";
+        public static bool mbGlobalExitInProgress = false;
         #endregion
 
         #region DPI

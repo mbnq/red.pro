@@ -24,16 +24,16 @@ namespace RED.mbnq
 
         private ControlPanel controlPanel;
         private mbnqConsole textHUD;
-        private ToolStripMenuItem 
-            removeCustomMenuItem,          
-            loadCustomMenuItem, 
-            saveMenuItem, 
-            loadMenuItem, 
-            openSettingsDirMenuItem, 
-            textConsoleMenuItem, 
-            newCaptureRegionMenuItem, 
-            LoadCaptureRegionMenuItem, 
-            aboutMenuItem, 
+        private ToolStripMenuItem
+            removeCustomMenuItem,
+            loadCustomMenuItem,
+            saveMenuItem,
+            loadMenuItem,
+            openSettingsDirMenuItem,
+            textConsoleMenuItem,
+            newCaptureRegionMenuItem,
+            LoadCaptureRegionMenuItem,
+            aboutMenuItem,
             closeMenuItem;
 
         #endregion
@@ -194,7 +194,7 @@ namespace RED.mbnq
         private void AboutMenuItem_Click(object sender, EventArgs e) { mbAboutForm aboutBox = new mbAboutForm(); aboutBox.Show(); }
 
         // exit app
-        private void CloseMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+        private void CloseMenuItem_Click(object sender, EventArgs e) { Program.mbGlobalExitInProgress = true; Application.Exit();  }
 
         #endregion
 

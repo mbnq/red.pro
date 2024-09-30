@@ -33,9 +33,17 @@ namespace RED.mbnq
 
             this.FormClosing += (sender, e) =>
             {
-                Sounds.PlayClickSoundOnce();
-                overlay.ToggleGlassMenu();
-                e.Cancel = true;                  // prevents instance from closing
+                if (!Program.mbGlobalExitInProgress)
+                {
+                    Sounds.PlayClickSoundOnce();
+                    overlay.ToggleGlassMenu();
+                    e.Cancel = true; 
+                } 
+                else
+                {
+                    Sounds.PlayClickSoundOnce();
+                    overlay.ToggleGlassMenu();
+                }
             };
 
             InitializeCPApplyValues();

@@ -97,9 +97,14 @@ namespace RED.mbnq
         }
         private void ApplyCircularRegion()
         {
+            // Ensure the form is borderless and the background is transparent
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.BackColor = Color.Black;  // Set a color to act as the transparent background
+            this.TransparencyKey = this.BackColor;  // Make the background color transparent
+
             if (isCircle)
             {
-                // circular region based on the form's size
+                // Create a circular region
                 using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
                 {
                     path.AddEllipse(0, 0, this.Width, this.Height);
@@ -108,14 +113,19 @@ namespace RED.mbnq
             }
             else
             {
-                // rectangular region based on the form's size
+                // Create a rectangular region
                 using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
                 {
                     path.AddRectangle(new Rectangle(0, 0, this.Width, this.Height));
                     this.Region = new Region(path);
                 }
             }
+
+            // Force the control to repaint to remove artifacts
+            this.Invalidate();
+            this.Update();
         }
+
 
         protected override void OnResize(EventArgs e)
         {
