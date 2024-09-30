@@ -168,7 +168,7 @@ namespace RED.mbnq
             displayTextVisibility.Add(true);
 
 #if DEBUG
-            displayTexts.Add("Debug: --");
+            displayTexts.Add("Debug: Loading console elements may take a while...");
 #else
             displayTexts.Add("");
 #endif
