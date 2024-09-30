@@ -145,7 +145,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpRRSlider.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="gcpOffX.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 134</value>
@@ -169,7 +169,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpOffX.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="gcpOffY.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 180</value>
@@ -193,7 +193,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpOffY.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="gcpZoom.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 226</value>
@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpZoom.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="gcpAlpha.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 272</value>
@@ -241,6 +241,33 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gcpAlpha.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="materialMultiLineTextBox1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Roboto, 14px</value>
+  </data>
+  <data name="materialMultiLineTextBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 328</value>
+  </data>
+  <data name="materialMultiLineTextBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 68</value>
+  </data>
+  <data name="materialMultiLineTextBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="materialMultiLineTextBox1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;materialMultiLineTextBox1.Name" xml:space="preserve">
+    <value>materialMultiLineTextBox1</value>
+  </data>
+  <data name="&gt;&gt;materialMultiLineTextBox1.Type" xml:space="preserve">
+    <value>MaterialSkin.Controls.MaterialMultiLineTextBox, MaterialSkin, Version=2.3.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;materialMultiLineTextBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;materialMultiLineTextBox1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -253,7 +280,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>443, 334</value>
+    <value>443, 413</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

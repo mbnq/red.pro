@@ -8,6 +8,8 @@
 */
 
 using MaterialSkin.Controls;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RED.mbnq
@@ -15,6 +17,7 @@ namespace RED.mbnq
     public partial class mbGlassCP : MaterialForm
     {
         private GlassHudOverlay overlay;
+        private Timer debugInfoTimer;
         public mbGlassCP(GlassHudOverlay overlay)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
@@ -35,6 +38,7 @@ namespace RED.mbnq
 
             InitializeSlidersApplyValues();
             AddSliderEventHandlers();
+            InitializeDebugInfoTimer();
         }
         private void InitializeSlidersApplyValues()
         {
@@ -64,6 +68,32 @@ namespace RED.mbnq
                 if (gcpAlpha.Value < 1) gcpAlpha.Value = 1;
                 overlay.glassOpacityValue = gcpAlpha.Value;
             };
+        }
+        private void InitializeDebugInfoTimer()
+        {
+            debugInfoTimer = new Timer();
+            debugInfoTimer.Interval = 1000; // Update every second (adjust as needed)
+            debugInfoTimer.Tick += (s, e) => UpdateDebugInfo();
+            debugInfoTimer.Start();
+        }
+        private void UpdateDebugInfo()
+        {
+            if (overlay == null)
+                return;
+
+            Rectangle adjustedRegion = overlay.GetAdjustedCaptureArea();
+            DateTime mbDateTime = DateTime.Now;
+
+            // Construct the debug lines
+            string[] debugLines = {
+            $"Debug Mode - mbnq - v.{Program.mbVersion} - {mbDateTime}",
+            $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
+            $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s",
+            ""
+        };
+
+            // Update the materialMultiLineTextBox1 with the debug information
+            materialMultiLineTextBox1.Text = string.Join(Environment.NewLine, debugLines);
         }
     }
 }

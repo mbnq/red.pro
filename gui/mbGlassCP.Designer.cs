@@ -43,6 +43,7 @@ namespace RED.mbnq
             this.gcpOffY = new MaterialSkin.Controls.MaterialSlider();
             this.gcpZoom = new MaterialSkin.Controls.MaterialSlider();
             this.gcpAlpha = new MaterialSkin.Controls.MaterialSlider();
+            this.materialMultiLineTextBox1 = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             this.SuspendLayout();
             // 
             // gcpRRSlider
@@ -90,10 +91,21 @@ namespace RED.mbnq
             this.gcpAlpha.MouseState = MaterialSkin.MouseState.HOVER;
             this.gcpAlpha.Name = "gcpAlpha";
             // 
+            // materialMultiLineTextBox1
+            // 
+            this.materialMultiLineTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialMultiLineTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.materialMultiLineTextBox1.Depth = 0;
+            resources.ApplyResources(this.materialMultiLineTextBox1, "materialMultiLineTextBox1");
+            this.materialMultiLineTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialMultiLineTextBox1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialMultiLineTextBox1.Name = "materialMultiLineTextBox1";
+            // 
             // mbGlassCP
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.materialMultiLineTextBox1);
             this.Controls.Add(this.gcpAlpha);
             this.Controls.Add(this.gcpZoom);
             this.Controls.Add(this.gcpOffY);
@@ -117,5 +129,6 @@ namespace RED.mbnq
         private MaterialSkin.Controls.MaterialSlider gcpOffY;
         private MaterialSkin.Controls.MaterialSlider gcpZoom;
         private MaterialSkin.Controls.MaterialSlider gcpAlpha;
+        private MaterialSkin.Controls.MaterialMultiLineTextBox materialMultiLineTextBox1;
     }
 }
