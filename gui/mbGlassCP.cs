@@ -76,8 +76,7 @@ namespace RED.mbnq
         }
         private void InitializeCPInfoTimer()
         {
-            debugInfoTimer = new Timer();
-            debugInfoTimer.Interval = 1000; // Update every second (adjust as needed)
+            debugInfoTimer = new Timer { Interval = 500 }; // ms
             debugInfoTimer.Tick += (s, e) => UpdateCPInfo();
             debugInfoTimer.Start();
         }
