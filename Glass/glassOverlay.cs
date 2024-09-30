@@ -69,12 +69,12 @@ namespace RED.mbnq
 
         /* --- --- ---  --- --- --- */
 
-        private void ToggleFrameVisibility()
+        public void ToggleFrameVisibility()
         {
             isBorderVisible = !isBorderVisible;
             this.Invalidate();
         }
-        private void ToggleShape()
+        public void ToggleShape()
         {
             isCircle = !isCircle;
             ApplyCircularRegion();

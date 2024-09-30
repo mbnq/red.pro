@@ -47,6 +47,11 @@ namespace RED.mbnq
             this.gcpLoadSettingsButton = new MaterialSkin.Controls.MaterialButton();
             this.gcpSaveSettingsButton = new MaterialSkin.Controls.MaterialButton();
             this.gcpCloseAllButton = new MaterialSkin.Controls.MaterialButton();
+            this.materialDivider2 = new MaterialSkin.Controls.MaterialDivider();
+            this.gcpReshapeButton = new MaterialSkin.Controls.MaterialButton();
+            this.gcpBorderButton = new MaterialSkin.Controls.MaterialButton();
+            this.gcpBindButton = new MaterialSkin.Controls.MaterialButton();
+            this.gcpNewAreaButton = new MaterialSkin.Controls.MaterialButton();
             this.SuspendLayout();
             // 
             // gcpRRSlider
@@ -149,10 +154,83 @@ namespace RED.mbnq
             this.gcpCloseAllButton.UseVisualStyleBackColor = true;
             this.gcpCloseAllButton.Click += new System.EventHandler(this.materialButton1_Click);
             // 
+            // materialDivider2
+            // 
+            this.materialDivider2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialDivider2.Depth = 0;
+            resources.ApplyResources(this.materialDivider2, "materialDivider2");
+            this.materialDivider2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialDivider2.Name = "materialDivider2";
+            // 
+            // gcpReshapeButton
+            // 
+            resources.ApplyResources(this.gcpReshapeButton, "gcpReshapeButton");
+            this.gcpReshapeButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpReshapeButton.Depth = 0;
+            this.gcpReshapeButton.HighEmphasis = true;
+            this.gcpReshapeButton.Icon = null;
+            this.gcpReshapeButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpReshapeButton.Name = "gcpReshapeButton";
+            this.gcpReshapeButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpReshapeButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpReshapeButton.UseAccentColor = false;
+            this.gcpReshapeButton.UseVisualStyleBackColor = true;
+            this.gcpReshapeButton.Click += new System.EventHandler(this.gcpReshapeButton_Click);
+            // 
+            // gcpBorderButton
+            // 
+            resources.ApplyResources(this.gcpBorderButton, "gcpBorderButton");
+            this.gcpBorderButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpBorderButton.Depth = 0;
+            this.gcpBorderButton.HighEmphasis = true;
+            this.gcpBorderButton.Icon = null;
+            this.gcpBorderButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpBorderButton.Name = "gcpBorderButton";
+            this.gcpBorderButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpBorderButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpBorderButton.UseAccentColor = false;
+            this.gcpBorderButton.UseVisualStyleBackColor = true;
+            this.gcpBorderButton.Click += new System.EventHandler(this.gcpBorderButton_Click);
+            // 
+            // gcpBindButton
+            // 
+            resources.ApplyResources(this.gcpBindButton, "gcpBindButton");
+            this.gcpBindButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpBindButton.Depth = 0;
+            this.gcpBindButton.HighEmphasis = true;
+            this.gcpBindButton.Icon = null;
+            this.gcpBindButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpBindButton.Name = "gcpBindButton";
+            this.gcpBindButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpBindButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpBindButton.UseAccentColor = false;
+            this.gcpBindButton.UseVisualStyleBackColor = true;
+            this.gcpBindButton.Click += new System.EventHandler(this.gcpBindButton_Click);
+            // 
+            // gcpNewAreaButton
+            // 
+            resources.ApplyResources(this.gcpNewAreaButton, "gcpNewAreaButton");
+            this.gcpNewAreaButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gcpNewAreaButton.Depth = 0;
+            this.gcpNewAreaButton.HighEmphasis = true;
+            this.gcpNewAreaButton.Icon = null;
+            this.gcpNewAreaButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gcpNewAreaButton.Name = "gcpNewAreaButton";
+            this.gcpNewAreaButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gcpNewAreaButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gcpNewAreaButton.UseAccentColor = false;
+            this.gcpNewAreaButton.UseVisualStyleBackColor = true;
+            this.gcpNewAreaButton.Click += new System.EventHandler(this.gcpNewAreaButton_Click);
+            // 
             // mbGlassCP
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gcpNewAreaButton);
+            this.Controls.Add(this.gcpBindButton);
+            this.Controls.Add(this.gcpBorderButton);
+            this.Controls.Add(this.gcpReshapeButton);
+            this.Controls.Add(this.materialDivider2);
             this.Controls.Add(this.gcpCloseAllButton);
             this.Controls.Add(this.gcpSaveSettingsButton);
             this.Controls.Add(this.gcpLoadSettingsButton);
@@ -185,5 +263,10 @@ namespace RED.mbnq
         private MaterialSkin.Controls.MaterialButton gcpLoadSettingsButton;
         private MaterialSkin.Controls.MaterialButton gcpSaveSettingsButton;
         private MaterialSkin.Controls.MaterialButton gcpCloseAllButton;
+        private MaterialSkin.Controls.MaterialDivider materialDivider2;
+        private MaterialSkin.Controls.MaterialButton gcpReshapeButton;
+        private MaterialSkin.Controls.MaterialButton gcpBorderButton;
+        private MaterialSkin.Controls.MaterialButton gcpBindButton;
+        private MaterialSkin.Controls.MaterialButton gcpNewAreaButton;
     }
 }

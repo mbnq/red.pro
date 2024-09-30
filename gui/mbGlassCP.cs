@@ -123,5 +123,28 @@ namespace RED.mbnq
         {
             overlay.Close();
         }
+        private void gcpReshapeButton_Click(object sender, EventArgs e)
+        {
+            overlay.ToggleShape();
+            playSND();
+        }
+
+        private void gcpBorderButton_Click(object sender, EventArgs e)
+        {
+            overlay.ToggleFrameVisibility();
+            playSND();
+        }
+
+        private void gcpBindButton_Click(object sender, EventArgs e)
+        {
+            overlay.ToggleMoveOption();
+            playSND();
+        }
+
+        private async void gcpNewAreaButton_Click(object sender, EventArgs e)
+        {
+            playSND();
+            await GlassHudOverlay.RestartWithNewAreaAsync();
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace RED.mbnq
                 ContextMenuStrip menu = new MaterialContextMenuStrip();
                 playSND();
 
-                menu.Items.Add((glassInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Settings", null, (s, ea) => { 
+                menu.Items.Add((glassInfoDisplay.IsGlassMenuEnabled ? "Close " : "Open ") + "Glass Editor", null, (s, ea) => { 
                     ToggleGlassMenu();
                     playSND();
                 });
@@ -102,7 +102,7 @@ namespace RED.mbnq
                 isMoving = false;
             }
         }
-        private void ToggleMoveOption()
+        public void ToggleMoveOption()
         {
             if (isMoveEnabled)
             {
