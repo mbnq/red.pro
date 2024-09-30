@@ -62,13 +62,11 @@ namespace RED.mbnq
                     playSND();
                 });
 
-                /*
-                // Removed for now since it's bugged and dunno how to fix it yet
                 menu.Items.Add("Load Settings", null, async (s, ea) => {
-                    await SaveLoad.mbLoadGlassSettings(this);
+                    await SaveLoad.mbLoadGlassSettingsNew(this);
+                    this.Refresh();
                     playSND();
                 });
-                */
 
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Close Glass", null, (s, ea) => { 
