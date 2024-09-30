@@ -15,6 +15,7 @@ using System.IO;
 using System.Diagnostics;
 using MaterialSkin.Controls;
 using RED.mbnq;
+using System.Threading.Tasks;
 
 public static class mbFnc
 {
@@ -178,6 +179,17 @@ public static class mbFnc
         int width = Math.Abs(p2.X - p1.X);
         int height = Math.Abs(p2.Y - p1.Y);
         return new Rectangle(x, y, width, height);
+    }
+
+    // ---------------------------------------
+    // Public static async method to get CPU usage asynchronously
+    private static Lazy<PerformanceCounter> cpuCounter = new Lazy<PerformanceCounter>(() => new PerformanceCounter("Processor", "% Processor Time", "_Total"));
+    public static async Task<float> mbGetCpuUsageAsync()
+    {
+        // on init call NextValue and wait before obtaining the value again
+        _ = cpuCounter.Value.NextValue();
+        await Task.Delay(200);
+        return cpuCounter.Value.NextValue();
     }
 
     // ------------------------------------------

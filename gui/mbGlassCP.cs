@@ -12,6 +12,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace RED.mbnq
 {
@@ -20,6 +21,7 @@ namespace RED.mbnq
         private GlassHudOverlay overlay;
         private Timer debugInfoTimer;
         private Action playSND = Sounds.PlayClickSoundOnce;
+        private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         public mbGlassCP(GlassHudOverlay overlay)
         {
             var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
@@ -88,18 +90,19 @@ namespace RED.mbnq
             debugInfoTimer.Tick += (s, e) => UpdateCPInfo();
             debugInfoTimer.Start();
         }
-        private void UpdateCPInfo()
+        private async void UpdateCPInfo()
         {
             if (overlay == null)
                 return;
 
+            float cpuUsage = await mbFnc.mbGetCpuUsageAsync();
             Rectangle adjustedRegion = overlay.GetAdjustedCaptureArea();
             DateTime mbDateTime = DateTime.Now;
 
             string[] debugLines = {
                 $"RED.PRO - Glass Info - v.{Program.mbVersion} - {mbDateTime}",
                 $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
-                $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s"
+                $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s CPU Usage: {cpuUsage:F2}%"
             };
 
             materialMultiLineTextBox1.Text = string.Join(Environment.NewLine, debugLines);
