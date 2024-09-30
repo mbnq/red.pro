@@ -47,7 +47,8 @@ namespace RED.mbnq
             gcpOffY.onValueChanged += (s, e) => { 
                 overlay.glassOffsetYValue = (2 * gcpOffY.Value - 100); 
                 overlay.UpdateOffsetY(2 * gcpOffY.Value - 100); 
-                overlay.UpdateGlassMenu(); };
+                overlay.UpdateGlassMenu(); 
+            };
             gcpZoom.onValueChanged += (s, e) => {
                 if (gcpZoom.Value < 1) gcpZoom.Value = 1;
                 overlay.glassZoomValue = gcpZoom.Value; 

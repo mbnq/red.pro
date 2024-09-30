@@ -113,21 +113,20 @@ namespace RED.mbnq
         }
         public void UpdateOffsets(float newOffsetX, float newOffsetY)
         {
-            // Update the offset values based on the arguments
-            offsetX = newOffsetX / 100f;
-            offsetY = newOffsetY / 100f;
+            // Use the offset values directly
+            offsetX = newOffsetX;
+            offsetY = newOffsetY;
             this.Invalidate();
         }
-
         public void UpdateZoom()
         {
-            // reverse the zoom factor calculation
-            zoomFactor = (GlassZoomMax - glassZoomValue) / 100f;
+            // Adjust zoomFactor using _glassZoom directly
+            zoomFactor = (GlassZoomMax / 100f) - _glassZoom;
             this.Invalidate();
         }
         public void UpdateOpacity()
         {
-            opacityFactor = glassOpacityValue / 100f;
+            opacityFactor = _glassOpacity;
             this.Invalidate();
         }
         public void UpdateRefreshInterval(int newInterval)
@@ -142,7 +141,7 @@ namespace RED.mbnq
 
             this.UpdateRefreshInterval(refreshRate);
 
-            this.Invalidate();
+            this.Invalidate();      // this may not be really needed
         }
     }
 
@@ -211,13 +210,23 @@ namespace RED.mbnq
         public Rectangle glassCaptureAreaValue { get => glassCaptureArea; set => glassCaptureArea = value; }
         public Point glassAbsolutePos
         {
-            get => new Point(GlassHudOverlay.displayOverlay.Left, GlassHudOverlay.displayOverlay.Top);
+            get
+            {
+                if (displayOverlay != null)
+                    return new Point(displayOverlay.Left, displayOverlay.Top);
+                else
+                    return Point.Empty;
+            }
             set
             {
-                GlassHudOverlay.displayOverlay.Left = value.X;
-                GlassHudOverlay.displayOverlay.Top = value.Y;
+                if (displayOverlay != null)
+                {
+                    displayOverlay.Left = value.X;
+                    displayOverlay.Top = value.Y;
+                }
             }
         }
+
         public void UpdateRefreshRate(int refreshRate)
         {
             glassRefreshTimer.Interval = refreshRate;
