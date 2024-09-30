@@ -85,9 +85,9 @@ namespace RED.mbnq
             DateTime mbDateTime = DateTime.Now;
 
             string[] debugLines = {
-            $"RED.PRO - Glass Info - v.{Program.mbVersion} - {mbDateTime}",
-            $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
-            $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s"
+                $"RED.PRO - Glass Info - v.{Program.mbVersion} - {mbDateTime}",
+                $"Displaying region: Top-Left({adjustedRegion.X}, {adjustedRegion.Y}) Size({adjustedRegion.Width}x{adjustedRegion.Height})",
+                $"FPS: {overlay.currentFps:F2} Frame Time: {overlay.GlassFrameTime:F4}s"
             };
 
             materialMultiLineTextBox1.Text = string.Join(Environment.NewLine, debugLines);
