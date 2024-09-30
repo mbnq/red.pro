@@ -213,21 +213,5 @@ namespace RED.mbnq
                 }
             }
         }
-
-        public void UpdateRefreshRate(int refreshRate)
-        {
-            glassRefreshTimer.Interval = refreshRate;
-            this.Invalidate();
-        }
-        public void UpdateOffsetX(int offsetXValue)
-        {
-            offsetX = offsetXValue / 100f;
-            this.Invalidate();
-        }
-        public void UpdateOffsetY(int offsetYValue)
-        {
-            offsetY = offsetYValue / 100f;
-            this.Invalidate();
-        }
     }
 }
