@@ -21,7 +21,6 @@ namespace RED.mbnq
     public class mbnqConsole : Form
     {
         // important stuff
-        private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private List<string> displayTexts = new List<string>();
         private List<bool> displayTextVisibility = new List<bool>();
 
@@ -260,14 +259,18 @@ namespace RED.mbnq
             displayTexts[3] = $"Console Draw Count: {paintCounter}";
             this.ThrottlePaint(); // Redraw with the updated draw count
         }
-        private void UpdateCpuUsageText()
+        private async Task UpdateCpuUsageTextAsync()
         {
-            displayTexts[4] = $"CPU: {GetCpuUsage()}";
+            // Fetch CPU usage asynchronously
+            float cpuUsage = await mbFnc.mbGetCpuUsageAsync();
+
+            // Update the display text with the new CPU usage value
+            displayTexts[4] = $"CPU: {cpuUsage:F1}%";
             ThrottlePaint(); // Ensure the HUD is redrawn, respecting the throttle
         }
         private void UpdateGeneralDisplay()
         {
-            UpdateCpuUsageText();
+            _ = UpdateCpuUsageTextAsync();
 
             // Check if the debug state has changed, needs isGlobalDebugOn to be changed to ControlPanel.mIsDebugOn 
             if (ControlPanel.mbIsDebugOn != isGlobalDebugOn)
@@ -329,11 +332,6 @@ namespace RED.mbnq
             }
         }
 
-        // cpu usage
-        private string GetCpuUsage()
-        {
-            return $"{cpuCounter.NextValue():F1} % CPU";
-        }
         private async Task<string> GetPingResultAsync(string address)
         {
             try

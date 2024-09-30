@@ -34,6 +34,8 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
+using System.Windows.Markup;
 
 namespace RED.mbnq
 {
@@ -199,7 +201,7 @@ namespace RED.mbnq
             {
                 if (!silent) Sounds.PlayClickSoundOnce();
                 controlPanel.UpdateAllUI();
-                Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings saved.");
+                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Settings saved.");
             }
 
             // ---
@@ -274,7 +276,7 @@ namespace RED.mbnq
 
             controlPanel.UpdateAllUI();
             controlPanel.mbSettingsLoaded = 1;
-            Debug.WriteLineIf(mbIsDebugOn, "mbnq: Settings Loaded.");
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Settings Loaded.");
             if (!silent) Sounds.PlayClickSoundOnce();
 
             // ---
@@ -331,6 +333,8 @@ namespace RED.mbnq
                     SaveLoad.INIFile.INIsave("settings.ini", section, setting.Key, setting.Value);
                 }
             }
+
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Glass Settings Saved with mbSaveGlassSettings()");
         }
 
         public static async Task mbLoadGlassSettings(GlassHudOverlay glassOverlay)
@@ -368,6 +372,7 @@ namespace RED.mbnq
             glassOverlay.UpdateOpacity();
 
             // glassOverlay.UpdateGlassMenu();
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Glass Settings Loaded with mbLoadGlassSettings()");
         }
         public static async Task mbLoadGlassSettingsNew(GlassHudOverlay glassOverlay)
         {
@@ -405,6 +410,7 @@ namespace RED.mbnq
 
             // If needed, refresh the overlay
             glassOverlay.Invalidate();
+            Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Glass Settings Loaded with mbLoadGlassSettingsNew()");
         }
         #endregion
     }
