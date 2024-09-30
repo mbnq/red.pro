@@ -143,6 +143,8 @@ namespace RED.mbnq
 
         private async void gcpNewAreaButton_Click(object sender, EventArgs e)
         {
+            overlay.glassOffsetXValue = 0;
+            overlay.glassOffsetYValue = 0;
             playSND();
             await GlassHudOverlay.RestartWithNewAreaAsync();
         }

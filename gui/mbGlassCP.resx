@@ -274,7 +274,7 @@
     <value>GrowAndShrink</value>
   </data>
   <data name="gcpLoadSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 460</value>
+    <value>18, 444</value>
   </data>
   <data name="gcpLoadSettingsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 6, 4, 6</value>
@@ -304,7 +304,7 @@
     <value>GrowAndShrink</value>
   </data>
   <data name="gcpSaveSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>90, 460</value>
+    <value>90, 444</value>
   </data>
   <data name="gcpSaveSettingsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 6, 4, 6</value>
@@ -334,7 +334,7 @@
     <value>GrowAndShrink</value>
   </data>
   <data name="gcpCloseAllButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 460</value>
+    <value>297, 444</value>
   </data>
   <data name="gcpCloseAllButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 6, 4, 6</value>
@@ -361,7 +361,7 @@
     <value>5</value>
   </data>
   <data name="materialDivider2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 441</value>
+    <value>18, 425</value>
   </data>
   <data name="materialDivider2.Size" type="System.Drawing.Size, System.Drawing">
     <value>395, 10</value>
@@ -502,7 +502,7 @@
     <value>13</value>
   </data>
   <data name="gcpNewAreaButton.Text" xml:space="preserve">
-    <value>Change Region</value>
+    <value>New Region</value>
   </data>
   <data name="&gt;&gt;gcpNewAreaButton.Name" xml:space="preserve">
     <value>gcpNewAreaButton</value>
@@ -526,7 +526,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>436, 505</value>
+    <value>436, 494</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
