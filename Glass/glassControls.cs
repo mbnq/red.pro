@@ -92,7 +92,7 @@ namespace RED.mbnq
             }
             else
             {
-                if (mbglassCPInstance.Visible != true)
+                if (glassInfoDisplay.IsGlassMenuEnabled != true)
                 {
                     mbglassCPInstance.Show();
                 }
