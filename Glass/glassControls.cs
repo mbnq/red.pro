@@ -10,7 +10,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace RED.mbnq
 {
@@ -39,12 +38,12 @@ namespace RED.mbnq
         */
         public glassControls(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
-            this.displayOverlayForm = overlayForm;
+            displayOverlayForm = overlayForm;
             this.selectedRegion = selectedRegion;
         }
         public void UpdateSelectedRegion(Rectangle newSelectedRegion)
         {
-            this.selectedRegion = newSelectedRegion;
+            selectedRegion = newSelectedRegion;
             displayOverlayForm.Invalidate();
         }
         public void DrawDebugInfo(Graphics g)
@@ -85,7 +84,6 @@ namespace RED.mbnq
     {
         Color mDefColGray = Color.Gray;
         Color mDefColWhite = Color.White;
-        int sliderSpacing = 50;
         int GlassZoomMax = 200;
         mbGlassCP mbglassCPInstance;
         public void UpdateGlassMenu()
@@ -143,17 +141,6 @@ namespace RED.mbnq
             if (refreshRate < 1) refreshRate = 1;
 
             this.UpdateRefreshInterval(refreshRate);
-
-            this.Invalidate();
-        }
-        public void UpdateTrackBarLabels()
-        {
-            // update each label based on the slider values
-            offsetXLabel.Text = $"Offset X: {offsetXSlider.Value}%";
-            offsetYLabel.Text = $"Offset Y: {offsetYSlider.Value}%";
-            zoomLabel.Text = $"Zoom: {zoomSlider.Value}%";
-            opacityLabel.Text = $"Opacity: {opacitySlider.Value}%";
-            refreshRateLabel.Text = $"Refresh Rate: {refreshRateSlider.Value}ms";
 
             this.Invalidate();
         }

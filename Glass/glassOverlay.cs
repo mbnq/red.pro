@@ -34,18 +34,6 @@ namespace RED.mbnq
         private float zoomFactor = 1.0f;
         private float opacityFactor = 1.0f;
 
-        private TrackBar offsetXSlider;
-        private TrackBar offsetYSlider;
-        private TrackBar zoomSlider;
-        private TrackBar opacitySlider;
-        private TrackBar refreshRateSlider;
-
-        private Label offsetXLabel;
-        private Label offsetYLabel;
-        private Label zoomLabel;
-        private Label opacityLabel;
-        private Label refreshRateLabel;
-
         private bool isBorderVisible = true;
 
         /* --- --- ---  --- --- --- */
@@ -72,7 +60,7 @@ namespace RED.mbnq
             this.FormClosed += (sender, e) => { if (mbglassCPInstance != null) mbglassCPInstance.Close(); };
             this.MouseClick += OverlayForm_MouseClick;
 
-            glassRefreshTimer = new System.Windows.Forms.Timer();
+            glassRefreshTimer = new Timer();
             glassRefreshTimer.Interval = Program.mbFrameDelay;
             glassRefreshTimer.Tick += (s, e) => this.Invalidate();
             glassRefreshTimer.Start();
@@ -128,6 +116,7 @@ namespace RED.mbnq
                 }
             }
         }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
