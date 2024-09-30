@@ -1,4 +1,13 @@
-﻿namespace RED.mbnq
+﻿
+/* 
+
+    www.mbnq.pl 2024 
+    https://mbnq.pl/
+    mbnq00 on gmail
+
+*/
+
+namespace RED.mbnq
 {
     partial class mbGlassCP
     {
