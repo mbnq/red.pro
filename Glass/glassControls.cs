@@ -28,14 +28,6 @@ namespace RED.mbnq
                 displayOverlayForm.Invalidate();
             }
         }
-
-        /*
-        public glassControls(GlassHudOverlay overlayForm)
-        {
-            this.displayOverlayForm = overlayForm;
-            this.selectedRegion = overlayForm.CaptureArea;
-        }
-        */
         public glassControls(GlassHudOverlay overlayForm, Rectangle selectedRegion)
         {
             displayOverlayForm = overlayForm;
@@ -86,13 +78,8 @@ namespace RED.mbnq
         Color mDefColWhite = Color.White;
         int GlassZoomMax = 200;
         mbGlassCP mbglassCPInstance;
-        public void UpdateGlassMenu()
-        {
-            this.Invalidate();
-        }
         public void ToggleGlassMenu()
         {
-            UpdateGlassMenu();
             glassInfoDisplay.IsGlassMenuEnabled = !glassInfoDisplay.IsGlassMenuEnabled;
 
             if (mbglassCPInstance == null)
@@ -110,17 +97,17 @@ namespace RED.mbnq
                     mbglassCPInstance.Hide();
                 }
             }
+
+            this.Invalidate();
         }
         public void UpdateOffsets(float newOffsetX, float newOffsetY)
         {
-            // Use the offset values directly
             offsetX = newOffsetX;
             offsetY = newOffsetY;
             this.Invalidate();
         }
         public void UpdateZoom()
         {
-            // Adjust zoomFactor using _glassZoom directly
             zoomFactor = (GlassZoomMax / 100f) - _glassZoom;
             this.Invalidate();
         }
@@ -166,41 +153,41 @@ namespace RED.mbnq
 
         public int glassOffsetXValue
         {
-            get => (int)(_glassOffsetX * 100); // Return as percentage
+            get => (int)(_glassOffsetX * 100);                  // Return as percentage
             set
             {
-                _glassOffsetX = value / 100f;  // Store as float, convert from percentage
-                UpdateOffsets(_glassOffsetX, _glassOffsetY); // Update both offsets in the overlay
+                _glassOffsetX = value / 100f;                   // Store as float, convert from percentage
+                UpdateOffsets(_glassOffsetX, _glassOffsetY);    // Update both offsets in the overlay
             }
         }
 
         public int glassOffsetYValue
         {
-            get => (int)(_glassOffsetY * 100); // Return as percentage
+            get => (int)(_glassOffsetY * 100);
             set
             {
-                _glassOffsetY = value / 100f; // Store as float, convert from percentage
-                UpdateOffsets(_glassOffsetX, _glassOffsetY); // Update both offsets in the overlay
+                _glassOffsetY = value / 100f;
+                UpdateOffsets(_glassOffsetX, _glassOffsetY);
             }
         }
 
         public int glassZoomValue
         {
-            get => (int)(_glassZoom * 100); // Return as percentage
+            get => (int)(_glassZoom * 100);
             set
             {
-                _glassZoom = value / 100f;  // Store as float, convert from percentage
-                UpdateZoom();  // Update the zoom in the overlay
+                _glassZoom = value / 100f;
+                UpdateZoom();
             }
         }
 
         public int glassOpacityValue
         {
-            get => (int)(_glassOpacity * 100); // Return as percentage
+            get => (int)(_glassOpacity * 100);
             set
             {
-                _glassOpacity = value / 100f;  // Store as float, convert from percentage
-                UpdateOpacity();  // Update the opacity in the overlay
+                _glassOpacity = value / 100f;
+                UpdateOpacity();
             }
         }
         public bool glassIsBorderVisible { get => isBorderVisible; set => isBorderVisible = value; }
@@ -232,13 +219,11 @@ namespace RED.mbnq
             glassRefreshTimer.Interval = refreshRate;
             this.Invalidate();
         }
-
         public void UpdateOffsetX(int offsetXValue)
         {
             offsetX = offsetXValue / 100f;
             this.Invalidate();
         }
-
         public void UpdateOffsetY(int offsetYValue)
         {
             offsetY = offsetYValue / 100f;
