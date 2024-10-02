@@ -290,6 +290,10 @@ namespace MaterialSkin
 
     public enum Accent
     {
+        Black000 = 0x000000,
+        Black100 = 0x111111,
+        Black200 = 0x222222,
+        Black400 = 0x444444,
         Red100 = 0xFF8A80,
         Red200 = 0xFF5252,
         Red400 = 0xFF1744,

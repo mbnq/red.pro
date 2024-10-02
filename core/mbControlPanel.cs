@@ -874,7 +874,7 @@ namespace RED.mbnq
                             Primary.Grey500,
                             Primary.Grey700,
                             Primary.Grey200,
-                            Accent.Teal100,
+                            Accent.Black200,
                             TextShade.WHITE
                         );
                         break;
