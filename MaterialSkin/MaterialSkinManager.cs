@@ -9,7 +9,6 @@
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
-
     public class MaterialSkinManager
     {
         private static MaterialSkinManager _instance;
