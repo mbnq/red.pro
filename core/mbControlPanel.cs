@@ -14,6 +14,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Net;
 using System.Net.Http;
 using static mbFnc;
 
@@ -110,7 +111,7 @@ namespace RED.mbnq
         public static string mbIPdicoveryProvider3 = "";
         public static string mbIPdicoveryProvider4 = "";
 
-        public static string mbIPpingTestTarget = "8.8.8.8";
+        public static string mbIPpingTestTarget;
 
         #endregion
 
@@ -625,8 +626,11 @@ namespace RED.mbnq
 
             mbPingTargetBox = new MaterialTextBox2
             {
-                Text = "test",
-                Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3),
+                Text = mbIPpingTestTarget,                              // "127.0.0.1",     // if not defined or other error -> localhost
+                Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3)
+            };
+            mbPingTargetBox.TextChanged += (s, e) => {
+                if (IPAddress.TryParse(mbPingTargetBox.Text, out _)) mbIPpingTestTarget = mbPingTargetBox.Text; 
             };
 
             #endregion
@@ -802,6 +806,7 @@ namespace RED.mbnq
             UpdateLabeledSliders();
             UpdateButtons();
             UpdateZoomControls();
+            UpdateTextBoxes();
         }
         public void UpdateZoomControls()
         {
@@ -919,6 +924,10 @@ namespace RED.mbnq
             if (mbZoomRefreshIntervalSlider.Value < 1) { mbZoomRefreshIntervalSlider.Value = 1; };
             if (mbZoomScopeSizeSlider.Value < 1) { mbZoomScopeSizeSlider.Value = 1; };
 
+        }
+        private void UpdateTextBoxes()
+        {
+            mbPingTargetBox.Text = mbIPpingTestTarget;
         }
         #endregion
 
