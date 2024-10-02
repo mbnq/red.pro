@@ -892,7 +892,7 @@ namespace RED.mbnq
                         break;
                     }
             }
-            this.Refresh();
+            Refresh();
         }
 
         public void UpdateAllUI()
@@ -903,6 +903,7 @@ namespace RED.mbnq
             UpdateButtons();
             UpdateZoomControls();
             UpdateTextBoxes();
+            Refresh();
         }
         public void UpdateZoomControls()
         {
