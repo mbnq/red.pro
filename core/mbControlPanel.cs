@@ -136,6 +136,7 @@ namespace RED.mbnq
 
             this.Text = "RED. PRO";
             this.Icon = Properties.Resources.mbnqIcon;
+            this.BackgroundImage = null;
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -894,7 +895,6 @@ namespace RED.mbnq
             }
             Refresh();
         }
-
         public void UpdateAllUI()
         {
             UpdateColorScheme();

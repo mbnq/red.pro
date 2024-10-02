@@ -131,7 +131,7 @@
   <data name="gui_defaultIcon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAi0AAAItCAYAAAD16UpyAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAP
-        XwAAD18B14rayQAAAAd0SU1FB+gJEgsTLweoXQAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJ
+        XgAAD14BBc04LQAAAAd0SU1FB+gJEgsTLweoXQAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJ
         TVBXgQ4XAAAvq0lEQVR4Xu3di3HkOLKo4XVBLsgFxT1xDGgX5EK7IBfWBbkgF9oFuSAX2oVzM2dQMdUc
         SqoHQeLx/RF/xO50d7EKSBBJAAT+A2A+/t///O9D+KNTn8rPAAAAIxKd/XP4Gn6E/zeA7+F/Q0kMAAC9
         Ex16jqhkxz5KovKZv8Ln8rMBAEBPRCeeUym/S6c+i5m8PJYiAAAArRMdd46urHXqM5iJ2s9SFAAAoFWi
@@ -344,9 +344,6 @@
   <data name="gui_toolsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\gfx\gui_toolsIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mbnqBackground0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\gfx\mbnqBackground0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="mbnqClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\sounds\mbnqClick.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -361,5 +358,8 @@
   </data>
   <data name="redProSplash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\png\redProSplash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red_pro_background_anime0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\gfx\red.pro.background.anime0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

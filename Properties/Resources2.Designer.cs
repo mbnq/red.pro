@@ -121,16 +121,6 @@ namespace RED.mbnq.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mbnqBackground0 {
-            get {
-                object obj = ResourceManager.GetObject("mbnqBackground0", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream mbnqClick {
@@ -155,6 +145,16 @@ namespace RED.mbnq.Properties {
         internal static System.IO.UnmanagedMemoryStream mbSplash {
             get {
                 return ResourceManager.GetStream("mbSplash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red_pro_background_anime0 {
+            get {
+                object obj = ResourceManager.GetObject("red_pro_background_anime0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
