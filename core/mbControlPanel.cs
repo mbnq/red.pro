@@ -142,6 +142,9 @@ namespace RED.mbnq
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(0, 0);
 
+            // this.BackgroundImage = Properties.Resources.red_pro_background_anime0;
+            // this.BackgroundImageLayout = ImageLayout.Stretch;
+
             this.Shown += ControlPanel_Shown;
             this.Resize += new EventHandler(InitSizeMb);
             // this.AutoSize = true;
@@ -183,12 +186,9 @@ namespace RED.mbnq
             }
             else
             {
-                // Handle the case where the theme string is invalid
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;  // or your default theme
+                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
                 mbMaterialThemeType = "DARK";
             }
-
-            // mbColorScheme = "RED";
         }
 
         // Crosshair Init, passing instance
@@ -587,17 +587,20 @@ namespace RED.mbnq
 
                         case "Blue":
                             mbColorScheme = "BLUE";
+                            MaterialSkinManager.BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
                             UpdateColorScheme();
                             break;
 
                         case "Grey":
                             mbColorScheme = "GREY";
+                            MaterialSkinManager.BACKDROP_DARK = Color.FromArgb(255, 0, 0, 0);
                             UpdateColorScheme();
                             break;
 
                         case "Red":
                         default:
                             mbColorScheme = "RED";
+                            MaterialSkinManager.BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
                             UpdateColorScheme();
                             break;
                     }

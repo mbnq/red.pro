@@ -204,10 +204,10 @@
         private static readonly Brush EXPANSIONPANEL_FOCUS_DARK_BRUSH = new SolidBrush(EXPANSIONPANEL_FOCUS_DARK);
 
         // Backdrop colors - for containers, like forms or panels
-        private static readonly Color BACKDROP_LIGHT = Color.FromArgb(255, 242, 242, 242);
-        private static readonly Brush BACKDROP_LIGHT_BRUSH = new SolidBrush(BACKGROUND_LIGHT);
-        private static readonly Color BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
-        private static readonly Brush BACKDROP_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
+        public static Color BACKDROP_LIGHT = Color.FromArgb(255, 242, 242, 242);
+        public static Brush BACKDROP_LIGHT_BRUSH = new SolidBrush(BACKGROUND_LIGHT);
+        public static Color BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
+        public static Brush BACKDROP_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
 
         //Other colors
         private static readonly Color CARD_BLACK = Color.FromArgb(255, 42, 42, 42);
