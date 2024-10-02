@@ -182,7 +182,7 @@ namespace RED.mbnq
                 controlPanel.mbColorBSlider.Value = 50;
             }
 
-            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshair();        // ensures that the crosshair overlay on the screen is removed
+            controlPanel.mbCrosshairOverlay.RemoveCustomCrosshairFnc();        // ensures that the crosshair overlay on the screen is removed
             controlPanel.RemoveCustomCrosshair();                           // removes the custom crosshair data from the control panel itself
             controlPanel.mbColorRSlider.Value++;                            // force crosshair redraw 
 
