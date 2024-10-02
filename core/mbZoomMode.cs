@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace RED.mbnq
 {
@@ -168,13 +169,29 @@ namespace RED.mbnq
             holdTimer.Stop();
             ShowZoomOverlay();
         }
-        private static void ZoomUpdateTimer_Tick(object sender, EventArgs e)
+        private static void ZoomUpdateTimer_TickOld(object sender, EventArgs e)
         {
             if (zoomForm != null)
             {
                 zoomForm.Invalidate();      // Forces zoomForm to repaint
             }
         }
+
+        private static void ZoomUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            // Offload the zoom update process to a background thread
+            Task.Run(() =>
+            {
+                CaptureScreenToBitmap();
+
+                // back to the UI thread to update the zoomForm
+                zoomForm?.Invoke(new Action(() =>
+                {
+                    if (zoomForm != null)zoomForm.Invalidate(); // force the form to repaint on the UI thread
+                }));
+            });
+        }
+
         public static void StartHoldTimer()
         {
             if (!isZooming)
@@ -193,7 +210,7 @@ namespace RED.mbnq
 
         /* --- --- ---  --- --- --- */
         #region Gaphics
-        private static void ZoomForm_Paint(object sender, PaintEventArgs e)
+        private static void ZoomForm_PaintOld(object sender, PaintEventArgs e)
         {
             if (controlPanel == null || controlPanel.mbCrosshairOverlay == null) return;
 
@@ -225,8 +242,51 @@ namespace RED.mbnq
                 g.DrawEllipse(borderPen, 0, 0, zoomForm.Width, zoomForm.Height);
             }
         }
+        private static void ZoomForm_Paint(object sender, PaintEventArgs e)
+        {
+            if (controlPanel == null || controlPanel.mbCrosshairOverlay == null || zoomBitmap == null) return;
+
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.HighSpeed;
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = PixelOffsetMode.None;
+
+            // Simply draw the preprocessed bitmap (no heavy processing here)
+            g.DrawImage(zoomBitmap, new Rectangle(0, 0, zoomScopeSizeInternal, zoomScopeSizeInternal));
+
+            // Draw crosshair lines and border (this should be fast)
+            int centerX = zoomForm.Width / 2;
+            int centerY = zoomForm.Height / 2;
+
+            using (Pen crosshairPen = new Pen(Color.Black, 2))
+            {
+                g.DrawLine(crosshairPen, centerX, 0, centerX, zoomForm.Height);
+                g.DrawLine(crosshairPen, 0, centerY, zoomForm.Width, centerY);
+            }
+
+            using (Pen borderPen = new Pen(Color.Black, 2))
+            {
+                g.DrawEllipse(borderPen, 0, 0, zoomForm.Width, zoomForm.Height);
+            }
+        }
 
         // Captures the screen area into the bitmap using BitBlt for performance
+        private static void CaptureScreenToBitmapOld()
+        {
+            int captureSize = zoomScopeSizeInternal / zoomMultiplier;
+            if (captureSize <= 0) captureSize = 1;
+
+            using (Graphics gDest = Graphics.FromImage(zoomBitmap))
+            {
+                IntPtr hdcDest = gDest.GetHdc();
+                IntPtr hdcSrc = GetDC(IntPtr.Zero);
+
+                BitBlt(hdcDest, 0, 0, captureSize, captureSize, hdcSrc, centeredX, centeredY, SRCCOPY);
+
+                gDest.ReleaseHdc(hdcDest);
+                ReleaseDC(IntPtr.Zero, hdcSrc);
+            }
+        }
         private static void CaptureScreenToBitmap()
         {
             int captureSize = zoomScopeSizeInternal / zoomMultiplier;
@@ -237,6 +297,7 @@ namespace RED.mbnq
                 IntPtr hdcDest = gDest.GetHdc();
                 IntPtr hdcSrc = GetDC(IntPtr.Zero);
 
+                // Perform screen capture in the background
                 BitBlt(hdcDest, 0, 0, captureSize, captureSize, hdcSrc, centeredX, centeredY, SRCCOPY);
 
                 gDest.ReleaseHdc(hdcDest);
