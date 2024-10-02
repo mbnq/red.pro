@@ -66,6 +66,7 @@ namespace RED.mbnq
         private MaterialTabSelector mbTabSelector;
         private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
         private mbnqFLIR FlirOverlayForm;
+        private MaterialTextBox2 mbPingTargetBox;
 
         public MaterialSlider 
             mbColorRSlider, 
@@ -619,6 +620,16 @@ namespace RED.mbnq
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
 
+            #region Other Controls
+            /* --- --- --- Buttons Code --- --- --- */
+
+            mbPingTargetBox = new MaterialTextBox2
+            {
+                Text = "test"
+            };
+
+            #endregion
+
             #region tabs buildup
             /* --- --- ---  Tab 1 goes here --- --- --- */
 
@@ -678,6 +689,7 @@ namespace RED.mbnq
             mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
 
             mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+            mbPanelForTab3.Controls.Add(mbPingTargetBox);
 
 #if DEBUG
             mbPanelForTab3.Controls.Add(debugTestButton);
