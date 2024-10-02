@@ -75,7 +75,7 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
 
         /* --- --- --- Load --- --- --- */
-        public void LoadCustomCrosshair()
+        public void LoadCustomCrosshairFnc()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -167,7 +167,7 @@ namespace RED.mbnq
         }
 
         /* --- --- --- Apply --- --- --- */
-        public void ApplyCustomCrosshair()
+        public void ApplyCustomCrosshairFnc()
         {
             var customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
             if (File.Exists(customFilePath))
@@ -195,7 +195,7 @@ namespace RED.mbnq
                 }
             }
         }
-        public void RemoveCustomCrosshair()
+        public void RemoveCustomCrosshairFnc()
         {
             string customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
             if (File.Exists(customFilePath))

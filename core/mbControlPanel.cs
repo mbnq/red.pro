@@ -771,21 +771,21 @@ namespace RED.mbnq
         // Load and set the new Custom .png Crosshair Ovelray and refresh display
         public void LoadCustomCrosshair()
         {
-            mbCrosshairOverlay.LoadCustomCrosshair();
+            mbCrosshairOverlay.LoadCustomCrosshairFnc();
             UpdateAllUI();
         }
 
         // Remove the overlay and refresh display
         public void RemoveCustomCrosshair()
         {
-            mbCrosshairOverlay.RemoveCustomCrosshair();
+            mbCrosshairOverlay.RemoveCustomCrosshairFnc();
             UpdateAllUI();
         }
 
         // Apply custom overlay
         public void ApplyCustomCrosshair()
         {
-            mbCrosshairOverlay.ApplyCustomCrosshair();
+            mbCrosshairOverlay.ApplyCustomCrosshairFnc();
             UpdateAllUI();
         }
 
