@@ -83,7 +83,7 @@ namespace RED.mbnq
             mbZoomScopeSizeSlider
         ;
 
-        public mbFnc.mbProgressBar mbProgressBar0;
+        public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
 
@@ -679,12 +679,12 @@ namespace RED.mbnq
             mbPanelForTab2.Controls.Add(mbDebugonCheckbox);
 #else
             mbIsDebugOn = false;
-            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
+            mbSpacer2(mbPanelForTab2.Controls, 20, "");
 #endif
 
             mbPanelForTab2.Controls.Add(mbEnableZoomModeCheckBox);
 
-            mbFnc.mbSpacer2(mbPanelForTab2.Controls, 20, "");
+            mbSpacer2(mbPanelForTab2.Controls, 20, "");
 
             AddLabeledSlider(mbPanelForTab2, "SniperMode Zoom Delay", 1, 5000, 1000, ref mbZoomTIntervalSlider);
             AddLabeledSlider(mbPanelForTab2, "SniperMode Refresh Interval", 1, 100, Program.mbFrameDelay, ref mbZoomRefreshIntervalSlider);
@@ -698,17 +698,17 @@ namespace RED.mbnq
             mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbSysDropDown);
 
-            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+            mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
             mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
 
-            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+            mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
             mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Ping Target:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbPingTargetBox);
 
-            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+            mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
 #if DEBUG
             mbPanelForTab3.Controls.Add(debugTestButton);
@@ -1058,7 +1058,7 @@ namespace RED.mbnq
                     string mBoxTitle = "Your IP:";
 
                     // Show the custom message box with the content
-                    mbFnc.mbMessageBox messageBox = new mbFnc.mbMessageBox(pageContent, mBoxTitle);
+                    mbMessageBox messageBox = new mbMessageBox(pageContent, mBoxTitle);
                     messageBox.ShowDialog();
                 }
             }
