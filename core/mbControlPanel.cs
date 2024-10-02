@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 using static mbFnc;
+using MaterialSkin;
 
 namespace RED.mbnq
 {
@@ -24,68 +25,70 @@ namespace RED.mbnq
     {
         #region ControlPanel Vars and Settings
 
-        public static bool mbIsDebugOn       = false;                        // global debug, not for Release version
+        public static bool mbIsDebugOn = false;                        // global debug, not for Release version
         public static readonly bool mbPBIsOn = true;                         // init only 
-        public static bool mbIsSplashOn      = false;                        // init only
-        public bool mbHideCrosshair          = false;                        // init only
-        public int mbSettingsLoaded          = 0;
+        public static bool mbIsSplashOn = false;                        // init only
+        public bool mbHideCrosshair = false;                        // init only
+        public int mbSettingsLoaded = 0;
 
-        private Button 
-            centerButton, 
-            loadChangePngButton, 
-            removePngButton, 
+        private Button
+            centerButton,
+            loadChangePngButton,
+            removePngButton,
             debugTestButton
         ;
 
-        private FlowLayoutPanel 
-            mbPanelForTab1, 
-            mbPanelForTab2, 
+        private FlowLayoutPanel
+            mbPanelForTab1,
+            mbPanelForTab2,
             mbPanelForTab3
         ;
 
-        private TabPage 
-            mbTab1, 
-            mbTab2, 
+        private TabPage
+            mbTab1,
+            mbTab2,
             mbTab3
         ;
 
-        public CheckBox 
-            mbAutoSaveCheckbox, 
-            mbDebugonCheckbox, 
-            mbAOnTopCheckBox, 
-            mbHideCrosshairCheckBox, 
-            mbDisableSoundCheckBox, 
-            mbEnableZoomModeCheckBox, 
-            mbEnableFlirCheckBox, 
-            mbDarkModeCheckBox, 
-            mbAntiCapsCheckBox, 
+        public CheckBox
+            mbAutoSaveCheckbox,
+            mbDebugonCheckbox,
+            mbAOnTopCheckBox,
+            mbHideCrosshairCheckBox,
+            mbDisableSoundCheckBox,
+            mbEnableZoomModeCheckBox,
+            mbEnableFlirCheckBox,
+            mbDarkModeCheckBox,
+            mbAntiCapsCheckBox,
             mbSplashCheckBox
         ;
 
         private mbRmbMenu rightClickMenu;
         private MaterialTabControl mbTabControl;
         private MaterialTabSelector mbTabSelector;
-        private MaterialComboBox mbSysDropDown, mbMbToolsDropDown;
+        private MaterialComboBox mbSysDropDown, mbMbToolsDropDown, mbColorSchemeDropDown;
         private mbnqFLIR FlirOverlayForm;
         private MaterialTextBox2 mbPingTargetBox;
 
-        public MaterialSlider 
-            mbColorRSlider, 
-            mbColorGSlider, 
-            mbColorBSlider, 
-            mbSizeSlider, 
-            mbTransparencySlider, 
-            mbOffsetXSlider, 
-            mbOffsetYSlider, 
-            mbZoomLevelSlider, 
-            mbZoomTIntervalSlider, 
-            mbZoomRefreshIntervalSlider, 
+        public MaterialSlider
+            mbColorRSlider,
+            mbColorGSlider,
+            mbColorBSlider,
+            mbSizeSlider,
+            mbTransparencySlider,
+            mbOffsetXSlider,
+            mbOffsetYSlider,
+            mbZoomLevelSlider,
+            mbZoomTIntervalSlider,
+            mbZoomRefreshIntervalSlider,
             mbZoomScopeSizeSlider
         ;
 
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
         public static string mbMaterialThemeType;
+        public static string mbColorScheme = "RED";
+        public MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
 
         public readonly static string mbUserFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mbnqplSoft");
 
@@ -94,17 +97,17 @@ namespace RED.mbnq
         public int mbControlWidth;
         public static ToolTip mbToolTip;
 
-        public static double mbImageARatio               = 1.00f;            // init only
+        public static double mbImageARatio = 1.00f;            // init only
 
-        public static readonly int mbCPWidth             = 262;              // init only
-        public static readonly int mbCPHeight            = 780;              // init only
-        public static readonly int mbControlDefSpacer    = 36;               // init only
+        public static readonly int mbCPWidth = 262;              // init only
+        public static readonly int mbCPHeight = 780;              // init only
+        public static readonly int mbControlDefSpacer = 36;               // init only
 
-        public const int mbPNGMaxWidth                   = 1920;             // init only
-        public const int mbPNGMaxHeight                  = 1080;             // init only
-        public const int mbSplashDuration                = 4000;             // duration in ms
+        public const int mbPNGMaxWidth = 1920;             // init only
+        public const int mbPNGMaxHeight = 1080;             // init only
+        public const int mbSplashDuration = 4000;             // duration in ms
 
-        public const int mbCrosshairRedrawTime           = 5000;             // interval in ms
+        public const int mbCrosshairRedrawTime = 5000;             // interval in ms
 
         public static string mbIPdicoveryProvider = "https://mbnq.pl/myip/";
         public static string mbIPdicoveryProvider2 = "";
@@ -168,11 +171,11 @@ namespace RED.mbnq
         // Material Skin Init
         public void InitializeMaterialSkin(string mbTheme)
         {
-            var materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
+            materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
 
-            if (Enum.TryParse(mbTheme, true, out MaterialSkin.MaterialSkinManager.Themes parsedTheme))
+            if (Enum.TryParse(mbTheme, true, out MaterialSkinManager.Themes parsedTheme))
             {
                 materialSkinManager.Theme = parsedTheme;
                 mbMaterialThemeType = mbTheme;
@@ -180,27 +183,11 @@ namespace RED.mbnq
             else
             {
                 // Handle the case where the theme string is invalid
-                materialSkinManager.Theme = MaterialSkin.MaterialSkinManager.Themes.DARK;  // or your default theme
+                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;  // or your default theme
                 mbMaterialThemeType = "DARK";
             }
 
-            materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                MaterialSkin.Primary.Red500,        // Primary color
-                MaterialSkin.Primary.Red700,        // Dark primary color
-                MaterialSkin.Primary.Red200,        // Light primary color
-                MaterialSkin.Accent.Red100,         // Accent color
-                MaterialSkin.TextShade.WHITE        // Text color
-            );            
-            
-            /*
-            materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                MaterialSkin.Primary.Blue500,        // Primary color
-                MaterialSkin.Primary.Blue700,        // Dark primary color
-                MaterialSkin.Primary.Blue200,        // Light primary color
-                MaterialSkin.Accent.Blue100,         // Accent color
-                MaterialSkin.TextShade.WHITE        // Text color
-            );
-            */
+            // mbColorScheme = "RED";
         }
 
         // Crosshair Init, passing instance
@@ -276,7 +263,7 @@ namespace RED.mbnq
             if (mbIsSplashOn)
             {
                 this.Size = new Size(0, 0);
-                this.Visible = false; 
+                this.Visible = false;
             }
             else
             {
@@ -311,7 +298,7 @@ namespace RED.mbnq
                         splashScreen.Close();
                         splashScreen.Dispose();
                     }));
-                }); 
+                });
             }
         }
         #endregion
@@ -331,7 +318,7 @@ namespace RED.mbnq
                 Enabled = true                          // we don't really need this
             };
 
-            mbTab1 = new TabPage("Xhair") { ImageKey = "CrosshairIcon" };  
+            mbTab1 = new TabPage("Xhair") { ImageKey = "CrosshairIcon" };
             mbTab2 = new TabPage("Options") { ImageKey = "SettingsIcon" };
             mbTab3 = new TabPage("Tools") { ImageKey = "ToolsIcon" };
 
@@ -495,7 +482,7 @@ namespace RED.mbnq
                             break;
                         case "Audio Settings":
                             mbRunSystemFile("mmsys.cpl");
-                            break;                        
+                            break;
                         case "Power Settings":
                             mbRunSystemFile("powercfg.cpl");
                             break;
@@ -508,7 +495,7 @@ namespace RED.mbnq
                         case "Computer Info":
                             mbRunSystemFile("msinfo32.exe");
                             break;
-                         case "System Configuration":
+                        case "System Configuration":
                             mbRunSystemFile("msconfig.exe");
                             break;
                         default:
@@ -565,6 +552,48 @@ namespace RED.mbnq
                 }
             }
 
+            // ---
+
+            mbColorSchemeDropDown = new MaterialComboBox
+            {
+                Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                MaxDropDownItems = 10
+            };
+
+            mbColorSchemeDropDown.Items.Add("Red");
+            mbColorSchemeDropDown.Items.Add("Blue");
+
+            // def
+            mbColorSchemeDropDown.SelectedIndex = 0;
+
+            // run the selected option
+            mbColorSchemeDropDown.SelectedIndexChanged += mbColorSchemeDropDown_SelectedIndexChanged;
+
+            // play click on dropdown
+            mbColorSchemeDropDown.DropDown += (sender, e) => Sounds.PlayClickSoundOnce();
+
+            void mbColorSchemeDropDown_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                Sounds.PlayClickSoundOnce();
+
+                var selectedItem = mbColorSchemeDropDown.SelectedItem;
+                if (selectedItem != null)
+                {
+                    switch (mbColorSchemeDropDown.SelectedItem.ToString())
+                    {
+                        case "Red":
+                            mbColorScheme = "RED";
+                            UpdateAllUI();
+                            break;
+                        case "Blue":
+                            mbColorScheme = "BLUE";
+                            UpdateAllUI();
+                            break;
+                    }
+                }
+            }
+
             /* --- --- ---  --- --- --- --- --- --- --- */
             #endregion
 
@@ -612,7 +641,7 @@ namespace RED.mbnq
 
             mbProgressBar0 = new mbProgressBar
             {
-                Location = new Point(0,1),
+                Location = new Point(0, 1),
                 Width = mbCPWidth,
                 Visible = false,
                 Value = 0
@@ -640,7 +669,7 @@ namespace RED.mbnq
                 Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3)
             };
             mbPingTargetBox.TextChanged += (s, e) => {
-                if (IPAddress.TryParse(mbPingTargetBox.Text, out _)) mbIPpingTestTarget = mbPingTargetBox.Text; 
+                if (IPAddress.TryParse(mbPingTargetBox.Text, out _)) mbIPpingTestTarget = mbPingTargetBox.Text;
             };
 
             #endregion
@@ -705,6 +734,11 @@ namespace RED.mbnq
 
             mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
+            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "GUI Color:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbColorSchemeDropDown);
+
+            mbSpacer2(mbPanelForTab3.Controls, 20, "");
+
             mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Ping Target:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbPingTargetBox);
 
@@ -718,7 +752,7 @@ namespace RED.mbnq
 
             /* --- --- ---  --- --- --- --- --- --- --- */
 
-#endregion
+            #endregion
 
             #region ToolTips
             /* --- --- ---  Tooltips --- --- --- */
@@ -772,7 +806,7 @@ namespace RED.mbnq
             #endregion
         }
         /* --- --- --- --- --- --- --- --- --- --- --- */
-#endregion
+        #endregion
 
         #region Custom Overlay Crosshair
 
@@ -810,6 +844,46 @@ namespace RED.mbnq
                 this.Size = new Size(mbCPWidth, mbCPHeight);
             }
         }
+        public void UpdateColorScheme()
+        {
+            switch (mbColorScheme)
+            {
+                case "BLUE":
+                    {
+                        materialSkinManager.ColorScheme = new ColorScheme(
+                            Primary.Blue500,        // Primary color
+                            Primary.Blue700,        // Dark primary color
+                            Primary.Blue200,        // Light primary color
+                            Accent.Blue100,         // Accent color
+                            TextShade.WHITE         // Text color
+                        );
+                        break;
+                    }
+                case "RED":
+                    {
+                        materialSkinManager.ColorScheme = new ColorScheme(
+                            Primary.Red500,        // Primary color
+                            Primary.Red700,        // Dark primary color
+                            Primary.Red200,        // Light primary color
+                            Accent.Red100,         // Accent color
+                            TextShade.WHITE        // Text color
+                        );
+                        break;
+                    }
+                default:
+                    {
+                        materialSkinManager.ColorScheme = new ColorScheme(
+                            Primary.Red500,        // Primary color
+                            Primary.Red700,        // Dark primary color
+                            Primary.Red200,        // Light primary color
+                            Accent.Red100,         // Accent color
+                            TextShade.WHITE        // Text color
+                        );
+                        break;
+                    }
+            }
+        }
+
         public void UpdateAllUI()
         {
             UpdateMainCrosshair();
@@ -817,6 +891,7 @@ namespace RED.mbnq
             UpdateButtons();
             UpdateZoomControls();
             UpdateTextBoxes();
+            UpdateColorScheme();
         }
         public void UpdateZoomControls()
         {
