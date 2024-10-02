@@ -625,7 +625,8 @@ namespace RED.mbnq
 
             mbPingTargetBox = new MaterialTextBox2
             {
-                Text = "test"
+                Text = "test",
+                Width = (mbCPWidth - (mbControlDefSpacer / 2) + 3),
             };
 
             #endregion
@@ -680,16 +681,20 @@ namespace RED.mbnq
 
             /* --- --- ---  Tab 3 goes here --- --- --- */
 
-            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "System Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbSysDropDown);
 
             mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
-            mbPanelForTab3.Controls.Add(new MaterialSkin.Controls.MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Tools:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbMbToolsDropDown);
 
             mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
+
+            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Ping Target:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
             mbPanelForTab3.Controls.Add(mbPingTargetBox);
+
+            mbFnc.mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
 #if DEBUG
             mbPanelForTab3.Controls.Add(debugTestButton);
