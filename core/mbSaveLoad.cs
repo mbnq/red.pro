@@ -34,8 +34,9 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Runtime.CompilerServices;
-using System.Windows.Markup;
+using MaterialSkin;
+// using System.Runtime.CompilerServices;
+// using System.Windows.Markup;
 
 namespace RED.mbnq
 {
@@ -149,7 +150,8 @@ namespace RED.mbnq
                 { "mbEnableAntiCapsLock", controlPanel.mbAntiCapsCheckBox.Checked },
                 { "mbEnableFlirMode", controlPanel.mbEnableFlirCheckBox.Checked },
                 { "PositionX", controlPanel.Left },
-                { "PositionY", controlPanel.Top }
+                { "PositionY", controlPanel.Top },
+                { "mbColorScheme", ControlPanel.mbColorScheme }
                 // { "AbsolutePos", controlPanel.mbCPabsolutePos }
             };
             mbSaveSettingsBatch("General", generalSettings);
@@ -273,6 +275,8 @@ namespace RED.mbnq
             ControlPanel.mbIPdicoveryProvider2 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider2", "https://api.seeip.org/");
             ControlPanel.mbIPdicoveryProvider3 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider3", "https://api.my-ip.io/v2/ip.txt");
             ControlPanel.mbIPdicoveryProvider4 = SaveLoad.INIFile.INIread("settings.ini", "Network", "mbIPdicoveryProvider4", "https://wtfismyip.com/text/");
+
+            ControlPanel.mbColorScheme = SaveLoad.INIFile.INIread("settings.ini", "General", "mbColorScheme", "RED");
 
             controlPanel.UpdateAllUI();
             controlPanel.mbSettingsLoaded = 1;

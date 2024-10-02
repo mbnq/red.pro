@@ -563,6 +563,7 @@ namespace RED.mbnq
 
             mbColorSchemeDropDown.Items.Add("Red");
             mbColorSchemeDropDown.Items.Add("Blue");
+            mbColorSchemeDropDown.Items.Add("Grey");
 
             // def
             mbColorSchemeDropDown.SelectedIndex = 0;
@@ -588,6 +589,14 @@ namespace RED.mbnq
                             break;
                         case "Blue":
                             mbColorScheme = "BLUE";
+                            UpdateAllUI();
+                            break;
+                        case "Grey":
+                            mbColorScheme = "GREY";
+                            UpdateAllUI();
+                            break;
+                        default:
+                            mbColorScheme = "RED";
                             UpdateAllUI();
                             break;
                     }
@@ -851,47 +860,50 @@ namespace RED.mbnq
                 case "BLUE":
                     {
                         materialSkinManager.ColorScheme = new ColorScheme(
-                            Primary.Blue500,        // Primary color
-                            Primary.Blue700,        // Dark primary color
-                            Primary.Blue200,        // Light primary color
-                            Accent.Blue100,         // Accent color
-                            TextShade.WHITE         // Text color
+                            Primary.Blue500,
+                            Primary.Blue700,
+                            Primary.Blue200,
+                            Accent.Blue100,
+                            TextShade.WHITE
+                        );
+                        break;
+                    }
+                case "GREY":
+                    {
+                        materialSkinManager.ColorScheme = new ColorScheme(
+                            Primary.Grey500,
+                            Primary.Grey700,
+                            Primary.Grey200,
+                            Accent.Teal100,
+                            TextShade.WHITE
                         );
                         break;
                     }
                 case "RED":
+                default: 
                     {
                         materialSkinManager.ColorScheme = new ColorScheme(
-                            Primary.Red500,        // Primary color
-                            Primary.Red700,        // Dark primary color
-                            Primary.Red200,        // Light primary color
-                            Accent.Red100,         // Accent color
-                            TextShade.WHITE        // Text color
-                        );
-                        break;
-                    }
-                default:
-                    {
-                        materialSkinManager.ColorScheme = new ColorScheme(
-                            Primary.Red500,        // Primary color
-                            Primary.Red700,        // Dark primary color
-                            Primary.Red200,        // Light primary color
-                            Accent.Red100,         // Accent color
-                            TextShade.WHITE        // Text color
+                            Primary.Red500,
+                            Primary.Red700,
+                            Primary.Red200,
+                            Accent.Red100,
+                            TextShade.WHITE
                         );
                         break;
                     }
             }
+
+            InitializeMaterialSkin(mbMaterialThemeType);
         }
 
         public void UpdateAllUI()
         {
+            UpdateColorScheme();
             UpdateMainCrosshair();
             UpdateLabeledSliders();
             UpdateButtons();
             UpdateZoomControls();
             UpdateTextBoxes();
-            UpdateColorScheme();
         }
         public void UpdateZoomControls()
         {
