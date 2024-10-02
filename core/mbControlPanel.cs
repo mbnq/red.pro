@@ -587,20 +587,17 @@ namespace RED.mbnq
 
                         case "Blue":
                             mbColorScheme = "BLUE";
-                            MaterialSkinManager.BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
                             UpdateColorScheme();
                             break;
 
                         case "Grey":
                             mbColorScheme = "GREY";
-                            MaterialSkinManager.BACKDROP_DARK = Color.FromArgb(255, 0, 0, 0);
                             UpdateColorScheme();
                             break;
 
                         case "Red":
                         default:
                             mbColorScheme = "RED";
-                            MaterialSkinManager.BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
                             UpdateColorScheme();
                             break;
                     }
