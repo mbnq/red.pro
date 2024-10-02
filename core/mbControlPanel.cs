@@ -564,7 +564,7 @@ namespace RED.mbnq
 
             mbColorSchemeDropDown.Items.Add("Red");
             mbColorSchemeDropDown.Items.Add("Blue");
-            mbColorSchemeDropDown.Items.Add("Grey");
+            mbColorSchemeDropDown.Items.Add("Mono");
 
             // def
             mbColorSchemeDropDown.SelectedIndex = 0;
@@ -590,7 +590,7 @@ namespace RED.mbnq
                             UpdateColorScheme();
                             break;
 
-                        case "Grey":
+                        case "Mono":
                             mbColorScheme = "GREY";
                             UpdateColorScheme();
                             break;
@@ -846,7 +846,7 @@ namespace RED.mbnq
         /* --- --- --- End of custom overlay --- --- --- */
         #endregion
 
-        #region Updating Stuff
+        #region Update Stuff
         public void InitSizeMb(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -867,6 +867,7 @@ namespace RED.mbnq
                             Accent.Blue100,
                             TextShade.WHITE
                         );
+                        mbColorSchemeDropDown.SelectedItem = "Blue";
                         break;
                     }
                 case "GREY":
@@ -878,6 +879,7 @@ namespace RED.mbnq
                             Accent.Black200,
                             TextShade.WHITE
                         );
+                        mbColorSchemeDropDown.SelectedItem = "Mono";
                         break;
                     }
                 case "RED":
@@ -890,6 +892,7 @@ namespace RED.mbnq
                             Accent.Red100,
                             TextShade.WHITE
                         );
+                        mbColorSchemeDropDown.SelectedItem = "Red";
                         break;
                     }
             }
