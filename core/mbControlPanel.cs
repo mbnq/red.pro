@@ -190,7 +190,17 @@ namespace RED.mbnq
                 MaterialSkin.Primary.Red200,        // Light primary color
                 MaterialSkin.Accent.Red100,         // Accent color
                 MaterialSkin.TextShade.WHITE        // Text color
+            );            
+            
+            /*
+            materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
+                MaterialSkin.Primary.Blue500,        // Primary color
+                MaterialSkin.Primary.Blue700,        // Dark primary color
+                MaterialSkin.Primary.Blue200,        // Light primary color
+                MaterialSkin.Accent.Blue100,         // Accent color
+                MaterialSkin.TextShade.WHITE        // Text color
             );
+            */
         }
 
         // Crosshair Init, passing instance
