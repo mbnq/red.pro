@@ -13,6 +13,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace RED.mbnq
 {
@@ -21,7 +22,7 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
         #region init
         private static Timer holdTimer;
-        private static Timer zoomUpdateTimer;
+        private static System.Timers.Timer zoomUpdateTimer;
         private static mbZoomForm zoomForm;
         private static bool isZooming = false;                                                              // init only
         private static ControlPanel controlPanel;
@@ -50,7 +51,7 @@ namespace RED.mbnq
 
         [DllImport("user32.dll")]
         private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
-
+        
         public static void InitializeZoomMode(ControlPanel panel)
         {
             controlPanel = panel;
@@ -61,11 +62,9 @@ namespace RED.mbnq
             };
             holdTimer.Tick += HoldTimer_Tick;
 
-            zoomUpdateTimer = new Timer
-            {
-                Interval = zoomRefreshIntervalInternal                  // refresh rate
-            };
-            zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
+            zoomUpdateTimer = new System.Timers.Timer(zoomRefreshIntervalInternal);
+            zoomUpdateTimer.Elapsed += ZoomUpdateTimer_Tick;
+            zoomUpdateTimer.AutoReset = true;
 
             int captureSize = (zoomScopeSizeInternal / zoomMultiplier);
             if (captureSize <= 0) captureSize = 1;
@@ -179,7 +178,7 @@ namespace RED.mbnq
 
         private static void ZoomUpdateTimer_Tick(object sender, EventArgs e)
         {
-            // Offload the zoom update process to a background thread
+            // offload the zoom update process to a background thread
             Task.Run(() =>
             {
                 CaptureScreenToBitmap();
@@ -187,7 +186,7 @@ namespace RED.mbnq
                 // back to the UI thread to update the zoomForm
                 zoomForm?.Invoke(new Action(() =>
                 {
-                    if (zoomForm != null)zoomForm.Invalidate(); // force the form to repaint on the UI thread
+                    if (zoomForm != null)zoomForm.Invalidate();
                 }));
             });
         }
@@ -292,20 +291,37 @@ namespace RED.mbnq
             int captureSize = zoomScopeSizeInternal / zoomMultiplier;
             if (captureSize <= 0) captureSize = 1;
 
+            IntPtr hdcSrc = IntPtr.Zero;
+            IntPtr hdcDest = IntPtr.Zero;
+
             using (Graphics gDest = Graphics.FromImage(zoomBitmap))
             {
-                IntPtr hdcDest = gDest.GetHdc();
-                IntPtr hdcSrc = GetDC(IntPtr.Zero);
+                try
+                {
+                    hdcDest = gDest.GetHdc();
+                    hdcSrc = GetDC(IntPtr.Zero);
 
-                // Perform screen capture in the background
-                BitBlt(hdcDest, 0, 0, captureSize, captureSize, hdcSrc, centeredX, centeredY, SRCCOPY);
+                    // screen capture
+                    BitBlt(hdcDest, 0, 0, captureSize, captureSize, hdcSrc, centeredX, centeredY, SRCCOPY);
+                }
+                finally
+                {
+                    if (hdcDest != IntPtr.Zero)
+                    {
+                        // release device context for destination graphics
+                        gDest.ReleaseHdc(hdcDest);
+                    }
 
-                gDest.ReleaseHdc(hdcDest);
-                ReleaseDC(IntPtr.Zero, hdcSrc);
+                    if (hdcSrc != IntPtr.Zero)
+                    {
+                        // release source device context
+                        ReleaseDC(IntPtr.Zero, hdcSrc);
+                    }
+                }
             }
         }
 
-        // Displays the zoom overlay.
+        // displays the zoom overlay
         public static void ShowZoomOverlay()
         {
             if (zoomForm == null)
@@ -326,9 +342,9 @@ namespace RED.mbnq
             }
             else
             {
-                // Update the size if the form already exists
+                // update the size if the form already exists
                 zoomForm.Size = new Size(zoomScopeSizeInternal, zoomScopeSizeInternal);
-                zoomForm.ApplyCircularRegion(); // Reapply circular region if needed
+                zoomForm.ApplyCircularRegion(); // reapply circular region if needed
             }
 
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
@@ -341,7 +357,6 @@ namespace RED.mbnq
             zoomUpdateTimer.Interval = zoomRefreshIntervalInternal;
             zoomUpdateTimer.Start();
         }
-
         public static void HideZoomOverlay()
         {
             if (zoomForm != null && isZooming)
@@ -370,20 +385,19 @@ namespace RED.mbnq
 
     /* --- --- ---  --- --- --- */
     #region mbZoomForm
-    // Custom form for displaying zoom overlay
+    // custom form for displaying zoom overlay
     public class mbZoomForm : Form
     {
         private GraphicsPath ellipsePath;
         public mbZoomForm()
         {
             this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
-                          ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             this.UpdateStyles();
             this.ApplyCircularRegion();
         }
 
-        // Applies a circular region to the form to create a circular window.
+        // applies a circular region to the form to create a circular window.
         public void ApplyCircularRegion()
         {
             ellipsePath = new GraphicsPath();
@@ -391,7 +405,7 @@ namespace RED.mbnq
             this.Region = new Region(ellipsePath);
         }
 
-        // Applies clipping to ensure the drawn content fits within the circular region.
+        // applies clipping to ensure the drawn content fits within the circular region.
         public void ApplyClipping(Graphics g)
         {
             if (ellipsePath != null)
