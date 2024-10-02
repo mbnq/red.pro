@@ -892,6 +892,7 @@ namespace RED.mbnq
                         break;
                     }
             }
+            this.Refresh();
         }
 
         public void UpdateAllUI()
