@@ -86,7 +86,7 @@ namespace RED.mbnq
 
         public mbProgressBar mbProgressBar0;
         public static mbCrosshair mbCrosshairDisplay;
-        public static string mbMaterialThemeType;
+        public static string mbMaterialThemeType = "";
         public static string mbColorScheme = "RED";
         public MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
 
@@ -583,21 +583,21 @@ namespace RED.mbnq
                 {
                     switch (mbColorSchemeDropDown.SelectedItem.ToString())
                     {
-                        case "Red":
-                            mbColorScheme = "RED";
-                            UpdateAllUI();
-                            break;
+
                         case "Blue":
                             mbColorScheme = "BLUE";
-                            UpdateAllUI();
+                            UpdateColorScheme();
                             break;
+
                         case "Grey":
                             mbColorScheme = "GREY";
-                            UpdateAllUI();
+                            UpdateColorScheme();
                             break;
+
+                        case "Red":
                         default:
                             mbColorScheme = "RED";
-                            UpdateAllUI();
+                            UpdateColorScheme();
                             break;
                     }
                 }
@@ -892,8 +892,6 @@ namespace RED.mbnq
                         break;
                     }
             }
-
-            InitializeMaterialSkin(mbMaterialThemeType);
         }
 
         public void UpdateAllUI()
