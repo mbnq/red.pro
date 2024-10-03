@@ -744,13 +744,13 @@ namespace RED.mbnq
 
             mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
-            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "GUI Color:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
-            mbPanelForTab3.Controls.Add(mbColorSchemeDropDown);
+            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Ping Target:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbPingTargetBox);
 
             mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
-            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "Ping Target:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
-            mbPanelForTab3.Controls.Add(mbPingTargetBox);
+            mbPanelForTab3.Controls.Add(new MaterialLabel { Text = "GUI Color:", AutoSize = true, Margin = new Padding(0, 10, 0, 10) });
+            mbPanelForTab3.Controls.Add(mbColorSchemeDropDown);
 
             mbSpacer2(mbPanelForTab3.Controls, 20, "");
 
