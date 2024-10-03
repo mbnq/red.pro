@@ -13,7 +13,8 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
+using static mbFnc;
+// using System.Security.Cryptography;
 
 namespace RED.mbnq
 {
@@ -28,7 +29,7 @@ namespace RED.mbnq
         private static ControlPanel controlPanel;
         private static Bitmap zoomBitmap;
 
-        public static int zoomScopeSizeInternalDefault = (mbFnc.mGetPrimaryScreenCenter2().Y);
+        public static int zoomScopeSizeInternalDefault = (mGetPrimaryScreenCenter2().Y);
         public static int zoomScopeSizeInternal = zoomScopeSizeInternalDefault;
         public static int zoomMultiplier = 1;                                                               // init only
         public static int startInterval = 1000;                                                             // init only
@@ -152,7 +153,7 @@ namespace RED.mbnq
         }
         private static void UpdateCenteredCoordinates()
         {
-            Point screenCenter = mbFnc.mGetPrimaryScreenCenter2();
+            Point screenCenter = mGetPrimaryScreenCenter2();
             int captureSize = zoomScopeSizeInternal / zoomMultiplier;
             centeredX = screenCenter.X - (captureSize / 2);
             centeredY = screenCenter.Y - (captureSize / 2);

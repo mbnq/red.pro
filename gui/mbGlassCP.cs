@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using static mbFnc;
 
 namespace RED.mbnq
 {
@@ -95,7 +96,7 @@ namespace RED.mbnq
             if (overlay == null)
                 return;
 
-            float cpuUsage = await mbFnc.mbGetCpuUsageAsync();
+            float cpuUsage = await mbGetCpuUsageAsync();
             Rectangle adjustedRegion = overlay.GetAdjustedCaptureArea();
             DateTime mbDateTime = DateTime.Now;
 

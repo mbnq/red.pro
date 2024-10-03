@@ -11,6 +11,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static mbFnc;
 
 namespace RED.mbnq
 {
@@ -113,7 +114,7 @@ namespace RED.mbnq
             {
                 selectingInProgress = false;
 
-                Rectangle selectionRect = mbFnc.mbGetRectangle(startPoint, endPoint);
+                Rectangle selectionRect = mbGetRectangle(startPoint, endPoint);
                 Point screenPoint = this.PointToScreen(selectionRect.Location);
 
                 SelectedArea = new Rectangle(screenPoint, selectionRect.Size);
@@ -150,7 +151,7 @@ namespace RED.mbnq
 
             if (selectingInProgress)
             {
-                Rectangle selectionRect = mbFnc.mbGetRectangle(startPoint, endPoint);
+                Rectangle selectionRect = mbGetRectangle(startPoint, endPoint);
 
                 // semi-transparent selection rectangle
                 using (SolidBrush selectionBrush = new SolidBrush(Color.FromArgb(128, Color.Blue)))

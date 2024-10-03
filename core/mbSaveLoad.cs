@@ -34,9 +34,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using MaterialSkin;
-// using System.Runtime.CompilerServices;
-// using System.Windows.Markup;
+using static mbFnc;
 
 namespace RED.mbnq
 {
@@ -249,7 +247,7 @@ namespace RED.mbnq
                 { "TransparencyValue", (val => controlPanel.mbTransparencySlider.Value = Convert.ToInt32(val), 50) },
                 { "OffsetXValue", (val => controlPanel.mbOffsetXSlider.Value = Convert.ToInt32(val), 1000) },
                 { "OffsetYValue", (val => controlPanel.mbOffsetYSlider.Value = Convert.ToInt32(val), 1000) },
-                // { "AbsolutePos", (val => controlPanel.mbCPabsolutePos = (Point)val, mbFnc.mGetPrimaryScreenCenter2()) },
+                // { "AbsolutePos", (val => controlPanel.mbCPabsolutePos = (Point)val, mGetPrimaryScreenCenter2()) },
                 { "mbHideCrosshair", (val => controlPanel.mbHideCrosshairCheckBox.Checked = Convert.ToBoolean(val), false) }
             };
             mbLoadSettingsBatch("Crosshair", crosshairSettings);

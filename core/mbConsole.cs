@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static mbFnc;
 
 namespace RED.mbnq
 {
@@ -262,7 +263,7 @@ namespace RED.mbnq
         private async Task UpdateCpuUsageTextAsync()
         {
             // Fetch CPU usage asynchronously
-            float cpuUsage = await mbFnc.mbGetCpuUsageAsync();
+            float cpuUsage = await mbGetCpuUsageAsync();
 
             // Update the display text with the new CPU usage value
             displayTexts[4] = $"CPU: {cpuUsage:F1}%";

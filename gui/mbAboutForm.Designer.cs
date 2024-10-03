@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using static mbFnc;
 
 namespace RED.mbnq.core
 {
@@ -74,7 +75,7 @@ namespace RED.mbnq.core
                 location: new Point(73, 245),
                 tabIndex: 6,
                 highEmphasis: true,
-                clickEvent: mbFnc.mbCopyLabelToClipboard
+                clickEvent: mbCopyLabelToClipboard
             );
 
             // PictureBox settings

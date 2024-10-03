@@ -13,6 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using static mbFnc;
 
 namespace RED.mbnq
 {
@@ -201,7 +202,7 @@ namespace RED.mbnq
             if (File.Exists(customFilePath))
             {
                 // Calculate hash of the current .png file
-                string currentFileHash = mbFnc.CalculateFileHash(customFilePath);
+                string currentFileHash = CalculateFileHash(customFilePath);
 
                 // Check for existing in backup files with same hash
                 var backupFiles = Directory.GetFiles(ControlPanel.mbUserFilesPath, "old.*.custom.png");
@@ -210,7 +211,7 @@ namespace RED.mbnq
 
                 foreach (var backupFile in backupFiles)
                 {
-                    string backupFileHash = mbFnc.CalculateFileHash(backupFile);
+                    string backupFileHash = CalculateFileHash(backupFile);
                     if (currentFileHash == backupFileHash)
                     {
                         shouldCreateBackup = false;

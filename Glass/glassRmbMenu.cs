@@ -10,6 +10,7 @@
 using System;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
+using static mbFnc;
 
 namespace RED.mbnq
 {
@@ -37,7 +38,7 @@ namespace RED.mbnq
 
                 menu.Items.Add(new ToolStripSeparator());
                 menu.Items.Add("Copy to Clipboard", null, (s, ea) => { 
-                    mbFnc.CopyOverlayToClipboard(this, GetAdjustedCaptureArea());
+                    CopyOverlayToClipboard(this, GetAdjustedCaptureArea());
                     playSND();
                 });
 
