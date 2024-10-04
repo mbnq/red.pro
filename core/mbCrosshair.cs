@@ -26,10 +26,11 @@ namespace RED.mbnq
 
         private Timer crosshairRefreshTimer;
         private Image crosshairPngOverlay;
-        private bool isAnimated = false;
+        private bool isAnimated = true;
         private EventHandler frameChangedHandler;
         private EventHandler applicationIdleHandler;
         private ControlPanel controlPanelInstance;
+        private static string mbCrosshairDefaultPath = Directory.GetFiles(ControlPanel.mbUserFilesPath, "RED.custom.*").FirstOrDefault();
         public int mbXhairPaintCount = 0;
         public void SetControlPanelInstance(ControlPanel controlPanel)
         {
@@ -117,12 +118,12 @@ namespace RED.mbnq
         /* --- --- --- Set --- --- --- */
 
         // string crosshairFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
-        string crosshairFilePath = Directory.GetFiles(ControlPanel.mbUserFilesPath, "RED.custom.*").FirstOrDefault();
+        string crosshairFilePath = mbCrosshairDefaultPath;
         public void SetCustomPNG()
         {
             try
             {
-                crosshairFilePath = Directory.GetFiles(ControlPanel.mbUserFilesPath, "RED.custom.*").FirstOrDefault();
+                crosshairFilePath = mbCrosshairDefaultPath;
 
                 if (!string.IsNullOrEmpty(crosshairFilePath) && File.Exists(crosshairFilePath))
                 {
@@ -206,7 +207,7 @@ namespace RED.mbnq
         /* --- --- --- Apply --- --- --- */
         public void ApplyCustomCrosshairFnc()
         {
-            var customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
+            var customFilePath = mbCrosshairDefaultPath;
             if (File.Exists(customFilePath))
             {
                 try
@@ -234,7 +235,7 @@ namespace RED.mbnq
         }
         public void RemoveCustomCrosshairFnc()
         {
-            string customFilePath = Directory.GetFiles(ControlPanel.mbUserFilesPath, "RED.custom.*").FirstOrDefault();
+            string customFilePath = mbCrosshairDefaultPath;
             if (!string.IsNullOrEmpty(customFilePath) && File.Exists(customFilePath))
             {
                 // Calculate hash of the current .png file
