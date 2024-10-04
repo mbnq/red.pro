@@ -107,7 +107,7 @@ namespace RED.mbnq
         public const int mbPNGMaxHeight = 1080;             // init only
         public const int mbSplashDuration = 4000;             // duration in ms
 
-        public const int mbCrosshairRedrawTime = 5000;             // interval in ms
+        public const int mbCrosshairRedrawTime = 30;             // interval in ms
 
         public static string mbIPdicoveryProvider = "https://mbnq.pl/myip/";
         public static string mbIPdicoveryProvider2 = "";

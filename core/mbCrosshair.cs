@@ -14,6 +14,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using static mbFnc;
+using System.Linq;
+using System.Drawing.Imaging;
 
 namespace RED.mbnq
 {
@@ -24,7 +26,11 @@ namespace RED.mbnq
 
         private Timer crosshairRefreshTimer;
         private Image crosshairPngOverlay;
+        private bool isAnimated = true;
+        private EventHandler frameChangedHandler;
+        private EventHandler applicationIdleHandler;
         private ControlPanel controlPanelInstance;
+        private static string mbCrosshairDefaultPath = Directory.GetFiles(ControlPanel.mbUserFilesPath, "RED.custom.*").FirstOrDefault();
         public int mbXhairPaintCount = 0;
         public void SetControlPanelInstance(ControlPanel controlPanel)
         {
@@ -65,7 +71,6 @@ namespace RED.mbnq
                 this.Invalidate();
                 // Debug.WriteLineIf(ControlPanel.mIsDebugOn, $"mbnq: Crosshair redrawn for {mbXhairPaintCount} time(s)");
             };
-
             crosshairRefreshTimer.Start();
         }
 
@@ -81,7 +86,7 @@ namespace RED.mbnq
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = ControlPanel.mbUserFilesPath;
-                openFileDialog.Filter = "PNG files (*.png)|*.png";
+                openFileDialog.Filter = "Image files (*.png;*.gif)|*.png;*.gif";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -89,13 +94,13 @@ namespace RED.mbnq
                     string fileName = Path.GetFileName(filePath);
 
                     // Exclude "RED.custom.png"
-                    if (fileName.Equals("RED.custom.png", StringComparison.OrdinalIgnoreCase))
+                    if ( (fileName.Equals("RED.custom.png", StringComparison.OrdinalIgnoreCase)) || (fileName.Equals("RED.custom.gif", StringComparison.OrdinalIgnoreCase)) )
                     {
                         Sounds.PlayClickSoundOnce();
                         return;
                     }
 
-                    string destinationPath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
+                    string destinationPath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom" + Path.GetExtension(fileName));
 
                     if (File.Exists(destinationPath))
                     {
@@ -112,34 +117,57 @@ namespace RED.mbnq
 
         /* --- --- --- Set --- --- --- */
 
-        string crosshairFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
+        // string crosshairFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
+        string crosshairFilePath = mbCrosshairDefaultPath;
         public void SetCustomPNG()
         {
-
             try
             {
-                if (File.Exists(crosshairFilePath))
+                crosshairFilePath = mbCrosshairDefaultPath;
+
+                if (!string.IsNullOrEmpty(crosshairFilePath) && File.Exists(crosshairFilePath))
                 {
                     using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(crosshairFilePath)))
                     {
                         using (var img = Image.FromStream(ms))
                         {
-                            if (img.Width <= ControlPanel.mbPNGMaxWidth && img.Height <= ControlPanel.mbPNGMaxHeight && img.RawFormat.Equals(System.Drawing.Imaging.ImageFormat.Png))
+                            if (img.Width <= ControlPanel.mbPNGMaxWidth && img.Height <= ControlPanel.mbPNGMaxHeight)
                             {
                                 // Dispose of the existing overlay if it exists
                                 crosshairPngOverlay?.Dispose();
                                 crosshairPngOverlay = new Bitmap(img);
+
+                                // Determine if image is animated
+                                FrameDimension dimension = new FrameDimension(img.FrameDimensionsList[0]);
+                                int frameCount = img.GetFrameCount(dimension);
+
+                                if (frameCount > 1)
+                                {
+                                    isAnimated = true;
+
+                                    // Initialize event handlers
+                                    frameChangedHandler = new EventHandler(OnFrameChanged);
+                                    applicationIdleHandler = new EventHandler(OnApplicationIdle);
+
+                                    ImageAnimator.Animate(crosshairPngOverlay, frameChangedHandler);
+                                    Application.Idle += applicationIdleHandler;
+                                }
+                                else
+                                {
+                                    isAnimated = false;
+                                }
+
+                                ControlPanel.mbImageARatio = (double)img.Width / img.Height;
                                 this.Invalidate();
                                 Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay successfully loaded.");
-                                ControlPanel.mbImageARatio = (double)img.Width / img.Height;
                             }
                             else
                             {
-                                MaterialMessageBox.Show("The custom overlay .png file has incorrect format.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
+                                MaterialMessageBox.Show("The custom overlay image has incorrect dimensions.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                                 Sounds.PlayClickSoundOnce();
                                 File.Delete(crosshairFilePath);
                                 crosshairPngOverlay = null;
-                                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions or format.");
+                                Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay failed to load: Invalid dimensions.");
                                 ControlPanel.mbImageARatio = 1.00f;
                             }
                         }
@@ -147,7 +175,6 @@ namespace RED.mbnq
                 }
                 else
                 {
-                    // MaterialMessageBox.Show("The specified custom overlay .png file does not exist.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.None);
                     Sounds.PlayClickSoundOnce();
                     crosshairPngOverlay = null;
                     Debug.WriteLineIf(ControlPanel.mbIsDebugOn, "mbnq: Custom overlay file does not exist.");
@@ -156,7 +183,6 @@ namespace RED.mbnq
             catch (Exception ex)
             {
                 MaterialMessageBox.Show($"Failed to load the custom overlay: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.None);
-                if (ControlPanel.mbIsDebugOn) { Console.WriteLine($"Exception occurred while loading custom overlay: {ex.Message}"); }
                 Debug.WriteLineIf(ControlPanel.mbIsDebugOn, $"mbnq: Exception occurred while loading custom overlay: {ex.Message}");
                 crosshairPngOverlay = null;
                 Sounds.PlayClickSoundOnce();
@@ -166,11 +192,22 @@ namespace RED.mbnq
             this.Invalidate();
             controlPanelInstance?.UpdateAllUI();
         }
+        private void OnApplicationIdle(object sender, EventArgs e)
+        {
+            if (isAnimated && crosshairPngOverlay != null)
+            {
+                ImageAnimator.UpdateFrames(crosshairPngOverlay);
+            }
+        }
+        private void OnFrameChanged(object sender, EventArgs e)
+        {
+            this.Invalidate();
+        }
 
         /* --- --- --- Apply --- --- --- */
         public void ApplyCustomCrosshairFnc()
         {
-            var customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
+            var customFilePath = mbCrosshairDefaultPath;
             if (File.Exists(customFilePath))
             {
                 try
@@ -198,8 +235,8 @@ namespace RED.mbnq
         }
         public void RemoveCustomCrosshairFnc()
         {
-            string customFilePath = Path.Combine(ControlPanel.mbUserFilesPath, "RED.custom.png");
-            if (File.Exists(customFilePath))
+            string customFilePath = mbCrosshairDefaultPath;
+            if (!string.IsNullOrEmpty(customFilePath) && File.Exists(customFilePath))
             {
                 // Calculate hash of the current .png file
                 string currentFileHash = CalculateFileHash(customFilePath);
@@ -246,11 +283,18 @@ namespace RED.mbnq
         {
             if (disposing)
             {
+                if (isAnimated && crosshairPngOverlay != null)
+                {
+                    ImageAnimator.StopAnimate(crosshairPngOverlay, frameChangedHandler);
+                    Application.Idle -= applicationIdleHandler;
+                }
                 crosshairPngOverlay?.Dispose();
                 Cursor.Show();
             }
             base.Dispose(disposing);
         }
+
+
         public bool HasCustomOverlay
         {
             get { return crosshairPngOverlay != null; }
@@ -277,20 +321,18 @@ namespace RED.mbnq
 
             if (crosshairPngOverlay != null)
             {
-                // Debug.WriteLineIf(ControlPanel.mIsDebugOn, "mbnq: Drawing custom overlay.");
+                if (isAnimated)
+                {
+                    // ImageAnimator.UpdateFrames(crosshairPngOverlay);
+                }
+
                 g.DrawImage(crosshairPngOverlay, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
                 mbXhairPaintCount++;
             }
             else
             {
+                // Draw default crosshair
                 g.FillRectangle(new SolidBrush(this.BackColor), this.ClientRectangle);
-
-                /*
-                int diameter = Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height);
-                Rectangle circleBounds = new Rectangle(0, 0, diameter, diameter);
-                g.FillEllipse(new SolidBrush(this.BackColor), circleBounds);
-                */
-
                 mbXhairPaintCount++;
             }
         }
