@@ -875,8 +875,8 @@ namespace RED.mbnq
                         materialSkinManager.ColorScheme = new ColorScheme(
                             Primary.Grey500,
                             Primary.Grey700,
-                            Primary.Grey200,
-                            Accent.Black200,
+                            Primary.Black100,
+                            Accent.Grey400,
                             TextShade.WHITE
                         );
                         mbColorSchemeDropDown.SelectedItem = "Mono";

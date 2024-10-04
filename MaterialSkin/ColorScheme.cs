@@ -285,11 +285,25 @@ namespace MaterialSkin
         BlueGrey600 = 0x546E7A,
         BlueGrey700 = 0x455A64,
         BlueGrey800 = 0x37474F,
-        BlueGrey900 = 0x263238
+        BlueGrey900 = 0x263238,
+        Black000 = 0x000000,
+        Black100 = 0x111111,
+        Black200 = 0x222222,
+        Black400 = 0x444444
     }
 
     public enum Accent
     {
+        Grey50 = 0xFAFAFA,
+        Grey100 = 0xF5F5F5,
+        Grey200 = 0xEEEEEE,
+        Grey300 = 0xE0E0E0,
+        Grey400 = 0xBDBDBD,
+        Grey500 = 0x9E9E9E,
+        Grey600 = 0x757575,
+        Grey700 = 0x616161,
+        Grey800 = 0x424242,
+        Grey900 = 0x212121,
         Black000 = 0x000000,
         Black100 = 0x111111,
         Black200 = 0x222222,
