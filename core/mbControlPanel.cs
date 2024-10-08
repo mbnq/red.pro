@@ -1274,6 +1274,9 @@ namespace RED.mbnq
         private void debugTestButton_Click(object sender, EventArgs e)
         {
             Sounds.PlayClickSoundOnce();
+            var zoomctrlpanel = new mbZoomModeCP();
+            // zoomctrlpanel.InitializeComponent();
+            zoomctrlpanel.Show();
             UpdateAllUI();
         }
 
