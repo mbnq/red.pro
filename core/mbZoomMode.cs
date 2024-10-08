@@ -23,7 +23,7 @@ namespace RED.mbnq
         /* --- --- ---  --- --- --- */
         #region init
         private static Timer holdTimer;
-        private static System.Timers.Timer zoomUpdateTimer;
+        private static Timer zoomUpdateTimer;
         private static mbZoomForm zoomForm;
         private static bool isZooming = false;                                                              // init only
         private static ControlPanel controlPanel;
@@ -63,9 +63,9 @@ namespace RED.mbnq
             };
             holdTimer.Tick += HoldTimer_Tick;
 
-            zoomUpdateTimer = new System.Timers.Timer(zoomRefreshIntervalInternal);
-            zoomUpdateTimer.Elapsed += ZoomUpdateTimer_Tick;
-            zoomUpdateTimer.AutoReset = true;
+            zoomUpdateTimer = new Timer();
+            zoomUpdateTimer.Interval = zoomRefreshIntervalInternal;
+            zoomUpdateTimer.Tick += ZoomUpdateTimer_Tick;
 
             int captureSize = (zoomScopeSizeInternal / zoomMultiplier);
             if (captureSize <= 0) captureSize = 1;
@@ -179,17 +179,8 @@ namespace RED.mbnq
 
         private static void ZoomUpdateTimer_Tick(object sender, EventArgs e)
         {
-            // offload the zoom update process to a background thread
-            Task.Run(() =>
-            {
-                CaptureScreenToBitmap();
-
-                // back to the UI thread to update the zoomForm
-                zoomForm?.Invoke(new Action(() =>
-                {
-                    if (zoomForm != null)zoomForm.Invalidate();
-                }));
-            });
+            CaptureScreenToBitmap();
+            zoomForm?.Invalidate();
         }
 
         public static void StartHoldTimer()
